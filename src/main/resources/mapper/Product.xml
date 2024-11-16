@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 제품관리(Product)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ProductDAO">
+
+  <select id="listProduct" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+		/* Product.listProduct */
+		<![CDATA[
+    SELECT
+      A.prodCd, A.prodNm, A.prodType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode,
+      B.houseNm, C.compNm, D.inQty, E.outQty, F.fileUrl,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd, MAX(issueDate) issueDate
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = A.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd, MAX(issueDate) issueDate
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = A.prodCd
+    LEFT JOIN (
+      SELECT tableKey, fileUrl
+	    FROM tblFiles F1
+      INNER JOIN (
+        SELECT MAX(fileSeq) maxFileSeq
+        FROM tblFiles
+        WHERE flagYN = 'Y' AND tableNm = "tblProduct"
+        GROUP BY tableNm, tableKey
+      ) F2 ON F1.fileSeq = F2.maxFileSeq
+    ) F ON F.tableKey = A.prodCd
+    ]]>
+		<if test='findProdNm!="" and findProdNm!=null'>
+			WHERE A.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
+		</if>
+		ORDER BY GREATEST (
+      IFNULL(E.issueDate, "1000-10-10"),
+      IFNULL(D.issueDate, "1000-10-10"),
+      IFNULL(A.issueDate, "1000-10-10")
+    ) DESC
+  </select>
+
+  <select id="showProduct" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+    /* Product.showProduct */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.prodNm, A.prodType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remark, A.flagYN,
+      A.regDate, A.issueDate, B.houseNm, C.compNm, D.inQty, E.outQty,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y' AND prodCd = #{prodCd}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = A.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = A.prodCd
+    ]]>
+  </select>
+
+  <select id="saveProduct" parameterType="com.bedone.warehouse.container.Product" resultType="Integer">
+    /* Product.saveProduct */
+    CALL sp_Product (
+      #{prodCd}, #{prodNm}, #{prodType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},
+      #{option1}, #{option2}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 메인(Main)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.MainDAO">
+
+  <select id="listMain" parameterType="hashmap" resultType="hashmap">
+    /* Main.listMain */
+    <![CDATA[
+    SELECT
+      menu, subMenu, parentsMenu, pageUrl, pageNm, pageIcon, menuOrder,
+      CASE WHEN menuNo < 10 THEN CONCAT('0', menuNo) ELSE menuNo END menuNo,
+      CONCAT(menu, subMenu) findMenu
+    FROM
+    	tblSysMenu
+    WHERE
+    	flagYN = 'Y'
+    ]]>
+    ORDER BY
+    	menuOrder
+  </select>
+
+  <select id="listSysMenu" parameterType="hashmap" resultType="hashmap">
+	  /* Main.listSysMenu */
+	  SELECT
+      menu, pageUrl, pageNm, pageIcon, menuOrder, menuNo
+    FROM
+      tblSysMenu
+	  WHERE
+      flagYN = 'Y' AND subMenu!='00' AND pageUrl IN (${pageNm})
+  </select>
+
+</mapper>

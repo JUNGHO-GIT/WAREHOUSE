@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 자재 입출고 Excel(ResourceInOutXls)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ResourceInOutXlsDAO">
+
+  <select id="saveResourceInOutXls" parameterType="com.bedone.warehouse.container.ResourceInOut" resultType="com.bedone.warehouse.container.ResourceInOut">
+    /* ResourceInOutXls.saveResourceInOutXls */
+    CALL sp_ResourceInOutXls (
+      #{inOutDt}, #{resrcCd}, #{qty}, #{compCd}, #{houseCd}, #{unitPrice}, #{remark},
+      #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

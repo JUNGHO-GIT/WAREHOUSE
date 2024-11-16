@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 대시보드(Dash)의 XML Mapper -->
+<!-- 생성일 : 2023-12-01 19:14:54 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.DashDAO">
+
+  <!-- 0. 공통 (입고, 출고) -->
+  <select id="getInOutData" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getInOutData */
+    <![CDATA[
+    SELECT
+      A.${paramMap.keyCd}, A.inOutDt, A.qty, A.sessionCnt, D.${paramMap.keyNm},
+      (SELECT SUM(qty)
+        FROM ${paramMap.tableNm}
+        WHERE flagYN = 'Y'
+        AND planYN = '${paramMap.planYN}'
+        AND qty ${paramMap.sign} 0
+        AND inOutDt BETWEEN '${startDt}' AND '${endDt}'
+      ) totalQty
+    FROM (
+      SELECT
+        prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM
+        ${paramMap.tableNm}
+      WHERE
+        flagYN = 'Y'
+        AND planYN = '${paramMap.planYN}'
+        AND qty ${paramMap.sign} 0
+        AND inOutDt BETWEEN '${startDt}' AND '${endDt}'
+      GROUP BY
+        ${paramMap.keyCd}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.${paramMap.keyCd} = A.${paramMap.keyCd}
+    GROUP BY
+      A.${paramMap.keyCd}, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <select id="getShipData" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getShipData */
+    SELECT
+      A.shipCd, A.shipDt, A.sessionCnt, F.prodNm, C.prodCd, C.inOutSeq,
+      (D.qty * -1) qty, G.totalQty
+    FROM (
+      SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
+      FROM tblShipping
+      WHERE flagYN = 'Y'
+      AND planYN = '${paramMap.planYN}'
+      AND shipDt BETWEEN '${startDt}' AND '${endDt}'
+      GROUP BY shipCd, shipDt
+    ) A
+    <if test='paramMap.planYN == "Y"'>
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq
+      FROM tblShipPlan
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    </if>
+    <if test='paramMap.planYN == "N"'>
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq
+      FROM tblShipItems
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    </if>
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y'
+    ) C ON C.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND qty <![CDATA[<]]> 0
+    ) D ON D.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) F ON F.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT B.shipCd, SUM(D.qty * -1) as totalQty
+      FROM tblProductInOut D
+      LEFT JOIN (
+        <choose>
+          <when test='paramMap.planYN == "Y"'>
+            SELECT shipCd, inOutSeq FROM tblShipPlan WHERE flagYN = 'Y'
+          </when>
+          <otherwise>
+            SELECT shipCd, inOutSeq FROM tblShipItems WHERE flagYN = 'Y'
+          </otherwise>
+        </choose>
+      ) B ON B.inOutSeq = D.inOutSeq
+      WHERE D.flagYN = 'Y' AND D.qty <![CDATA[<]]> 0
+      GROUP BY B.shipCd
+    ) G ON G.shipCd = A.shipCd
+    GROUP BY
+      A.shipCd, A.shipDt, F.prodCd, F.prodNm, C.inOutSeq, G.totalQty
+    ORDER BY
+      A.shipCd DESC;
+  </select>
+
+  <!-- 1-1. 금일 입고 예정 (제품) -->
+  <select id="getProdInPlanToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdInPlanToday */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 1-2. 금일 출고 예정 (제품) -->
+  <select id="getProdOutPlanToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdOutPlanToday */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 1-3. 금일 출하 예정 (제품) -->
+  <select id="getShipPlanToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getShipPlanToday */
+    <![CDATA[
+    SELECT
+      A.shipDt, A.shipCd, A.sessionCnt, B.inOutSeq, C.inOutDt, F.prodCd, F.prodNm,
+      IFNULL(B.cnt, 0) cnt, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      (SELECT SUM(qty)
+        FROM tblShipping
+        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND shipDt = #{shipDt}
+      ) totalQty
+    FROM (
+      SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipDt = #{shipDt}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipPlan
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y'
+    ) C ON C.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) F ON F.prodCd = C.prodCd
+    ORDER BY
+      A.shipCd DESC;
+    ]]>
+  </select>
+
+  <!-- 2-1. 금일 입고 현황 (제품) -->
+  <select id="getProdInToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdInToday */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 2-2. 금일 출고 현황 (제품) -->
+  <select id="getProdOutToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdOutToday */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 3-3. 금일 출하 현황 (제품) -->
+  <select id="getShipToday" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getShipToday */
+    <![CDATA[
+    SELECT
+      A.shipDt, A.shipCd, A.sessionCnt, B.inOutSeq, C.inOutDt, F.prodCd, F.prodNm,
+      IFNULL(B.cnt, 0) cnt, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND shipDt = #{shipDt}
+      ) totalQty
+    FROM (
+      SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'N' AND shipDt = #{shipDt}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipItems
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y'
+    ) C ON C.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) F ON F.prodCd = C.prodCd
+    ORDER BY
+      A.shipCd DESC;
+    ]]>
+  </select>
+
+  <!-- 3-1. 금주 입고 현황 (제품) -->
+  <select id="getProdInWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdInWeek */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 3-2. 금주 출고 현황 (제품) -->
+  <select id="getProdOutWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdOutWeek */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 3-3. 금주 출하 현황 (제품) -->
+  <select id="getShipWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getShipWeek */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM (
+      SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      GROUP BY prodCd
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) D ON D.prodCd = A.prodCd
+    GROUP BY
+      A.prodCd, A.inOutDt, D.prodNm
+    ]]>
+  </select>
+
+  <!-- 4-1. 안전 재고 현황 (제품) -->
+  <select id="getProdProtected" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdProtected */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.prodNm, A.protectedQty,
+      IFNULL(D.inQty, 0) inQty,
+      IFNULL(E.outQty, 0) outQty,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT prodCd, prodNm, protectedQty
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = A.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = A.prodCd
+    WHERE
+    	A.protectedQty > (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0))
+    ]]>
+  </select>
+
+  <!-- 5-1. 주간 입고 현황 (제품) -->
+  <select id="getProdInChartWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdInChartWeek */
+    <![CDATA[
+    SELECT
+      DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM
+      tblProductInOut
+    WHERE
+      flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+    GROUP BY
+      DATE_FORMAT(inOutDt, '%Y-%m-%d')
+    ORDER BY
+      inOutDt
+    ]]>
+  </select>
+
+  <!-- 5-2. 주간 출고 현황 (제품) -->
+  <select id="getProdOutChartWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getProdOutChartWeek */
+    <![CDATA[
+    SELECT
+      DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
+      (SELECT SUM(qty)
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND  planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM
+      tblProductInOut
+    WHERE
+      flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+    GROUP BY
+      DATE_FORMAT(inOutDt, '%Y-%m-%d')
+    ORDER BY
+      inOutDt
+    ]]>
+  </select>
+
+  <!-- 5-3. 주간 출하 현황 (제품) -->
+  <select id="getShipChartWeek" parameterType="hashmap" resultType="hashmap">
+    /* Dash.getShipChartWeek */
+    <![CDATA[
+    SELECT
+      A.shipDt,
+      DATE_FORMAT(shipDt, '%Y-%m-%d') date,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      (SELECT SUM(qty)
+        FROM tblShipping
+        WHERE flagYN = 'Y' AND  planYN = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
+    FROM (
+      SELECT *
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipItems
+      WHERE flagYN = 'N'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y'
+    ) C ON C.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON D.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON E.prodCd = C.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) F ON F.prodCd = C.prodCd
+    GROUP BY
+      DATE_FORMAT(A.shipDt, '%Y-%m-%d')
+    ORDER BY
+      A.shipDt
+    ]]>
+  </select>
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보(User)의 XML Mapper -->
+<!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.UserConfigDAO">
+
+  <select id="showUserConfigTab" parameterType="hashmap" resultType="com.bedone.warehouse.container.UserConfig">
+  	/* UserConfig.showUserConfigTab */
+  	SELECT
+      config
+    FROM
+      tblUserConfig
+	  WHERE
+      userID = #{userConfigID} AND pageNm = #{pageNm} AND gridCd = #{gridCd}
+	  ORDER BY
+      issueDate DESC limit 1
+  </select>
+
+  <select id="showUserConfigInfo" parameterType="hashmap" resultType="com.bedone.warehouse.container.UserConfig">
+  	/* UserConfig.showUserConfigInfo */
+  	SELECT
+      userID userConfigID,
+      passwd userConfigPw,
+      userNm userConfigNm,
+      phone userConfigPhone,
+      email userConfigEmail,
+      uLevel userConfigLevel,
+      compCd userConfigCompCd,
+      uPerm userConfigPerm,
+      flagYN flagYN
+    FROM
+      tblUser
+    WHERE
+      userID = #{userConfigID}
+  </select>
+
+  <update id="updateUserConfigPw" parameterType="map">
+    /* UserConfig.updateUserConfigPw */
+    UPDATE
+      tblUser
+    SET
+      passwd = #{userConfigPw}
+    WHERE
+      userID = #{userConfigID}
+  </update>
+
+  <select id="saveUserConfigTab" parameterType="hashmap" resultType="Integer">
+  	/* UserConfig.saveUserConfigTab */
+  	CALL sp_UserConfig (
+      #{configSeq}, #{userID}, #{pageNm}, #{gridCd}, #{config}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+  <select id="saveUserConfigInfo" parameterType="hashmap" resultType="Integer">
+  	/* UserConfig.saveUserConfigInfo */
+  	CALL sp_UserConfig (
+      #{configSeq}, #{userID}, #{pageNm}, #{gridCd}, #{config}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

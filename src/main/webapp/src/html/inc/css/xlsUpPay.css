@@ -1,0 +1,25 @@
+#search01 {
+    margin-left:10px;
+    margin-top: 10px;
+    width: 820px;
+    height: 35px;
+    color: #FFF;
+    font-size: 11pt;
+    background-color: #F2F2F2;
+    border: 1px #CCC solid;
+    border-radius: 5px;
+}
+
+#search01 .normal {
+    float: left;
+    margin: 5px 0 0 20px;
+    color: #333;
+    width: 450px;
+    height: 20px;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+#search01 select {
+    width: 150px;
+}

@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 보고서(Report)의 XML Mapper -->
+<!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ReportDAO">
+
+  <select id="listReportProdIn" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportProdIn */
+    <![CDATA[
+    SELECT
+      prodNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.prodNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblProduct A
+      LEFT JOIN (
+        SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
+        FROM tblProductInOut
+        WHERE qty > 0 AND flagYN = 'Y'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+      ) B ON A.prodCd = B.prodCd
+    ) Z
+    ]]>
+    GROUP BY Z.prodNm
+    ORDER BY Z.prodNm
+  </select>
+
+  <select id="listReportResrcIn" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportResrcIn */
+    <![CDATA[
+    SELECT
+      resrcNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.resrcNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblResource A
+      LEFT JOIN (
+        SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
+        FROM tblResourceInOut
+        WHERE qty > 0 AND flagYN = 'Y'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+      ) B ON A.resrcCd = B.resrcCd
+    ) Z
+    ]]>
+    GROUP BY Z.resrcNm
+    ORDER BY Z.resrcNm
+  </select>
+
+  <select id="listReportProdOut" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportProdOut */
+    <![CDATA[
+    SELECT
+      prodNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.prodNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblProduct A
+      LEFT JOIN (
+        SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
+        FROM tblProductInOut
+        WHERE qty < 0 AND flagYN = 'Y'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+      ) B ON A.prodCd = B.prodCd
+    ) Z
+    ]]>
+    GROUP BY Z.prodNm
+    ORDER BY Z.prodNm
+  </select>
+
+  <select id="listReportResrcOut" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportResrcOut */
+    <![CDATA[
+    SELECT
+      resrcNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.resrcNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblResource A
+      LEFT JOIN (
+        SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
+        FROM tblResourceInOut
+        WHERE qty < 0 AND flagYN = 'Y'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+      ) B ON A.resrcCd = B.resrcCd
+    ) Z
+    ]]>
+    GROUP BY Z.resrcNm
+    ORDER BY Z.resrcNm
+  </select>
+
+  <select id="listReportProdStock" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportProdStock*/
+    <![CDATA[
+    SELECT
+      prodNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.prodNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblProduct A
+      LEFT JOIN (
+        SELECT prodCd, '${curYear}-01' dt,
+        CASE WHEN '${curYear}-01' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-02-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-02' dt,
+        CASE WHEN '${curYear}-02' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-03-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-03' dt,
+        CASE WHEN '${curYear}-03' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-04-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-04' dt,
+        CASE WHEN '${curYear}-04' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-05-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-05' dt,
+        CASE WHEN '${curMonth}' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-06-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-06' dt,
+        CASE WHEN '${curYear}-06' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-07-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-07' dt,
+        CASE WHEN '${curYear}-07' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-08-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-08' dt,
+        CASE WHEN '${curYear}-08' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-09-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-09' dt,
+        CASE WHEN '${curYear}-09' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-10-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-10' dt,
+        CASE WHEN '${curYear}-10' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-11-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-11' dt,
+        CASE WHEN '${curYear}-11' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-12-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+
+        UNION ALL
+
+        SELECT prodCd, '${curYear}-12' dt,
+        CASE WHEN '${curYear}-12' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM tblProductInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${nextYear}-01-01'
+        GROUP BY LEFT (inOutDt, 7), prodCd
+      ) B ON A.prodCd = B.prodCd
+    ) Z
+    ]]>
+    GROUP BY Z.prodNm
+    ORDER BY Z.prodNm
+  </select>
+
+  <select id="listReportResrcStock" parameterType="hashmap" resultType="hashmap">
+    /* Report.listReportResrcStock*/
+    <![CDATA[
+    SELECT
+      resrcNm,
+      SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
+      SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
+      SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
+      SUM(`${curYear}-10`) '10', SUM(`${curYear}-11`) '11', SUM(`${curYear}-12`) '12'
+    FROM (
+      SELECT
+        A.resrcNm,
+        IF (B.dt = '${curYear}-01', B.totalQty, 0) '${curYear}-01',
+        IF (B.dt = '${curYear}-02', B.totalQty, 0) '${curYear}-02',
+        IF (B.dt = '${curYear}-03', B.totalQty, 0) '${curYear}-03',
+        IF (B.dt = '${curYear}-04', B.totalQty, 0) '${curYear}-04',
+        IF (B.dt = '${curYear}-05', B.totalQty, 0) '${curYear}-05',
+        IF (B.dt = '${curYear}-06', B.totalQty, 0) '${curYear}-06',
+        IF (B.dt = '${curYear}-07', B.totalQty, 0) '${curYear}-07',
+        IF (B.dt = '${curYear}-08', B.totalQty, 0) '${curYear}-08',
+        IF (B.dt = '${curYear}-09', B.totalQty, 0) '${curYear}-09',
+        IF (B.dt = '${curYear}-10', B.totalQty, 0) '${curYear}-10',
+        IF (B.dt = '${curYear}-11', B.totalQty, 0) '${curYear}-11',
+        IF (B.dt = '${curYear}-12', B.totalQty, 0) '${curYear}-12'
+      FROM
+        tblResource A
+      LEFT JOIN (
+        SELECT resrcCd, '${curYear}-01' dt,
+        CASE WHEN '${curYear}-01' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-02-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-02' dt,
+        CASE WHEN '${curYear}-02' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-03-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-03' dt,
+        CASE WHEN '${curYear}-03' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-04-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-04' dt,
+        CASE WHEN '${curYear}-04' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-05-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-05' dt,
+        CASE WHEN '${curMonth}' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-06-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-06' dt,
+        CASE WHEN '${curYear}-06' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-07-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-07' dt,
+        CASE WHEN '${curYear}-07' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-08-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-08' dt,
+        CASE WHEN '${curYear}-08' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-09-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-09' dt,
+        CASE WHEN '${curYear}-09' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-10-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-10' dt,
+        CASE WHEN '${curYear}-10' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-11-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-11' dt,
+        CASE WHEN '${curYear}-11' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-12-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+
+        UNION ALL
+
+        SELECT resrcCd, '${curYear}-12' dt,
+        CASE WHEN '${curYear}-12' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
+        FROM  tblResourceInOut
+        WHERE flagYN = 'Y' AND inOutDt < '${nextYear}-01-01'
+        GROUP BY LEFT (inOutDt, 7), resrcCd
+      ) B ON A.resrcCd = B.resrcCd
+    ) Z
+    ]]>
+    GROUP BY Z.resrcNm
+    ORDER BY Z.resrcNm
+  </select>
+
+</mapper>

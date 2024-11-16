@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 공통코드(CommonCd)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.CommonCdDAO">
+
+  <select id="listAllCommonCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.CommonCd">
+    /* CommonCd.listAllCommonCd */
+  	SELECT
+      groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYN
+  	FROM
+      tblCommonCd
+	  ORDER BY
+      itemSeq ASC
+  </select>
+
+  <select id="listCommonCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.CommonCd">
+  	/* CommonCd.listCommonCd */
+  	SELECT
+      groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
+      CASE WHEN flagYN = 'Y' THEN '유효' ELSE '삭제' END flagYN
+  	FROM
+      tblCommonCd
+	  WHERE
+      itemNm LIKE CONCAT('%', #{findItemNm}, '%')
+    <if test='findGroupCd!="" and findGroupCd!=null'>
+      AND groupCd = #{findGroupCd}
+    </if>
+	  ORDER BY groupCd, itemSeq
+  </select>
+
+  <select id="showCommonCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.CommonCd">
+  	/* CommonCd.showCommonCd */
+  	SELECT
+      groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq
+  	FROM
+      tblCommonCd
+  	WHERE
+      groupCd = #{groupCd} AND itemCd = #{itemCd}
+  </select>
+
+  <select id="mappingGroupCd" parameterType="hashmap" resultType="hashmap">
+  	/* CommonCd.mappingGroupCd */
+  	SELECT
+      groupCd, groupNm
+	  FROM
+      tblCommonCd
+	  WHERE
+      itemCd IS NOT NULL
+	  GROUP BY
+      groupCd, groupNm
+  </select>
+
+  <select id="listComCodeAll" parameterType="hashmap" resultType="com.bedone.warehouse.container.Common">
+    /* CommonCd.listComCodeAll */
+    SELECT
+      groupCd, groupNm, itemCd cd, itemNm nm, #{target} target
+    FROM
+      tblCommonCd
+    WHERE
+      flagYN = 'Y' and groupCd = #{groupCd}
+    ORDER BY
+      itemSeq
+  </select>
+
+  <select id="listComCodeGroupAll" parameterType="hashmap" resultType="com.bedone.warehouse.container.Common">
+    /* CommonCd.listComCodeGroupAll */
+    SELECT
+      groupCd cd, groupNm nm, #{target} target
+    FROM
+      tblCommonCd
+    WHERE
+      flagYN = 'Y'
+    GROUP BY
+      groupCd, groupNm
+  </select>
+
+  <select id="saveCommonCd" parameterType="com.bedone.warehouse.container.CommonCd">
+  	/* CommonCd.saveCommonCd */
+  	CALL sp_CommonCd (
+      #{groupCd}, #{itemCd}, #{groupNm}, #{itemNm}, #{itemMemo}, #{itemSeq}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

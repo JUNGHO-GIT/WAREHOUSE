@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 출하 계획 관리 (ShipPlan) -->
+<!-- 생성일 : 2021-05-22 10:5:56 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ShipPlanDAO">
+
+  <select id="listShipPlan" parameterType="hashmap" resultType="hashmap">
+    /* ShipPlan.listShipPlan */
+    <![CDATA[
+    SELECT
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
+      C.compNm, C.compCd, (D.qty * -1) qty,
+      IFNULL(B.cnt, 0) cnt
+    FROM (
+      SELECT *
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipDt BETWEEN #{findStartDt} AND #{findEndDt}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipPlan
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+    ) D ON D.inOutSeq = B.inOutSeq
+    ]]>
+    ORDER BY
+      A.shipCd DESC
+  </select>
+
+  <select id="listShipPlanDetail" parameterType="hashmap" resultType="hashmap">
+    /* ShipPlan.listShipPlanDetail */
+    <![CDATA[
+    SELECT
+      A.shipDt, A.shipCd,
+      B.inOutSeq, IFNULL(B.cnt, 0) cnt,
+      C.inOutDt, (D.qty * -1) qty,
+      F.prodCd, F.prodNm, F.option1, F.option2
+    FROM (
+      SELECT *
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipCd = #{shipCd}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipPlan
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd, inOutSeq
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y'
+    ) C ON C.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+    ) D ON D.inOutSeq = B.inOutSeq
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) F ON F.prodCd = C.prodCd
+    ]]>
+    ORDER BY
+      A.shipCd DESC;
+  </select>
+
+  <select id="showShipPlan" parameterType="hashmap" resultType="hashmap">
+    /* ShipPlan.showShipPlan */
+    <![CDATA[
+    SELECT
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
+      C.compNm, C.compCd, (D.qty * -1) qty,
+      IFNULL(B.cnt, 0) cnt
+    FROM (
+      SELECT *
+      FROM tblShipping
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipCd = #{shipCd}
+    ) A
+    LEFT JOIN (
+      SELECT shipCd, inOutSeq, COUNT(*) cnt
+      FROM tblShipPlan
+      WHERE flagYN = 'Y'
+      GROUP BY shipCd
+    ) B ON B.shipCd = A.shipCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+    ) D ON D.inOutSeq = B.inOutSeq
+    ]]>
+    ORDER BY
+      A.shipDt DESC
+  </select>
+
+  <select id="saveShipPlan" parameterType="com.bedone.warehouse.container.Shipping">
+    /* ShipPlan.saveShipPlan */
+    CALL sp_Shipping (
+      #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},
+      #{inOutSeq}, #{flagYN}, #{planYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

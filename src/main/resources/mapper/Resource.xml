@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 자재(Resource)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ResourceDAO">
+
+  <select id="listResource" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+		/* Resource.listResource */
+		<![CDATA[
+    SELECT
+      A.resrcCd, A.resrcNm, A.resrcType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode,
+      B.houseNm, C.compNm, D.inQty, E.outQty, F.fileUrl,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd, MAX(issueDate) issueDate
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY resrcCd
+    ) D ON D.resrcCd = A.resrcCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd, MAX(issueDate) issueDate
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY resrcCd
+    ) E ON E.resrcCd = A.resrcCd
+    LEFT JOIN (
+      SELECT tableKey, fileUrl
+	    FROM tblFiles F1
+      INNER JOIN (
+        SELECT MAX(fileSeq) maxFileSeq
+        FROM tblFiles
+        WHERE flagYN = 'Y' AND tableNm = "tblResource"
+        GROUP BY tableNm, tableKey
+      ) F2 ON F1.fileSeq = F2.maxFileSeq
+    ) F ON F.tableKey = A.resrcCd
+    ]]>
+		<if test='findResrcNm!="" and findResrcNm!=null'>
+			WHERE A.resrcNm LIKE CONCAT('%', #{findResrcNm}, '%')
+		</if>
+		ORDER BY GREATEST (
+      IFNULL(E.issueDate, "1000-10-10"),
+      IFNULL(D.issueDate, "1000-10-10"),
+      IFNULL(A.issueDate, "1000-10-10")
+    ) DESC
+  </select>
+
+  <select id="showResource" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+    /* Resource.showResource */
+    <![CDATA[
+    SELECT
+      A.resrcCd, A.resrcNm, A.resrcType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remark, A.flagYN,
+      A.regDate, A.issueDate, B.houseNm, C.compNm, D.inQty, E.outQty,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y' AND resrcCd = #{resrcCd}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) C ON C.compCd = A.compCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY resrcCd
+    ) D ON D.resrcCd = A.resrcCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY resrcCd
+    ) E ON E.resrcCd = A.resrcCd
+    ]]>
+  </select>
+
+  <select id="saveResource" parameterType="com.bedone.warehouse.container.Resource" resultType="Integer">
+    /* Resource.saveResource */
+    CALL sp_Resource (
+      #{resrcCd}, #{resrcNm}, #{resrcType}, #{houseCd}, #{protectedQty}, #{option1}, #{unit},
+      #{option2}, #{quality}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "maven.terminal.favorites": [
+    {
+      "command": "clean package",
+      "debug": false
+    }
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/bower_components": true,
+    "**/coverage": true,
+    "**/tmp": true,
+    "**/.mvn": true,
+    "**/mvnw": true,
+    "**/mvnw.cmd": true
+  },
+  "explorerExclude.backup": {}
+}

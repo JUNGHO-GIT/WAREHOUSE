@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Bom관리(Bom)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.BomDAO">
+
+  <select id="listBom" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+    <![CDATA[
+    SELECT
+      B.*,
+      IFNULL (A.cnt, 0) cnt,
+      IFNULL (C.option1, D.option1) option1,
+      IFNULL (C.option2, D.option2) option2,
+      IFNULL (C.barcode, D.barcode) barcode
+    FROM (
+      SELECT prodCd, COUNT(*) cnt
+      FROM tblBom
+      WHERE flagYN = 'Y'
+      GROUP BY prodCd
+    ) A
+    RIGHT JOIN (
+      SELECT *
+      FROM viewProdAll
+      WHERE bomType = "prod"
+    ) B ON B.prodCd = A.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+    ) C ON C.prodCd = B.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblResource
+    ) D ON D.resrcCd = B.prodCd
+    ]]>
+    <if test='findProdNm!="" and findProdNm!=null'>
+      WHERE B.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
+    </if>
+  </select>
+
+  <select id="showBom" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+    /* Bom.showBom */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.resrcCd, A.bomType, A.unitQty, A.flagYN,
+      B.resrcCd, B.resrcNm, B.resrcType, B.protectedQty, B.maker, B.unit, B.option1,
+      B.option2, B.quality, B.unitPrice, B.houseCd, B.compCd, B.barcode,
+      C.houseNm, D.compNm,
+      (IFNULL(E.inQty, 0) + IFNULL(F.outQty, 0)) qty
+    FROM (
+      SELECT *
+      FROM tblBom
+      WHERE flagYN = 'Y' AND prodCd = #{prodCd} AND bomType = #{bomType}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) B ON B.resrcCd = A.resrcCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) C ON C.houseCd = B.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) D ON D.compCd = B.compCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd, MAX(issueDate) issueDate
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY resrcCd
+    ) E ON E.resrcCd = B.resrcCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd, MAX(issueDate) issueDate
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY resrcCd
+    ) F ON F.resrcCd = B.resrcCd
+    ]]>
+    ORDER BY B.resrcNm
+  </select>
+
+  <select id="saveBom" parameterType="com.bedone.warehouse.container.Bom" resultType="Integer">
+		/* Bom.saveBom*/
+		CALL sp_Bom (
+      #{prodCd}, #{resrcCd}, #{bomType}, #{qty}, #{unitQty}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

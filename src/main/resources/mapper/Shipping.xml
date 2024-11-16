@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 출고 현황 (출하) (Shipping) -->
+<!-- 생성일 : 2021-04-12 10:5:56 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ShippingDAO">
+
+  <select id="listShipping" parameterType="hashmap" resultType="hashmap">
+		/* Shipping.listShipping */
+		<![CDATA[
+    SELECT
+      A.inOutSeq, A.inOutDt, (A.qty * -1) qty,
+      B.prodCd, B.prodNm, B.option1, B.option2
+		FROM (
+      SELECT *
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) B ON B.prodCd = A.prodCd
+    ]]>
+    GROUP BY
+      A.inOutSeq
+		ORDER BY
+      A.inOutDt DESC
+  </select>
+
+  <select id="saveShipping" parameterType="com.bedone.warehouse.container.Shipping">
+    /* Shipping.saveShipping */
+    CALL sp_Shipping (
+      #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},
+      #{inOutSeq}, #{flagYN}, #{planYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

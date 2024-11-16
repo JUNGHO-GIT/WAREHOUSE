@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 자재입출고예정(ResourceInOutPlan)의 XML Mapper -->
+<!-- 생성일 : 2021-05-11 13:12:55 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ResourceInOutPlanDAO">
+
+  <!-- 1-1. 자재 입출고 예정 리스트 -->
+  <select id="listResourceInOutPlan" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+    /* ResourcePlan.listResourceInOutPlan */
+    <![CDATA[
+    SELECT
+      A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.unitPrice,
+      B.compNm, C.houseNm,
+      ABS(qty*unitPrice) "supplyPrice",
+      CASE WHEN A.qty < 0 THEN "출고예정" ELSE "입고예정" END "inOut"
+    FROM (
+      SELECT *
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND resrcCd != 0 AND resrcCd = #{resrcCd}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) B ON B.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) C ON C.houseCd = A.houseCd
+    ]]>
+    ORDER BY
+      A.inOutDt DESC, A.issueDate DESC
+  </select>
+
+  <!-- 1-2. 자재 입출고 예정 상세 -->
+  <select id="showResourceInOutPlan" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+    /* ResourcePlan.showResourceInOutPlan */
+    <![CDATA[
+    SELECT
+      A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
+      B.compNm, C.houseNm, D.resrcNm,
+      ABS(A.qty * A.unitPrice) "supplyPrice",
+      CASE WHEN A.qty < 0 THEN "out" ELSE "in" END "inOut"
+    FROM (
+      SELECT *
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'Y' AND resrcCd != 0 AND inOutSeq = #{inOutSeq}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) B ON B.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) C ON C.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) D ON D.resrcCd = A.resrcCd
+    ]]>
+  </select>
+
+  <!-- 1-3. 자재 입출고 예정 저장 -->
+  <select id="saveResourceInOutPlan" parameterType="com.bedone.warehouse.container.ResourceInOut" resultType="Integer">
+    /* ResourcePlan.saveResourceInOutPlan */
+    CALL sp_ResourceInOut (
+      #{inOutSeq}, #{inOutDt}, #{resrcCd}, #{qty}, #{houseCd}, #{unitPrice}, #{remark}, #{compCd},
+      #{flagYN}, #{planYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

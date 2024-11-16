@@ -1,0 +1,113 @@
+#search01 {
+    margin: 4px 1px 1px 1px;
+    width: 837px;
+    height: 35px;
+    color: #FFF;
+    font-size: 11pt;
+    background-color: #F2F2F2;
+    border: 1px #CCC solid;
+    border-radius: 5px;
+}
+
+#search01 .normal {
+    float: left;
+    margin: 5px 0 0 20px;
+    width: 740px;
+    height: 20px;
+    color: #333;
+    font-size:10pt;
+}
+
+#search01 input {
+    font-size: 9pt;
+}
+
+#search01 select {
+    width: 100px;
+}
+
+#sumArea {
+    height: 25px;
+    background-color: #F9F9F9;
+    border-bottom:1px #CCC solid;
+}
+
+#sumArea div {
+    float:left;
+}
+
+#sumArea div p {
+    font-weight: bold;
+    margin-bottom: 0;
+    text-align:right;
+    color: #666;
+}
+
+#sumArea div p span {
+    font-weight: normal;
+    color: #666;
+}
+
+
+#saveForm {
+    width: 295px;
+    height: 420px;
+    margin:10px 10px 0 7px;
+}
+
+
+#saveForm .frmGroup {
+    margin-top: 0px;
+    width: 295px;
+    background-color: #F9F9F9;
+    border: 1px #CCC solid;
+    border-radius: 5px;
+}
+
+#saveForm .frmGroup .frmTitle {
+    float: left;
+    width: 80px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0 0 7px;
+    border: 1px #999 solid;
+}
+
+#saveForm .frmGroup .frmInput {
+    float: left;
+    width: 195px;
+    height: 20px;
+    text-align: left;
+    margin: 5px 5px 0 0;
+    border: 1px #F9F9F9 solid;
+}
+
+#saveForm .frmGroup input {
+    height: 17px;
+    margin-left: 5px;
+    ime-mode:auto;
+    background-color: #FFF;
+    border: 1px #F9F9F9 outset;
+    font-size: 12px;
+}
+
+#saveForm .frmGroup textarea {
+    font-family: "맑은 고딕";
+    height: 17px;
+    margin-left: 5px;
+    ime-mode:auto;
+    background-color: #FFF;
+    border: 1px #F9F9F9 outset;
+    font-size: 12px;
+}
+
+#saveForm .frmGroup select {
+    background-color:#FFF;
+    margin-left:5px;
+    font-size: 12px;
+    height: 20px;
+    width: 111px;
+    border: 1px #F9F9F9 outset;
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:task="http://www.springframework.org/schema/task"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc
+  https://www.springframework.org/schema/mvc/spring-mvc.xsd
+  http://www.springframework.org/schema/beans
+  https://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context
+  https://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/task
+  http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+  <annotation-driven />
+  <task:scheduler id="jobScheduler" pool-size="10" />
+  <task:annotation-driven scheduler="jobScheduler" />
+  <context:component-scan base-package="com.bedone.warehouse" />
+  <resources location="/resources/" mapping="/resources/**"  />
+	<resources location="/src/imgs/" mapping="/imgs/**" />
+	<resources location="/src/lib/" mapping="/lib/**" />
+	<resources location="/src/html/" mapping="/**" />
+
+  <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <beans:property name="prefix" value="/src/" />
+    <beans:property name="suffix" value=".jsp" />
+    <beans:property name="contentType" value="text/html; charset=utf-8"/>
+  </beans:bean>
+
+  <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+
+    <!--
+    <beans:property name="driverClassName" value="core.log.jdbc.driver.MysqlDriver" />
+    <beans:property name="url" value="jdbc:mysql://203.245.44.22/jadejava04?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=UTC" />
+    <beans:property name="username" value="jadejava04" />
+    <beans:property name="password" value="cores1123!" />
+    -->
+
+    <!--
+    <beans:property name="driverClassName" value="core.log.jdbc.driver.MysqlDriver" />
+    <beans:property name="url" value="jdbc:mysql://203.245.44.22/jadejava05?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=UTC" />
+    <beans:property name="username" value="jadejava05" />
+    <beans:property name="password" value="story4U!" />
+    -->
+
+    <!--
+    <beans:property name="driverClassName" value="core.log.jdbc.driver.MysqlDriver" />
+    <beans:property name="url" value="jdbc:mysql://192.168.10.221:6033/warehouse?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=UTC" />
+    <beans:property name="username" value="warehouse" />
+    <beans:property name="password" value="zhdjtm!" />
+    -->
+
+    <beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+    <beans:property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/warehouse" />
+    <beans:property name="username" value="root" />
+    <beans:property name="password" value="m7m7m7m7m7!" />
+  </beans:bean>
+
+  <beans:bean name="template" class="org.springframework.jdbc.core.JdbcTemplate">
+    <beans:property name="dataSource" ref="dataSource" />
+  </beans:bean>
+
+  <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <beans:property name="dataSource" ref="dataSource" />
+    <beans:property name="mapperLocations" value="classpath*:mapper/*.xml" />
+  </beans:bean>
+
+  <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <beans:constructor-arg index="0" ref="sqlSessionFactory" />
+  </beans:bean>
+
+  <beans:bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <beans:property name="maxUploadSize" value="100000000" />
+    <beans:property name="defaultEncoding" value="UTF-8" />
+  </beans:bean>
+
+  <!-- <beans:bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <beans:property name="location" value="classpath:app.properties" />
+  </beans:bean> -->
+
+  <interceptors>
+    <interceptor>
+      <mapping path="/warehouse/**" />
+      <mapping path="/act/**" />
+      <beans:bean id="commonInterceptor" class="com.bedone.warehouse.util.LoginCheckInterceptor" />
+    </interceptor>
+  </interceptors>
+
+</beans:beans>

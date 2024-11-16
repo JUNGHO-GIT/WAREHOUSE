@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 창고관리(House)의 XML Mapper -->
+<!-- 생성일 : 2021-05-01 19:14:54 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.HouseDAO">
+
+  <select id="listHouse" parameterType="hashmap" resultType="com.bedone.warehouse.container.House">
+    /* House.listHouse*/
+    <![CDATA[
+    SELECT
+      (A.houseCd) id,
+      (A.houseCd) tId,
+      (A.parentsHCd) pId,
+      (A.houseNm) name,
+      (CASE WHEN B.houseCd = '' THEN 'false' ELSE 'true' END) isParent
+    FROM (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y' AND parentsHCd = #{parentsHCd}
+    ) A
+    LEFT JOIN (
+      SELECT parentsHCd houseCd
+      FROM tblHouse
+      WHERE flagYN = 'Y' AND parentsHCd != 0
+      GROUP BY parentsHCd
+    ) B ON B.houseCd = A.houseCd
+    ]]>
+    ORDER BY
+      A.houseOrder
+  </select>
+
+  <select id="showHousePerProduct" parameterType="hashmap" resultType="hashmap">
+    /* House.showHousePerProduct */
+    <![CDATA[
+    SELECT
+      A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
+      (B.houseNm) parentsHNm,
+      C.prodNm, G.prodCd,
+      G.inQty, G.outQty,
+      (G.inQty + G.outQty) qty
+    FROM (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y' AND houseCd = #{houseCd}
+    ) A
+    LEFT JOIN (
+      SELECT houseCd, houseNm
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.parentsHCd
+    LEFT JOIN (
+      SELECT prodCd, houseCd,
+      SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) inQty,
+      SUM(CASE WHEN qty < 0 THEN qty ELSE 0 END) outQty
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND houseCd = #{houseCd}
+      GROUP BY prodCd, houseCd
+    ) G ON G.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT prodCd, prodNm
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) C ON C.prodCd = G.prodCd
+    ]]>
+    GROUP BY
+      G.prodCd, A.houseCd
+  </select>
+
+  <select id="showHousePerResource" parameterType="hashmap" resultType="hashmap">
+    /* House.showHousePerResource*/
+    <![CDATA[
+    SELECT
+      A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
+      (B.houseNm) parentsHNm,
+      C.resrcNm, G.resrcCd,
+      G.inQty, G.outQty,
+      (G.inQty + G.outQty) qty
+    FROM (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y' AND houseCd = #{houseCd}
+    ) A
+    LEFT JOIN (
+      SELECT houseCd, houseNm
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) B ON B.houseCd = A.parentsHCd
+    LEFT JOIN (
+      SELECT resrcCd, houseCd,
+      SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) inQty,
+      SUM(CASE WHEN qty < 0 THEN qty ELSE 0 END) outQty
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND houseCd = #{houseCd}
+      GROUP BY resrcCd, houseCd
+    ) G ON G.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT resrcCd, resrcNm
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) C ON C.resrcCd = G.resrcCd
+    ]]>
+    GROUP BY
+      G.resrcCd, A.houseCd
+  </select>
+
+  <select id="saveHouse" parameterType="com.bedone.warehouse.container.House" resultType="hashmap">
+    /* House.saveHouse*/
+    CALL sp_House (
+      #{houseCd}, #{houseNm}, #{parentsHCd}, #{houseOrder}, #{flagYN}, #{issueID}
+    )
+  </select>
+
+</mapper>

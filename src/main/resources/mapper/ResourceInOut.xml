@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 자재입출고관리(ResourceInOut)의 XML Mapper -->
+<!-- 생성일 : 2021-05-11 13:12:55 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.ResourceInOutDAO">
+
+  <select id="listResourceInOut" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+		/* ResourceInOut.listResourceInOut */
+  	<![CDATA[
+		SELECT
+      A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.unitPrice, A.remark, A.flagYN,
+      A.regDate, A.issueDate, A.issueID, ABS (qty*unitPrice) "supplyPrice",
+      B.compNm, C.houseNm, F.fileUrl,
+      CASE WHEN A.qty < 0 THEN "출고" ELSE "입고" END "inOut"
+    FROM (
+      SELECT *
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND resrcCd != 0 AND resrcCd = #{resrcCd}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) B ON B.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) C ON C.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT tableKey, fileUrl
+	    FROM tblFiles F1
+      INNER JOIN (
+        SELECT MAX(fileSeq) maxFileSeq
+        FROM tblFiles
+        WHERE flagYN = 'Y' AND tableNm = "tblResource"
+        GROUP BY tableNm, tableKey
+      ) F2 ON F1.fileSeq = F2.maxFileSeq
+    ) F ON F.tableKey = A.resrcCd
+    ]]>
+		ORDER BY
+      A.inOutDt DESC, A.issueDate DESC
+  </select>
+
+  <select id="showResourceInOut" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+		/* ResourceInOut.showResourceInOut */
+    <![CDATA[
+    SELECT
+      A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
+      B.compNm, C.houseNm, D.resrcNm,
+      ABS(A.qty * A.unitPrice) "supplyPrice",
+      CASE WHEN A.qty < 0 THEN "out" ELSE "in" END "inOut"
+    FROM (
+      SELECT *
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND resrcCd != 0 AND inOutSeq = #{inOutSeq}
+    ) A
+    LEFT JOIN (
+      SELECT *
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) B ON B.compCd = A.compCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) C ON C.houseCd = A.houseCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) D ON D.resrcCd = A.resrcCd
+    ]]>
+  </select>
+
+  <select id="saveResourceInOut" parameterType="com.bedone.warehouse.container.ResourceInOut" resultType="Integer">
+    /* ResourceInOut.saveResourceInOut */
+    CALL sp_ResourceInOut (
+      #{inOutSeq}, #{inOutDt}, #{resrcCd}, #{qty}, #{houseCd}, #{unitPrice}, #{remark}, #{compCd},
+      #{flagYN}, #{planYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

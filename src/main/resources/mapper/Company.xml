@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 거래처(Company)의 XML Mapper -->
+<!-- 생성일 : 2021-04-12 10:5:56 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.CompanyDAO">
+
+  <select id="listCompany" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+		/* Company.listCompany */
+    <![CDATA[
+    SELECT
+      A.compCd, A.compNm, A.compNo, A.owner, A.major, A.phone, A.taxEmail, A.address,
+      A.compType, A.compPart, A.remarks, A.issueID, F.fileUrl,
+      CASE WHEN A.flagYN = 'Y' THEN "유효" ELSE "무효" END flagYN
+    FROM (
+      SELECT *
+      FROM tblCompany
+    ) A
+    LEFT JOIN (
+      SELECT tableKey, fileUrl
+	    FROM tblFiles F1
+      INNER JOIN (
+        SELECT MAX(fileSeq) maxFileSeq
+        FROM tblFiles
+        WHERE flagYN = 'Y' AND tableNm = "tblCompany"
+        GROUP BY tableNm, tableKey
+      ) F2 ON F1.fileSeq = F2.maxFileSeq
+    ) F ON F.tableKey = A.compCd
+    ]]>
+    <if test='findCompNm!="" and findCompNm!=null'>
+		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
+		</if>
+		ORDER BY A.compNm ASC
+  </select>
+
+  <select id="showCompany" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+		/* Company.showCompany */
+    <![CDATA[
+    SELECT
+      compCd, compNm, compNo, owner, major, phone, taxEmail, address, compType, compPart,
+      remarks, flagYN, regDate, issueDate, issueID
+    FROM (
+      SELECT *
+      FROM tblCompany
+      WHERE compCd = #{compCd}
+    ) A
+    ]]>
+  </select>
+
+  <select id="saveCompany" parameterType="com.bedone.warehouse.container.Company" resultType="Integer">
+		/* Company.saveCompany */
+		CALL sp_Company (
+      #{compCd}, #{compNm}, #{compNo}, #{owner}, #{major}, #{phone}, #{taxEmail}, #{address},
+      #{compType}, #{compPart}, #{remarks}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

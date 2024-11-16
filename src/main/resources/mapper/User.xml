@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보(User)의 XML Mapper -->
+<!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.UserDAO">
+
+  <select id="listUser" parameterType="hashmap" resultType="com.bedone.warehouse.container.User">
+    /* User.listUser */
+    <![CDATA[
+    SELECT
+      A.userID, A.userNm, A.phone, A.email, A.uLevel, B.itemNm,
+      CASE WHEN A.flagYN = 'Y' THEN "유효" ELSE "무효" END flagYN
+    FROM
+      tblUser A
+    LEFT JOIN (
+      SELECT itemCd, itemNm
+      FROM tblCommonCd
+      WHERE groupCd = '0001'
+    ) B ON A.uLevel = B.itemCd
+    ]]>
+    <if test='findUserNm!="" and findUserNm!=null'>
+      WHERE (
+        A.userNm LIKE CONCAT('%', #{findUserNm}, '%') OR
+        A.userID LIKE CONCAT('%', #{findUserNm}, '%')
+      )
+    </if>
+    ORDER BY A.userNm ASC
+  </select>
+
+  <select id="showUser" parameterType="hashmap" resultType="com.bedone.warehouse.container.User">
+    /* User.showUser */
+    SELECT
+      userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
+    FROM
+      tblUser
+    WHERE
+      userID = #{userID}
+  </select>
+
+  <select id="saveUser" parameterType="com.bedone.warehouse.container.User" resultType="Integer">
+    /* User.saveUser */
+    CALL sp_User (
+      #{userID}, #{passwd}, #{userNm}, #{phone}, #{email}, #{uLevel}, #{compCd}, #{uPerm},
+      #{flagYN}, #{issueID}
+    );
+  </select>
+
+  <select id="checkUserID" parameterType="hashmap" resultType="Integer">
+    /* User.checkUserID */
+    SELECT
+      COUNT(*) cnt
+    FROM
+      tblUser
+    WHERE
+      userID = #{userID}
+  </select>
+
+  <update id="updatePw" parameterType="map">
+    /* User.updatePw */
+    UPDATE
+      tblUser
+    SET
+      passwd = #{passwd}
+    WHERE
+      userID = #{userID}
+  </update>
+
+  <select id="listUserPerm" parameterType="hashmap" resultType="hashmap">
+    /* User.listUserPerm */
+    SELECT
+      menu, subMenu, pageUrl, pageNm, menuOrder, menuNo
+    FROM
+      tblSysMenu
+    WHERE
+      flagYN = 'Y' AND subMenu!='00'
+    ORDER BY
+      menuOrder
+  </select>
+</mapper>

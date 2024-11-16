@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bedone.warehouse.dao.FilesDAO">
+
+  <select id="listFiles" parameterType="hashmap" resultType="com.bedone.warehouse.container.Files">
+    /* Files.listFiles */
+    <![CDATA[
+    SELECT
+      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
+    FROM
+      tblFiles
+    WHERE
+      flagYN = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
+    ]]>
+  </select>
+
+  <select id="showFiles" parameterType="hashmap" resultType="hashmap">
+    /* Files.showFiles */
+    <![CDATA[
+    SELECT
+      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
+    FROM
+      tblFiles
+    WHERE
+      flagYN = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
+    ]]>
+  </select>
+
+  <update id="updateIssueDate" parameterType="hashmap">
+    /* Files.updateIssueDate */
+    <![CDATA[
+    UPDATE
+      ${tableNm}
+    SET
+      issueDate = NOW()
+    WHERE
+    	${keyColumn} = #{tableKey}
+   	]]>
+  </update>
+
+  <select id="saveFiles" parameterType="com.bedone.warehouse.container.Files" resultType="Integer">
+    /* Files.saveFiles */
+    CALL sp_Files (
+      #{fileSeq}, #{tableNm}, #{tableKey}, #{fileUrl}, #{fileNm}, #{flagYN}, #{issueID}
+    );
+  </select>
+
+</mapper>

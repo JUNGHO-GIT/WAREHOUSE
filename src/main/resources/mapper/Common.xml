@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 공통(Common)의 XML Mapper -->
+<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+
+<mapper namespace="com.bedone.warehouse.dao.CommonDAO">
+
+  <select id="findBom" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+    /* Common.findBom */
+    <![CDATA[
+    SELECT
+      A.prodCd, B.prodNm, B.bomType
+		FROM (
+      SELECT prodCd, COUNT(*) cnt
+      FROM tblBom
+      WHERE flagYN = 'Y'
+      GROUP BY prodCd
+    ) A
+    INNER JOIN (
+      SELECT *
+      FROM viewProdAll
+    ) B ON A.prodCd = B.prodCd
+    LEFT JOIN (
+      SELECT *
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) C ON A.prodCd = C.prodCd AND B.bomType = "prod"
+    LEFT JOIN (
+      SELECT *
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) D ON A.prodCd = D.resrcCd AND B.bomType = "resrc"
+    ]]>
+    <if test='findBom!="" and findBom!=null'>
+      WHERE B.prodNm LIKE CONCAT('%', #{findBom}, '%')
+    </if>
+  </select>
+
+  <select id="findCompNm" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+    /* Common.findCompNm */
+    <![CDATA[
+    SELECT
+      A.compCd, A.compNm
+    FROM (
+      SELECT compCd, compNm
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <if test='findCompNm!="" and findCompNm!=null'>
+		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
+		</if>
+		ORDER BY A.compCd ASC;
+  </select>
+
+  <select id="findCompCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+    /* Common.findCompCd */
+    <![CDATA[
+    SELECT
+      A.compCd, A.compNm
+    FROM (
+      SELECT compCd, compNm
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <choose>
+      <when test='findCompNm!="" and findCompNm!=null'>
+        WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
+      </when>
+      <otherwise>
+        <if test='findCompCd!="" and findCompCd!=null'>
+          WHERE A.compCd = #{findCompCd}
+        </if>
+      </otherwise>
+    </choose>
+    ORDER BY A.compCd ASC;
+  </select>
+
+  <select id="findProdNm" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+    /* Common.findProdNm */
+		<![CDATA[
+    SELECT
+      A.prodCd, A.prodNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT prodCd, prodNm
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON A.prodCd = D.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON A.prodCd = E.prodCd
+    ]]>
+    <if test='findProdNm!="" and findProdNm!=null'>
+		  WHERE A.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
+		</if>
+		ORDER BY A.prodNm ASC
+  </select>
+
+  <select id="findProdCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+    /* Common.findProdCd */
+    <![CDATA[
+    SELECT
+      A.prodCd, A.prodNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT prodCd, prodNm
+      FROM tblProduct
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY prodCd
+    ) D ON A.prodCd = D.prodCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd
+      FROM tblProductInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY prodCd
+    ) E ON A.prodCd = E.prodCd
+    ]]>
+    <choose>
+      <when test='findProdNm!="" and findProdNm!=null'>
+        WHERE A.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
+      </when>
+      <otherwise>
+        <if test='findProdCd!="" and findProdCd!=null'>
+          WHERE A.prodCd = #{findProdCd}
+        </if>
+      </otherwise>
+    </choose>
+    ORDER BY A.prodNm ASC
+  </select>
+
+  <select id="findResrcNm" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+    /* Common.findResrcNm */
+    <![CDATA[
+    SELECT
+      A.resrcCd, A.resrcNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT resrcCd, resrcNm
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY resrcCd
+    ) D ON A.resrcCd = D.resrcCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY resrcCd
+    ) E ON A.resrcCd = E.resrcCd
+    ]]>
+    <if test='findResrcNm!="" and findResrcNm!=null'>
+      WHERE A.resrcNm LIKE CONCAT('%', #{findResrcNm}, '%')
+    </if>
+    ORDER BY A.resrcNm ASC
+  </select>
+
+  <select id="findResrcCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+    /* Common.findResrcCd */
+    <![CDATA[
+    SELECT
+      A.resrcCd, A.resrcNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+    FROM (
+      SELECT resrcCd, resrcNm
+      FROM tblResource
+      WHERE flagYN = 'Y'
+    ) A
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      GROUP BY resrcCd
+    ) D ON A.resrcCd = D.resrcCd
+    LEFT JOIN (
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
+      FROM tblResourceInOut
+      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      GROUP BY resrcCd
+    ) E ON A.resrcCd = E.resrcCd
+    ]]>
+    <choose>
+      <when test='findResrcNm!="" and findResrcNm!=null'>
+        WHERE A.resrcNm LIKE CONCAT('%', #{findResrcNm}, '%')
+      </when>
+      <otherwise>
+        <if test='findResrcCd!="" and findResrcCd!=null'>
+          WHERE A.resrcCd = #{findResrcCd}
+        </if>
+      </otherwise>
+    </choose>
+    ORDER BY A.resrcNm ASC
+  </select>
+
+  <select id="findHouseNm" parameterType="hashmap" resultType="com.bedone.warehouse.container.House">
+    /* Common.findHouseNm */
+    <![CDATA[
+    SELECT
+      A.houseCd, A.houseNm
+    FROM (
+      SELECT houseCd, houseNm
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <if test='findHouseNm!="" and findHouseNm!=null'>
+		  WHERE A.houseNm LIKE CONCAT('%', #{findHouseNm}, '%')
+		</if>
+		ORDER BY A.houseCd ASC;
+  </select>
+
+  <select id="findHouseCd" parameterType="hashmap" resultType="com.bedone.warehouse.container.House">
+    /* Common.findHouseCd */
+    <![CDATA[
+    SELECT
+      A.houseCd, A.houseNm
+    FROM (
+      SELECT houseCd, houseNm
+      FROM tblHouse
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <choose>
+      <when test='findHouseNm!="" and findHouseNm!=null'>
+        WHERE A.houseNm LIKE CONCAT('%', #{findHouseNm}, '%')
+      </when>
+      <otherwise>
+        <if test='findHouseCd!="" and findHouseCd!=null'>
+          WHERE A.houseCd = #{findHouseCd}
+        </if>
+      </otherwise>
+    </choose>
+    ORDER BY A.houseCd ASC
+  </select>
+
+</mapper>

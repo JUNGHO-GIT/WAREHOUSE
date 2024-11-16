@@ -1,0 +1,86 @@
+#search01 {
+    margin-left:10px;
+    margin-top: 10px;
+    width: 820px;
+    height: 35px;
+    color: #FFF;
+    font-size: 11pt;
+    background-color: #F2F2F2;
+    border: 1px #CCC solid;
+    border-radius: 5px;
+}
+
+#search01 .normal {
+    float: left;
+    margin: 5px 0 0 20px;
+    width: 160px;
+    height: 20px;
+
+}
+
+#search01 select {
+    width: 120px;
+}
+
+#saveForm {
+    float: left;
+    width: 822px;
+    height: 670px;
+    margin:10px 0 0 10px;
+}
+
+#saveForm .frmGroup {
+    float: left;
+    width: 500px;
+    background-color: #F9F9F9;
+    border: 1px #CCC solid;
+    border-radius: 5px;
+}
+
+#saveForm .frmGroup .frmTitle {
+    float: left;
+    width: 85px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0 0 7px;
+    border: 1px #999 solid;
+}
+
+#saveForm .frmGroup .frmInput {
+    float: left;
+    width: 385px;
+    height: 20px;
+    text-align: left;
+    margin: 5px 5px 0 0;
+    border: 1px #F9F9F9 solid;
+}
+
+#saveForm .frmGroup input {
+    height: 17px;
+    margin-left: 5px;
+    ime-mode:auto;
+    background-color: #FFF;
+    border: 1px #F9F9F9 outset;
+    font-size: 12px;
+}
+
+#saveForm .frmGroup textarea {
+    font-family: "맑은 고딕";
+    height: 17px;
+    margin-left: 5px;
+    ime-mode:auto;
+    background-color: #FFF;
+    border: 1px #F9F9F9 outset;
+    font-size: 12px;
+}
+
+#saveForm .frmGroup select {
+    background-color:#FFF;
+    margin-left:5px;
+    font-size: 12px;
+    height: 20px;
+    width: 111px;
+    border: 1px #F9F9F9 outset;
+}

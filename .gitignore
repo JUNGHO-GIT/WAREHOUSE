@@ -1,0 +1,19 @@
+# Compiled output
+/target/
+/build/
+/classes/
+/*.class
+
+# node
+node_modules/
+
+# Gradle specific
+.gradle/
+/build/
+
+# Spring Boot specific
+/maven-wrapper/
+
+# tomcat
+/Tomcat*/**
+/Tomcat80/**
