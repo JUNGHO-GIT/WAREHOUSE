@@ -38,7 +38,7 @@ public class HouseCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/house", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/house", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String warehouse () throws Exception {
 
     utils.info ("======================house============================");

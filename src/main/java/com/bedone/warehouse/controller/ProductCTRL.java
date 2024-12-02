@@ -38,7 +38,7 @@ public class ProductCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/product", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/product", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String product () throws Exception {
 
     utils.info ("============================product================================");

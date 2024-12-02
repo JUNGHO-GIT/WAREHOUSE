@@ -38,7 +38,7 @@ public class ResourceInOutCTRL {
 
   //---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceIn () throws Exception {
 
     utils.info ("======================resourceIn============================");
@@ -48,7 +48,7 @@ public class ResourceInOutCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceOut () throws Exception {
 
     utils.info ("======================resourceOut============================");

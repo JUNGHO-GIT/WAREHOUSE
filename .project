@@ -46,13 +46,6 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.zeroturnaround.vscode.config.jrebelNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/resources/rebel.xml</name>
-			<type>1</type>
-			<location>C:/Users/jungh/AppData/Local/Temp/rebelxml-warehouse3130601121307386891/rebel.xml</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>0</id>

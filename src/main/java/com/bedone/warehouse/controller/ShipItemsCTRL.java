@@ -41,7 +41,7 @@ public class ShipItemsCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/shipItems", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/shipItems", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String shipItems () throws Exception {
 
     utils.info ("======================shipItems============================");

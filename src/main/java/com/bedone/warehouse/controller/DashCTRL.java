@@ -150,7 +150,7 @@ public class DashCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/dash", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+  (value="/dash", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
   public String dash () throws Exception {
 
     return "dash";

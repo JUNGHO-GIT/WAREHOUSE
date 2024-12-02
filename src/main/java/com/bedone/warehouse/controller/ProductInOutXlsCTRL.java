@@ -41,7 +41,7 @@ public class ProductInOutXlsCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productInOutXls", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productInOutXls", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productInOutXls () throws Exception {
 
     utils.info ("======================productInOutXls============================");

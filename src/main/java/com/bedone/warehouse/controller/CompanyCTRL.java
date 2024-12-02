@@ -38,7 +38,7 @@ public class CompanyCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/company", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/company", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String company () throws Exception {
 
     return "company";

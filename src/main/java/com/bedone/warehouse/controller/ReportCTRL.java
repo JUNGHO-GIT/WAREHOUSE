@@ -34,7 +34,7 @@ public class ReportCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/reportIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/reportIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String reportIn () throws Exception {
 
     utils.info ("======================reportIn============================");
@@ -44,7 +44,7 @@ public class ReportCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/reportOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/reportOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String reportOut () throws Exception {
 
     utils.info ("======================reportOut============================");
@@ -54,7 +54,7 @@ public class ReportCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/reportStock", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/reportStock", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String reportStock () throws Exception {
 
     utils.info ("======================reportStock============================");
@@ -64,7 +64,7 @@ public class ReportCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/reportHouse", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/reportHouse", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String reportHouse () throws Exception {
 
     utils.info ("======================reportHouse============================");

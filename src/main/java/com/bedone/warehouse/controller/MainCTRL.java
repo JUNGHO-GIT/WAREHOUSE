@@ -41,7 +41,7 @@ public class MainCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/main", method= RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/main", method= RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String main (
     HttpServletRequest request,
     HttpSession session,

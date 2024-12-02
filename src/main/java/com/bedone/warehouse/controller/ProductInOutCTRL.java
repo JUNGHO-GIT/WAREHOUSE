@@ -38,7 +38,7 @@ public class ProductInOutCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productIn", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productIn () throws Exception {
 
     utils.info ("======================productIn============================");
@@ -48,7 +48,7 @@ public class ProductInOutCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productOut", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productOut () throws Exception {
 
     utils.info ("======================productOut============================");

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application generated-by="maven" build-tool-version="4.0.0-alpha-10" plugin-version="1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_3.xsd">
+	<classpath>
+		<dir name="E:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/Warehouse_Work/Warehouse/target/classes/">
+      <include name="**/com/**" />
+      <include name="**/mapper/**" />
+		</dir>
+  </classpath>
+	<web>
+		<link target="/">
+      <dir name="E:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/Warehouse_Work/Warehouse/src/main/webapp" />
+    </link>
+  </web>
+</application>

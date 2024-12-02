@@ -39,7 +39,7 @@ public class CommonCdCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/commonCd", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/commonCd", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String commonCd () throws Exception {
 
     return "commonCd";

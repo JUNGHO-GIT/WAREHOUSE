@@ -38,7 +38,7 @@ public class ProductInOutPlanCTRL {
 
   // 0. 제품 입고 예정 ---------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productInPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productInPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productInPlan () throws Exception {
 
     utils.info ("======================productInPlan============================");
@@ -48,7 +48,7 @@ public class ProductInOutPlanCTRL {
 
   // 0. 제품 출고 예정 ---------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productOutPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productOutPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productOutPlan () throws Exception {
 
     utils.info ("======================productOutPlan============================");

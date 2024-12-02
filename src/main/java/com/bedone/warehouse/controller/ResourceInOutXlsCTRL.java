@@ -43,7 +43,7 @@ public class ResourceInOutXlsCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceInOutXls", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceInOutXls", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceInOutXls () throws Exception {
 
     utils.info ("======================resourceInOutXls============================");

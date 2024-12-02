@@ -39,7 +39,7 @@ public class DayOffCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/dayOff", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/dayOff", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String dayOff () throws Exception {
 
     utils.info ("============================dayOff================================");

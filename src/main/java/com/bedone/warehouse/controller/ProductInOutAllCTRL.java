@@ -41,7 +41,7 @@ public class ProductInOutAllCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/productInOutAll", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/productInOutAll", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String productInOutAll () throws Exception {
 
     utils.info ("=========================productInOutAll=============================");

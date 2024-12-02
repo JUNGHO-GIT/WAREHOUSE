@@ -38,7 +38,7 @@ public class ResourceCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resource", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resource", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resource () throws Exception {
 
     utils.info ("======================resource============================");

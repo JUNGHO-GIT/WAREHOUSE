@@ -41,7 +41,7 @@ public class ResourceInOutAllCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceInOutAll", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceInOutAll", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceInOutAll () throws Exception {
 
     utils.info ("=========================resourceInOutAll=============================");

@@ -41,7 +41,7 @@ public class ShipPlanCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/shipPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/shipPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String shipPlan () throws Exception {
 
     utils.info ("======================shipPlan============================");

@@ -43,7 +43,7 @@ public class BomCTRL {
 
   // ---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/bom", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/bom", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String bom (
 
   ) throws Exception {

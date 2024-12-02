@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,12 +41,11 @@ public class UserCTRL {
   @RequestMapping
   (value={"/", "/login"}, method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String login (
-
   ) throws Exception {
 
     utils.info ("======================login============================");
 
-    return "login";
+    return "userLogin";
   }
 
   // ---------------------------------------------------------------------------------------------->
@@ -80,7 +78,7 @@ public class UserCTRL {
 
   //---------------------------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/user", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/user", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String user (
 
   ) throws Exception {

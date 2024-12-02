@@ -38,7 +38,7 @@ public class ResourceInOutPlanCTRL {
 
   // 0. 자재 입고 예정 ---------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceInPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceInPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceInPlan () throws Exception {
 
     utils.info ("======================resourceInPlan============================");
@@ -48,7 +48,7 @@ public class ResourceInOutPlanCTRL {
 
   // 0. 자재 출고 예정 ---------------------------------------------------------------------------->
   @RequestMapping
-  (value="/warehouse/resourceOutPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
+  (value="/resourceOutPlan", method=RequestMethod.GET, produces="text/html;charset=UTF-8")
   public String resourceOutPlan () throws Exception {
 
     utils.info ("======================resourceOutPlan============================");
