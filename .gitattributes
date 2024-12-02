@@ -1,25 +1,16 @@
-# java
+# .gitattributes
+
+* text=auto eol=lf
+
 *.java linguist-language=Java
-
-# jsp
 *.jsp linguist-language=Java
-
-# javascript
 *.js linguist-language=JavaScript
 *.jsx linguist-language=JavaScript
 *.ts linguist-language=TypeScript
 *.tsx linguist-language=TypeScript
-
-# css
 *.css linguist-language=CSS
-
-# xml
 *.xml linguist-language=XML
 *.xsd linguist-language=XML
 *.xsl linguist-language=XML
-
-# sql
 *.sql linguist-language=SQL
-
-# json
 *.json linguist-language=JSON

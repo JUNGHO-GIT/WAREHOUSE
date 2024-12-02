@@ -1,6 +1,12 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "typeRoots": [
+      "./src/main/resources/static/types"
+    ],
+    "types": [
+      "global"
+    ]
   },
   "include": [
     "src/**/*",
