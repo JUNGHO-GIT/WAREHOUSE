@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bedone.warehouse.dao.FilesDAO">
+<mapper namespace="com.warehouse.dao.FilesDAO">
 
-  <select id="listFiles" parameterType="hashmap" resultType="com.bedone.warehouse.container.Files">
+  <select id="listFiles" parameterType="hashmap" resultType="com.warehouse.container.Files">
     /* Files.listFiles */
     <![CDATA[
     SELECT
@@ -39,7 +39,7 @@
    	]]>
   </update>
 
-  <select id="saveFiles" parameterType="com.bedone.warehouse.container.Files" resultType="Integer">
+  <select id="saveFiles" parameterType="com.warehouse.container.Files" resultType="Integer">
     /* Files.saveFiles */
     CALL sp_Files (
       #{fileSeq}, #{tableNm}, #{tableKey}, #{fileUrl}, #{fileNm}, #{flagYN}, #{issueID}

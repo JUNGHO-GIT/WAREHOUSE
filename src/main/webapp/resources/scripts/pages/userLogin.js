@@ -1,14 +1,14 @@
-// 1. 로그인 -------------------------------------------------------------------------------------->
+// 1. 로그인 ---------------------------------------------------------------------------------------
 var fnAuth = function () {
 
   if ($("#uid").val() == "") {
     alert("아이디를 입력해 주세요.");
-    $("#uid").focus();
+    $("#uid").on("focus", function () {});
     return;
   }
   if ($("#pass").val() == "") {
     alert("비밀번호를 입력해 주세요.");
-    $("#pass").focus();
+    $("#pass").on("focus", function () {});
     return;
   }
   if ($("#setId").is(":checked")) {
@@ -42,33 +42,14 @@ var fnAuth = function () {
   });
 };
 
-// 0. 엔터일때만 실행 ----------------------------------------------------------------------------->
-function onKeyDown (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    fnAuth();
-  }
-};
-
-// 0. 에러처리 ------------------------------------------------------------------------------------>
-var ajaxErrorHandler = function (request, status, error) {
-  if (request.status === 477) {
-    alert("세션이 종료 되었습니다.");
-    fnGoPage("reLogin");
-  }
-  else {
-    alert(`code: ${request.status}\n message: ${request.responseText}\n error: ${error}`);
-  }
-};
-
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-$(document).ready(function () {
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
+jQuery(function($) {
   if ($.cookie("uid")) {
     $("#uid").val($.cookie("uid"));
     $("#setId").prop("checked", "checked");
-    $("#pass").focus();
+    $("#pass").on("focus", function () {});
   }
   else {
-    $("#uid").focus();
+    $("#uid").on("focus", function () {});
   }
 });

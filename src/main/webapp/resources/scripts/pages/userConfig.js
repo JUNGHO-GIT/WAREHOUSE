@@ -58,27 +58,27 @@ var fnSaveUserConfigInfo = function () {
 
   if ($("#userConfigNm").val() == "") {
     alert("사용자 이름을 입력해 주세요");
-    $("#userNm").focus();
+    $("#userNm").on("focus", function () {});
     return;
   }
   if ($("#userConfigID").val() == "") {
     alert("사용자 아이디를 입력해 주세요");
-    $("#userID").focus();
+    $("#userID").on("focus", function () {});
     return;
   }
   if ($("#userIDCheck").val() == "N") {
     alert("사용자 아이디 중복 체크를 해주세요.");
-    $("#userID").focus();
+    $("#userID").on("focus", function () {});
     return;
   }
   if ($("#userConfigPw").val() == "") {
     alert("비밀번호를 입력해주세요.");
-    $("#userConfigPw").focus();
+    $("#userConfigPw").on("focus", function () {});
     return;
   }
   if ($("#userConfigLevel").val() == "") {
     alert("회원등급을 선택해 주세요");
-    $("#userConfigLevel").focus();
+    $("#userConfigLevel").on("focus", function () {});
     return;
   }
 
@@ -117,7 +117,6 @@ var fnSaveUserConfigInfo = function () {
 var fnSaveUserConfigTab = function () {
 
   var tabs = fnTabOrder();
-
   var param = {
     "configSeq": $("#configSeq").val() || 0,
     "userConfigID": $("#userConfigID").val(),
@@ -151,7 +150,7 @@ var fnUpdateConfigPw = function() {
   // 비번 입력안한 경우
   if ($("#userConfigPw").val() == "") {
     alert("비밀번호를 입력해주세요.");
-    $("#userConfigPw").focus();
+    $("#userConfigPw").on("focus", function () {});
     return;
   }
 

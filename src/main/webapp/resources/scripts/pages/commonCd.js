@@ -1,4 +1,4 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnGetList01 = function () {
 
   var gridCd = "grid01";
@@ -69,7 +69,7 @@ var fnGetList01 = function () {
   });
 };
 
-// 2. 상세 항목 ----------------------------------------------------------------------------------->
+// 2. 상세 항목 ------------------------------------------------------------------------------------
 var fnShow = function (groupCd, itemCd) {
 
   $.ajax({
@@ -94,7 +94,7 @@ var fnShow = function (groupCd, itemCd) {
   });
 };
 
-// 3. 저장 ---------------------------------------------------------------------------------------->
+// 3. 저장 -----------------------------------------------------------------------------------------
 var fnSave = function (flagYN) {
 
   var flagParam = "";
@@ -106,12 +106,12 @@ var fnSave = function (flagYN) {
     flagParam = "N";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $("#groupCd").focus();
+      $("#groupCd").on("focus", function () {});
       return;
     }
     if (!$("#itemCd").val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $("#itemCd").focus();
+      $("#itemCd").on("focus", function () {});
       return;
     }
     if (!confirm("삭제 하시겠습니까?")) {
@@ -122,17 +122,17 @@ var fnSave = function (flagYN) {
     flagParam = "Y";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $("#groupCd").focus();
+      $("#groupCd").on("focus", function () {});
       return;
     }
     if (!$("#itemCd").val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $("#itemCd").focus();
+      $("#itemCd").on("focus", function () {});
       return;
     }
     if (!$("#itemNm").val()) {
       alert("아이템을 바르게 입력해 주세요");
-      $("#itemNm").focus();
+      $("#itemNm").on("focus", function () {});
       return;
     }
     if (regGroup) {
@@ -140,7 +140,7 @@ var fnSave = function (flagYN) {
         var regSplit = regGroup.split("@");
         if (regSplit.length != 2) {
           alert("그룹코드@그룹명 형태로 등록해주세요");
-          $("#regGroup").focus();
+          $("#regGroup").on("focus", function () {});
           return;
         }
         groupCd = regSplit[0];
@@ -180,12 +180,12 @@ var fnSave = function (flagYN) {
   });
 };
 
-// 4. 삭제 ---------------------------------------------------------------------------------------->
+// 4. 삭제 -----------------------------------------------------------------------------------------
 var fnDel = function () {
   fnSave("N");
 };
 
-// 5-1. 초기화 ------------------------------------------------------------------------------------>
+// 5-1. 초기화 -------------------------------------------------------------------------------------
 var fnReset = function () {
 
   // 공통코드 초기화
@@ -203,7 +203,7 @@ var fnReset = function () {
   $("#grid01").pqGrid("refreshDataAndView");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 --------------------------------------------------->
+// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
 var fnPressGet01 = function (event) {
   if (
     (event.key === "Enter") ||
@@ -216,14 +216,14 @@ var fnPressGet01 = function (event) {
   }
 };
 
-// 0. 그룹 선택시 그룹코드 표시 ------------------------------------------------------------------->
+// 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 var fnChangeList = function () {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 $(document).ready(function() {
   var comboStr = [
     {part:"comCodeGroup", target:"findGroupCd", cd:""},

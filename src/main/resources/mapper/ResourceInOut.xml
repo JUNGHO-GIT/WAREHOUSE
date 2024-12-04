@@ -4,9 +4,9 @@
 <!-- 자재입출고관리(ResourceInOut)의 XML Mapper -->
 <!-- 생성일 : 2021-05-11 13:12:55 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ResourceInOutDAO">
+<mapper namespace="com.warehouse.dao.ResourceInOutDAO">
 
-  <select id="listResourceInOut" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+  <select id="listResourceInOut" parameterType="hashmap" resultType="com.warehouse.container.ResourceInOut">
 		/* ResourceInOut.listResourceInOut */
   	<![CDATA[
 		SELECT
@@ -44,7 +44,7 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
-  <select id="showResourceInOut" parameterType="hashmap" resultType="com.bedone.warehouse.container.ResourceInOut">
+  <select id="showResourceInOut" parameterType="hashmap" resultType="com.warehouse.container.ResourceInOut">
 		/* ResourceInOut.showResourceInOut */
     <![CDATA[
     SELECT
@@ -75,7 +75,7 @@
     ]]>
   </select>
 
-  <select id="saveResourceInOut" parameterType="com.bedone.warehouse.container.ResourceInOut" resultType="Integer">
+  <select id="saveResourceInOut" parameterType="com.warehouse.container.ResourceInOut" resultType="Integer">
     /* ResourceInOut.saveResourceInOut */
     CALL sp_ResourceInOut (
       #{inOutSeq}, #{inOutDt}, #{resrcCd}, #{qty}, #{houseCd}, #{unitPrice}, #{remark}, #{compCd},

@@ -1,4 +1,4 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnGetList01 = function () {
 
   var gridCd = "grid01";
@@ -63,7 +63,7 @@ var fnGetList01 = function () {
   });
 };
 
-// 1-2. 회원등급 ---------------------------------------------------------------------------------->
+// 1-2. 회원등급 -----------------------------------------------------------------------------------
 var fnGetPartsUser = function () {
 
   $("#userPerms").empty();
@@ -85,32 +85,32 @@ var fnGetPartsUser = function () {
 
       for (var i = 0; i < data.length; i++) {
         var detail = data[i];
-        if (i > 0 && oldMenu != detail.menu) {
+        if (i > 0 && oldMenu != detail.page) {
 
-          var space = `<hr class="hr mt-5 mb-5"/>`;
+          var space = `<hr class="hr mt-5px mb-5px"/>`;
 
           $("#userPerms").append(space);
         }
         var userText = `
-          <div class="row mt-10" style="white-space:nowrap;">
-            <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="row mt-10px" style="white-space:nowrap;">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
               ▷ ${detail.pageNm}
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 ml-10px">
               <input
                 type="radio"
                 class="user${i}"
-                name="${detail.menu}${detail.subMenu}"
-                value="${detail.menu}${detail.subMenu}"
+                name="${detail.page}${detail.subPage}"
+                value="${detail.page}${detail.subPage}"
                 onBlur="fnGetPerm();"
               />
               <span>있음</span>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 ml-10px">
               <input
                 type="radio"
                 class="user${i}"
-                name="${detail.menu}${detail.subMenu}"
+                name="${detail.page}${detail.subPage}"
                 value=""
                 onBlur="fnGetPerm();"
                 checked
@@ -121,14 +121,14 @@ var fnGetPartsUser = function () {
         `;
         $("#userPerms").append(userText);
 
-        oldMenu = detail.menu;
+        oldMenu = detail.page;
       }
     },
     error: ajaxErrorHandler
   });
 };
 
-// 1-3. 권한 체크 --------------------------------------------------------------------------------->
+// 1-3. 권한 체크 ----------------------------------------------------------------------------------
 var fnGetPerm = function () {
 
   G_uPerm = "";
@@ -145,7 +145,7 @@ var fnGetPerm = function () {
   }
 };
 
-// 2. 상세 항목 ----------------------------------------------------------------------------------->
+// 2. 상세 항목 ------------------------------------------------------------------------------------
 var fnShow = function (userID) {
 
   $.ajax({
@@ -200,7 +200,7 @@ var fnShow = function (userID) {
   });
 };
 
-// 3-1. 저장 -------------------------------------------------------------------------------------->
+// 3-1. 저장 ---------------------------------------------------------------------------------------
 var fnSave = function (flagYN) {
 
 	var flagParam = "";
@@ -219,27 +219,27 @@ var fnSave = function (flagYN) {
     flagParam = "Y";
     if ($("#userNm").val() == "") {
       alert("사용자 이름을 입력해 주세요");
-      $("#userNm").focus();
+      $("#userNm").on("focus", function () {});
       return;
     }
     if ($("#userID").val() == "") {
       alert("사용자 아이디를 입력해 주세요");
-      $("#userID").focus();
+      $("#userID").on("focus", function () {});
       return;
     }
     if ($("#userIDCheck").val() == "N") {
       alert("사용자 아이디 중복 체크를 해주세요.");
-      $("#userID").focus();
+      $("#userID").on("focus", function () {});
       return;
     }
     if ($("#passwd").val() == "") {
       alert("비밀번호를 입력해 주세요");
-      $("#passwd").focus();
+      $("#passwd").on("focus", function () {});
       return;
     }
     if ($("#uLevel").val() == "") {
       alert("회원등급을 선택해 주세요");
-      $("#uLevel").focus();
+      $("#uLevel").on("focus", function () {});
       return;
     }
   }
@@ -294,12 +294,12 @@ var fnSave = function (flagYN) {
   });
 };
 
-// 3-2. 아이디 중복 체크 -------------------------------------------------------------------------->
+// 3-2. 아이디 중복 체크 ---------------------------------------------------------------------------
 var fnCheckUserID = function () {
 
   if ($("#userID").val() == "") {
     alert("아이디를 바르게 입력해 주세요");
-    $("#userID").focus();
+    $("#userID").on("focus", function () {});
     return;
   }
 
@@ -318,7 +318,7 @@ var fnCheckUserID = function () {
       }
       else {
         alert("이미 사용중인 아이디 입니다.\n 다른 아이디를 입력해 주세요.");
-        $("#userID").focus();
+        $("#userID").on("focus", function () {});
         $("#userIDCheck").val("N");
       }
     },
@@ -326,7 +326,7 @@ var fnCheckUserID = function () {
   });
 };
 
-// 3-3. 비밀번호 변경 ----------------------------------------------------------------------------->
+// 3-3. 비밀번호 변경 ------------------------------------------------------------------------------
 var fnUpdatePw = function() {
 
   var changeFlag = $("#changeFlag").val();
@@ -334,7 +334,7 @@ var fnUpdatePw = function() {
   // 비번 입력안한 경우
   if ($("#passwd").val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $("#passwd").focus();
+    $("#passwd").on("focus", function () {});
     return;
   }
 
@@ -382,12 +382,12 @@ var fnUpdatePw = function() {
 	};
 };
 
-// 4. 삭제 ---------------------------------------------------------------------------------------->
+// 4. 삭제 -----------------------------------------------------------------------------------------
 var fnDel = function () {
   fnSave("N");
 };
 
-// 5-1. 초기화 ------------------------------------------------------------------------------------>
+// 5-1. 초기화 -------------------------------------------------------------------------------------
 var fnReset = function () {
 
   // 권한 초기화
@@ -420,7 +420,7 @@ var fnReset = function () {
   $("#grid01").pqGrid("refreshDataAndView");
 };
 
-// 5-2. 초기화 (비밀번호) ------------------------------------------------------------------------->
+// 5-2. 초기화 (비밀번호) --------------------------------------------------------------------------
 var fnResetPw = function () {
   // row 클릭했을때 `비번변경`버튼 상태 초기화
   $("#passwd").prop("readonly", true);
@@ -429,7 +429,7 @@ var fnResetPw = function () {
   $("#changeFlag").val("N");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 --------------------------------------------------->
+// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
 var fnPressGet01 = function (event) {
   if (
     (event.key === "Enter") ||
@@ -442,14 +442,14 @@ var fnPressGet01 = function (event) {
   }
 };
 
-// 0. 그룹 선택시 그룹코드 표시 ------------------------------------------------------------------->
+// 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 var fnChangeList = function () {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 $(document).ready(function() {
   var comboStr = [{part:"comCode", target:"uLevel", groupCd:"0001", format:"combo"}];
   fnInitCombo(comboStr, function() {

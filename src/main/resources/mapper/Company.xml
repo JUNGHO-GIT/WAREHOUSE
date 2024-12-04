@@ -4,9 +4,9 @@
 <!-- 거래처(Company)의 XML Mapper -->
 <!-- 생성일 : 2021-04-12 10:5:56 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.CompanyDAO">
+<mapper namespace="com.warehouse.dao.CompanyDAO">
 
-  <select id="listCompany" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+  <select id="listCompany" parameterType="hashmap" resultType="com.warehouse.container.Company">
 		/* Company.listCompany */
     <![CDATA[
     SELECT
@@ -34,7 +34,7 @@
 		ORDER BY A.compNm ASC
   </select>
 
-  <select id="showCompany" parameterType="hashmap" resultType="com.bedone.warehouse.container.Company">
+  <select id="showCompany" parameterType="hashmap" resultType="com.warehouse.container.Company">
 		/* Company.showCompany */
     <![CDATA[
     SELECT
@@ -48,7 +48,7 @@
     ]]>
   </select>
 
-  <select id="saveCompany" parameterType="com.bedone.warehouse.container.Company" resultType="Integer">
+  <select id="saveCompany" parameterType="com.warehouse.container.Company" resultType="Integer">
 		/* Company.saveCompany */
 		CALL sp_Company (
       #{compCd}, #{compNm}, #{compNo}, #{owner}, #{major}, #{phone}, #{taxEmail}, #{address},

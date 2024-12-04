@@ -2,7 +2,7 @@
 <html>
 <head>
 <!--jQuery dependencies-->
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css" />    
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
@@ -36,15 +36,15 @@ $(function () {
         { rank: 19, company: 'Crédit Agricole', revenues: '110764.6', profits: '7434.3' },
         { rank: 20, company: 'American Intl. Group', revenues: '108905.0', profits: '10477.0' }
     ];
-    var obj = { 
-        width: 700, 
-        height: 400, 
+    var obj = {
+        width: 700,
+        height: 400,
         numberCell:{resizable:true,title:"#",width:30,minWidth:30},
 	editor: {type: 'textbox'},
         title: "ParamQuery Grid with JSON Data",
         resizable:true,
         scrollModel:{autoFit:true, theme:true},
-        draggable:true 
+        draggable:true
     };
     obj.colModel = [
         { title: "Rank", width: 100, dataType: "integer", dataIndx: "rank" },
@@ -55,11 +55,11 @@ $(function () {
     obj.dataModel = { data: data };
     $("#grid_json").pqGrid(obj);
 });
-        
-</script>    
+
+</script>
 </head>
 <body>
 <div id="grid_json" style="margin:100px;"></div>
-</body>
+</section>
 
 </html>

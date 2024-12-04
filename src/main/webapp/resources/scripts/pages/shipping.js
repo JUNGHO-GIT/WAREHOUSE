@@ -1,4 +1,4 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnGetList01 = function () {
 
   var gridCd = "grid01";
@@ -94,7 +94,7 @@ var fnGetList01 = function () {
   });
 };
 
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnGetList02 = function () {
 
   var gridCd = "grid02";
@@ -149,7 +149,7 @@ var fnGetList02 = function () {
   $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
 };
 
-// 3-1. 저장 -------------------------------------------------------------------------------------->
+// 3-1. 저장 ---------------------------------------------------------------------------------------
 var fnSaveItems = function () {
 
   var getData = $("#grid02").pqGrid("getData");
@@ -161,27 +161,27 @@ var fnSaveItems = function () {
   }
   if ($("#comp").val() == "") {
     alert("거래처를 입력해 주세요.");
-    $("#compNm").focus();
+    $("#compNm").on("focus", function () {});
     return;
   }
   if ($("#toMajor").val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $("#toMajor").focus();
+    $("#toMajor").on("focus", function () {});
     return;
   }
   if ($("#toPhone").val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $("#toPhone").focus();
+    $("#toPhone").on("focus", function () {});
     return;
   }
   if ($("#shipDt").val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $("#shipDt").focus();
+    $("#shipDt").on("focus", function () {});
     return;
   }
   if ($("#shipMajor").val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $("#shipMajor").focus();
+    $("#shipMajor").on("focus", function () {});
     return;
   }
   if (!confirm("출하 하시겠습니까?")) {
@@ -236,7 +236,7 @@ var fnSaveItems = function () {
   });
 };
 
-// 3-1. 계획 저장 --------------------------------------------------------------------------------->
+// 3-1. 계획 저장 ----------------------------------------------------------------------------------
 var fnSavePlan = function () {
 
   var getData = $("#grid02").pqGrid("getData");
@@ -248,27 +248,27 @@ var fnSavePlan = function () {
   }
   if ($("#comp").val() == "") {
     alert("거래처를 입력해 주세요.");
-    $("#compNm").focus();
+    $("#compNm").on("focus", function () {});
     return;
   }
   if ($("#toMajor").val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $("#toMajor").focus();
+    $("#toMajor").on("focus", function () {});
     return;
   }
   if ($("#toPhone").val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $("#toPhone").focus();
+    $("#toPhone").on("focus", function () {});
     return;
   }
   if ($("#shipDt").val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $("#shipDt").focus();
+    $("#shipDt").on("focus", function () {});
     return;
   }
   if ($("#shipMajor").val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $("#shipMajor").focus();
+    $("#shipMajor").on("focus", function () {});
     return;
   }
   if (!confirm("출하 계획을 등록 하시겠습니까?")) {
@@ -315,12 +315,12 @@ var fnSavePlan = function () {
   });
 };
 
-// 4. 삭제 ---------------------------------------------------------------------------------------->
+// 4. 삭제 -----------------------------------------------------------------------------------------
 var fnDelProd = function (rowIdx) {
   $("#grid02").pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
-// 5-1. 초기화 ------------------------------------------------------------------------------------>
+// 5-1. 초기화 -------------------------------------------------------------------------------------
 var fnReset = function () {
 
   var curDate = fnToday();
@@ -343,14 +343,14 @@ var fnReset = function () {
   $("#grid02").pqGrid("refreshDataAndView");
 };
 
-// 5-2. 초기화 (검색시) --------------------------------------------------------------------------->
+// 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
 var fnResetWhenSearch = function () {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 --------------------------------------------------->
+// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
 var fnPressGet01 = function (event) {
   if (
     (event.key === "Enter") ||
@@ -363,15 +363,15 @@ var fnPressGet01 = function (event) {
   }
 };
 
-// 0. 그룹 선택시 그룹코드 표시 ------------------------------------------------------------------->
+// 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 var fnChangeList = function () {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-$(document).ready(function () {
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
+jQuery(function($) {
   var curDate = fnToday();
   var pastDate = fnDateAdd(curDate, -30);
   $("#shipDt").datepicker(G_calendar);

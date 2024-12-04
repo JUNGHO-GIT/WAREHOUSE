@@ -4,9 +4,9 @@
 <!-- 제품 Excel(ProductXls)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ProductXlsDAO">
+<mapper namespace="com.warehouse.dao.ProductXlsDAO">
 
-  <select id="saveProductXls" parameterType="com.bedone.warehouse.container.Product" resultType="com.bedone.warehouse.container.Product">
+  <select id="saveProductXls" parameterType="com.warehouse.container.Product" resultType="com.warehouse.container.Product">
   /* ProductXls.saveProductXls */
   CALL sp_ProductXls (
     #{prodNm}, #{prodType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},

@@ -1,4 +1,4 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnGetList01 = function () {
 
   var gridCd = "grid01";
@@ -134,12 +134,12 @@ var fnGetList01 = function () {
       // 2. title에 안전재고 이하 갯수 표시
       obj.title = `
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 d-left">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
           <span>자재 관리</span>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 d-right ms-n50">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-right ml-n50px">
           <span class="fsr-1.4 red">●</span>
-          <span class="ms-5 me-5">안전재고 이하 : </span>
+          <span class="ml-5px mr-5px">안전재고 이하 : </span>
           <span class="red">${obj.calcLowStock(myJsonData)}</span>
         </div>
       </div>
@@ -163,7 +163,7 @@ var fnGetList01 = function () {
   });
 };
 
-// 2. 상세 항목 ----------------------------------------------------------------------------------->
+// 2. 상세 항목 ------------------------------------------------------------------------------------
 var fnShow = function (resrcCd) {
 
   $.ajax({
@@ -208,7 +208,7 @@ var fnShow = function (resrcCd) {
   });
 };
 
-// 3. 저장 ---------------------------------------------------------------------------------------->
+// 3. 저장 -----------------------------------------------------------------------------------------
 var fnSave = function (flagYN) {
 
   var flagParam = "";
@@ -227,32 +227,32 @@ var fnSave = function (flagYN) {
     flagParam = "Y";
     if ($("#resrcNm").val() == "") {
       alert("자재 이름을 입력해 주세요.");
-      $("#resrc").focus();
+      $("#resrc").on("focus", function () {});
       return;
     }
     if ($("#resrcType").val() == "") {
       alert("자재 분류를 입력해 주세요.");
-      $("#resrcNm").focus();
+      $("#resrcNm").on("focus", function () {});
       return;
     }
     if ($("#comp").val() == "") {
       alert("거래처를 입력해 주세요.");
-      $("#comp").focus();
+      $("#comp").on("focus", function () {});
       return;
     }
     if ($("#house").val() == "") {
       alert("창고를 입력해 주세요.");
-      $("#house").focus();
+      $("#house").on("focus", function () {});
       return;
     }
     if ($("#protectedQty").val() == "" || $("#protectedQty").val() == "0") {
       alert("안전재고를 입력해 주세요.");
-      $("#protectedQty").focus();
+      $("#protectedQty").on("focus", function () {});
       return;
     }
     if ($("#unitPrice").val() == "" || $("#unitPrice").val() == "0") {
       alert("표준단가를 입력해 주세요.");
-      $("#unitPrice").focus();
+      $("#unitPrice").on("focus", function () {});
       return;
     }
   }
@@ -293,12 +293,12 @@ var fnSave = function (flagYN) {
   });
 };
 
-// 4. 삭제 ---------------------------------------------------------------------------------------->
+// 4. 삭제 -----------------------------------------------------------------------------------------
 var fnDel = function () {
   fnSave("N");
 };
 
-// 5-1. 초기화 ------------------------------------------------------------------------------------>
+// 5-1. 초기화 -------------------------------------------------------------------------------------
 var fnReset = function () {
 
   // 자재 초기화
@@ -341,7 +341,7 @@ var fnReset = function () {
   fnShowFiles("tblResource", "0", "files");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 --------------------------------------------------->
+// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
 var fnPressGet01 = function (event) {
   if (
     (event.key === "Enter") ||
@@ -354,15 +354,15 @@ var fnPressGet01 = function (event) {
   }
 };
 
-// 0. 그룹 선택시 그룹코드 표시 ------------------------------------------------------------------->
+// 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 var fnChangeList = function () {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-$(document).ready(function () {
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
+jQuery(function($) {
   var comboStr = [{part: "comCode", target: "resrcType", groupCd: "0003", format: "combo"}];
   fnInitCombo (comboStr, function () {
     fnGetList01();

@@ -4,7 +4,7 @@
 <!-- 보고서(Report)의 XML Mapper -->
 <!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ReportDAO">
+<mapper namespace="com.warehouse.dao.ReportDAO">
 
   <select id="listReportProdIn" parameterType="hashmap" resultType="hashmap">
     /* Report.listReportProdIn */

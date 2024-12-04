@@ -4,9 +4,9 @@
 <!-- 창고관리(House)의 XML Mapper -->
 <!-- 생성일 : 2021-05-01 19:14:54 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.HouseDAO">
+<mapper namespace="com.warehouse.dao.HouseDAO">
 
-  <select id="listHouse" parameterType="hashmap" resultType="com.bedone.warehouse.container.House">
+  <select id="listHouse" parameterType="hashmap" resultType="com.warehouse.container.House">
     /* House.listHouse*/
     <![CDATA[
     SELECT
@@ -105,7 +105,7 @@
       G.resrcCd, A.houseCd
   </select>
 
-  <select id="saveHouse" parameterType="com.bedone.warehouse.container.House" resultType="hashmap">
+  <select id="saveHouse" parameterType="com.warehouse.container.House" resultType="hashmap">
     /* House.saveHouse*/
     CALL sp_House (
       #{houseCd}, #{houseNm}, #{parentsHCd}, #{houseOrder}, #{flagYN}, #{issueID}

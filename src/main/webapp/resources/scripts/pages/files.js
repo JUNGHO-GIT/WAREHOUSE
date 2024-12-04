@@ -1,4 +1,4 @@
-// 1-1. 파일 업로드 (일반) ------------------------------------------------------------------------>
+// 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
 var fnUploadFiles = function (formParam) {
 
   var fileUploadForm = formParam;
@@ -11,12 +11,12 @@ var fnUploadFiles = function (formParam) {
 
   if (!$("#userFile").val()) {
     alert("파일을 먼저 선택해 주세요");
-    $("#userFile").focus();
+    $("#userFile").on("focus", function () {});
     return;
   }
   if (fileExt != "jpg" && fileExt != "JPG" && fileExt != "png" && fileExt != "PNG") {
     alert("등록 불가능한 파일입니다. JPG, PNG 파일만 등록 가능합니다.");
-    $("#userFile").focus();
+    $("#userFile").on("focus", function () {});
     return;
   }
   $("#fileUpBtn").html("ing..");
@@ -52,7 +52,7 @@ var fnUploadFiles = function (formParam) {
   });
 };
 
-// 1-2. 파일 업로드 (WAR) ------------------------------------------------------------------------->
+// 1-2. 파일 업로드 (WAR) --------------------------------------------------------------------------
 var fnUploadWarFiles = function (formParam) {
 
   var fileUploadForm = formParam;
@@ -62,12 +62,12 @@ var fnUploadWarFiles = function (formParam) {
 
   if (!$("#userFile").val()) {
     alert("파일을 먼저 선택해 주세요");
-    $("#userFile").focus();
+    $("#userFile").on("focus", function () {});
     return;
   }
   if (fileExt != "war" && fileExt != "WAR") {
     alert("등록 불가능한 파일입니다. WAR 파일만 등록 가능합니다.");
-    $("#userFile").focus();
+    $("#userFile").on("focus", function () {});
     return;
   }
   $("#fileUpBtn").html("ing..");
@@ -89,7 +89,7 @@ var fnUploadWarFiles = function (formParam) {
   });
 };
 
-// 2-1. 특정항목의 파일 리스트 -------------------------------------------------------------------->
+// 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
 var fnShowFiles = function (tableNm, tableKey, target) {
   var imgStyle = "cursor:pointer; margin-left:2px; border-radius:30%;";
   var imgFile = [".jpg", ".JPG", ".png", ".PNG"];
@@ -150,7 +150,7 @@ var fnShowFiles = function (tableNm, tableKey, target) {
   });
 };
 
-// 2-2. 리스트 이미지 클릭시 표시 ----------------------------------------------------------------->
+// 2-2. 리스트 이미지 클릭시 표시 ------------------------------------------------------------------
 var fnShowSelectedFiles = function(fileUrl, rowId) {
 
   var imgUrl = "viewFiles?fileUrl=" + fileUrl;
@@ -162,19 +162,19 @@ var fnShowSelectedFiles = function(fileUrl, rowId) {
   currentSelectedRow = rowId;
 };
 
-// 2-3. 리스트 이미지 클릭시 팝업 ----------------------------------------------------------------->
+// 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
 var fnPopupImage = function (fileUrl) {
   var valUrl = "viewFiles?fileUrl=" + fileUrl;
   window.open(valUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
 };
 
-// 3. 파일 다운로드 ------------------------------------------------------------------------------->
+// 3. 파일 다운로드 --------------------------------------------------------------------------------
 var fnDownloadFiles = function (fileUrl) {
   var valUrl = "/downloadFiles?fileUrl=" + fileUrl;
   window.location = valUrl;
 };
 
-// 4. 파일 삭제 ----------------------------------------------------------------------------------->
+// 4. 파일 삭제 ------------------------------------------------------------------------------------
 var fnDeleteFiles = function (fileSeq, fileUrl, fileNm) {
 
   if (!confirm("업로드된 파일을 삭제 하시겠습니까?")) {
@@ -221,15 +221,4 @@ var fnDeleteFiles = function (fileSeq, fileUrl, fileNm) {
     },
     error: ajaxErrorHandler
   });
-};
-
-// 0. 에러처리 ------------------------------------------------------------------------------------>
-var ajaxErrorHandler = function (request, status, error) {
-  if (request.status === 477) {
-    alert("세션이 종료 되었습니다.");
-    fnGoPage("reLogin");
-  }
-  else {
-    alert(`code: ${request.status}\n message: ${request.responseText}\n error: ${error}`);
-  }
 };

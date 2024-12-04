@@ -4,9 +4,9 @@
 <!-- 제품 입출고 Excel(ProductInOutXls)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ProductInOutXlsDAO">
+<mapper namespace="com.warehouse.dao.ProductInOutXlsDAO">
 
-  <select id="saveProductInOutXls" parameterType="com.bedone.warehouse.container.ProductInOut" resultType="com.bedone.warehouse.container.ProductInOut">
+  <select id="saveProductInOutXls" parameterType="com.warehouse.container.ProductInOut" resultType="com.warehouse.container.ProductInOut">
     /* ProductInOutXls.saveProductInOutXls */
     CALL sp_ProductInOutXls (
       #{inOutDt}, #{prodCd}, #{qty}, #{compCd}, #{houseCd}, #{unitPrice}, #{remark},

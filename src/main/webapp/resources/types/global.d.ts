@@ -1,7 +1,7 @@
 // global.d.ts
 
-// jquery
-declare var $: any;
+// jQuery
+declare var $: JQueryStatic;
 
 // daum
 declare var daum: any;

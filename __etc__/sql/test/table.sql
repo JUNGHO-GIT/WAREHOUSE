@@ -393,14 +393,14 @@ DROP TABLE IF EXISTS `tblSysMenu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblSysMenu` (
-  `menu` varchar(1) DEFAULT '',
-  `subMenu` varchar(3) DEFAULT '',
-  `parentsMenu` varchar(4) DEFAULT '',
+  `page` varchar(1) DEFAULT '',
+  `subPage` varchar(3) DEFAULT '',
+  `parentsPage` varchar(4) DEFAULT '',
   `pageUrl` varchar(50) DEFAULT '',
   `pageNm` varchar(50) DEFAULT '',
   `pageIcon` varchar(50) DEFAULT '',
-  `menuOrder` int(11) DEFAULT '0',
-  `menuNo` int(11) DEFAULT '0',
+  `pageOrder` int(11) DEFAULT '0',
+  `pageNo` int(11) DEFAULT '0',
   `flagYN` varchar(1) DEFAULT 'Y',
   `issueID` varchar(20) DEFAULT '',
   `regDate` datetime DEFAULT NULL,

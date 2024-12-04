@@ -4,7 +4,7 @@
 <!-- 출하 계획 관리 (ShipPlan) -->
 <!-- 생성일 : 2021-05-22 10:5:56 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ShipPlanDAO">
+<mapper namespace="com.warehouse.dao.ShipPlanDAO">
 
   <select id="listShipPlan" parameterType="hashmap" resultType="hashmap">
     /* ShipPlan.listShipPlan */
@@ -111,7 +111,7 @@
       A.shipDt DESC
   </select>
 
-  <select id="saveShipPlan" parameterType="com.bedone.warehouse.container.Shipping">
+  <select id="saveShipPlan" parameterType="com.warehouse.container.Shipping">
     /* ShipPlan.saveShipPlan */
     CALL sp_Shipping (
       #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},

@@ -4,7 +4,7 @@
 <!-- 출고 현황 (출하) (Shipping) -->
 <!-- 생성일 : 2021-04-12 10:5:56 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.ShippingDAO">
+<mapper namespace="com.warehouse.dao.ShippingDAO">
 
   <select id="listShipping" parameterType="hashmap" resultType="hashmap">
 		/* Shipping.listShipping */
@@ -29,7 +29,7 @@
       A.inOutDt DESC
   </select>
 
-  <select id="saveShipping" parameterType="com.bedone.warehouse.container.Shipping">
+  <select id="saveShipping" parameterType="com.warehouse.container.Shipping">
     /* Shipping.saveShipping */
     CALL sp_Shipping (
       #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},

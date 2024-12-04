@@ -4,9 +4,9 @@
 <!-- 휴무관리(DayOff)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.DayOffDAO">
+<mapper namespace="com.warehouse.dao.DayOffDAO">
 
-  <select id="getUser" resultType="com.bedone.warehouse.container.DayOff" >
+  <select id="getUser" resultType="com.warehouse.container.DayOff" >
     /* DayOff.getUser */
     SELECT
       userID, userNm
@@ -16,7 +16,7 @@
       flagYN = 'Y'
   </select>
 
-  <select id="getList" resultType="com.bedone.warehouse.container.DayOff">
+  <select id="getList" resultType="com.warehouse.container.DayOff">
     /* DayOff.getList */
     SELECT
       A.offDate, A.restCnt, A.offSeq, B.userNm,
@@ -35,7 +35,7 @@
     </if>
   </select>
 
-  <select id="showDayOff" resultType="com.bedone.warehouse.container.DayOff">
+  <select id="showDayOff" resultType="com.warehouse.container.DayOff">
     /* DayOff.showDayOff */
     SELECT
       offDate, userID, offSeq

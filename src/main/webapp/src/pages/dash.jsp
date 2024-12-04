@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="true" %>
 
 <!DOCTYPE html>
 <html class="bg-cover-5">
 
-  <!-- head --------------------------------------------------------------------------------------->
+  <!-- head ----------------------------------------------------------------------------------------
   <head lang="en, ko">
     <title>warehouse dash</title>
 
@@ -58,13 +57,13 @@
     </style>
   </head>
 
-  <!-- body --------------------------------------------------------------------------------------->
+  <!-- body ----------------------------------------------------------------------------------------
   <body class="theme-cyan">
     <div id="app" class="app">
       <div id="content" class="" style="margin: 1.3%">
         <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
 
-        <!-- header ------------------------------------------------------------------------------->
+        <!-- header --------------------------------------------------------------------------------
         <div id="header" class="app-header">
           <a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade">
             <i class="fa fa-arrow-up"></i>
@@ -85,11 +84,11 @@
         </div>
         <!-- /.header -->
 
-        <!-- row 1 -------------------------------------------------------------------------------->
+        <!-- row 1 ---------------------------------------------------------------------------------
         <div class="row" data-masonry='{"percentPosition":true}'>
 
           <!-- col 1 -->
-          <div class="col-xl-4 col-lg-6 mb-4" style="height: 21.5rem">
+          <div class="col-xl-4 col-lg-6 mb-4px" style="height: 21.5rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
                 <div class="d-flex fw-bold small">
@@ -108,7 +107,7 @@
                 <div class="row">
                   <div class="col-12 float-sm-start">
                     <div class="row align-items-center">
-                      <h5 class="mb-0">
+                      <h5 class="mb-0px">
                         <small class="fw-600 ms-auto" style="font-size: 40px">
                           <span class="prodInTodayQty"></span>
                           <span class="prodInPlanTodayQty d-none"></span>
@@ -138,7 +137,7 @@
           <!-- /.col 1 -->
 
           <!-- col 2 -->
-          <div class="col-xl-4 col-lg-6 mb-4" style="height: 21.5rem">
+          <div class="col-xl-4 col-lg-6 mb-4px" style="height: 21.5rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
                 <div class="d-flex fw-bold small">
@@ -157,7 +156,7 @@
                 <div class="row">
                   <div class="col-12 float-sm-start">
                     <div class="row align-items-center">
-                      <h5 class="mb-0">
+                      <h5 class="mb-0px">
                         <small class="fw-600 ms-auto" style="font-size: 40px">
                           <span class="prodOutTodayQty"></span>
                           <span class="prodOutPlanTodayQty d-none"></span>
@@ -187,7 +186,7 @@
           <!-- /.col 2 -->
 
           <!-- col 3 -->
-          <div class="col-xl-4 col-lg-6 mb-4" style="height: 21.5rem">
+          <div class="col-xl-4 col-lg-6 mb-4px" style="height: 21.5rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
                 <div class="d-flex fw-bold small">
@@ -206,7 +205,7 @@
                 <div class="row">
                   <div class="col-12 float-sm-start">
                     <div class="row align-items-center">
-                      <h5 class="mb-0">
+                      <h5 class="mb-0px">
                         <small class="fw-600 ms-auto" style="font-size: 40px">
                           <span class="shipTodayQty"></span>
                           <span class="shipPlanTodayQty d-none"></span>
@@ -238,10 +237,10 @@
         </div>
         <!-- /.row 1 -->
 
-        <!-- row 2 ------------------------------------------------------------------------------>
+        <!-- row 2 -------------------------------------------------------------------------------
         <div class="row" data-masonry='{"percentPosition":true}'>
           <!-- col 1 -->
-          <div class="col-xl-3 col-lg-3 mb-4" style="height: 15rem">
+          <div class="col-xl-3 col-lg-3 mb-4px" style="height: 15rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
                 <div class="d-flex fw-bold small">
@@ -260,7 +259,7 @@
                 <div class="row">
                   <div class="col-12 float-sm-start">
                     <div class="row align-items-center">
-                      <h5 class="mb-0">
+                      <h5 class="mb-0px">
                         <small class="fw-600 ms-auto" style="font-size: 40px">
                           <span class="prodInPieWeekQty"></span>
                           <span class="prodInPlanPieWeekQty d-none"></span>
@@ -295,7 +294,7 @@
           <!-- /.col 1 -->
 
           <!-- col 2 -->
-          <div class="col-xl-3 col-lg-3 mb-4" style="height: 15rem">
+          <div class="col-xl-3 col-lg-3 mb-4px" style="height: 15rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
                 <div class="d-flex fw-bold small">
@@ -314,7 +313,7 @@
                 <div class="row">
                   <div class="col-12 float-sm-start">
                     <div class="row align-items-center">
-                      <h5 class="mb-0">
+                      <h5 class="mb-0px">
                         <small class="fw-600 ms-auto" style="font-size: 40px">
                           <span class="prodOutPieWeekQty"></span>
                           <span class="prodOutPlanPieWeekQty d-none"></span>
@@ -349,10 +348,10 @@
           <!-- /.col 2 -->
 
           <!-- col 3 -->
-          <div class="col-xl-6 col-lg-6 mb-4" style="height: 15rem">
+          <div class="col-xl-6 col-lg-6 mb-4px" style="height: 15rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
-                <div class="d-flex fw-bold small mb-3">
+                <div class="d-flex fw-bold small mb-3px">
                   <span class="flex-grow-1 fs-14px">
                     안전 재고 알림
                   </span>
@@ -379,13 +378,13 @@
         </div>
         <!-- /.row 2 -->
 
-        <!-- row 3 ------------------------------------------------------------------------------>
+        <!-- row 3 -------------------------------------------------------------------------------
         <div class="row" data-masonry='{"percentPosition":true}'>
           <!-- col 1 -->
-          <div class="col-xl-6 col-lg-6 mb-4" style="height: 20rem">
+          <div class="col-xl-6 col-lg-6 mb-4px" style="height: 20rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
+                <div class="d-flex align-items-center mb-2px">
                   <div class="flex-fill fw-bold fs-14px">주간 입고 현황</div>
                   <a href="#" class="text-decoration-none text-white text-opacity-50">
                     View report
@@ -428,10 +427,10 @@
           <!-- /.col 1 -->
 
           <!-- col 2 -->
-          <div class="col-xl-6 col-lg-6 mb-4" style="height: 20rem">
+          <div class="col-xl-6 col-lg-6 mb-4px" style="height: 20rem">
             <div class="card" style="height: 100%">
               <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
+                <div class="d-flex align-items-center mb-2px">
                   <div class="flex-fill fw-bold fs-14px">주간 출고 현황</div>
                   <a href="#" class="text-decoration-none text-white text-opacity-50">
                     View report
@@ -483,7 +482,7 @@
       © 2023 CORES Inc. All Right Reserved
     </div>
 
-  </body>
+  </section>
   <!-- /.body -->
 </html>
 <!-- /.html -->

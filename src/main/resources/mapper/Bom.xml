@@ -4,9 +4,9 @@
 <!-- Bom관리(Bom)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.BomDAO">
+<mapper namespace="com.warehouse.dao.BomDAO">
 
-  <select id="listBom" parameterType="hashmap" resultType="com.bedone.warehouse.container.Product">
+  <select id="listBom" parameterType="hashmap" resultType="com.warehouse.container.Product">
     <![CDATA[
     SELECT
       B.*,
@@ -39,7 +39,7 @@
     </if>
   </select>
 
-  <select id="showBom" parameterType="hashmap" resultType="com.bedone.warehouse.container.Resource">
+  <select id="showBom" parameterType="hashmap" resultType="com.warehouse.container.Resource">
     /* Bom.showBom */
     <![CDATA[
     SELECT
@@ -84,7 +84,7 @@
     ORDER BY B.resrcNm
   </select>
 
-  <select id="saveBom" parameterType="com.bedone.warehouse.container.Bom" resultType="Integer">
+  <select id="saveBom" parameterType="com.warehouse.container.Bom" resultType="Integer">
 		/* Bom.saveBom*/
 		CALL sp_Bom (
       #{prodCd}, #{resrcCd}, #{bomType}, #{qty}, #{unitQty}, #{flagYN}, #{issueID}

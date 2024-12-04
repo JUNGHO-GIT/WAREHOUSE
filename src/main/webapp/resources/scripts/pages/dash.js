@@ -1,4 +1,4 @@
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
@@ -28,7 +28,7 @@ var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
 
       var htmlContent = todayList.map(function(item) {
         return `
-          <div class="row mb-2">
+          <div class="row mb-2px">
             <div class="col-6">
               <div>${item.prodNm}</div>
               <div class="small text-white text-opacity-50">${item.sessionCnt} session</div>
@@ -59,7 +59,7 @@ var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnPie = function (keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
@@ -151,7 +151,7 @@ var fnPie = function (keyParam, inOutParam, planParam, dateParam) {
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnProdInChartWeek = function () {
 
   var inChart = AmCharts.makeChart("prodInChartWeek", {
@@ -288,7 +288,7 @@ var fnProdInChartWeek = function () {
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnProdOutChartWeek = function () {
 
   var outChart = AmCharts.makeChart("prodOutChartWeek", {
@@ -423,7 +423,7 @@ var fnProdOutChartWeek = function () {
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnProdProtected = function () {
   $.ajax({
     url: "act/prodProtected",
@@ -440,8 +440,8 @@ var fnProdProtected = function () {
 
         listData.forEach(function (item, index) {
           var iconClass = index % 2 === 0
-          ? "bi bi-circle-fill fs-6px text-theme me-2"
-          : "bi bi-circle-fill fs-6px text-white-transparent-3 me-2";
+          ? "bi bi-circle-fill fs-6px text-theme mr-2px"
+          : "bi bi-circle-fill fs-6px text-white-transparent-3 mr-2px";
 
           htmlContent += `
             <tr>
@@ -473,7 +473,7 @@ var fnProdProtected = function () {
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnSwitchSpan = function (keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
@@ -531,7 +531,7 @@ var fnSwitchSpan = function (keyParam, inOutParam, planParam, dateParam) {
   }
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 var fnSwitchPie = function (keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
@@ -589,8 +589,8 @@ var fnSwitchPie = function (keyParam, inOutParam, planParam, dateParam) {
   }
 };
 
-// ------------------------------------------------------------------------------------------------>
-$(document).ready(function () {
+// -------------------------------------------------------------------------------------------------
+jQuery(function($) {
   /* fnInOutChart("prod", "In", "", "Today");
   fnInOutChart("prod", "In", "Plan", "Today");
   fnInOutChart("prod", "Out", "", "Today");

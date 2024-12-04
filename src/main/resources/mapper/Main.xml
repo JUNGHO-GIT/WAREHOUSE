@@ -4,32 +4,32 @@
 <!-- 메인(Main)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.bedone.warehouse.dao.MainDAO">
+<mapper namespace="com.warehouse.dao.MainDAO">
 
   <select id="listMain" parameterType="hashmap" resultType="hashmap">
     /* Main.listMain */
     <![CDATA[
     SELECT
-      menu, subMenu, parentsMenu, pageUrl, pageNm, pageIcon, menuOrder,
-      CASE WHEN menuNo < 10 THEN CONCAT('0', menuNo) ELSE menuNo END menuNo,
-      CONCAT(menu, subMenu) findMenu
+      page, subPage, parentsPage, pageUrl, pageNm, pageIcon, pageOrder,
+      CASE WHEN pageNo < 10 THEN CONCAT('0', pageNo) ELSE pageNo END pageNo,
+      CONCAT(page, subPage) findMenu
     FROM
     	tblSysMenu
     WHERE
     	flagYN = 'Y'
     ]]>
     ORDER BY
-    	menuOrder
+    	pageOrder
   </select>
 
   <select id="listSysMenu" parameterType="hashmap" resultType="hashmap">
 	  /* Main.listSysMenu */
 	  SELECT
-      menu, pageUrl, pageNm, pageIcon, menuOrder, menuNo
+      page, pageUrl, pageNm, pageIcon, pageOrder, pageNo
     FROM
       tblSysMenu
 	  WHERE
-      flagYN = 'Y' AND subMenu!='00' AND pageUrl IN (${pageNm})
+      flagYN = 'Y' AND subPage!='00' AND pageUrl IN (${pageNm})
   </select>
 
 </mapper>

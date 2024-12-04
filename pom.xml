@@ -7,14 +7,14 @@
 >
   <!-- metadata -->
   <name>WAREHOUSE</name>
-  <groupId>com.bedone</groupId>
-  <artifactId>wms</artifactId>
+  <groupId>com.warehouse</groupId>
+  <artifactId>WAREHOUSE</artifactId>
   <packaging>war</packaging>
   <modelVersion>4.0.0</modelVersion>
   <version>1.0.0-BUILD-SNAPSHOT</version>
   <!-- properties -->
   <properties>
-    <org.springframework-version>4.3.28.RELEASE</org.springframework-version>
+    <org.springframework-version>4.3.14.RELEASE</org.springframework-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <org.slf4j-version>1.7.30</org.slf4j-version>
@@ -132,8 +132,8 @@
     </dependency>
     <!-- mysql -->
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
       <version>8.0.33</version>
     </dependency>
     <!-- mybatis -->
@@ -168,12 +168,6 @@
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jdk8</artifactId>
       <version>2.13.0</version>
-    </dependency>
-    <!-- gson -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.9.1</version>
     </dependency>
     <dependency>
       <groupId>cglib</groupId>

@@ -1,8 +1,8 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 var fnShowExcel = function (body) {
 
   var gridCd = "grid01";
-  var inputBox = `<input class="mt-5" type="checkbox" id="allCheck" onClick="fnSelectAll()" />`;
+  var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onClick="fnSelectAll()" />`;
 
   var obj = {
     numberCell:{show:true, resizable:false, width:30},
@@ -90,7 +90,7 @@ var fnShowExcel = function (body) {
   $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
 };
 
-// 1-2. 전부 선택 --------------------------------------------------------------------------------->
+// 1-2. 전부 선택 ----------------------------------------------------------------------------------
 var fnSelectAll = function () {
 
   var getData = $("#grid01").pqGrid("getData");
@@ -121,7 +121,7 @@ var fnSelectAll = function () {
   }
 };
 
-// 3. 저장 ---------------------------------------------------------------------------------------->
+// 3. 저장 -----------------------------------------------------------------------------------------
 var fnSave = function() {
 
   // 데이터 불러오기
@@ -206,7 +206,7 @@ var fnSave = function() {
   });
 };
 
-// 5. 초기화 ------------------------------------------------------------------------------------->
+// 5. 초기화 --------------------------------------------------------------------------------------
 var fnReset = function () {
   // 파일 초기화
   $("#productInOutXls").val("");
@@ -215,7 +215,7 @@ var fnReset = function () {
   $("#grid01").pqGrid("refreshDataAndView");
 };
 
-// 0. 엑셀 업로드 --------------------------------------------------------------------------------->
+// 0. 엑셀 업로드 ----------------------------------------------------------------------------------
 var fnFilePicked = function (oEvent) {
 
   var oFile = oEvent.target.files[0];
@@ -260,14 +260,14 @@ var fnFilePicked = function (oEvent) {
   reader.readAsBinaryString(oFile);
 };
 
-// 0. 엑셀 다운로드 ------------------------------------------------------------------------------->
+// 0. 엑셀 다운로드 --------------------------------------------------------------------------------
 var fnExDownload = function () {
   var fileUrl = "productInOut_Xls_sample.xls";
   window.location = "/downloadFiles?fileUrl="+fileUrl;
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-$(document).ready(function () {
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
+jQuery(function($) {
   fnShowExcel();
   var oFileIn = document.getElementById("productInOutXls");
   if (oFileIn.addEventListener) {
