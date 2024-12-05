@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function (pCd) {
+function fnGetList01 (pCd) {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
   var filter = function (treeId, parentNode, childNodes) {
     if (!childNodes) {
@@ -43,16 +43,17 @@ var fnGetList01 = function (pCd) {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function (houseData) {
+function fnGetList02 (houseData) {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   창고별 재고 현황",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -121,16 +122,17 @@ var fnGetList02 = function (houseData) {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList03 = function (houseData) {
+function fnGetList03 (houseData) {
 
-  var gridCd = "grid03";
+  const gridCd = "grid03";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   창고별 재고 현황",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -199,7 +201,7 @@ var fnGetList03 = function (houseData) {
 };
 
 // 2-1. 상세 항목 ----------------------------------------------------------------------------------
-var fnShow = function (event, treeId, treeNode) {
+function fnShow(event, treeId, treeNode) {
 
   $.ajax({
     url: "act/showHouse",
@@ -235,7 +237,7 @@ var fnShow = function (event, treeId, treeNode) {
 };
 
 // 2-2. 노드트리 새로고침 --------------------------------------------------------------------------
-var fnRefreshNode = function (pId, resultCd) {
+function fnRefreshNode(pId, resultCd) {
   var treeObj = $.fn.zTree.getZTreeObj("grid01");
 
   // 부모 노드 찾기
@@ -259,7 +261,7 @@ var fnRefreshNode = function (pId, resultCd) {
 };
 
 // 3-1. 저장 ---------------------------------------------------------------------------------------
-var fnSave = function (YN) {
+function fnSave(YN) {
 
   var flagParam = "";
 
@@ -338,7 +340,7 @@ var fnSave = function (YN) {
 };
 
 // 3-2. 하위 창고 추가 -----------------------------------------------------------------------------
-var fnAddCat = function () {
+function fnAddCat() {
 
   if ($("#houseCd").val() == "0" || $("#houseCd").val() == "") {
     alert("하위 창고항목을 생성 할 수 없습니다.");
@@ -353,7 +355,7 @@ var fnAddCat = function () {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function () {
+function fnDel() {
   if ($("#houseCd").val() == "0") {
     alert("삭제할 창고를 선택해 주세요.");
     return;
@@ -362,7 +364,7 @@ var fnDel = function () {
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   // 창고 그리드 초기화
   $.fn.zTree.destroy("grid01");
@@ -377,7 +379,7 @@ var fnReset = function () {
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.keyCode === 13 && event.key === "Enter") ||
     (event.type === "click")

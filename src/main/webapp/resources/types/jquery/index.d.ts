@@ -1,3 +1,5 @@
+// jquery/index.d.ts
+
 /// <reference types="sizzle" />
 /// <reference path="jquery.d.ts" />
 /// <reference path="jquery-static.d.ts" />

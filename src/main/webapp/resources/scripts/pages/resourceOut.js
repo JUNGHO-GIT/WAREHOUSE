@@ -1,27 +1,86 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
-    numberCell:{show:true, resizable:false, width:30},
-    xlsNm: "resourceInOut.xlsx",
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     title: "   자재 출고 관리",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
-    editable:false,
-    swipeModel: {on:false},
-    pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
-    selectionModel: {type:"row", fireSelectChange:true},
-    pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    editable: false,
+    swipeModel: {on: false},
+    pasteModel: {on: false},
+    filterModel: {on: true, mode: "AND", header: true},
+    selectionModel: {type: "row", mode: "single"},
+    pageModel: {type: "local", rPP: 100, rPPOptions: [10, 20, 50, 100]},
+    scrollModel: {autoFit: true, theme: true, pace: "fast", horizontal: true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
+  /** @type {pq.gridT.colModel} **/
+  const colModel = [
+    {
+      title: "이미지", dataIndx: "fileUrl", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      minWidth: 70, maxWidth: 70,
+      render: renderImage,
+    },
+    {
+      title: "자재명", dataIndx: "resrcNm", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      minWidth: 100,
+    },
+    {
+      title: "창고", dataIndx: "houseNm", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+    },
+    {
+      title: "재질", dataIndx: "option1", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+    },
+    {
+      title: "안전재고", dataIndx: "protectedQty", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+    },
+    {
+      title: "입고", dataIndx: "inQty", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderZero,
+    },
+    {
+      title: "출고", dataIndx: "outQty", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderZero,
+    },
+    {
+      title: "재고", dataIndx: "qty", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderZero,
+    },
+    {
+      title: "재고부족", dataIndx: "lowStock", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: displayLowStock,
+    },
+    {
+      title: "바코드", dataIndx: "barcode", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+    },
+    // footer
+    {
+      title: "합계", dataIndx: "qty", dataType: "string", align: "center",
+      summary: {
+        type: "sum",
+        edit: false,
+      },
+      render: calcSum,
+    },
+  ];
+
+  function rowClick (event, ui) {
     fnGetList02(ui.rowData.resrcCd);
     fnReset();
     fnFindCd("", ui.rowData.resrcCd, "resrc");
@@ -29,54 +88,36 @@ var fnGetList01 = function () {
     fnFindCd("", ui.rowData.compCd, "comp");
   };
 
-  // 이미지 렌더링
-  obj.renderImage = function(ui) {
-    var imageUrl = "";
-    var noImage = "no-image.webp";
-    var noGridImage = "noGridImage.webp";
-    var rowImage = ui.rowData.fileUrl;if (!rowImage || ui.rowData.fileUrl === noGridImage) {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${noImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    else {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${rowImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    return imageUrl;
+  function renderImage(ui) {
+    const imageUrl = ui.rowData.fileUrl || "noGridImage.webp";
+    return (
+      `<img
+        src="viewFiles?fileUrl=${imageUrl}"
+        class="w-100p h-auto radius-1 shadow-1"
+        loading="lazy"
+      />`
+    );
   };
 
-  // 빈값 0으로 출력
-  obj.renderZero = function(ui) {
+  function renderZero(ui) {
     return ui.cellData ? ui.cellData : "0";
   };
 
-  // 푸터 합계 계산
-  obj.calcSum = function (data, dataIndex) {
+  function calcSum(data, dataIndex) {
     if (!data) {
       return "0";
     }
-    var sum = data.reduce(function(acc, row) {
-      var value = Number(row[dataIndex]);
+    const sum = data.reduce(function(acc, row) {
+      const value = Number(row[dataIndex]);
       return acc + (isNaN(value) ? 0 : value);
     }, 0);
     return sum.toLocaleString();
   };
 
-  // 안전재고 이하 갯수 계산
-  obj.calcLowStock = function (data) {
-    var lowStockCount = 0;
-    for (var i = 0; i < data.length; i++) {
-      var row = data[i];
+  function calcLowStock(data) {
+    let lowStockCount = 0;
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
       row.lowStock = parseInt(row.qty) <= parseInt(row.protectedQty) ? 1 : 0;
       if (row.lowStock === 1) {
         lowStockCount++;
@@ -85,50 +126,10 @@ var fnGetList01 = function () {
     return lowStockCount;
   };
 
-  // 안전재고 이하 표시
-  obj.displayLowStock = function (ui) {
-    return ui.rowData.lowStock === 1 ? `<span class="fsr-2.5 red">●</span>` : "";
+  function displayLowStock(ui) {
+    return ui.rowData.lowStock === 1 ? `<span class="fs-1-5rem red">●</span>` : "";
   };
-  obj.colModel = [
-    {dataIndx:"fileUrl", title:"이미지", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      minWidth:70, maxWidth:70, render: obj.renderImage,
-    },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      minWidth:200
-    },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
-    },
-    {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
-    },
-    {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
-    },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
-    },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
-    },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
-    },
-    {dataIndx:"lowStock", title:"재고부족", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.displayLowStock
-    },
-    {dataIndx:"barcode", title:"바코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
-    },
-  ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
@@ -138,87 +139,108 @@ var fnGetList01 = function () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: function (myJsonData) {
-
-      // 1. 콜백 데이터 할당
-      obj.dataModel = {data:myJsonData};
-
-      // 2. title에 안전재고 이하 갯수 표시
-      obj.title = `
+      const title = `
       <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
           <span>자재 출고 관리</span>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
-          <span class="fsr-1.4 red">●</span>
+          <span class="fs-1-4rem red">●</span>
           <span class="ml-5px mr-5px">안전재고 이하 : </span>
-          <span class="red">${obj.calcLowStock(myJsonData)}</span>
+          <span class="red">${calcLowStock(myJsonData)}</span>
         </div>
       </div>
       `;
-
-      // 3. footer에 합계표시
-      obj.summaryData = [{
+      const summaryData = [{
         pq_rowcls: "summary-row",
         fileUrl: "noGridImage.webp",
         resrcNm: `<b>Total : </b>`,
-        protectedQty: obj.calcSum(myJsonData, "protectedQty"),
-        inQty: obj.calcSum(myJsonData, "inQty"),
-        outQty: obj.calcSum(myJsonData, "outQty"),
-        qty: obj.calcSum(myJsonData, "qty")
+        protectedQty: calcSum(myJsonData, "protectedQty"),
+        inQty: calcSum(myJsonData, "inQty"),
+        outQty: calcSum(myJsonData, "outQty"),
+        qty: calcSum(myJsonData, "qty"),
       }];
-
-      // 4. 그리드 갱신
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      const dataModel = {data: myJsonData};
+      $("#" + gridCd).pqGrid({
+        ...gridOption,
+        title,
+        summaryData,
+        dataModel,
+        colModel,
+        rowClick,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function (resrcCd) {
+function fnGetList02 (resrcCd) {
 
-  var gridCd = "grid02";
   $("#resrcCd").val(resrcCd);
 
-  var obj = {
-    numberCell:{show:true, resizable:false, width:30},
-    xlsNm: "resourceInOut.xlsx",
+  const gridCd = "grid02";
+
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     title: "   자재 입출고 내역",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
-    editable:false,
-    swipeModel: {on:false},
-    pasteModel: {on:false},
-    scrollModel: {autoFit:true},
-    filterModel: {on:true, mode:"AND", header:false},
-    selectionModel: {type:"row", fireSelectChange:true},
-    pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    editable: false,
+    swipeModel: {on: false},
+    pasteModel: {on: false},
+    filterModel: {on: true, mode: "AND", header: true},
+    selectionModel: {type: "row", mode: "single"},
+    pageModel: {type: "local", rPP: 100, rPPOptions: [10, 20, 50, 100]},
+    scrollModel: {autoFit: true, theme: true, pace: "fast", horizontal: true, flexContent: true},
+    numberCell:{show:true, resizable:false, width:30},
   };
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow(ui.rowData.inOutSeq);
-  };
-  obj.colModel = [
-    {dataIndx:"inOutDt", title:"일자", dataType:"string", align:"center"
+
+  /** @type {pq.gridT.colModel} **/
+  const colModel = [
+    {
+      title: "일자", dataIndx: "inOutDt", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
     },
-    {dataIndx:"inOut", title:"분류", dataType:"string", align:"center"
+    {
+      title: "분류", dataIndx: "inOut", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
     },
-    {dataIndx:"compNm", title:"거래처", dataType:"string", align:"center"
+    {
+      title: "거래처", dataIndx: "compNm", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center"
+    {
+      title: "창고", dataIndx: "houseNm", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
     },
-    {dataIndx:"qty", title:"수량", dataType:"string", align:"right", format:"#,###"
+    {
+      title: "수량", dataIndx: "qty", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderQty,
     },
-    {dataIndx:"unitPrice", title:"표준단가", dataType:"string", align:"right", format:"#,###"
+    {
+      title: "표준단가", dataIndx: "unitPrice", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderPrice,
     },
-    {dataIndx:"supplyPrice", title:"공급가", dataType:"string", align:"right", format:"#,###"
-    }
+    {
+      title: "공급가", dataIndx: "supplyPrice", dataType: "string", align: "center",
+      filter: { options: { type: "textbox", condition: "contain", listeners: ["keyup"]}},
+      render: renderPrice,
+    },
   ];
 
-	// ajax 호출
+  function renderQty(ui) {
+    return ui.cellData ? ui.cellData : "0";
+  };
+
+  function renderPrice(ui) {
+    return ui.cellData ? ui.cellData.toLocaleString() : "0";
+  };
+
   $.ajax({
     url: "act/listResourceInOut",
     data: `resrcCd=${resrcCd}`,
@@ -228,15 +250,19 @@ var fnGetList02 = function (resrcCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: function (myJsonData) {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      const dataModel = {data: myJsonData};
+      $(`#${gridCd}`).pqGrid({
+        ...gridOption,
+        dataModel,
+        colModel,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-var fnShow = function (inOutSeq) {
+function fnShow(inOutSeq) {
 
   $.ajax({
     url: "act/showResourceInOut",
@@ -271,7 +297,7 @@ var fnShow = function (inOutSeq) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-var fnSave = function (flagYN) {
+function fnSave(flagYN) {
 
   var flagParam = "";
   var planParam = "";
@@ -371,12 +397,12 @@ var fnSave = function (flagYN) {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function () {
+function fnDel() {
   fnSave("N");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   var curDate = fnToday();
 
@@ -407,7 +433,7 @@ var fnReset = function () {
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
-var fnResetWhenSearch = function () {
+function fnResetWhenSearch() {
 
 	// 자재 초기화
   $("#resrc").val("");
@@ -415,12 +441,12 @@ var fnResetWhenSearch = function () {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("option", "dataModel", {data: []});
-	$("#grid02").pqGrid("refreshDataAndView");
+  $("#grid01").pqGrid("dataModel", {data: []});
+  $("#grid01").pqGrid("refreshDataAndView");
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||
@@ -433,7 +459,7 @@ var fnPressGet01 = function (event) {
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
-var fnChangeList = function () {
+function fnChangeList() {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();

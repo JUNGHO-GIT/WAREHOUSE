@@ -1,4 +1,4 @@
-// tslint:disable:no-irregular-whitespace
+/// jquery/jquery-legacy.d.ts
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface JQueryCallback extends JQuery.Callbacks {}

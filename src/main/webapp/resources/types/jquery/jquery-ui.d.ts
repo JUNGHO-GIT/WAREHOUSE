@@ -1,3 +1,5 @@
+/// jquery/jquery-ui.d.ts
+
 /// <reference types="jquery" />
 
 declare namespace JQueryUI

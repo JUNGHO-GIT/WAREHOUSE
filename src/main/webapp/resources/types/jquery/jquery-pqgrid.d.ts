@@ -1,17 +1,16 @@
+
 /// <reference types="jquery" />
 
-declare global
+interface JQueryStatic
 {
-  interface JQueryStatic
-  {
-    active;
-    paramquery;
-  }
-  interface JQuery
-  {
-    pqGrid (options: pq.gridT.options | string): any;
-    pqGrid (method: string, param: any): any;
-  }
+  active;
+  paramquery;
+}
+
+interface JQuery
+{
+  pqGrid (options: pq.gridT.options | string): any;
+  pqGrid (method: string, param: any): any;
 }
 
 declare module pq
@@ -50,10 +49,8 @@ declare module pq
         all?: boolean;
         check?: any;
         header?: boolean;
-        history?: boolean; //9.1.0
         maxCheck?: number; //5.3.0
         select?: boolean;
-        useTxn?: boolean; //9.1.0
         uncheck?: any;
       };
       /** dataIndx of linked checkbox column */
@@ -62,7 +59,6 @@ declare module pq
       cls?: string;
       /** Class to be assigned to header. */
       clsHead?: string; //5.2.0
-      clsFilter?: string; //8.7.0
       /** collapse properties for parent grouped columns */
       collapsible?: {
         /**last child of grouped column is visible instead of first column in collapsed state. */
@@ -72,7 +68,7 @@ declare module pq
       };
       /** nesting of colModel used for grouping of columns */
       colModel?: colModel;
-      /** When set to false, this option prevents a column from being copied to the clipboard */
+      /** When set to false, this option prevents a column from being copied to the clipboard or exported data */
       copy?: boolean;
       /** fieldname used for data binding */
       dataIndx?: string | number;
@@ -118,7 +114,7 @@ declare module pq
         init?: (ui: any) => any;
         labelIndx?: numberorstring;
         listener?: any;
-        //listeners?: any[]
+        listeners?: any[];
 
         maxCheck?: number; //5.3.0
 
@@ -132,18 +128,11 @@ declare module pq
         selectGridCreated?: (ui: object) => void; //5.2.0
         selectGridObj?: (ui: object) => void; //5.3.0
         style?: string;
-        title?: (values: any[], col: column) => string; //10.0.0
         //value?: any
         //value2?: any
         valueIndx?: numberorstring;
       };
       filterFn?: (ui: object) => object; //5.2.0
-
-      fmtDateEdit?: string; //10.0.0
-      fmtDateFilter?: string; //10.0.0
-      fmtNumberEdit?: string; //10.0.0
-      fmtNumberFilter?: string; //10.0.0
-
       format?: string | ((any) => any); //5.3.0: callback
       formatRaw?: string; //5.3.0
       formula?: (ui: {rowData: any;}) => any;
@@ -166,15 +155,13 @@ declare module pq
       nodrag?: boolean;
       nodrop?: boolean;
       parent?: column;
-      /** When set to false, this option skips paste of data on a column */
-      paste?: boolean; //8.0.0
       pivotSortFn?: ((a: object, b: object) => number); //5.4.0
       //v7.0.0
       /*prop?: {
           align?: string
           valign?: string
       }*/
-      postRender?: (string | ((ui: postRenderObj) => void));
+      postRender?: (string | ((ui: cellObject) => void));
       render?: (string | ((ui: renderObj) => string | {
         attr?: string;
         cls?: string;
@@ -191,9 +178,6 @@ declare module pq
       renderLabel?: ((ui: renderObj) => string | void); //5.3.0
       resizable?: boolean;
       showifOpen?: boolean; //5.3.0
-      /** this option skips export of this column */
-      skipExport?: boolean; //9.0.0
-      skipFocus?: boolean; //9.1.0
       sortable?: boolean;
       sortType?: ((rowData1: any, rowData2: any, dataIndx: any) => number);
 
@@ -224,9 +208,7 @@ declare module pq
 
     type filterModel = {
       //clear?: boolean
-      gridOptions?: object;
       header?: boolean;
-      hideClearIcon?: boolean; //10.1.0
       hideRows?: boolean; //6.2.0
       menuIcon?: boolean; //5.2.0
       mode?: "AND" | "OR";
@@ -237,8 +219,6 @@ declare module pq
 
     interface editorObj
     {
-      appendTo?: string; //8.4.0
-      preventClose?: ((ui: any) => boolean); //8.4.0
       type?: any;
       init?: ((ui: any) => any);
       prepend?: any;
@@ -251,7 +231,7 @@ declare module pq
       getData?: ((ui) => any);
       cls?: string;
       select?: boolean;
-      style?: string | object;
+      style?: string;
       attr?: string;
     }
     interface rowObject
@@ -269,11 +249,6 @@ declare module pq
     interface cellObject extends rowObject, colObject
     {
     }
-    interface postRenderObj extends cellObject
-    {
-      cell: any;
-    }
-
     interface renderObj extends cellObject
     {
       cellData: any;
@@ -325,7 +300,6 @@ declare module pq
       groupCols?: Array<string | boolean>;
       header?: boolean;
       headerMenu?: Array<string>;
-      hideLines?: boolean; //9.1.0
       icon?: Array<string>;
       ignoreCase?: boolean;
       indent?: number;
@@ -364,10 +338,8 @@ declare module pq
     }
     interface toolPanel
     {
-      disablePivotChkBox?: boolean; //8.6.0
       hideAggPane?: boolean;
       hideColPane?: boolean;//show when pivot mode is true, hide otherwise, never show when it's false.
-      hideGroupChkBox?: boolean; //8.6.0
       hidePivotChkBox?: boolean;
       hideRowPane?: boolean;
       show?: boolean;
@@ -402,7 +374,6 @@ declare module pq
       method?: string;
       postData?: any;
       postDataOnce?: any;
-      progressAcrossTabs?: boolean; //8.6.0
       recIndx?: numberorstring;
       url?: string;
     }
@@ -426,25 +397,11 @@ declare module pq
       on?: boolean;
       head?: boolean; //7.2.0: ignored.
       init?: (evt, ui) => void;
-      bodyItems?: itemX[] | ((evt, ui) => itemX[]); //8.7.0
       cellItems?: itemX[] | ((evt, ui) => itemX[]); //7.2.0
       headItems?: itemX[] | ((evt, ui) => itemX[]); //7.2.0
       imgItems?: itemX[] | ((evt, ui) => itemX[]); //7.2.0
       items?: itemX[] | ((evt, ui) => itemX[]); //7.2.0: updated
       miscItems?: itemX[] | ((evt, ui) => itemX[]); //7.2.0
-      tabItems?: itemX[] | ((evt, ui) => itemX[]); //8.0.0
-    };
-
-    //8.0.0
-    type tab = {
-      extraRows?: number;
-      extraCols?: number;
-      gridOptions?: pq.gridT.options | (() => pq.gridT.options);
-      hidden?: boolean;
-      noClose?: boolean;
-      noRename?: boolean;
-      name?: string;
-      sheet?: worksheet;
     };
 
     /*******************************options **************************************************/
@@ -455,8 +412,6 @@ declare module pq
         on?: boolean;
         duration?: number;
       };
-      autoAddCol?: boolean; //8.3
-      autoAddRow?: boolean; //8.3
       autofill?: boolean;
       autoRow?: boolean;
       autoRowHead?: boolean;
@@ -481,15 +436,12 @@ declare module pq
       copyModel?: any;
       dataModel?: dataModel;
       detailModel?: {
-        cache?: boolean;
-        hasChild?: (rowData: object) => boolean; //9.1.0
-        header?: boolean; //8.7.0
-        height?: number | string;  //8.0: string added
-        collapseIcon?: string;
-        expandIcon?: string;
-        init: (ui: rowObject) => JQuery;
+        cache?: boolean,
+        height?: number,
+        collapseIcon?: "ui-icon-triangle-1-e",
+        expandIcon?: "ui-icon-triangle-1-se";
+        init: ((ui: rowObject) => JQuery);
       };
-      dimsRelativeTo?: string; //7.6.0
       dragColumns?: {
         enabled?: boolean;
         acceptIcon?: string;
@@ -502,7 +454,7 @@ declare module pq
       dragModel?: {
         on?: boolean;
         clsDnD?: string;
-        clsNode?: string;//7.4
+        clsNode?: string,//7.4
         contentHelper?: ((diHelper: Array<string>, dragItems: Array<any>) => string);
         cssHelper?: any; //object of css properties applied to helper.
         diDrag?: numberorstring;
@@ -543,13 +495,10 @@ declare module pq
         warnClass?: string;
       };
       editor?: {
-        attr?: string;
-        cls?: string;
-        getData?: ((ui: any) => any); //8.2.0
-        init?: ((ui: any) => any); //8.2.0
-        select?: boolean;
-        style?: string | object;
         type?: string;
+        cls?: string;
+        style?: string;
+        select?: boolean;
       };
       filterModel?: filterModel;
       flex?: {
@@ -557,15 +506,6 @@ declare module pq
         one?: boolean;
         all?: boolean;
       };
-
-      fmtDate?: string; //10.0.0
-      fmtDateEdit?: string; //10.0.0
-      fmtDateFilter?: string; //10.0.0
-      fmtNumber?: string; //10.0.0
-      fmtNumberEdit?: string; //10.0.0
-      fmtNumberFilter?: string; //10.0.0
-
-      format?: (rd: object, col: object, cellprop: object, rowprop: object) => string;
       formulas?: Array<[number | string, (rowData: any, column: column) => any]>,
       formulasModel?: {
         on?: boolean;
@@ -579,7 +519,6 @@ declare module pq
       hoverMode?: string;
       hwrap?: boolean;
       locale?: string; //6.1.0
-      localeFmt?: string; //10.0.0
       maxHeight?: numberorstring;
       maxWidth?: numberorstring;
 
@@ -589,7 +528,7 @@ declare module pq
         gridOptions?: any;
         singleFilter?: boolean;
         popupOptions?: any;
-        tabs?: Array<string>; //['hideCols', 'filter', 'export' ]    //9.0.0: 'export'
+        tabs?: Array<string>; //['hideCols', 'filter']
       };
 
       mergeCells?: Array<{
@@ -606,14 +545,12 @@ declare module pq
         flex: boolean;
       };
       minWidth?: numberorstring;
-      noStickyHeader?: boolean; //9.1.0
       numberCell?: {
         width?: number;
         title?: string;
         resizable?: boolean;
         minWidth?: number;
         show?: boolean;
-        menuUI?: object; //9.0.0
       };
       pageModel?: pageModel;
       pasteModel?: {
@@ -634,7 +571,6 @@ declare module pq
       }>;
       postRenderInterval?: number;
       reactive?: boolean; //6.1.0
-      refreshCompareBy?: string; //8.4.0
       resizable?: boolean;
       realFocus?: boolean;
       roundCorners?: boolean;
@@ -648,10 +584,6 @@ declare module pq
         cls?: string;
       };
       rowResize?: boolean; //7.4
-
-      rowSpanHead?: boolean; //9.0.0
-
-      rowTemplate?: object; //8.0.0
       scrollModel?: {
         horizontal?: boolean;
         pace?: string;
@@ -676,7 +608,6 @@ declare module pq
       showTitle?: boolean;
       showToolbar?: boolean;
       showTop?: boolean;
-      skipSSFn?: boolean; //9.1.0
       sortable?: boolean;
       sortModel?: sortModel;
 
@@ -686,7 +617,6 @@ declare module pq
       stringify?: boolean;
       stripeRows?: boolean;
       summaryData?: any[];
-      summaryOnTop?: boolean; //8.1.0
       summaryOptions?: {
         date?: string;
         number?: string;
@@ -694,14 +624,6 @@ declare module pq
       };
       summaryTitle?: any;
       swipeModel?: any;
-      //8.1.0
-      tabModel?: {
-        activeId?: number;
-        newTab?: (() => tab);
-        noAdd?: boolean;
-        noSortable?: boolean;
-        tabs?: tab[];
-      };
       title?: string;
       toolbar?: {
         cls?: string;
@@ -734,10 +656,7 @@ declare module pq
       treeModel?: {
         childstr?: string;
         dataIndx?: numberorstring;
-        filterLockSummary?: boolean; //7.7
-        filterShowChildren?: boolean; //7.7
         format?: string;
-        hideLines?: boolean; //9.1.0
         historyAdd?: boolean; //7.4
         historyDelete?: boolean; //7.4
         historyMove?: boolean; //7.4
@@ -752,7 +671,6 @@ declare module pq
         render?: (ui: object) => any;
         nodeClose?: object; //7.2
         summary?: boolean;
-        summaryInTitleRow?: boolean; //7.7
 
         cascade?: boolean;
         cbId?: string;
@@ -762,7 +680,6 @@ declare module pq
         select?: boolean;
         useLabel?: boolean;
       };
-      virtualWin?: boolean; //8.1.0
       virtualX?: boolean;
       virtualY?: boolean;
       warning?: {
@@ -776,8 +693,7 @@ declare module pq
 
 
       //#################################inline Events------------
-      autoRowHeight?: (evt, ui) => void;
-      beforeCellClick?: (evt, ui) => boolean | void;
+
       beforeCellKeyDown?: (evt, ui) => boolean | void;
       beforeCheck?: (evt, ui) => boolean | void;
 
@@ -787,18 +703,14 @@ declare module pq
       beforeColumnCollapse?: (evt, ui) => boolean | void;
       beforeColumnOrder?: (evt, ui) => boolean | void; //5.5.0
 
-      beforeCopy?: (evt, ui) => boolean | void; //8.4.0
-
       beforeExport?: (evt, ui) => boolean | void;
       beforeFillHandle?: (evt, ui) => boolean | void;
       beforeFilter?: (evt, ui) => boolean | void;
       beforeGroupExpand?: (evt, ui) => boolean | void;
-      beforeHeadKeyDown?: (evt, ui) => boolean | void; //8.7.0
       beforeHideCols?: (evt, ui: { //5.2.0
         diHide?: Array<numberorstring>;
         diShow?: Array<numberorstring>;
       }) => boolean | void;
-      beforeNewData?: (evt, ui) => boolean | void; //8.6.0
       beforePaste?: (evt, ui) => boolean | void;
       beforeRowExpand?: (evt, ui) => boolean | void; //5.5.0: updated
       beforeRowSelect?: (evt, ui) => boolean | void;
@@ -806,10 +718,6 @@ declare module pq
       beforeTableView?: (evt, ui) => boolean | void;
       beforeTreeExpand?: (evt, ui) => boolean | void;
       beforeValidate?: (evt, ui) => boolean | void;
-
-      blur?: (evt, ui) => any; //8.7.0
-      blurHead?: (evt, ui) => any; //8.7.0
-
       cellBeforeSave?: (evt, ui) => boolean | void;
       cellClick?: (evt, ui) => any;
       cellDblClick?: (evt, ui) => any;
@@ -826,8 +734,6 @@ declare module pq
       columnDrag?: (evt, ui) => any;
       columnOrder?: (evt: Object, ui: Object) => void | boolean;
       columnResize?: (evt, ui) => any;
-
-      copy?: (evt, ui) => any; //8.4.0
 
       /**event fired when grid data binding and view is complete. */
       complete?: (evt: Object, ui: Object) => void | boolean;
@@ -848,10 +754,6 @@ declare module pq
       //exportExcel?: (evt, ui) => any
 
       filter?: (evt, ui) => any;
-
-      focus?: (evt, ui) => any; //8.7.0
-      focusHead?: (evt, ui) => any; //8.7.0
-
       group?: (evt, ui) => any;
       groupChange?: (evt, ui) => any;
       groupData?: (evt, ui) => any;
@@ -870,14 +772,8 @@ declare module pq
         num_undo: number;
         num_redo: number;
       }) => any;
-
-      lazyInit?: ((evt, ui) => void); //8.5.0
-      lazyProgress?: ((evt, ui) => void); //8.5.0
-      lazyComplete?: ((evt, ui) => void); //8.5.0
-
       load?: ((evt, ui) => void);
       moveNode?: ((evt, ui) => void); //6.0.0
-      paste?: (evt, ui) => void;
       pivotCM?: ((evt, ui) => void); //5.3.0
 
       /**event fired whenever grid is refreshed */
@@ -901,9 +797,6 @@ declare module pq
         oldSorter: any[];
         sorter: any[];
       }) => any;
-      tabActivate?: (evt, ui: {tab: tab;}) => any; //8.6.0
-      tabsReady?: (evt, ui: {state: string;}) => any; //8.6.0
-      tabRename?: (evt, ui: {tab: tab, oldVal: string;}) => any; //8.6.0
       toggle?: (evt, ui: {state: string;}) => any;
       treeExpand?: (evt, ui: any) => any;
       workbookReady?: (evt, ui: {workbook: workbook;}) => any;
@@ -916,18 +809,13 @@ declare module pq
       c2?: number;
       rc?: number;
       cc?: number;
-      style?: string; //10.0.0
     }
     interface Range
     {
       address (): Array<objRange>;
       addressLast (): objRange;
       add (obj?: objRange);
-      addCol (right?: boolean, col?: object); //9.0.0
-      addRow (below?: boolean, row?: object); //9.0.0
-
       align (str?: string): string; //v7.0.0
-      border (type: string, style: string, color: string);  //9.0.0
       clear ();
       comment (text?: string): string; //v7.0.0
       copy (obj?: {
@@ -941,26 +829,12 @@ declare module pq
         render?: boolean;
         header?: boolean; //7.3.0
       });
-
-      deleteCol (); //9.0.0
-      deleteRow (); //9.0.0
-
-      eachCol (callback: (column: column, index: number) => void); //v8.0.0
-      eachRow (callback: (rowData: object, index: number) => void); //v8.0.0
-
       enable (enable?: boolean): boolean; //v7.0.0
       //getStyle(key: string): string //v7.0.0
-      format (val?: string): string; //v8.1.0
-      freezePanes (); //v9.0.0
-      hideCols (); //8.0.0
-      hideRows (); //8.0.0
       indexOf (obj?: objRange): number;
-      link (url?: string): string | void; //9.0.0
       merge ();
       pic (file: any, x?: number, y?: number); //7.2.0
       select ();
-      showCols (); //8.0.0
-      showRows (); //8.0.0
       style (key: string, val?: string): string; //v7.0.0
       toggleStyle (key: string, val: any[]); //v7.0.0
       unmerge ();
@@ -1040,7 +914,6 @@ declare module pq
       columns?: worksheetColumn[];
       frozenRows?: number;
       frozenCols?: number;
-      hidden?: boolean;
       mergeCells?: string[];
       /**number of header rows in rows. */
       headerRows?: number;
@@ -1048,7 +921,6 @@ declare module pq
     }
     interface workbook
     {
-      activeId?: number;
       sheets?: worksheet[];
     }
     interface Checkbox
@@ -1086,8 +958,7 @@ declare module pq
     //7.2
     interface Formulas
     {
-      exec (formula: string): numberorstring;
-      computeAll (): void;
+      exec (string): numberorstring;
     }
 
     //7.2
@@ -1175,14 +1046,6 @@ declare module pq
       updateId (node: any, id: numberorstring); //7.4.0
     }
 
-    //8.7.0
-    interface Detail
-    {
-      getRip (node: any): number;
-      rowCollapse (obj: {rowIndx?: number, rowIndxPage?: number;});
-      rowExpand (obj: {rowIndx?: number, rowIndxPage?: number;});
-      toggleAll ();
-    }
     /******************************************grid methods ***************/
     interface instance
     {
@@ -1193,12 +1056,6 @@ declare module pq
         dataIndx?: string | number,
         cls: string,
         refresh?: boolean;
-      });
-
-      //8.7.0
-      addClassHead (obj: {
-        ri: number,
-        colIndx: number;
       });
 
       addNodes (nodes: any[], rowIndx?: number);//6.0.0
@@ -1239,12 +1096,6 @@ declare module pq
         rows?: any[];
       });
 
-      //9.0.0
-      Context ():
-        {
-          showMenu (evt, ui: object);
-        };
-
       copy (obj?: any);
 
       createTable (obj: {
@@ -1274,8 +1125,6 @@ declare module pq
 
       destroy ();
 
-      Detail (): Detail; //8.7.0
-
       disable ();
 
       //6.0.0
@@ -1290,21 +1139,12 @@ declare module pq
       expand ();
 
       exportData (options: {
-        eachCell?: any,
-        eachCellHead?: any,
-        eachRow?: any,
-        eachRowHead?: any,
-        eachCol?: any,
-
-        activeSheet?: boolean,
         /**String of css rules applicable to Html format. */
         cssRules?: string,
-        cssTable?: string,
         /**Name of file without extension. */
-        //filename?: string,
-        /**csv, xlsx, json, js, wb or htm  */
+        filename?: string,
+        /**csv, xlsx, json or htm  */
         format?: string,
-        linkStyle?: string, //9.0.0
         /**non-json export: exclude header in export. */
         noheader?: boolean,
         /**json export: exclude pq_ related meta data. */
@@ -1315,24 +1155,18 @@ declare module pq
         render?: boolean,
         /**Excel export: replace unwanted characters. */
         replace?: [any, string], //6.2.4
-        selection?: string, //9.0.0
-        separator?: string,
         /**Excel sheet name. */
         sheetName?: string,
-        sheets?: Array<string>,
-        skipHiddenCols?: boolean, //9.0.0
-        skipHiddenRows?: boolean, //9.0.0
-        skipHiddenSheets?: boolean, //9.0.0
         /**Applicable to htm format. Title of html page. */
         title?: string,
         /**Excel export: maps to type parameter of jsZip generate method.*/
         type?: string;
         /**Absolute or relative url where grid posts the data to be returned back by server as a download file. The data is not posted when url is not provided. */
-        //url?: string,
+        url?: string,
         /**Excel export: generate intermediate json workbook instead of final Excel file. */
         workbook?: boolean;
         /**Applicable to non-xlsx format. Set it true to reduce the size of download file by compressing it. */
-        //zip?: boolean
+        zip?: boolean;
       }): string | Blob;
 
       exportExcel (option?: any);
@@ -1355,15 +1189,6 @@ declare module pq
         rowIndxPage: number,
         colIndx: number;
       });
-
-      //8.7.0
-      focusHead (obj?: {
-        ri: number,
-        colIndx: number;
-      });
-
-      freezeTopRow ();//9.0.0
-      freezeFirstCol ();//9.0.0
 
       Formulas (): Formulas; //7.2.0
 
@@ -1445,16 +1270,9 @@ declare module pq
 
       getEditCellData (): any;
 
-      getFocus ():
+      getInstance ():
         {
-          rowIndxPage: number;
-          colIndx: number;
-        };
-
-      getFocusHead ():
-        {
-          ri: number;
-          colIndx: number;
+          grid: instance;
         };
 
       //7.2.0
@@ -1466,17 +1284,6 @@ declare module pq
           filterRow: boolean;
         };
 
-      /*getInstance(): {
-          grid: instance
-      }*/
-
-      //v8
-      getNextVisibleCI (ci: number): number;
-      getNextVisibleRIP (rip: number): number;
-      getPrevVisibleCI (ci: number): number;
-      getPrevVisibleRIP (rip: number): number;
-
-      getPics (): any[];
       getRecId (obj: rowObject): any;
 
       getRow (obj: {
@@ -1507,8 +1314,6 @@ declare module pq
           initH: number;
           finalH: number;
         };
-
-      getXHR (): object; //9.1.0
       /** rowIndx of row ( 0 based ) or page number ( 1 based ) */
       goToPage (obj: {rowIndx?: number, page?: number;});
 
@@ -1532,7 +1337,7 @@ declare module pq
       /**imports workbook into grid */
       importWb (obj: {
         workbook: workbook,
-        /**either specify sheet (name or 0 based index) or the 1st sheet / all sheets are imported. */
+        /**either specify sheet (name or 0 based index) or the 1st sheet is imported. */
         sheet?: number | string,
         extraRows?: number,
         extraCols?: number,
@@ -1621,7 +1426,7 @@ declare module pq
       quitEditMode ();
 
       //Range(obj: objRange): rangeInstance
-      Range (range: objRange | string): Range; //8.2.0: string format ie., "A1C3" supported.
+      Range (obj: objRange): Range;
 
 
       /** refresh the grid. */
@@ -1640,8 +1445,6 @@ declare module pq
       refreshHeaderFilter (obj: {colIndx?: number, dataIndx?: numberorstring;});
 
       refreshRow (obj: rowObject);
-
-      refreshSummary (); //8.4.0
 
       refreshToolbar ();
 
@@ -1663,12 +1466,6 @@ declare module pq
         colIndx?: number;
         cls: string,
         refresh?: boolean;
-      });
-
-      //8.7.0
-      removeClassHead (obj: {
-        ri: number,
-        colIndx: number;
       });
 
       removeData (obj: {
@@ -1716,8 +1513,6 @@ declare module pq
 
       SelectRow (): SelectRow;
 
-      setData (data: Object[]): void;
-
       setSelection (obj: {
         rowIndx?: number,
         rowIndxPage?: number,
@@ -1729,24 +1524,9 @@ declare module pq
 
       sort (obj?: {single?: boolean, sorter?: any[];});
 
-      //8.1.0
-      Tab (method?: string, ...methodArgs: any[]):
-        {
-          add ();
-          activate (id: number);
-          activeTab (): tab;
-          create (id: number);
-          eachGrid (fn: (grid: pq.gridT.instance) => void); //10.1.0
-          grid (tab: tab): pq.gridT.instance | undefined;
-          main (): pq.gridT.instance;
-          remove (id: number);
-          rename (id: number, val: string);
-          tabs (): tab[];
-        };
-
       toggle ();
 
-      toolbar (selector?: string);
+      toolbar ();
 
       ToolPanel ():
         {
@@ -1757,8 +1537,6 @@ declare module pq
         };
 
       Tree (): Tree;
-
-      unfreezePanes (); //v9.0.0
 
       updateRow (obj: {
         rowIndx?: number,
@@ -1784,20 +1562,9 @@ declare module pq
   /** create pqgrid plugin.  */
   function grid (selector: string | JQuery, options: gridT.options): gridT.instance;
 
-  function deFormatNumber (val: string, format: string, locale?: string): number;
+  function deFormatNumber (val: string, format: string): number;
+  function formatNumber (val: number, format: string): string;
 
-  function exportCsv (head: any[], body: any[], obj?: object): string; //9.0.0
-  function exportHtm (head: any[], body: any[], obj?: object): string | Blob; //9.0.0
-  function exportPdf (head: any[], body: any[]): string; //9.0.0
-
-  function formatDate (val: number, format: string, locale?: string): string; //10.0.0
-  function formatNumber (val: number, format: string, locale?: string): string;
-  function getScripts (scripts: string[], callback: () => void): void; //9.0.0
-
-  function parseDate (val: number, format?: string, locale?: string): string; //10.0.0
-  function postData (url: string, ajaxdata: object, ajaxOptions?: object); //9.0.0
-
-  function saveAs (contents: Blob | string, name: string): void; //9.0.0
   function toLetter (indx: number): string;
 
   namespace aggregate
@@ -1815,7 +1582,7 @@ declare module pq
     /**exports js workbook to xlsx format. */
     function exportWb (obj: {
       workbook: gridT.workbook,
-      replace?: [any, string], //same as in exportData.
+      url?: string,
       type?: string;
     }): string | Blob;
     function eachCell (
@@ -1828,8 +1595,6 @@ declare module pq
       file?: File,
       /**Blob data of Excel file. */
       content?: any,
-      /**separator used while csv import */
-      separator?: string, //v8.2.0
       /** specify index numbers or names of sheet to be imported, otherwise all sheets are imported. */
       sheets?: Array<number | string>,
       /** type of content used by jsZip. */
@@ -1847,5 +1612,3 @@ declare module pq
     function attr (str: string): any;
   }
 }
-
-export default pq;

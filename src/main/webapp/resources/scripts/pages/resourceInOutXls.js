@@ -1,21 +1,21 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnShowExcel = function (body) {
+function fnShowExcel(body) {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
   var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourceInOutXls.xlsx",
     title: "   자재 관리",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable: true,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    scrollModel: {autoFit:true},
     filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
@@ -92,7 +92,7 @@ var fnShowExcel = function (body) {
 };
 
 // 1-2. 전부 선택 ----------------------------------------------------------------------------------
-var fnSelectAll = function () {
+function fnSelectAll() {
 
   var getData = $("#grid01").pqGrid("getData");
 
@@ -123,7 +123,7 @@ var fnSelectAll = function () {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-var fnSave = function() {
+function fnSave() {
 
   // 데이터 불러오기
   var getData = $("#grid01").pqGrid("getData");
@@ -207,16 +207,16 @@ var fnSave = function() {
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
   // 파일 초기화
   $("#resourceInOutXls").val("");
   // 그리드 초기화
-  $("#grid01").pqGrid("option", "dataModel", {data: []});
+  $("#grid01").pqGrid("dataModel", {data: []});
   $("#grid01").pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 업로드 ----------------------------------------------------------------------------------
-var fnFilePicked = function (oEvent) {
+function fnFilePicked(oEvent) {
 
   var oFile = oEvent.target.files[0];
   var sFilename = oFile.name;
@@ -261,7 +261,7 @@ var fnFilePicked = function (oEvent) {
 };
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
-var fnExDownload = function () {
+function fnExDownload() {
   var fileUrl = "resourceInOut_Xls_sample.xls";
   window.location = "/downloadFiles?fileUrl="+fileUrl;
 };

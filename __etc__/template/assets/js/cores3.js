@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 var G_scrollCnt = 2;
 
-var fnScrollUp = function () {
+function fnScrollUp() {
   var tr1 = $("#tr1").html();
   var tr2 = $("#tr2").html();
   var tr3 = $("#tr3").html();
@@ -76,7 +76,7 @@ function shuffle (array) {
   array.sort(() => Math.random() - 0.5);
 };
 
-var fnChatList = function () {
+function fnChatList() {
 
   var toDeliChart = AmCharts.makeChart("toDeliChart", {
     "type": "serial",

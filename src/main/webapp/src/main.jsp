@@ -63,9 +63,9 @@
     </div>
 
     <!--------------------------------------------------------------------------------------------->
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 right_col" style="width:-webkit-fill-available; padding:inherit">
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 right_col">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-3vh">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 h-10vh">
           <div class="gnb_wrap border-bottom-1 shadow-bottom-3">
             <div class="gnb_toggle">
               <i class="fa fa-bars fs-25px light-black pointer-navy" id="menu_toggle"></i>

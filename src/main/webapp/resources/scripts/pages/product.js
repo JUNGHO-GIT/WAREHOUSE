@@ -1,13 +1,14 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -171,7 +172,7 @@ var fnGetList01 = function () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-var fnShow = function (prodCd) {
+function fnShow(prodCd) {
 
   $.ajax({
     url: "act/showProduct",
@@ -215,7 +216,7 @@ var fnShow = function (prodCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-var fnSave = function (flagYN) {
+function fnSave(flagYN) {
 
   var flagParam = "";
 
@@ -300,12 +301,12 @@ var fnSave = function (flagYN) {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function () {
+function fnDel() {
   fnSave("N");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   // 제품 초기화
   $("#prodCd").val("0");
@@ -348,7 +349,7 @@ var fnReset = function () {
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||
@@ -361,7 +362,7 @@ var fnPressGet01 = function (event) {
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
-var fnChangeList = function () {
+function fnChangeList() {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();

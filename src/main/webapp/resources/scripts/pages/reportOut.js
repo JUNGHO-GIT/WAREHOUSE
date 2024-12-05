@@ -1,15 +1,16 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
   var showYear = $("#findYear").val();
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "reportOut.xlsx",
     title: "   (제품) 연간 출고 현황",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -81,17 +82,18 @@ var fnGetList01 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function () {
+function fnGetList02() {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
   var showYear = $("#findYear").val();
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "reportIn.xlsx",
     title: "   (자재) 연간 출고 현황",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -163,7 +165,7 @@ var fnGetList02 = function () {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnSetYears = function (selectId) {
+function fnSetYears(selectId) {
   var year = new Date().getFullYear();
   var select = $("#" + selectId);
   select.empty();
@@ -177,7 +179,7 @@ var fnSetYears = function (selectId) {
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||

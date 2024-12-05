@@ -1,5 +1,5 @@
 // 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
-var fnShowUserConfig = function () {
+function fnShowUserConfig() {
 
   $.ajax({
     url: "act/showUserConfigTab",
@@ -19,7 +19,7 @@ var fnShowUserConfig = function () {
 };
 
 // 2. 팝업 화면 유저정보 -------------------------------------------------------------------------->
-var fnShowUserConfigInfo = function () {
+function fnShowUserConfigInfo() {
 
   if ($(`#popup2`).hasClass("d-none")) {
     $(`#popup2`).removeClass("d-none");
@@ -61,7 +61,7 @@ var fnShowUserConfigInfo = function () {
 };
 
 // 3-1. 유저정보 저장 ----------------------------------------------------------------------------->
-var fnSaveUserConfigInfo = function () {
+function fnSaveUserConfigInfo() {
 
   if ($("#userConfigNm").val() == "") {
     alert("사용자 이름을 입력해 주세요");
@@ -121,7 +121,7 @@ var fnSaveUserConfigInfo = function () {
 };
 
 // 3-2. 탭 순서 저장 ------------------------------------------------------------------------------>
-var fnSaveUserConfigTab = function () {
+function fnSaveUserConfigTab() {
 
   var tabs = fnTabOrder();
   var param = {
@@ -150,7 +150,7 @@ var fnSaveUserConfigTab = function () {
 };
 
 // 3-3. 비밀번호 변경 ----------------------------------------------------------------------------->
-var fnUpdateConfigPw = function() {
+function fnUpdateConfigPw() {
 
   var changeConfigFlag = $("#changeConfigFlag").val();
 
@@ -206,7 +206,7 @@ var fnUpdateConfigPw = function() {
 };
 
 // 5-1. 초기화 ------------------------------------------------------------------------------------>
-var fnReset = function () {
+function fnReset() {
   $("#userConfigID").val("");
   $("#userConfigPw").val("");
   $("#userConfigNm").val("");
@@ -218,7 +218,7 @@ var fnReset = function () {
 };
 
 // 5-2. 초기화 (비밀번호) ------------------------------------------------------------------------->
-var fnResetPw = function () {
+function fnResetPw() {
   // row 클릭했을때 `비번변경`버튼 상태 초기화
   $("#userConfigPw").prop("readonly", true);
   $("#userConfigPw").val("BCryptPassword");

@@ -1,14 +1,15 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shipItems.xlsx",
     title: "   제품 출하 관리",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -73,17 +74,18 @@ var fnGetList01 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function (shipCd) {
+function fnGetList02 (shipCd) {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
   $("#shipCd").val(shipCd);
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shippingList.xlsx",
     title: "   제품 출하 상세 목록",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -131,7 +133,7 @@ var fnGetList02 = function (shipCd) {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-var fnShow = function (shipCd) {
+function fnShow(shipCd) {
 
   $.ajax({
     url: "act/showShipItems",
@@ -158,7 +160,7 @@ var fnShow = function (shipCd) {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function () {
+function fnDel() {
 
   var getData = $("#grid01").pqGrid("getData");
   var shipCd = "";
@@ -220,7 +222,7 @@ var fnDel = function () {
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   var curDate = fnToday();
 
@@ -238,12 +240,12 @@ var fnReset = function () {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("option", "dataModel", {data: []});
+  $("#grid02").pqGrid("dataModel", {data: []});
   $("#grid02").pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
-var fnExcelDown = function () {
+function fnExcelDown() {
   var shipCd = $("#shipCd").val();
 
   if (!shipCd) {
@@ -255,7 +257,7 @@ var fnExcelDown = function () {
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||

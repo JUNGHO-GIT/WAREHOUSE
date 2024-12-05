@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
+function fnInOutChart(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
   var inOut = inOutParam;
@@ -60,7 +60,7 @@ var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnPie = function (keyParam, inOutParam, planParam, dateParam) {
+function fnPie(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
   var keyUp = key.charAt(0).toUpperCase() + key.slice(1);
@@ -152,7 +152,7 @@ var fnPie = function (keyParam, inOutParam, planParam, dateParam) {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnProdInChartWeek = function () {
+function fnProdInChartWeek() {
 
   var inChart = AmCharts.makeChart("prodInChartWeek", {
     "type": "serial",
@@ -289,7 +289,7 @@ var fnProdInChartWeek = function () {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnProdOutChartWeek = function () {
+function fnProdOutChartWeek() {
 
   var outChart = AmCharts.makeChart("prodOutChartWeek", {
     "type": "serial",
@@ -424,7 +424,7 @@ var fnProdOutChartWeek = function () {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnProdProtected = function () {
+function fnProdProtected() {
   $.ajax({
     url: "act/prodProtected",
     type: "POST",
@@ -474,7 +474,7 @@ var fnProdProtected = function () {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnSwitchSpan = function (keyParam, inOutParam, planParam, dateParam) {
+function fnSwitchSpan(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
   var inOut = inOutParam;
@@ -532,7 +532,7 @@ var fnSwitchSpan = function (keyParam, inOutParam, planParam, dateParam) {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnSwitchPie = function (keyParam, inOutParam, planParam, dateParam) {
+function fnSwitchPie(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
   var inOut = inOutParam;

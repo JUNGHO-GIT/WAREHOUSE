@@ -3949,18 +3949,6 @@ ul.notifications {
 	height: 100%;
 	background: #f7f7f7;
 }
-.frame_container {
-	width: 100%;
-	height: auto;
-	margin: 0;
-	padding: 0;
-}
-.flex_container {
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	height: 100%;
-}
 .left_gnb {
 	width: 200px;
 	position: relative;

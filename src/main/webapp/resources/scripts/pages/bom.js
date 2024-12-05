@@ -1,14 +1,15 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   제품 정보",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -68,17 +69,18 @@ var fnGetList01 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function () {
+function fnGetList02() {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
   var insertBtn=`<button type="button" class="btn btn-primary btn-xs insertBtn">&#x25bc;</button>`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   자재 정보",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
@@ -166,17 +168,18 @@ var fnGetList02 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList03 = function () {
+function fnGetList03 () {
 
-  var gridCd = "grid03";
+  const gridCd = "grid03";
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "bomList.xlsx",
     title: "   BOM 항목",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
@@ -226,17 +229,18 @@ var fnGetList03 = function () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-var fnShow = function (prodCd, bomType) {
+function fnShow(prodCd, bomType) {
 
-  var gridCd = "grid03";
+  const gridCd = "grid03";
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   BOM 정보",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
@@ -301,7 +305,7 @@ var fnShow = function (prodCd, bomType) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-var fnSave = function () {
+function fnSave() {
 
   var getData = $("#grid03").pqGrid("getData");
   var prodCd = $("#prod").val();
@@ -369,12 +373,12 @@ var fnSave = function () {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function (rowIdx) {
+function fnDel(rowIdx) {
   $("#grid03").pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDelResrc = function (rowIdx) {
+function fnDelResrc(rowIdx) {
 
   var getData = $("#grid03").pqGrid("getRowData", {rowIndx: rowIdx});
   var prodCd = $("#prod").val();
@@ -416,12 +420,12 @@ var fnDelResrc = function (rowIdx) {
 };
 
 // 5-1. 그리드 초기화 ------------------------------------------------------------------------------
-var fnNew = function () {
+function fnNew() {
 
   fnReset();
 
   // 그리드 비우기
-  $("#grid03").pqGrid("option", "dataModel", {data: []});
+  $("#grid03").pqGrid("dataModel", {data: []});
 
   // 그리드 포커스 제거
   $("#grid01").pqGrid("setSelection", null);
@@ -433,7 +437,7 @@ var fnNew = function () {
 };
 
 // 5-2. 그리드 초기화 ------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   // 제품 초기화
   $("#prodNm").val("");
@@ -447,7 +451,7 @@ var fnReset = function () {
 };
 
 // 5-3. 그리드 초기화(검색시) ----------------------------------------------------------------------
-var fnResetWhenSearch = function () {
+function fnResetWhenSearch() {
 
 	// 제품 초기화
   $("#prod").val("");
@@ -455,19 +459,19 @@ var fnResetWhenSearch = function () {
 
   // 그리드 초기화
   $("#grid03").pqGrid("setSelection", null);
-	$("#grid03").pqGrid("option", "dataModel", {data: []});
+	$("#grid03").pqGrid("dataModel", {data: []});
 	$("#grid03").pqGrid("refreshDataAndView");
 };
 
 // 0. BOM input ------------------------------------------------------------------------------------
-var fnBomInput = function () {
+function fnBomInput() {
 
   // bomInput에 엔터 입력시 이벤트 (grid reset)
   $(".bomInput").keydown(function(e) {
     if (e.keyCode === 13) {
       fnReset();
       $("#grid03").pqGrid("setSelection", null);
-      $("#grid03").pqGrid("option", "dataModel.data", []);
+      $("#grid03").pqGrid("dataModel", {data: []});
       $("#grid03").pqGrid("refreshDataAndView");
     }
   });
@@ -482,7 +486,7 @@ var fnBomInput = function () {
 }
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||
@@ -495,7 +499,7 @@ var fnPressGet01 = function (event) {
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-var fnPressGet02 = function (event) {
+function fnPressGet02(event) {
   if (
     (event.keyCode === 13 && event.key === "Enter") ||
     (event.type === "click")
@@ -506,7 +510,7 @@ var fnPressGet02 = function (event) {
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
-var fnChangeList = function () {
+function fnChangeList() {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();

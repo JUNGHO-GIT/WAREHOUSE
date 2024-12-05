@@ -1,5 +1,4 @@
-// tslint:disable:jsdoc-format
-// tslint:disable:no-irregular-whitespace
+/// jquery/jquery.d.ts
 
 interface JQuery<TElement = HTMLElement> extends Iterable<TElement>
 {

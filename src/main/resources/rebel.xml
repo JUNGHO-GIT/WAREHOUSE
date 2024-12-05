@@ -7,13 +7,13 @@
 <application generated-by="vscode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE_TEST/target/classes">
+		<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/target/classes">
 		</dir>
 	</classpath>
 
 	<web>
 		<link target="/">
-			<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE_TEST/src/main/webapp">
+			<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/src/main/webapp">
 			</dir>
 		</link>
 	</web>

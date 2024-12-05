@@ -1,5 +1,5 @@
 // 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
-var fnUploadFiles = function (formParam) {
+function fnUploadFiles(formParam) {
 
   var fileUploadForm = formParam;
   var tableNm = $("#tableNm").val();
@@ -53,7 +53,7 @@ var fnUploadFiles = function (formParam) {
 };
 
 // 1-2. 파일 업로드 (WAR) --------------------------------------------------------------------------
-var fnUploadWarFiles = function (formParam) {
+function fnUploadWarFiles(formParam) {
 
   var fileUploadForm = formParam;
   var formData = new FormData(fileUploadForm);
@@ -90,7 +90,7 @@ var fnUploadWarFiles = function (formParam) {
 };
 
 // 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
-var fnShowFiles = function (tableNm, tableKey, target) {
+function fnShowFiles(tableNm, tableKey, target) {
   var imgStyle = "cursor:pointer; margin-left:2px; border-radius:30%;";
   var imgFile = [".jpg", ".JPG", ".png", ".PNG"];
   var currentSelectedRow = null;
@@ -151,7 +151,7 @@ var fnShowFiles = function (tableNm, tableKey, target) {
 };
 
 // 2-2. 리스트 이미지 클릭시 표시 ------------------------------------------------------------------
-var fnShowSelectedFiles = function(fileUrl, rowId) {
+function fnShowSelectedFiles(fileUrl, rowId) {
 
   var imgUrl = "viewFiles?fileUrl=" + fileUrl;
 
@@ -163,19 +163,19 @@ var fnShowSelectedFiles = function(fileUrl, rowId) {
 };
 
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
-var fnPopupImage = function (fileUrl) {
+function fnPopupImage(fileUrl) {
   var valUrl = "viewFiles?fileUrl=" + fileUrl;
   window.open(valUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
 };
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
-var fnDownloadFiles = function (fileUrl) {
+function fnDownloadFiles(fileUrl) {
   var valUrl = "/downloadFiles?fileUrl=" + fileUrl;
   window.location = valUrl;
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------
-var fnDeleteFiles = function (fileSeq, fileUrl, fileNm) {
+function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
 
   if (!confirm("업로드된 파일을 삭제 하시겠습니까?")) {
     return;

@@ -52,7 +52,7 @@
             <!-- grid 1 -->
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 px-10px">
               <div class="grid-main">
-                <div class="h-100p" id="grid01"></div>
+                <div class="h-90p" id="grid01"></div>
               </div>
             </div>
             <!-- grid 2 -->

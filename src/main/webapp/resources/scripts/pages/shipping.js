@@ -1,14 +1,15 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shipping.xlsx",
     title: "   제품 출고 현황",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -95,17 +96,18 @@ var fnGetList01 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function () {
+function fnGetList02() {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
   var delBtn = `<button class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shipDetail.xlsx",
     title: "   제품 출하 대기 목록",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -150,7 +152,7 @@ var fnGetList02 = function () {
 };
 
 // 3-1. 저장 ---------------------------------------------------------------------------------------
-var fnSaveItems = function () {
+function fnSaveItems() {
 
   var getData = $("#grid02").pqGrid("getData");
   var rowCnt = getData.length;
@@ -237,7 +239,7 @@ var fnSaveItems = function () {
 };
 
 // 3-1. 계획 저장 ----------------------------------------------------------------------------------
-var fnSavePlan = function () {
+function fnSavePlan() {
 
   var getData = $("#grid02").pqGrid("getData");
   var rowCnt = getData.length;
@@ -316,12 +318,12 @@ var fnSavePlan = function () {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDelProd = function (rowIdx) {
+function fnDelProd(rowIdx) {
   $("#grid02").pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
 
   var curDate = fnToday();
 
@@ -339,19 +341,19 @@ var fnReset = function () {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("option", "dataModel", {data: []});
+  $("#grid02").pqGrid("dataModel", {data: []});
   $("#grid02").pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
-var fnResetWhenSearch = function () {
+function fnResetWhenSearch() {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||
@@ -364,7 +366,7 @@ var fnPressGet01 = function (event) {
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
-var fnChangeList = function () {
+function fnChangeList() {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();

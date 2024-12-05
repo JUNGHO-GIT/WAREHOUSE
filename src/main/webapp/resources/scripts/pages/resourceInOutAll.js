@@ -1,14 +1,15 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   자재 입출고 관리",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -205,18 +206,19 @@ var fnGetList01 = function () {
 };
 
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList02 = function () {
+function fnGetList02() {
 
-  var gridCd = "grid02";
+  const gridCd = "grid02";
   var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourceInOutAll.xlsx",
     title: "   일괄 입고",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
@@ -294,7 +296,7 @@ var fnGetList02 = function () {
 };
 
 // 1-2. 검증 ---------------------------------------------------------------------------------------
-var fnCheck = function() {
+function fnCheck() {
 
   var getData = $("#grid02").pqGrid("getData");
   var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
@@ -366,7 +368,7 @@ var fnCheck = function() {
 };
 
 // 3-1. 저장 (선택) --------------------------------------------------------------------------------
-var fnSave = function () {
+function fnSave() {
 
   var getData = $("#grid02").pqGrid("getData");
   var inOut = $("input[name=inOut]:checked").val();
@@ -417,7 +419,7 @@ var fnSave = function () {
 };
 
 // 3-2. 저장 (전체) --------------------------------------------------------------------------------
-var fnSaveAll = function () {
+function fnSaveAll() {
 
   var grid = $("#grid02").pqGrid("getInstance").grid;
   var data = grid.option("dataModel.data");
@@ -462,18 +464,18 @@ var fnSaveAll = function () {
 }
 
 // 4-1. 삭제 (선택) --------------------------------------------------------------------------------
-var fnDel = function (rowIdx) {
+function fnDel(rowIdx) {
   $("#grid02").pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
-var fnDelAll = function () {
-  $("#grid02").pqGrid("option", "dataModel", {data: []});
+function fnDelAll() {
+  $("#grid02").pqGrid("dataModel", {data: []});
   $("#grid02").pqGrid("refreshDataAndView");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
   var curDate = fnToday();
 
   // 자재 초기화
@@ -506,13 +508,13 @@ var fnReset = function () {
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
-var fnResetWhenSearch = function () {
+function fnResetWhenSearch() {
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
 };
 
 // 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (
     (event.key === "Enter") ||
     (event.type === "click") ||
@@ -525,7 +527,7 @@ var fnPressGet01 = function (event) {
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
-var fnChangeList = function () {
+function fnChangeList() {
   var findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();

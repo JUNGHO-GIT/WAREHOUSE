@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-var fnFindCd = function(targetNm, targetCd, targetId, event) {
+function fnFindCd(targetNm, targetCd, targetId, event) {
 
   // ex. house, houseCd, houseNm
   var str = targetId;
@@ -39,7 +39,7 @@ var fnFindCd = function(targetNm, targetCd, targetId, event) {
 
   // 이벤트 한 번만 설정
   $(`#${str}`).on("change", function() {
-    $(`#${strCd}`).val(this.value);
+    $(`#${strCd}`).val($(`#${str}`).val());
   });
 
   $.ajax({
@@ -106,7 +106,7 @@ var fnFindCd = function(targetNm, targetCd, targetId, event) {
 };
 
 // 0.fnGetCdWithNm ---------------------------------------------------------------------------------
-var fnGetCdWithNm = function(targetNm, targetVal, rowIndx, gridCd) {
+function fnGetCdWithNm(targetNm, targetVal, rowIndx, gridCd) {
   return new Promise(function(resolve, reject) {
 
     // ex. grid00
@@ -216,8 +216,8 @@ var fnGetCdWithNm = function(targetNm, targetVal, rowIndx, gridCd) {
 };
 
 // 0. 일괄 입출고 탭 전환 --------------------------------------------------------------------------
-var curTab = "in";
-var fnSwitchTab = function (newTab) {
+let curTab = "in";
+function fnSwitchTab(newTab) {
   if (curTab !== newTab) {
 
     // 버튼 스타일 변경
@@ -225,12 +225,13 @@ var fnSwitchTab = function (newTab) {
     document.getElementById(newTab + "Tab").classList.add("active");
 
     // 라디오 버튼 체크
-    document.querySelector(`input[name=inOut][value=${newTab}]`).checked = true;
+    $(`input[name=inOut][value=${curTab}]`).prop("checked", false);
+    $(`input[name=inOut][value=${newTab}]`).prop("checked", true);
 
     // 그리드 제목 변경
-    var title = newTab === "in" ? "일괄 입고" : "일괄 출고";
-    $("#grid02").pqGrid("option", "title", title);
-    $("#grid02").pqGrid("refreshDataAndView");
+    const title = newTab === "in" ? "일괄 입고" : "일괄 출고";
+    $(`#grid02`).pqGrid("options.title", title);
+    $(`#grid02`).pqGrid("refreshDataAndView");
 
     // 현재 탭 업데이트
     curTab = newTab;
@@ -238,12 +239,12 @@ var fnSwitchTab = function (newTab) {
 }
 
 // 0. 콤마 제거 -----------------------------------------------------------------------------------
-var fnRemoveComma = function (obj) {
+function fnRemoveComma(obj) {
   return parseInt(obj.replace(/,/g, ''), 10);
 };
 
 // 0. 공급가 계산 ---------------------------------------------------------------------------------
-var fnSupplyPrice = function () {
+function fnSupplyPrice() {
   // 콤마를 제거한 후 단가와 수량을 계산
   var unitPrice = fnRemoveComma($("#unitPrice").val());
   var qty = fnRemoveComma($("#qty").val());
@@ -290,7 +291,7 @@ var fnInputNum = (function() {
 })();
 
 // 0. 천단위 콤마 추가 (js에서 호출) ---------------------------------------------------------------
-var fnFormatNum = function (num) {
+function fnFormatNum(num) {
   // 값이 null, undefined, 또는 빈 문자열인 경우 0을 반환
   if (num === null || num === undefined || num === '') {
     return "0";
@@ -355,7 +356,7 @@ var fnInputRate = (function() {
 })();
 
 // 0. 숫자 비율형식 변환 (소숫점 3자리 - js에서 호출) ---------------------------------------------
-var fnFormatRate = function (num) {
+function fnFormatRate(num) {
   // 값이 null, undefined, 또는 빈 문자열인 경우 0을 반환
   if (num === null || num === undefined || num === '') {
     return "0.000";
@@ -374,7 +375,7 @@ var fnFormatRate = function (num) {
 };
 
 // 0. 날짜 형식 변환 -------------------------------------------------------------------------------
-var fnFormatDate = function (value) {
+function fnFormatDate(value) {
   // 입력값이 유효한 날짜 형식인지 확인
   var validFormat = /^\d{4}-\d{2}-\d{2}$/;
   if (validFormat.test(value)) {
@@ -420,7 +421,7 @@ function fnLayerTop(layer) {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnSetTm = function (t, target) {
+function fnSetTm(t, target) {
   if (t) {
     var divT = t.split(":");
     if (divT[0] < 10) divT[0] = "0" + parseInt(divT[0], 10);
@@ -430,7 +431,7 @@ var fnSetTm = function (t, target) {
   }
 };
 
-var fnSetTmFormat = function (tm) {
+function fnSetTmFormat(tm) {
   if (tm) {
     var hr = tm.substr(0, 2);
     var min = tm.substr(2, 2);
@@ -440,7 +441,7 @@ var fnSetTmFormat = function (tm) {
 };
 
 //## 행당월의 처음날과 마지막날을 반환
-var fnSetMonth = function (mnth, dt) {
+/* function fnSetMonth(mnth, dt) {
   var divDt = dt.split("-");
 
   var nextMnth = parseInt(mnth, 10) + 1;
@@ -454,9 +455,9 @@ var fnSetMonth = function (mnth, dt) {
   $("#startDt").val(startDt);
   $("#endDt").val(endDt);
   //return terms;
-};
+}; */
 
-var fnDateAdd = function (sDate, nDays) {
+/* function fnDateAdd(sDate, nDays) {
   var divDt = sDate.split("-");
   var yy = divDt[0];
   var mm = divDt[1];
@@ -469,9 +470,9 @@ var fnDateAdd = function (sDate, nDays) {
   dd = d.getDate(); dd = (dd < 10) ? '0' + dd : dd;
 
   return '' + yy + '-' + mm + '-' + dd;
-};
+}; */
 
-var fnToday = function () {
+function fnToday() {
   var now = new Date();
   var year = now.getFullYear();
   var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
@@ -482,7 +483,7 @@ var fnToday = function () {
   return chan_val;
 };
 
-var fnYearMonth = function () {
+function fnYearMonth() {
   var now = new Date();
   var year = now.getFullYear();
   var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
@@ -494,7 +495,7 @@ var fnYearMonth = function () {
 };
 
 
-var fnTodayMin = function () {
+function fnTodayMin() {
   var now = new Date();
   var hour = now.getHours() > 9 ? '' + now.getHours() : '0' + now.getHours();
   var min = now.getMinutes() > 9 ? '' + now.getMinutes() : '0' + now.getMinutes();

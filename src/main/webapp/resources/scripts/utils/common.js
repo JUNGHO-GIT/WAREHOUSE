@@ -66,7 +66,7 @@ var G_calendar2 = {
   minDate: '-30y'
 
 };
-var fnSetYear = function () {
+function fnSetYear() {
   var dateObj = new Date();
   var month = dateObj.getUTCMonth() + 1; //months from 1-12
   var day = dateObj.getUTCDate();
@@ -89,7 +89,7 @@ var fnSetYear = function () {
 };
 
 
-var fnSleep = function (num) {	//[1/1000초]
+function fnSleep(num) {	//[1/1000초]
   var now = new Date();
   var stop = now.getTime() + num;
   while (true) {
@@ -98,7 +98,7 @@ var fnSleep = function (num) {	//[1/1000초]
   }
 };
 
-var fnSetTm = function (t, target) {
+function fnSetTm(t, target) {
   if (t) {
     var divT = t.split(":");
     if (divT[0] < 10) divT[0] = "0" + parseInt(divT[0], 10);
@@ -108,7 +108,7 @@ var fnSetTm = function (t, target) {
   }
 };
 
-var fnSetTmFormat = function (tm) {
+function fnSetTmFormat(tm) {
   if (tm) {
     var hr = tm.substr(0, 2);
     var min = tm.substr(2, 2);
@@ -118,7 +118,7 @@ var fnSetTmFormat = function (tm) {
 };
 
 //## 행당월의 처음날과 마지막날을 반환
-var fnSetMonth = function (mnth, dt) {
+function fnSetMonth(mnth, dt) {
   var divDt = dt.split("-");
 
   var nextMnth = parseInt(mnth, 10) + 1;
@@ -134,7 +134,7 @@ var fnSetMonth = function (mnth, dt) {
   //return terms;
 };
 
-var fnDateAdd = function (sDate, nDays) {
+function fnDateAdd(sDate, nDays) {
   var divDt = sDate.split("-");
   var yy = divDt[0];
   var mm = divDt[1];
@@ -149,7 +149,7 @@ var fnDateAdd = function (sDate, nDays) {
   return '' + yy + '-' + mm + '-' + dd;
 };
 
-var fnToday = function () {
+function fnToday() {
   var now = new Date();
   var year = now.getFullYear();
   var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
@@ -160,7 +160,7 @@ var fnToday = function () {
   return chan_val;
 };
 
-var fnYearMonth = function () {
+function fnYearMonth() {
   var now = new Date();
   var year = now.getFullYear();
   var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
@@ -172,7 +172,7 @@ var fnYearMonth = function () {
 };
 
 
-var fnTodayMin = function () {
+function fnTodayMin() {
   var now = new Date();
   var hour = now.getHours() > 9 ? '' + now.getHours() : '0' + now.getHours();
   var min = now.getMinutes() > 9 ? '' + now.getMinutes() : '0' + now.getMinutes();
@@ -183,7 +183,7 @@ var fnTodayMin = function () {
 };
 
 
-var fnGetLeftMenus = function (cd) {
+function fnGetLeftMenus(cd) {
   var leftMenu = '';
   for (c = 0; c < G_subMenu[cd].length; c++) {
     leftMenu += '<div onclick="fnExistDestPerms(\'' + G_subMenuLink[cd][c] + '\')"><img src="/img/folder.jpg"> ' + G_subMenu[cd][c] + '</div>';
@@ -194,7 +194,7 @@ var fnGetLeftMenus = function (cd) {
 
 };
 
-var fnShowSubMenu = function (cd) {
+function fnShowSubMenu(cd) {
   var subPage = '';
   var leftMenu = '';
   for (c = 0; c < G_subMenu[cd].length; c++) {
@@ -206,22 +206,22 @@ var fnShowSubMenu = function (cd) {
   //alert(subPage);
 };
 
-var fnStaySubMenu = function () {
+function fnStaySubMenu() {
   $("#_subMenu").show();
 };
 
-var fnHideSubMenu = function () {
+function fnHideSubMenu() {
   $("#_subMenu").hide();
 };
 
-var fnSetCurMenu = function (cd) {
+function fnSetCurMenu(cd) {
   $('#_mainMenu div:nth-child(' + cd + ')').css("color", "#186096");
   $('#_mainMenu div:nth-child(' + cd + ')').css("background-color", "#FFF");
   $('#_mainMenu div:nth-child(' + cd + ')').css("height", "31px");
   $('#_mainMenu div:nth-child(' + cd + ')').css("margin-top", "2px");
 };
 
-var fnStripSlash = function (str) {
+function fnStripSlash(str) {
   var rs;
   var divStr = "";
   for (k = 0; k < 10; k++) {
@@ -235,17 +235,17 @@ var fnStripSlash = function (str) {
   //}
 };
 
-var fnMainOpen = function (target, winName) {
+function fnMainOpen(target, winName) {
   window.open(target, winName, "width=1024,height=950,left:200,resizable=0, scrollbars=1");
 };
 //## 페이지 이동
-var fnGoPage2 = function (target) {
+function fnGoPage2(target) {
   window.open(target, "GIRO", "width=1024,height=950,left:200,resizable=0, scrollbars=1");
   return;
 };
 
 //## 권한 체크
-var fnCheckAuth = function (auth) {
+function fnCheckAuth(auth) {
   if (auth.STATUS == "SESSION_OFF") {
     alert("Session이 종료 되었습니다.\n다시 로그인 하시기 바랍니다.");
     fnGoPage("logout.post.php");
@@ -256,7 +256,7 @@ var fnCheckAuth = function (auth) {
 };
 
 //## form Reset
-var fnGReset = function (layer, except) {
+function fnGReset(layer, except) {
 
   var txtEle = $("#" + layer + " input");
   for (var i = 0; i < txtEle.length; i++) {
@@ -308,7 +308,7 @@ var fnGReset = function (layer, except) {
 };
 
 //## 조회 CC 찾기
-var fnSetFindCC = function (t) {
+function fnSetFindCC(t) {
   var valUrl = "./action/common/listCC.php";
   var findStr = "";
   var curVal = G_userID;
@@ -319,7 +319,7 @@ var fnSetFindCC = function (t) {
 };
 
 //## 지점별 CC 찾기
-var fnSetFindCCatDaily = function (val) {
+function fnSetFindCCatDaily(val) {
   var valUrl = "./action/common/listCCatDaily.php";
   var findStr = "findPart=" + val;
   var target = "findCC";
@@ -328,7 +328,7 @@ var fnSetFindCCatDaily = function (val) {
   fnFindComboWithParam(valUrl, findStr, curVal, target, showStr);
 };
 //## APDCALL 찾기
-var fnSetFindAPDCALLatDaily = function (val) {
+function fnSetFindAPDCALLatDaily(val) {
   var valUrl = "./action/common/listAPDCALLatDaily.php";
   var findStr = "findPart=" + val;
   var target = "findAPDCALL";
@@ -337,7 +337,7 @@ var fnSetFindAPDCALLatDaily = function (val) {
   fnFindComboWithParam(valUrl, findStr, curVal, target, showStr);
 };
 //## CC별 병원 찾기
-var fnSetHospitalwithCC = function (I00USRSEQ) {
+function fnSetHospitalwithCC(I00USRSEQ) {
   var valUrl = "./action/common/listHospitalWithCC.php";
   var findStr = "I00USRSEQ=" + I00USRSEQ;
   var curVal = '';
@@ -347,7 +347,7 @@ var fnSetHospitalwithCC = function (I00USRSEQ) {
 };
 
 //## 수정모드로 변경
-var fnEditMode = function (layer, onOff, except) {
+function fnEditMode(layer, onOff, except) {
 
   var txtEle1 = $("#" + layer + " input");
 
@@ -391,7 +391,7 @@ var fnEditMode = function (layer, onOff, except) {
   return;
 };
 
-var fnReadMode = function (layer, onOff, except) {
+function fnReadMode(layer, onOff, except) {
 
   var txtEle1 = $("#" + layer + " input");
 
@@ -413,7 +413,7 @@ var fnReadMode = function (layer, onOff, except) {
 };
 
 //## 환자 찾기
-var fnSetPatient = function (C20PTNAME, I00PTCODE) {
+function fnSetPatient(C20PTNAME, I00PTCODE) {
   var valUrl = "./action/common/listPatient.php";
   var findStr = C20PTNAME;
   var curVal = I00PTCODE;
@@ -422,7 +422,7 @@ var fnSetPatient = function (C20PTNAME, I00PTCODE) {
   fnFindCombo(valUrl, findStr, curVal, target, showStr);
 };
 
-var fnSetCallPatient = function (C20PTNAME, I00PTCODE) {
+function fnSetCallPatient(C20PTNAME, I00PTCODE) {
   var valUrl = "./action/common/listCallPatient.php";
   var findStr = C20PTNAME;
   var curVal = I00PTCODE;
@@ -431,7 +431,7 @@ var fnSetCallPatient = function (C20PTNAME, I00PTCODE) {
   fnFindCombo(valUrl, findStr, curVal, target, showStr);
 };
 
-var fnGetList = function (e) {
+function fnGetList(e) {
   if (e.keyCode != "13") {
     return; // 엔터일때만 수행
   }
@@ -439,7 +439,7 @@ var fnGetList = function (e) {
 };
 
 //## 병원 찾기
-var fnSetHospital = function (C50HSPTNM, I00HSPSEQ, e) {
+function fnSetHospital(C50HSPTNM, I00HSPSEQ, e) {
 
   if (e.keyCode != "13") {
     return; // 엔터일때만 수행
@@ -453,7 +453,7 @@ var fnSetHospital = function (C50HSPTNM, I00HSPSEQ, e) {
   fnFindCombo(valUrl, findStr, curVal, target, showStr);
 };
 
-var fnShowHospital = function (C50HSPTNM, I00HSPSEQ) {
+function fnShowHospital(C50HSPTNM, I00HSPSEQ) {
   var valUrl = "./action/common/listHospital.php";
   var findStr = C50HSPTNM;
   var curVal = I00HSPSEQ;
@@ -464,7 +464,7 @@ var fnShowHospital = function (C50HSPTNM, I00HSPSEQ) {
 
 
 //## 병원 찾기-설치/재설치
-var fnSetHospitalInstall = function (C50HSPTNM, I00HSPSEQ, e) {
+function fnSetHospitalInstall(C50HSPTNM, I00HSPSEQ, e) {
 
   if (e.keyCode != "13") {
     return; // 엔터일때만 수행
@@ -477,7 +477,7 @@ var fnSetHospitalInstall = function (C50HSPTNM, I00HSPSEQ, e) {
   fnFindCombo(valUrl, findStr, curVal, target, showStr);
 };
 
-var fnShowHospitalInstall = function (C50HSPTNM, I00HSPSEQ) {
+function fnShowHospitalInstall(C50HSPTNM, I00HSPSEQ) {
   var valUrl = "./action/common/listHospitalInstall.php";
   var findStr = C50HSPTNM;
   var curVal = I00HSPSEQ;
@@ -488,7 +488,7 @@ var fnShowHospitalInstall = function (C50HSPTNM, I00HSPSEQ) {
 
 
 //## 시리얼 찾기
-var fnSetSerial = function (ITEMNM, I00INOSEQ, target, target1, target2, target3, e) {
+function fnSetSerial(ITEMNM, I00INOSEQ, target, target1, target2, target3, e) {
 
   if (e.keyCode != "13") {
     return; // 엔터일때만 수행
@@ -505,7 +505,7 @@ var fnSetSerial = function (ITEMNM, I00INOSEQ, target, target1, target2, target3
 
 };
 
-var fnShowSerial = function (ITEMNM, I00INOSEQ, target) {
+function fnShowSerial(ITEMNM, I00INOSEQ, target) {
   var valUrl = "./action/common/listItems.php";
   var findStr = ITEMNM;
   var curVal = I00INOSEQ;
@@ -514,7 +514,7 @@ var fnShowSerial = function (ITEMNM, I00INOSEQ, target) {
 };
 
 
-var fnMoveMonth = function (f) {
+function fnMoveMonth(f) {
   var sYr = $("#findSYear").val();
   var eYr = $("#findEYear").val();
   var sMonth = $("#findSMonth").val();
@@ -566,7 +566,7 @@ var fnMoveMonth = function (f) {
 };
 
 //## api 받기
-var fnSetApi = function () {
+function fnSetApi() {
 
   var param = "";
   var valUrl = "act/hash";
@@ -593,7 +593,7 @@ var fnSetApi = function () {
 };
 
 //## 날짜 자동세팅하기
-var fnSetDate = function (obj, m) {
+function fnSetDate(obj, m) {
   var str10 = obj.value.split(' ').join('');
   var str10 = str10.split('-').join('');
   var strDt = "";
@@ -611,7 +611,7 @@ var fnSetDate = function (obj, m) {
 };
 
 //## 천단위 코마(,) 찍어 해당 폼에 표기하기
-var fnCommify = function (obj) {
+function fnCommify(obj) {
   n = obj.value;
   var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
   n += '';                          // 숫자를 문자열로 변환
@@ -628,7 +628,7 @@ var fnCommify = function (obj) {
 };
 
 //## 천단위 코마(,) 찍어 반환하기
-var fnGetNumWithComma = function (n) {
+function fnGetNumWithComma(n) {
   var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
   n += '';                          // 숫자를 문자열로 변환
 
@@ -645,7 +645,7 @@ var fnGetNumWithComma = function (n) {
 
 
 //## 천단위 코마(,) 제거 후 반환하기
-var fnGetNumRemoveComma = function (n) {
+function fnGetNumRemoveComma(n) {
   if (!n) return;
   var num = parseInt(n.replace(/,/g, ""));
   return num;
@@ -654,17 +654,17 @@ var fnGetNumRemoveComma = function (n) {
 
 
 
-var fnSetEmpty = function (obj) {
+function fnSetEmpty(obj) {
   if (obj.value == "0") obj.value = "";
 };
 
-var fnSetZero = function (obj) {
+function fnSetZero(obj) {
   if (obj.value == "") obj.value = "0";
 };
 
 
 
-var fnPermCheck = function () {
+function fnPermCheck() {
   if (G_permStr) {
     alert(G_permStr);
     fnGoPage("logout.post.php");
@@ -672,14 +672,14 @@ var fnPermCheck = function () {
   }
 };
 
-var fnCheckPermJson = function (obj) {
+function fnCheckPermJson(obj) {
   if (obj.STATUS == "SESSION_OFF") {
     alert(obj.ERROR_MSG);
     location.href = "/index.html";
   }
 };
 
-var fnMkSiteLink = function (str) {
+function fnMkSiteLink(str) {
   var links = "";
   var divRow = str.split(",");
   for (l = 0; l < divRow.length; l++) {
@@ -695,7 +695,7 @@ var fnMkSiteLink = function (str) {
 };
 
 //## APD Alarm popup
-var fnAPDAlarmPopup = function (on) {
+function fnAPDAlarmPopup(on) {
   var target = "_APD_Alarm";
   if (on != "off") {
     if (on != "fix" || $("#" + target).css("top") == "auto") {
@@ -710,7 +710,7 @@ var fnAPDAlarmPopup = function (on) {
 };
 
 //## 업데이트 로우
-var fnRowUpdate = function (valUrl, param, rowIndx, gridCd) {
+function fnRowUpdate(valUrl, param, rowIndx, gridCd) {
 
   $.ajax({
     url: valUrl,
@@ -744,7 +744,7 @@ var fnRowUpdate = function (valUrl, param, rowIndx, gridCd) {
   });
 };
 
-var fnComboComCode = function (targets) {
+function fnComboComCode(targets) {
 
   var divTgt = targets.split(",");
 
@@ -785,7 +785,7 @@ var fnComboComCode = function (targets) {
 };
 
 /*//## 공통코드를 통해서 콤보, checkBox, Radio 버튼
-var fnCommonCd = function(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹코드, val:기존값, target:표시해야할 레이어, format:combo/radio/checkbox, fid:폼ID
+function fnCommonCd(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹코드, val:기존값, target:표시해야할 레이어, format:combo/radio/checkbox, fid:폼ID
 
     var param  = "C04GRUPCD="+comGrpCd;
     param  += "&curVal="+curVal;
@@ -872,7 +872,7 @@ var fnCommonCd = function(comGrpCd, curVal, target, format, fid) { //comGrpCd:�
 }
 */
 //## 여러개의 콤보를 한번의 통신으로 구성(콤보박스 전용)
-var fnMultiCombo = function (groupCds, targets, mode) { //groupCds:그룹 코드들, targets:표시해야할 콤보
+function fnMultiCombo(groupCds, targets, mode) { //groupCds:그룹 코드들, targets:표시해야할 콤보
 
   var divGroupCd = groupCds.split(",");
   var divTarget = targets.split(",");
@@ -932,7 +932,7 @@ var fnMultiCombo = function (groupCds, targets, mode) { //groupCds:그룹 코드
 };
 
 //## Master Data를 통해서 콤보
-var fnFindCombo = function (valUrl, findStr, curVal, target, showStr) { //valUrl:Master Data URL, findStr:검색어, curVal:기존값, target:표시해야할 콤보, showStr:콤보 타이틀
+function fnFindCombo(valUrl, findStr, curVal, target, showStr) { //valUrl:Master Data URL, findStr:검색어, curVal:기존값, target:표시해야할 콤보, showStr:콤보 타이틀
 
   var param = "findStr=" + findStr;
   if (curVal) {param += "&curVal=" + curVal;}
@@ -973,7 +973,7 @@ var fnFindCombo = function (valUrl, findStr, curVal, target, showStr) { //valUrl
 };
 
 //## Master Data를 통해서 콤보(파라미터 바로 넘기기)
-var fnFindComboWithParam = function (valUrl, param, curVal, target, showStr) { //valUrl:Master Data URL, param:파라미터, curVal:기존값, target:표시해야할 콤보, showStr:콤보 타이틀
+function fnFindComboWithParam(valUrl, param, curVal, target, showStr) { //valUrl:Master Data URL, param:파라미터, curVal:기존값, target:표시해야할 콤보, showStr:콤보 타이틀
 
   $.ajax({
     url: valUrl,
@@ -1010,7 +1010,7 @@ var fnFindComboWithParam = function (valUrl, param, curVal, target, showStr) { /
 };
 
 //## Master Data를 통해서 콤보
-var fnComCombo = function (valUrl, target, curVal, showStr) { //valUrl:Master Data URL, target:표시해야할 콤보, showStr:콤보 타이틀
+function fnComCombo(valUrl, target, curVal, showStr) { //valUrl:Master Data URL, target:표시해야할 콤보, showStr:콤보 타이틀
 
   var param = "";
 
@@ -1047,7 +1047,7 @@ var fnComCombo = function (valUrl, target, curVal, showStr) { //valUrl:Master Da
 };
 
 //## Radio, Checkbox 값 취하기
-var fnGetCheckVal = function (obj, format) {
+function fnGetCheckVal(obj, format) {
   var rsVal = "";
   if (format == "radio") {
     var newObj = $('input:radio[id=' + obj + ']');
@@ -1066,7 +1066,7 @@ var fnGetCheckVal = function (obj, format) {
 
 
 //## 첨부 파일 이미지 보기 - 공통 처리
-var fnShowThumb = function (I00SEQNCY, target) {
+function fnShowThumb(I00SEQNCY, target) {
 
   var param = "I00SEQNCY=" + I00SEQNCY;
   var valUrl = "./action/common/fileThumb.php";
@@ -1105,7 +1105,7 @@ var fnShowThumb = function (I00SEQNCY, target) {
 
 };
 
-var fnCheckPart = function (val) {
+function fnCheckPart(val) {
   if ($("#" + val.id).prop("checked") == true) {
 
     $("input[id=" + val.value + "]:checkbox").each(function () {
@@ -1148,7 +1148,7 @@ $(document).on("keyup", "input:text[engOnly]", function () {$(this).val($(this).
 
 
 /*
-var fnInitCombo = function(struct, callback) {
+function fnInitCombo(struct, callback) {
     var part = "";
     var target = "";
     var groupCd = "";
@@ -1275,7 +1275,7 @@ var fnInitCombo = function(struct, callback) {
 
 };
 */
-var fnShowHideCol = function (gridCd, colNm) {
+function fnShowHideCol(gridCd, colNm) {
   var CM = $("#" + gridCd).pqGrid("getColModel");
 
   for (var i = 0; i < CM.length; i++) {
@@ -1290,7 +1290,7 @@ var fnShowHideCol = function (gridCd, colNm) {
   $("#" + gridCd).pqGrid('refresh');
 };
 
-var fnSetTime = function (obj) {
+function fnSetTime(obj) {
 
   var val = obj.value;
   var tm = "";
@@ -1311,7 +1311,7 @@ var fnSetTime = function (obj) {
 };
 
 /*
-var fnPressGet01 = function(e) {
+function fnPressGet01(e) {
   alert("dd2");
     if(e.keyCode != "13")
     {
@@ -1321,7 +1321,7 @@ var fnPressGet01 = function(e) {
 };
 */
 
-var fnExport = function (gridCd, xlsxNm) {
+function fnExport(gridCd, xlsxNm) {
 
   if (gridCd == undefined) {
     alert("그리드 코드가 지정되지 않았습니다.");
@@ -1424,7 +1424,7 @@ var fnExport = function (gridCd, xlsxNm) {
 };
 
 
-var fnCurDateTime = function () {
+function fnCurDateTime() {
   var d = new Date();
 
   var date = leadingZeros(d.getFullYear().toString().substr(2, 2), 2) + leadingZeros(d.getMonth() + 1, 2) + leadingZeros(d.getDate(), 2);
@@ -1462,7 +1462,7 @@ function nextMonth () {
 }
 
 //## AM Chart 날짜 YYYY-MM-DD로 변환
-var fnChGraphDate = function (curDt) {
+function fnChGraphDate(curDt) {
   var Y = curDt.getFullYear();
   var M = (curDt.getMonth() + 1);
   var D = curDt.getDate();
@@ -1576,7 +1576,7 @@ function fnGetRooms (target, callback) {
 
 
 
-var fnInputNm = function (obj) {
+function fnInputNm(obj) {
   //좌우 방향키, 백스페이스, 딜리트, 탭키에 대한 예외
   if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39
     || event.keyCode == 46) return;
@@ -1587,7 +1587,7 @@ var fnInputNm = function (obj) {
 
 
 
-var fnPressCommonCd = function (part, target, findStrId) {
+function fnPressCommonCd(part, target, findStrId) {
   if (event.keyCode != "13") {
     return; // 엔터일때만 수행
   }
@@ -1597,7 +1597,7 @@ var fnPressCommonCd = function (part, target, findStrId) {
 
 
 //struct 구조 => { part:'구분', target:'표시해야할 레이어' , groupCd:'그룹코드',  cd:'기존값(현재값)'  }
-var fnInitCombo = function (struct, callback, m) {
+function fnInitCombo(struct, callback, m) {
 
   var part = "";
   var target = "";
@@ -1741,7 +1741,7 @@ var fnInitCombo = function (struct, callback, m) {
 
 
 
-var fnCommonCd = function (part, groupCd, cd, target, format, findStr) { //part: 구분(테이블), groupCd:그룹코드, itemCd:기존값, target:표시해야할 레이어, format:combo/radio/checkbox
+function fnCommonCd(part, groupCd, cd, target, format, findStr) { //part: 구분(테이블), groupCd:그룹코드, itemCd:기존값, target:표시해야할 레이어, format:combo/radio/checkbox
 
   var param = "part=" + part;
   param += "&groupCd=" + groupCd;
@@ -1809,7 +1809,7 @@ var fnCommonCd = function (part, groupCd, cd, target, format, findStr) { //part:
 };
 
 
-var fnGetFiles = function (cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보이게 / 'N' 삭제버튼 안보이게
+function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보이게 / 'N' 삭제버튼 안보이게
 
   var param = "bbsCd=" + cd;
   param += "&bbsSeq=" + seq;
@@ -1891,13 +1891,13 @@ var fnGetFiles = function (cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버�
 
 /*
 //## 첨부파일 다운로드 - 공통처리
-var fnDownFile = function(seq) {
+function fnDownFile(seq) {
 window.open("/action/common/fileDown.php?SEQ="+seq);
 };
 
 
 //## 첨부 파일 삭제 - 공통 처리
-var fnDelFile = function(seq) {
+function fnDelFile(seq) {
 
   if(!confirm("정말로 삭제 하시겠습니까?")) {
       return;
@@ -1934,7 +1934,7 @@ var fnDelFile = function(seq) {
 
 
 //## 파일 업로드
-/*var fnFileUp = function(){
+/*function fnFileUp() {
 
 
  if (!$("#userFile").val()) {
@@ -2015,7 +2015,7 @@ var fnDelFile = function(seq) {
 };*/
 
 //## 파일 삭제
-var fnDelFile = function (bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, fileFlag) {
+function fnDelFile(bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, fileFlag) {
 
   if (!confirm("정말로 삭제 하시겠습니까?")) {
     return;
@@ -2064,7 +2064,7 @@ var fnDelFile = function (bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, file
 
 
 //## 첨부파일 다운로드 - 공통처리
-var fnDownFile = function (fileUrl, fileNm) {
+function fnDownFile(fileUrl, fileNm) {
 
   var valUrl = "act/fileDownload?fileUrl=" + fileUrl + "&fileNm=" + fileNm;
   window.location = valUrl;
@@ -2072,7 +2072,7 @@ var fnDownFile = function (fileUrl, fileNm) {
 };
 
 
-var fnSaveUserConfigTab = function () {
+function fnSaveUserConfigTab() {
 
   var tabs = fnTabOrder();
   var configSeq = $("#configSeq").val();
@@ -2113,7 +2113,7 @@ var fnSaveUserConfigTab = function () {
 
 
 
-var fnShowUserConfigTab = function () {
+function fnShowUserConfigTab() {
   var param = "gridCd=" + '';
   param += "&pageNm=" + 'tabs';
   var valUrl = "act/showUserConfigTab";
@@ -2138,14 +2138,14 @@ var fnShowUserConfigTab = function () {
   });
 };
 
-var fnGetParameter = function (nm) {
+function fnGetParameter(nm) {
   var name = nm.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-var fnFindCompany = function (findCompNm, compCd, target) {
+function fnFindCompany(findCompNm, compCd, target) {
   if (event.keyCode != "13" && findCompNm != "") {
     return; // 엔터일때만 수행
   }
@@ -2183,7 +2183,7 @@ var fnFindCompany = function (findCompNm, compCd, target) {
   });
 };
 
-var fnFindHouse = function (findhouseNm, houseCd, target) {
+function fnFindHouse(findhouseNm, houseCd, target) {
   if (event.keyCode != "13" && findhouseNm != "") {
     return; // 엔터일때만 수행
   }
@@ -2221,7 +2221,7 @@ var fnFindHouse = function (findhouseNm, houseCd, target) {
   });
 };
 
-var fnFindResrcNm = function (findResrcNm, resrcCd, target) {
+function fnFindResrcNm(findResrcNm, resrcCd, target) {
 
   if (event.keyCode != "13" && findResrcNm != "") {
     return; // 엔터일때만 수행
@@ -2262,7 +2262,7 @@ var fnFindResrcNm = function (findResrcNm, resrcCd, target) {
     }
   });
 };
-var fnFindProdNm = function (findProdNm, prodCd, target) {
+function fnFindProdNm(findProdNm, prodCd, target) {
 
   if (event.keyCode != "13") //  && findProdNm != ""
   {
@@ -2309,7 +2309,7 @@ var LogOutTime = function () {
   var timer = null;
   var limit = 1000 * 60 * 60 * 1;
   //limit : 1000 * 60 * 10,  //10분 후 로그아웃
-  var fnc = function () {fnGoPage('/logout');};
+  function fnc() {fnGoPage('/logout');};
   var start = function () {
     timer = window.setTimeout(function () {fnc();}, limit);
     //        $("#time_No",opener.document).val(1);
@@ -2334,7 +2334,7 @@ var LogOutTime = function () {
 
 };
 
-var fnCurPageNm = function () {
+function fnCurPageNm() {
   var pageName = "";
 
   var tempPageName = window.location.href;
@@ -2344,13 +2344,13 @@ var fnCurPageNm = function () {
   return pageName;
 };
 
-var fnInitLoading = function (gridCd) {
+function fnInitLoading(gridCd) {
 
   var div = "<div id=\"progress_" + gridCd + "\" style=\"display:none;width:100%;height:10px;background-image:url('/imgs/progress.gif');background-position:bottom;\"></div>";
   $("#" + gridCd).after(div);
 };
 
-var fnLoading = function (gridCd) {
+function fnLoading(gridCd) {
   var rs = {
     start: function () {
       $("#progress_" + gridCd).css("display", "");
@@ -2362,7 +2362,7 @@ var fnLoading = function (gridCd) {
   return rs;
 };
 
-var fnFindHouseCd = function (findNm, houseCd, target) {
+function fnFindHouseCd(findNm, houseCd, target) {
 
   if (houseCd == "") {
     if (event.keyCode != "13") {
@@ -2406,7 +2406,7 @@ var fnFindHouseCd = function (findNm, houseCd, target) {
 
 };
 
-var fnFindCompCd = function (findNm, findCd, target) {
+function fnFindCompCd(findNm, findCd, target) {
 
   if (findCd == "") {
     if (event.keyCode != "13") {
@@ -2450,7 +2450,7 @@ var fnFindCompCd = function (findNm, findCd, target) {
 
 };
 
-var fnFindProdCd = function (findNm, findCd, target) {
+function fnFindProdCd(findNm, findCd, target) {
 
   if (findCd == "") {
     if (event.keyCode != "13") {

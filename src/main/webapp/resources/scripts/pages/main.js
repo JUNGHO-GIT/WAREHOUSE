@@ -1,15 +1,16 @@
-var G_myTabs = "/";
-var G_myTabTarget = "/";
-var G_height = $(window).height() - 60;
-var G_tabCnt = 8;
+let TABS = "/";
+let TABS_TARGET = "/";
+let TABS_LIMIT = 8;
+let HEIGHT = window.innerHeight * 0.7;
 
 // 1. 탭 불러오기 --------------------------------------------------------------------------------->
-var fnSetTab = function (tabs) {
+function fnSetTab(tabs) {
+
   if (!tabs) {
     return;
   }
-  var tabArray = tabs.split(",");
 
+  var tabArray = tabs.split(",");
   var pageUrl = "";
   for (var i = 0; i < tabArray.length; i++) {
     var tabSplit = tabArray[i].split("@");
@@ -18,37 +19,28 @@ var fnSetTab = function (tabs) {
     }
     pageUrl += tabSplit[1];
   }
-  var param = "config=" + pageUrl;
-  var obj = {};
+
   $.ajax({
     url: "act/listSysMenu",
     type: "POST",
     dataType: "json",
-    data: param,
-    // ajax 호출을 header에 기록
+    data: `config=${pageUrl}`,
     beforeSend: function (xmlHttpRequest) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: function (data) {
+      let obj = {};
       for (var i = 0; i < data.length; i++) {
         obj[data[i].pageUrl] = data[i].pageNm;
       }
       fnTabInit(obj, tabArray);
     },
-    error: function (request, status, error) {
-      if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
-        fnGoPage("/reLogin");
-      }
-      else {
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }
-    },
+    error: ajaxErrorHandler
   });
 };
 
 // 2. 탭 초기화 --------------------------------------------------------------------------------->
-var fnTabInit = function (obj, tabArray) {
+function fnTabInit(obj, tabArray) {
 
   var lastPageUrl = "";
   var lastPageNo = "";
@@ -69,14 +61,16 @@ var fnTabInit = function (obj, tabArray) {
   }
   if (lastPageNo) {
     resultContents = `
-      <div class="frame_container" id="tabContents${lastPageNo}">
+      <div id="tabContents${lastPageNo}">
         <iframe
           id="ifr${lastPageNo}"
           src="${lastPageUrl}"
           width="100%"
-          height="${G_height}px"
+
           border="0"
-          frameborder="0">
+          frameborder="0"
+          loading="lazy"
+        >
         </iframe>
       </div>
     `;
@@ -85,15 +79,15 @@ var fnTabInit = function (obj, tabArray) {
 };
 
 // 3. 탭 불러오기 ------------------------------------------------------------------------------>
-var fnAddTabAll = function (pageNm, pageUrl, pageNo) {
+function fnAddTabAll(pageNm, pageUrl, pageNo) {
 
   var resultTab;
 
-  if (G_myTabs.indexOf("/" + pageNo + "/") > -1) {
+  if (TABS.indexOf("/" + pageNo + "/") > -1) {
     fnShowTab(pageNo, pageUrl);
   }
   else {
-    var tabs = G_myTabs.split("/");
+    var tabs = TABS.split("/");
     for (var k = 0; k < tabs.length; k++) {
       if (tabs[k]) {
         $("#tab" + tabs[k]).prop("class", "");
@@ -103,9 +97,9 @@ var fnAddTabAll = function (pageNm, pageUrl, pageNo) {
     fnMkTabCd(pageNo, pageUrl, "add");
 
     // 탭 생성갯수 제한하기
-    var tabCnt = G_myTabs.split("/").length - 1;
-    if (tabCnt > G_tabCnt) {
-      var firstTab = G_myTabs.split("/")[1];
+    var tabCnt = TABS.split("/").length - 1;
+    if (tabCnt > TABS_LIMIT) {
+      var firstTab = TABS.split("/")[1];
       fnRmTab(firstTab, "");
     }
     else {
@@ -132,20 +126,20 @@ var fnAddTabAll = function (pageNm, pageUrl, pageNo) {
 };
 
 // 4. 탭 코드 ----------------------------------------------------------------------------------->
-var fnMkTabCd = function (pageNo, pageUrl, pageParam) {
+function fnMkTabCd(pageNo, pageUrl, pageParam) {
 
   var newTab = pageNo;
-  var divTabCd = G_myTabs.split("/");
-  var divTabTarget = G_myTabTarget.split("/");
+  var divTabCd = TABS.split("/");
+  var divTabTarget = TABS_TARGET.split("/");
   var tabCnt = divTabCd.length;
 
-  if (tabCnt - 1 > G_tabCnt) {
-    G_myTabs = "/";
-    G_myTabTarget = "/";
+  if (tabCnt - 1 > TABS_LIMIT) {
+    TABS = "/";
+    TABS_TARGET = "/";
     for (var k = 0; k < tabCnt; k++) {
       if (k > 1) {
-        G_myTabs += divTabCd[k] + "/";
-        G_myTabTarget += divTabTarget[k] + "/";
+        TABS += divTabCd[k] + "/";
+        TABS_TARGET += divTabTarget[k] + "/";
       }
       else {
         $("#tab" + divTabCd[k]).remove();
@@ -153,17 +147,17 @@ var fnMkTabCd = function (pageNo, pageUrl, pageParam) {
     }
   }
   if (pageParam == "add") {
-    if (G_myTabs.indexOf("/" + pageNo + "/") < 0) {
-      G_myTabs += pageNo + "/";
+    if (TABS.indexOf("/" + pageNo + "/") < 0) {
+      TABS += pageNo + "/";
     }
-    if (G_myTabTarget.indexOf("/" + pageUrl + "/") < 0) {
-      G_myTabTarget += pageUrl + "/";
+    if (TABS_TARGET.indexOf("/" + pageUrl + "/") < 0) {
+      TABS_TARGET += pageUrl + "/";
     }
   }
   else {
-    G_myTabs = G_myTabs.split("/" + pageNo + "/").join("/");
-    G_myTabTarget = G_myTabTarget.split("/" + pageUrl + "/").join("/");
-    var divTabs = G_myTabs.split("/");
+    TABS = TABS.split("/" + pageNo + "/").join("/");
+    TABS_TARGET = TABS_TARGET.split("/" + pageUrl + "/").join("/");
+    var divTabs = TABS.split("/");
     var tabSize = divTabs.length;
     newTab = divTabs[tabSize - 2];
   }
@@ -171,16 +165,16 @@ var fnMkTabCd = function (pageNo, pageUrl, pageParam) {
 };
 
 // 1-2. 탭 추가 ----------------------------------------------------------------------------------->
-var fnAddTab = function (pageNm, pageUrl, pageNo) {
+function fnAddTab(pageNm, pageUrl, pageNo) {
 
   var resultTab;
   var resultContents;
 
-  if (G_myTabs.indexOf("/" + pageNo + "/") > -1) {
+  if (TABS.indexOf("/" + pageNo + "/") > -1) {
     fnShowTab(pageNo, pageUrl);
   }
   else {
-    var tabs = G_myTabs.split("/");
+    var tabs = TABS.split("/");
     for (var k = 0; k < tabs.length; k++) {
       if (tabs[k]) {
         $("#tab" + tabs[k]).prop("class", "");
@@ -211,14 +205,16 @@ var fnAddTab = function (pageNm, pageUrl, pageNo) {
 
     if ($("#tabContents" + pageNo).html() == undefined) {
       resultContents = `
-        <div class="frame_container" id="tabContents${pageNo}">
+        <div id="tabContents${pageNo}">
           <iframe
             id="ifr${pageNo}"
             src="${pageUrl}"
             width="100%"
-            height="${G_height}px"
+
             border="0"
-            frameborder="0">
+            frameborder="0"
+            loading="lazy"
+          >
           </iframe>
         </div>
       `;
@@ -228,7 +224,7 @@ var fnAddTab = function (pageNm, pageUrl, pageNo) {
 };
 
 // 1-3. 탭 제거 ----------------------------------------------------------------------------------->
-var fnRmTab = function (pageNo, pageUrl) {
+function fnRmTab(pageNo, pageUrl) {
 
   var posit = "";
 
@@ -247,27 +243,29 @@ var fnRmTab = function (pageNo, pageUrl) {
 };
 
 // 1-4. 탭 활성화 --------------------------------------------------------------------------------->
-var fnShowTab = function (pageNo, pageUrl) {
+function fnShowTab(pageNo, pageUrl) {
 
   var resultContents = $("#tabContents" + pageNo).html();
 
   if (resultContents == undefined) {
     resultContents = `
-      <div class="frame_container" id="tabContents${pageNo}">
+      <div id="tabContents${pageNo}">
         <iframe
           id="ifr${pageNo}"
           src="${pageUrl}"
+          width="100%"
+
           border="0"
           frameborder="0"
-          width="100%"
-          height="${G_height}px">
+          loading="lazy"
+        >
         </iframe>
       </div>
     `;
     $("#tabContents").append(resultContents );
   }
 
-  var tabs = G_myTabs.split("/");
+  var tabs = TABS.split("/");
 
   for (var k = 0; k < tabs.length; k++) {
     if (tabs[k]) {
@@ -282,9 +280,9 @@ var fnShowTab = function (pageNo, pageUrl) {
 };
 
 // 1-5. 새로고침 ---------------------------------------------------------------------------------->
-var fnIfrRefresh = function () {
+function fnIfrRefresh() {
 
-  var tabs = G_myTabs.split("/");
+  var tabs = TABS.split("/");
   var curTab = "";
   for (var k = 0; k < tabs.length; k++) {
     if (tabs[k]) {
@@ -299,7 +297,7 @@ var fnIfrRefresh = function () {
 };
 
 // 1-6. 탭 순서 저장 ------------------------------------------------------------------------------>
-var fnTabOrder = function () {
+function fnTabOrder() {
 
   var tabs = "";
   for (var i = 0; i < $("#tabs li").length; i++) {
@@ -314,23 +312,23 @@ var fnTabOrder = function () {
 };
 
 // 1-10. 탭 전부 닫기 ----------------------------------------------------------------------------->
-var fnCloseAllTab = function () {
+function fnCloseAllTab() {
 
-  var tabs = G_myTabs.split("/");
+  var tabs = TABS.split("/");
   for (var k = 0; k < tabs.length; k++) {
     if (tabs[k]) {
       $("#tab" + tabs[k]).remove();
       $("#tabContents" + tabs[k]).remove();
     }
   }
-  G_myTabs = "/";
-  G_myTabTarget = "/";
+  TABS = "/";
+  TABS_TARGET = "/";
 
   fnIfrRefresh();
 };
 
 // 3-1. 탭 sort ----------------------------------------------------------------------------------->
-var fnTabSortAndDrag = function () {
+function fnTabSortAndDrag() {
   $(`#tabs`).sortable({
     direction: 'horizontal',
 	  disabled: false,
@@ -346,7 +344,7 @@ var fnTabSortAndDrag = function () {
 };
 
 // 0. 탭 순서 저장 -------------------------------------------------------------------------------->
-var fnSaveUserConfigTab = function () {
+function fnSaveUserConfigTab() {
 
   var tabs = fnTabOrder();
   var configSeq = $("#configSeq").val();
@@ -380,7 +378,7 @@ var fnSaveUserConfigTab = function () {
 };
 
 // 0. 버전정보 표시 ------------------------------------------------------------------------------->
-var fnShowVersion = function () {
+function fnShowVersion() {
   $.ajax({
     type: "GET",
     url: "showVersion",
@@ -397,7 +395,7 @@ var fnShowVersion = function () {
 };
 
 // 0. 로그아웃 ------------------------------------------------------------------------------------>
-var fnLogOut = function () {
+function fnLogOut() {
   var encryptedItem = {"loginSession": "false"};
   var encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
   localStorage.setItem("loginSession", encryptedValue);
@@ -405,7 +403,7 @@ var fnLogOut = function () {
 };
 
 // 0. 세션 체크 ----------------------------------------------------------------------------------->
-var fnCheckSession = function () {
+function fnCheckSession() {
   window.addEventListener("storage", function (e) {
     if (e.key === "loginSession") {
       var decryptedItem = localStorage.getItem("loginSession");
@@ -419,7 +417,7 @@ var fnCheckSession = function () {
 };
 
 // 0. 현재 열려있는 탭 정보 console에 표시 -------------------------------------------------------->
-var fnConsoleTabInfo = function (rmTab) {
+function fnConsoleTabInfo(rmTab) {
   var tabs = document.querySelectorAll("li[id^='tab']");
   var tabIdRegex = /^tab\d+$/;
   var info = Array.from(tabs).map(function(tab) {
@@ -434,7 +432,7 @@ var fnConsoleTabInfo = function (rmTab) {
   console.log("닫기버튼을 누른 탭: " + rmTab);
   console.log("현재 열려있는 탭 갯수: " + info.split(",").length);
   console.log("현재 열려있는 탭: " + info);
-  console.log("G_myTabs: " + G_myTabs);
+  console.log("TABS: " + TABS);
 };
 
 // 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->

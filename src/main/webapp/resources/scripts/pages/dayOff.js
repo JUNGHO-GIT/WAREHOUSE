@@ -1,14 +1,15 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
-var fnGetList01 = function () {
+function fnGetList01 () {
 
-  var gridCd = "grid01";
+  const gridCd = "grid01";
 
-  var obj = {
+  /** @type {pq.gridT.options} **/
+  const gridOption = {
     numberCell:{show:true, resizable:false, width:30},
     xlsNm: "dayOff.xlsx",
     title: "   휴무일 관리",
-    width: "auto",
-    height: "auto",
+    width: "flex",
+    height: "flex",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -61,7 +62,7 @@ var fnGetList01 = function () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-var fnShow = function (offSeq) {
+function fnShow(offSeq) {
 
   fnReset();
 
@@ -85,7 +86,7 @@ var fnShow = function (offSeq) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-var fnSave = function () {
+function fnSave() {
   var userID = $("#userID option:selected").val() || "";
   var flagYN = $("#flagYN").val() || "Y";
   var offSeq = $("#offSeq").val() || 0;
@@ -162,12 +163,12 @@ var fnSave = function () {
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
-var fnDel = function () {
+function fnDel() {
   fnSave("N");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
-var fnReset = function () {
+function fnReset() {
   $("#userID").prop("disabled", false);
   $("#offCntDay").prop("disabled", false);
   $("#count").prop("readonly", false);
@@ -188,7 +189,7 @@ var dateFormat = function (date) {
 }
 
 // -------------------------------------------------------------------------------------------------
-var fnCheckUserID = function () {
+function fnCheckUserID() {
 
   if ($("#userID").val() == "") {
     alert("아이디를 바르게 입력해 주세요");
@@ -220,7 +221,7 @@ var fnCheckUserID = function () {
 };
 
 // -------------------------------------------------------------------------------------------------
-var fnGetUserInfo = function () {
+function fnGetUserInfo() {
 
   $("#userID").html("<option value=''>==사용자==</option>");
 
@@ -245,7 +246,7 @@ var fnGetUserInfo = function () {
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-var fnPressGet01 = function (event) {
+function fnPressGet01(event) {
   if (event.key === "Enter") {
     event.preventDefault();
     fnReset();
