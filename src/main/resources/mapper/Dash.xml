@@ -4,7 +4,7 @@
 <!-- 대시보드(Dash)의 XML Mapper -->
 <!-- 생성일 : 2023-12-01 19:14:54 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.DashDAO">
+<mapper namespace="com.bedone.wms.dao.DashDAO">
 
   <!-- 0. 공통 (입고, 출고) -->
   <select id="getInOutData" parameterType="hashmap" resultType="hashmap">

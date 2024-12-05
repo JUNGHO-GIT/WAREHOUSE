@@ -4,9 +4,9 @@
 <!-- 자재 Excel(ResourceXls)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.ResourceXlsDAO">
+<mapper namespace="com.bedone.wms.dao.ResourceXlsDAO">
 
-  <select id="saveResourceXls" parameterType="com.warehouse.container.Resource" resultType="com.warehouse.container.Resource">
+  <select id="saveResourceXls" parameterType="com.bedone.wms.container.Resource" resultType="com.bedone.wms.container.Resource">
   /* ResourceXls.saveResourceXls */
   CALL sp_ResourceXls (
     #{resrcNm}, #{resrcType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},

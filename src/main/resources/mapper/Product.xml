@@ -4,9 +4,9 @@
 <!-- 제품관리(Product)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.ProductDAO">
+<mapper namespace="com.bedone.wms.dao.ProductDAO">
 
-  <select id="listProduct" parameterType="hashmap" resultType="com.warehouse.container.Product">
+  <select id="listProduct" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
 		/* Product.listProduct */
 		<![CDATA[
     SELECT
@@ -62,7 +62,7 @@
     ) DESC
   </select>
 
-  <select id="showProduct" parameterType="hashmap" resultType="com.warehouse.container.Product">
+  <select id="showProduct" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
     /* Product.showProduct */
     <![CDATA[
     SELECT
@@ -100,7 +100,7 @@
     ]]>
   </select>
 
-  <select id="saveProduct" parameterType="com.warehouse.container.Product" resultType="Integer">
+  <select id="saveProduct" parameterType="com.bedone.wms.container.Product" resultType="Integer">
     /* Product.saveProduct */
     CALL sp_Product (
       #{prodCd}, #{prodNm}, #{prodType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},

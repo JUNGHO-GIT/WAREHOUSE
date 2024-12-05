@@ -2,7 +2,7 @@
 var fnShowExcel = function (body) {
 
   var gridCd = "grid01";
-  var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onClick="fnSelectAll()" />`;
+  var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
   var obj = {
     numberCell:{show:true, resizable:false, width:30},

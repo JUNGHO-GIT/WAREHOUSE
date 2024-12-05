@@ -21,7 +21,14 @@ var fnShowUserConfig = function () {
 // 2. 팝업 화면 유저정보 -------------------------------------------------------------------------->
 var fnShowUserConfigInfo = function () {
 
-  fnGridPopup("popup2", "on");
+  if ($(`#popup2`).hasClass("d-none")) {
+    $(`#popup2`).removeClass("d-none");
+    $(`#popup2`).addClass("d-block");
+  }
+  else {
+    $(`#popup2`).removeClass("d-block");
+    $(`#popup2`).addClass("d-none");
+  }
 
   $.ajax({
     url: "act/showUserConfigInfo",
@@ -220,7 +227,7 @@ var fnResetPw = function () {
 };
 
 // 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-$(document).ready(function() {
+jQuery(function($) {
   fnShowUserConfig();
   $("#popup2").draggable({ handle: "#popTop" });
   $("#popTop").css("cursor", "move");

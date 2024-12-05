@@ -224,7 +224,7 @@ var fnChangeList = function () {
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
-$(document).ready(function() {
+jQuery(function($) {
   var comboStr = [
     {part:"comCodeGroup", target:"findGroupCd", cd:""},
     {part:"comCodeGroup", target:"groupCd", cd:""}

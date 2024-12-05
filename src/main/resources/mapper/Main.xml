@@ -4,7 +4,7 @@
 <!-- 메인(Main)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.MainDAO">
+<mapper namespace="com.bedone.wms.dao.MainDAO">
 
   <select id="listMain" parameterType="hashmap" resultType="hashmap">
     /* Main.listMain */
@@ -12,7 +12,7 @@
     SELECT
       page, subPage, parentsPage, pageUrl, pageNm, pageIcon, pageOrder,
       CASE WHEN pageNo < 10 THEN CONCAT('0', pageNo) ELSE pageNo END pageNo,
-      CONCAT(page, subPage) findMenu
+      CONCAT(page, subPage) findPage
     FROM
     	tblSysMenu
     WHERE

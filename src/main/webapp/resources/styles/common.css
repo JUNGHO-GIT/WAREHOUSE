@@ -1,0 +1,102 @@
+.card {
+  background-color: #ffffff !important;
+  border-radius: 2px !important;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1) !important;
+  margin: -10px -5px 10px -5px !important;
+  padding: 10px 10px 0px 10px !important;
+  height: 100% !important;
+  overflow: auto !important;
+}
+.inline-btn {
+  width: 60px;
+  height: 23px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.delBtn {
+  width:17px;
+  margin: 0px;
+  padding: 0px;
+  color: #d9534f;
+  font-weight: 800;
+  background-color: #ffffff;
+}
+.chkBtn {
+  width:17px;
+  margin: 0px;
+  padding: 0px;
+  color: #428bca;
+  font-weight: 800;
+  background-color: #ffffff;
+}
+.scroll-view {
+  transition: all 0.4s ease !important;
+  opacity: 1 !important;
+}
+.navbar {
+  transition: all 0.4s ease !important;
+  opacity: 1 !important;
+}
+.nav_title {
+  transition: all 0.4s ease !important;
+  opacity: 1 !important;
+}
+.sidebar-menu {
+  transition: all 0.4s ease !important;
+  opacity: 1 !important;
+}
+.pq-grid-cell {
+  text-align: center !important;
+}
+.pq-grid-header{
+  text-align: center !important;
+}
+.pq-grid-number-cell {
+  text-align: center !important;
+}
+.pq-grid > .pq-grid-top {
+  height:35px !important;
+}
+
+.gnb_wrap {
+	width: 100%;
+	min-height: 60px;
+	position: relative;
+	background: #ededed;
+	border: 1px solid #d9dee4;
+}
+.gnb_toggle {
+	position: absolute;
+  left: 25px;
+	bottom: 15px;
+  z-index: 100;
+}
+.gnb_tab {
+	position: absolute;
+  bottom: 0;
+}
+.gnb_tab > ul {
+	margin: 0 0 0 85px;
+	padding: 0;
+}
+.gnb_tab > ul > li {
+	list-style: none;
+	padding: 0;
+}
+.gnb_tab > ul > li > div:hover,
+.gnb_tab > ul > li.active > div {
+	background: #f7f7f7;
+}
+.gnb_tab > ul > li > span > i {
+	margin-left: -22px;
+	margin-right: 13px;
+}
+.gnb_tab > ul > li > span > i:hover {
+	cursor: pointer;
+	color: #f60;
+}
+.save_gnb {
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+}

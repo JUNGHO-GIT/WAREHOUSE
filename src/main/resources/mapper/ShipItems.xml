@@ -4,7 +4,7 @@
 <!-- 출하 관리 (ShipItems) -->
 <!-- 생성일 : 2021-05-22 10:5:56 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.ShipItemsDAO">
+<mapper namespace="com.bedone.wms.dao.ShipItemsDAO">
 
   <select id="listShipItems" parameterType="hashmap" resultType="hashmap">
     /* ShipItems.listShipItems */
@@ -111,7 +111,7 @@
       A.shipDt DESC
   </select>
 
-  <select id="saveShipItems" parameterType="com.warehouse.container.Shipping">
+  <select id="saveShipItems" parameterType="com.bedone.wms.container.Shipping">
     /* ShipItems.saveShipItems */
     CALL sp_Shipping (
       #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},

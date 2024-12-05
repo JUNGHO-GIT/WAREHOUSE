@@ -1,25 +1,31 @@
-var G_myTabs = "";
-var G_myTabTarget = "";
-var G_tabCnt = 10;
+var G_myTabs = "/";
+var G_myTabTarget = "/";
+var G_height = $(window).height() - 60;
+var G_tabCnt = 8;
 
-// ------------------------------------------------------------------------------------------------>
-var fnSetTab = function (userConfigTabs) {
-
-  if (!userConfigTabs) {
+// 1. 탭 불러오기 --------------------------------------------------------------------------------->
+var fnSetTab = function (tabs) {
+  if (!tabs) {
     return;
   }
+  var tabArray = tabs.split(",");
 
-  var tabArray = userConfigTabs.split(",");
-  var tabUrls = tabArray.map(function(tab) {
-    return tab.split("@")[1];
-  }).join(",");
-
+  var pageUrl = "";
+  for (var i = 0; i < tabArray.length; i++) {
+    var tabSplit = tabArray[i].split("@");
+    if (pageUrl) {
+      pageUrl += ",";
+    }
+    pageUrl += tabSplit[1];
+  }
+  var param = "config=" + pageUrl;
   var obj = {};
   $.ajax({
     url: "act/listSysMenu",
-    data: `config=${tabUrls}`,
     type: "POST",
-    dataType: "JSON",
+    dataType: "json",
+    data: param,
+    // ajax 호출을 header에 기록
     beforeSend: function (xmlHttpRequest) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -29,293 +35,306 @@ var fnSetTab = function (userConfigTabs) {
       }
       fnTabInit(obj, tabArray);
     },
-    error: ajaxErrorHandler,
+    error: function (request, status, error) {
+      if (request.status == 477) {
+        alert("세션이 종료 되었습니다.");
+        fnGoPage("/reLogin");
+      }
+      else {
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    },
   });
 };
 
-// ------------------------------------------------------------------------------------------------>
+// 2. 탭 초기화 --------------------------------------------------------------------------------->
 var fnTabInit = function (obj, tabArray) {
 
-  let lastTabUrl = "";
-  let lastTabCd = "";
+  var lastPageUrl = "";
+  var lastPageNo = "";
+  var resultContents;
 
-  tabArray.forEach(function(tab) {
-    var [tabCd, tabUrl] = tab.split("@");
-    if (obj[tabUrl]) {
-      fnAddTabAll(obj[tabUrl], tabUrl, tabCd);
-      lastTabUrl = tabUrl;
-      lastTabCd = tabCd;
+  for (var i = 0; i < tabArray.length; i++) {
+    var tabSplit = tabArray[i].split("@");
+    var pageUrl = "";
+    for (var key in obj) {
+      var pageNm = obj[key];
+      var pageUrl = key;
+      if (pageUrl == tabSplit[1]) {
+        fnAddTabAll(pageNm, pageUrl, tabSplit[0]);
+        lastPageUrl = pageUrl;
+        lastPageNo = tabSplit[0];
+      }
     }
-  });
-
-  if (!lastTabCd) {
-    return;
   }
-
-  const tabContents = (
-    /* javascript */`
-    <div id="tabContents${lastTabCd}">
-      <iframe
-        id="frame${lastTabCd}"
-        src="${lastTabUrl}"
-        width="100%"
-        height="600px"
-        border="0"
-        frameborder="0"
-        scrolling="auto"
-        loading="lazy"
-      ></iframe>
-    </div>`
-  );
-  $(`#tabContents`).append(tabContents);
+  if (lastPageNo) {
+    resultContents = `
+      <div class="frame_container" id="tabContents${lastPageNo}">
+        <iframe
+          id="ifr${lastPageNo}"
+          src="${lastPageUrl}"
+          width="100%"
+          height="${G_height}px"
+          border="0"
+          frameborder="0">
+        </iframe>
+      </div>
+    `;
+    $("#tabContents").append(resultContents);
+  }
 };
 
-// ------------------------------------------------------------------------------------------------>
-var fnAddTabAll = function (tabText, page, pageNo) {
+// 3. 탭 불러오기 ------------------------------------------------------------------------------>
+var fnAddTabAll = function (pageNm, pageUrl, pageNo) {
+
+  var resultTab;
 
   if (G_myTabs.indexOf("/" + pageNo + "/") > -1) {
-    fnShowTab(pageNo, page);
+    fnShowTab(pageNo, pageUrl);
   }
   else {
-    // 기존 탭의 클래스 및 표시 상태 업데이트
-    G_myTabs.split("/").forEach(function(tab) {
-      if (tab) {
-        $(`#tab${tab}`).removeClass("active");
-        $(`#tabContents${tab}`).addClass("d-none");
+    var tabs = G_myTabs.split("/");
+    for (var k = 0; k < tabs.length; k++) {
+      if (tabs[k]) {
+        $("#tab" + tabs[k]).prop("class", "");
       }
-    });
-
-    // 새 탭 추가 전 탭 개수 재계산
-    var tabCnt = G_myTabs.split("/").filter(function(tab) {
-      return tab;
-    }).length;
-
-    // 탭 개수 제한을 초과한 경우, 가장 오래된 탭 제거
-    if (tabCnt >= G_tabCnt) {
-      var firstTab = G_myTabs.split("/").filter(function(tab) {
-        return tab;
-      })[0];
-      fnRmTab(firstTab, "");
     }
 
-    // 새 탭 DOM 요소 추가
-    const tabEl = (
-      /* javascript */`
-      <div
-        id="tab${pageNo}"
-        page="${page}"
-        class="border-1 shadow-1 p-13px drag bg-light"
-        style="display: flex; justify-content: center; align-items: center;"
-      >
-        <div
-          class="fs-0-8rem fw-600 black pointer-navy"
-          onClick="fnShowTab('${pageNo}', '${page}')"
-        >
-          ${tabText}
-        </div>
-        <div
-          class="fs-0-8rem fw-700 burgundy pointer-burgundy ml-1vw"
-          onClick="fnRmTab('${pageNo}', '${page}')"
-        >
-          x
-        </div>
-      </div>`
-    );
-    $(`#tabContainer`).append(tabEl);
-    $(`#tab${pageNo}`).addClass("active");
-    fnMkTabCd(pageNo, page, "add");
+    fnMkTabCd(pageNo, pageUrl, "add");
+
+    // 탭 생성갯수 제한하기
+    var tabCnt = G_myTabs.split("/").length - 1;
+    if (tabCnt > G_tabCnt) {
+      var firstTab = G_myTabs.split("/")[1];
+      fnRmTab(firstTab, "");
+    }
+    else {
+      resultTab = (/* javascript */`
+        <li class="active" id="tab${pageNo}" pageUrl="${pageUrl}">
+          <div
+            class="border-1 shadow-1 p-15px pointer"
+            onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+            style="display: flex; justify-content: center; align-items: center;"
+          >
+          <div class="fs-0-8rem fw-500 navy pointer-navy">
+            ${pageNm}
+          </div>
+          <i class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+            onclick="fnRmTab('${pageNo}', '${pageUrl}')"
+          >
+          </i>
+          </div>
+        </li>
+      `);
+      $("#tabs").append(resultTab);
+    }
   }
 };
 
-// ------------------------------------------------------------------------------------------------>
-var fnMkTabCd = function (pageNo, page, pageAttr) {
+// 4. 탭 코드 ----------------------------------------------------------------------------------->
+var fnMkTabCd = function (pageNo, pageUrl, pageParam) {
 
-  var tabArray = G_myTabs.split("/").filter(function(tab) {
-    return tab;
-  });
+  var newTab = pageNo;
+  var divTabCd = G_myTabs.split("/");
+  var divTabTarget = G_myTabTarget.split("/");
+  var tabCnt = divTabCd.length;
 
-  var targetArray = G_myTabTarget.split("/").filter(function(target) {
-    return target;
-  });
-
-  if (pageAttr === "add") {
-    if (!tabArray.includes(pageNo.toString())) {
-      tabArray.push(pageNo);
+  if (tabCnt - 1 > G_tabCnt) {
+    G_myTabs = "/";
+    G_myTabTarget = "/";
+    for (var k = 0; k < tabCnt; k++) {
+      if (k > 1) {
+        G_myTabs += divTabCd[k] + "/";
+        G_myTabTarget += divTabTarget[k] + "/";
+      }
+      else {
+        $("#tab" + divTabCd[k]).remove();
+      }
     }
-    if (!targetArray.includes(page)) {
-      targetArray.push(page);
+  }
+  if (pageParam == "add") {
+    if (G_myTabs.indexOf("/" + pageNo + "/") < 0) {
+      G_myTabs += pageNo + "/";
+    }
+    if (G_myTabTarget.indexOf("/" + pageUrl + "/") < 0) {
+      G_myTabTarget += pageUrl + "/";
     }
   }
   else {
-    var tabIndex = tabArray.indexOf(pageNo.toString());
-    if (tabIndex > -1) {
-      tabArray.splice(tabIndex, 1);
-    }
-    var targetIndex = targetArray.indexOf(page);
-    if (targetIndex > -1) {
-      targetArray.splice(targetIndex, 1);
-    }
+    G_myTabs = G_myTabs.split("/" + pageNo + "/").join("/");
+    G_myTabTarget = G_myTabTarget.split("/" + pageUrl + "/").join("/");
+    var divTabs = G_myTabs.split("/");
+    var tabSize = divTabs.length;
+    newTab = divTabs[tabSize - 2];
   }
-
-  G_myTabs = tabArray.join("/");
-  G_myTabTarget = targetArray.join("/");
+  return newTab;
 };
 
-// ------------------------------------------------------------------------------------------------>
-var fnAddTab = function (tabText, page, pageNo) {
-  var tabArray = G_myTabs.split("/").filter(function(tab) {
-    return tab;
-  });
+// 1-2. 탭 추가 ----------------------------------------------------------------------------------->
+var fnAddTab = function (pageNm, pageUrl, pageNo) {
 
-  // 탭이 이미 존재하는 경우, 해당 탭을 표시
-  if (tabArray.includes(pageNo.toString())) {
-    fnShowTab(pageNo, page);
+  var resultTab;
+  var resultContents;
+
+  if (G_myTabs.indexOf("/" + pageNo + "/") > -1) {
+    fnShowTab(pageNo, pageUrl);
   }
   else {
-    // 탭 개수 제한 확인
-    if (tabArray.length >= G_tabCnt) {
-      // 가장 오래된 탭 제거
-      var firstTab = tabArray[0];
-      fnRmTab(firstTab, "");
+    var tabs = G_myTabs.split("/");
+    for (var k = 0; k < tabs.length; k++) {
+      if (tabs[k]) {
+        $("#tab" + tabs[k]).prop("class", "");
+        $("#tabContents" + tabs[k]).css("display", "none");
+      }
     }
+    fnMkTabCd(pageNo, pageUrl, "add");
 
-    // 기존 탭의 클래스 및 표시 상태 업데이트
-    tabArray.forEach(function(tab) {
-      $(`#tab${tab}`).removeClass("active");
-      $(`#tabContents${tab}`).addClass("d-none");
-    });
-
-    // 새 탭 추가
-    fnMkTabCd(pageNo, page, "add");
-
-    const tabEl = (
-      /* javascript */`
-      <div
-        id="tab${pageNo}"
-        page="${page}"
-        class="border-1 shadow-1 p-13px drag bg-light"
-        style="display: flex; justify-content: center; align-items: center;"
-      >
+    // 탭추가
+    resultTab = (/* javascript */`
+      <li class="active" id="tab${pageNo}" pageUrl="${pageUrl}">
         <div
-          class="fs-0-8rem fw-600 black pointer-navy"
-          onClick="fnShowTab('${pageNo}', '${page}')"
+          class="border-1 shadow-1 p-15px pointer"
+          onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+          style="display: flex; justify-content: center; align-items: center;"
         >
-          ${tabText}
+          <div class="fs-0-8rem fw-500 navy pointer-navy">
+            ${pageNm}
+          </div>
+          <i class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+            onclick="fnRmTab('${pageNo}', '${pageUrl}')"
+          >
+          </i>
         </div>
-        <div
-          class="fs-0-8rem fw-700 burgundy pointer-burgundy ml-1vw"
-          onClick="fnRmTab('${pageNo}', '${page}')"
-        >
-          x
+      </li>
+    `);
+    $("#tabs").append(resultTab);
+
+    if ($("#tabContents" + pageNo).html() == undefined) {
+      resultContents = `
+        <div class="frame_container" id="tabContents${pageNo}">
+          <iframe
+            id="ifr${pageNo}"
+            src="${pageUrl}"
+            width="100%"
+            height="${G_height}px"
+            border="0"
+            frameborder="0">
+          </iframe>
         </div>
-      </div>`
-    );
-    const tabContents = (
-      /* javascript */`
-      <div id="tabContents${pageNo}">
+      `;
+      $("#tabContents").append(resultContents);
+    }
+  }
+};
+
+// 1-3. 탭 제거 ----------------------------------------------------------------------------------->
+var fnRmTab = function (pageNo, pageUrl) {
+
+  var posit = "";
+
+  if ($("#tab" + pageNo).prop("class") == "active") {
+    posit = "last";
+  }
+  $("#tab" + pageNo).remove();
+  $("#tabContents" + pageNo).remove();
+
+  var lastTab = fnMkTabCd(pageNo, pageUrl, "rm");
+
+  if (posit == "last") {
+    $("#tab" + lastTab).prop("class", "active");
+    $("#tabContents" + lastTab).css("display", "");
+  }
+};
+
+// 1-4. 탭 활성화 --------------------------------------------------------------------------------->
+var fnShowTab = function (pageNo, pageUrl) {
+
+  var resultContents = $("#tabContents" + pageNo).html();
+
+  if (resultContents == undefined) {
+    resultContents = `
+      <div class="frame_container" id="tabContents${pageNo}">
         <iframe
           id="ifr${pageNo}"
-          src="${page}"
-          width="100%"
-          height="600px"
+          src="${pageUrl}"
           border="0"
           frameborder="0"
-          scrolling="auto"
-          loading="lazy"
-        ></iframe>
-      </div>`
-    );
+          width="100%"
+          height="${G_height}px">
+        </iframe>
+      </div>
+    `;
+    $("#tabContents").append(resultContents );
+  }
 
-    $(`#tabContainer`).append(tabEl);
-    $(`#tabContents`).append(tabContents);
-    $(`#tab${pageNo}`).addClass("active");
-    $(`#tabContents${pageNo}`).removeClass("d-none");
+  var tabs = G_myTabs.split("/");
+
+  for (var k = 0; k < tabs.length; k++) {
+    if (tabs[k]) {
+      $("#tab" + tabs[k]).prop("class", "");
+      $("#tab" + tabs[k]).css("z-index", "3");
+      $("#tabContents" + tabs[k]).css("display", "none");
+    }
+  }
+  $("#tab" + pageNo).prop("class", "active");
+  $("#tab" + pageNo).css("z-index", "10");
+  $("#tabContents" + pageNo).css("display", "");
+};
+
+// 1-5. 새로고침 ---------------------------------------------------------------------------------->
+var fnIfrRefresh = function () {
+
+  var tabs = G_myTabs.split("/");
+  var curTab = "";
+  for (var k = 0; k < tabs.length; k++) {
+    if (tabs[k]) {
+      if ($("#tab" + tabs[k]).prop("class") == "active") {
+        curTab = tabs[k];
+      }
+    }
+  }
+  if (curTab) {
+    $("#ifr" + curTab).attr("src", $("#ifr" + curTab).attr("src"));
   }
 };
 
-// ------------------------------------------------------------------------------------------------>
-var fnShowTab = function (pageNo, page) {
-
-  console.log("fnShowTab: " + pageNo + ", " + page);
-
-  const tabContents = (
-    /* javascript */`
-    <div id="tabContents${pageNo}">
-      <iframe
-        id="ifr${pageNo}"
-        src="${page}"
-        width="100%"
-        height="600px"
-        border="0"
-        frameborder="0"
-        scrolling="auto"
-        loading="lazy"
-      >
-      </iframe>
-    </div>`
-  );
-
-  if (!$(`#tabContents${pageNo}`).html()) {
-    $(`#tabContents`).append(tabContents);
-  }
-
-  const tabArray = G_myTabs.split("/").filter(function(tab) {
-    return tab;
-  });
-
-  tabArray.forEach(function(tab) {
-    $(`#tab${tab}`).removeClass("active");
-    $(`#tabContents${tab}`).addClass("d-none");
-  });
-
-  $(`#tab${pageNo}`).addClass("active");
-  $(`#tabContents${pageNo}`).removeClass("d-none");
-};
-
-// ------------------------------------------------------------------------------------------------>
-var fnRmTab = function (pageNo, page) {
-
-  const tabEl = $(`#tab${pageNo}`);
-  const tabContentsEl = $(`#tabContents${pageNo}`);
-  const lastTab = fnMkTabCd(pageNo, page, "rm");
-  let isActive = "";
-
-  if (tabEl.hasClass("active")) {
-    isActive = "last";
-  }
-
-  tabEl.remove();
-  tabContentsEl.remove();
-
-  if (isActive === "last") {
-    $(`#tab${lastTab}`).addClass("active");
-    $(`#tabContents${lastTab}`).removeClass("d-none");
-  }
-
-  // 로그 찍기
-  fnConsoleTabInfo(pageNo);
-};
-
-// 3. 탭 정렬하기 --------------------------------------------------------------------------------->
+// 1-6. 탭 순서 저장 ------------------------------------------------------------------------------>
 var fnTabOrder = function () {
-  const tabContainers = $(`#tabContainer`).children();
-  const tabOrder = tabContainers.map((_, tab) => {
-    const tabCd = $(tab).attr("id").replace("tab", "");
-    const tabPage = $(tab).attr("page");
-    return `${tabCd}@${tabPage}`;
-  })
-  .get()
-  .join(",");
 
-  return tabOrder;
+  var tabs = "";
+  for (var i = 0; i < $("#tabs li").length; i++) {
+    var tabCd = $("#tabs li").eq(i).attr("id").split("tab").join("");
+    var tabPage = $("#tabs li").eq(i).attr("pageUrl");
+    if (tabs) {
+      tabs += ",";
+    }
+    tabs += tabCd + "@" + tabPage;
+  }
+  return tabs;
+};
+
+// 1-10. 탭 전부 닫기 ----------------------------------------------------------------------------->
+var fnCloseAllTab = function () {
+
+  var tabs = G_myTabs.split("/");
+  for (var k = 0; k < tabs.length; k++) {
+    if (tabs[k]) {
+      $("#tab" + tabs[k]).remove();
+      $("#tabContents" + tabs[k]).remove();
+    }
+  }
+  G_myTabs = "/";
+  G_myTabTarget = "/";
+
+  fnIfrRefresh();
 };
 
 // 3-1. 탭 sort ----------------------------------------------------------------------------------->
 var fnTabSortAndDrag = function () {
-  $("#tabContainer").sortable({
-    // @ts-ignore
+  $(`#tabs`).sortable({
     direction: 'horizontal',
 	  disabled: false,
+    // @ts-ignore
     sort: true,
     delay: 0,
     store: null,
@@ -323,32 +342,7 @@ var fnTabSortAndDrag = function () {
     easing: "cubic-bezier(1, 0, 0, 1)",
   });
 
-  $("#tabContainer").disableSelection();
-};
-
-// 4. 탭 새로고침 --------------------------------------------------------------------------------->
-var fnRefreshTab = function () {
-
-  const tabContainers = G_myTabs.split("/");
-  const curTab = tabContainers.find(tab => $(`#tab${tab}`).prop("class") === "active");
-
-  if (curTab) {
-    $(`#ifr${curTab}`).attr("src", $(`#ifr${curTab}`).attr("src"));
-  }
-};
-
-// 4. 탭 전부 닫기 -------------------------------------------------------------------------------->
-var fnCloseAllTab = function () {
-  var tabs = G_myTabs.split("/");
-  for (var k = 0; k < tabs.length; k++) {
-    if (tabs[k]) {
-      $(`#tab${tabs[k]}`).remove();
-      $(`#tabContents${tabs[k]}`).remove();
-    }
-  }
-  // 전역 변수 초기화
-  G_myTabs = "";
-  G_myTabTarget = "";
+  $(`#tabs`).disableSelection();
 };
 
 // 0. 탭 순서 저장 -------------------------------------------------------------------------------->
@@ -444,7 +438,7 @@ var fnConsoleTabInfo = function (rmTab) {
 };
 
 // 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
-jQuery(function() {
+jQuery(function($) {
   fnShowVersion();
   fnCheckSession();
   fnTabSortAndDrag();

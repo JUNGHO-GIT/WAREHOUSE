@@ -4,9 +4,9 @@
 <!-- 자재(Resource)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.ResourceDAO">
+<mapper namespace="com.bedone.wms.dao.ResourceDAO">
 
-  <select id="listResource" parameterType="hashmap" resultType="com.warehouse.container.Resource">
+  <select id="listResource" parameterType="hashmap" resultType="com.bedone.wms.container.Resource">
 		/* Resource.listResource */
 		<![CDATA[
     SELECT
@@ -62,7 +62,7 @@
     ) DESC
   </select>
 
-  <select id="showResource" parameterType="hashmap" resultType="com.warehouse.container.Resource">
+  <select id="showResource" parameterType="hashmap" resultType="com.bedone.wms.container.Resource">
     /* Resource.showResource */
     <![CDATA[
     SELECT
@@ -100,7 +100,7 @@
     ]]>
   </select>
 
-  <select id="saveResource" parameterType="com.warehouse.container.Resource" resultType="Integer">
+  <select id="saveResource" parameterType="com.bedone.wms.container.Resource" resultType="Integer">
     /* Resource.saveResource */
     CALL sp_Resource (
       #{resrcCd}, #{resrcNm}, #{resrcType}, #{houseCd}, #{protectedQty}, #{option1}, #{unit},

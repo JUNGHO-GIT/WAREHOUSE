@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application generated-by="maven" build-tool-version="4.0.0-alpha-10" plugin-version="1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_3.xsd">
+
+<!--
+  This is the JRebel configuration file. It maps the running application to your IDE workspace, enabling JRebel reloading for this project.
+  Refer to https://manuals.jrebel.com/jrebel/standalone/config.html for more information.
+-->
+<application generated-by="vscode" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
+
 	<classpath>
-		<dir name="E:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/Warehouse_Work/Warehouse/target/classes/">
-      <include name="**/com/**" />
-      <include name="**/mapper/**" />
+		<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE_TEST/target/classes">
 		</dir>
-  </classpath>
+	</classpath>
+
 	<web>
 		<link target="/">
-      <dir name="E:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/Warehouse_Work/Warehouse/src/main/webapp" />
-    </link>
-  </web>
+			<dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE_TEST/src/main/webapp">
+			</dir>
+		</link>
+	</web>
+
 </application>

@@ -93,10 +93,10 @@ var fnGetPartsUser = function () {
         }
         var userText = `
           <div class="row mt-10px" style="white-space:nowrap;">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               ▷ ${detail.pageNm}
             </div>
-            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 ml-10px">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-10px">
               <input
                 type="radio"
                 class="user${i}"
@@ -106,7 +106,7 @@ var fnGetPartsUser = function () {
               />
               <span>있음</span>
             </div>
-            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 ml-10px">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-10px">
               <input
                 type="radio"
                 class="user${i}"
@@ -450,7 +450,7 @@ var fnChangeList = function () {
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
-$(document).ready(function() {
+jQuery(function($) {
   var comboStr = [{part:"comCode", target:"uLevel", groupCd:"0001", format:"combo"}];
   fnInitCombo(comboStr, function() {
     fnGetList01();

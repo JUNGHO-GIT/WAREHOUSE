@@ -4,9 +4,9 @@
 <!-- 공통(Common)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.CommonDAO">
+<mapper namespace="com.bedone.wms.dao.CommonDAO">
 
-  <select id="findBom" parameterType="hashmap" resultType="com.warehouse.container.Product">
+  <select id="findBom" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
     /* Common.findBom */
     <![CDATA[
     SELECT
@@ -37,7 +37,7 @@
     </if>
   </select>
 
-  <select id="findCompNm" parameterType="hashmap" resultType="com.warehouse.container.Company">
+  <select id="findCompNm" parameterType="hashmap" resultType="com.bedone.wms.container.Company">
     /* Common.findCompNm */
     <![CDATA[
     SELECT
@@ -54,7 +54,7 @@
 		ORDER BY A.compCd ASC;
   </select>
 
-  <select id="findCompCd" parameterType="hashmap" resultType="com.warehouse.container.Company">
+  <select id="findCompCd" parameterType="hashmap" resultType="com.bedone.wms.container.Company">
     /* Common.findCompCd */
     <![CDATA[
     SELECT
@@ -78,7 +78,7 @@
     ORDER BY A.compCd ASC;
   </select>
 
-  <select id="findProdNm" parameterType="hashmap" resultType="com.warehouse.container.Product">
+  <select id="findProdNm" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
     /* Common.findProdNm */
 		<![CDATA[
     SELECT
@@ -107,7 +107,7 @@
 		ORDER BY A.prodNm ASC
   </select>
 
-  <select id="findProdCd" parameterType="hashmap" resultType="com.warehouse.container.Product">
+  <select id="findProdCd" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
     /* Common.findProdCd */
     <![CDATA[
     SELECT
@@ -143,7 +143,7 @@
     ORDER BY A.prodNm ASC
   </select>
 
-  <select id="findResrcNm" parameterType="hashmap" resultType="com.warehouse.container.Resource">
+  <select id="findResrcNm" parameterType="hashmap" resultType="com.bedone.wms.container.Resource">
     /* Common.findResrcNm */
     <![CDATA[
     SELECT
@@ -172,7 +172,7 @@
     ORDER BY A.resrcNm ASC
   </select>
 
-  <select id="findResrcCd" parameterType="hashmap" resultType="com.warehouse.container.Resource">
+  <select id="findResrcCd" parameterType="hashmap" resultType="com.bedone.wms.container.Resource">
     /* Common.findResrcCd */
     <![CDATA[
     SELECT
@@ -208,7 +208,7 @@
     ORDER BY A.resrcNm ASC
   </select>
 
-  <select id="findHouseNm" parameterType="hashmap" resultType="com.warehouse.container.House">
+  <select id="findHouseNm" parameterType="hashmap" resultType="com.bedone.wms.container.House">
     /* Common.findHouseNm */
     <![CDATA[
     SELECT
@@ -225,7 +225,7 @@
 		ORDER BY A.houseCd ASC;
   </select>
 
-  <select id="findHouseCd" parameterType="hashmap" resultType="com.warehouse.container.House">
+  <select id="findHouseCd" parameterType="hashmap" resultType="com.bedone.wms.container.House">
     /* Common.findHouseCd */
     <![CDATA[
     SELECT

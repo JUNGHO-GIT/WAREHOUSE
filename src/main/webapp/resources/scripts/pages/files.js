@@ -118,19 +118,19 @@ var fnShowFiles = function (tableNm, tableKey, target) {
         if (imgFile.includes(`.${file.fileUrl.split(".").pop()}`)) {
           $("#" + target).append(`
             <div id="imageRow${k}" class="d-inline-block text-left pointer"
-            onClick="fnShowSelectedFiles('${file.fileUrl}', ${k})">
+            onclick="fnShowSelectedFiles('${file.fileUrl}', ${k})">
               <img src="/imgs/pre.png"
-                onClick="fnPopupImage('${file.fileUrl}');"
+                onclick="fnPopupImage('${file.fileUrl}');"
                 style="${imgStyle}"
                 loading="lazy"
               />
               <img src="/imgs/download.png"
-                onClick="fnDownloadFiles('${file.fileUrl}');"
+                onclick="fnDownloadFiles('${file.fileUrl}');"
                 style="${imgStyle}"
                 loading="lazy"
               />
               <img src="/imgs/del.png"
-                onClick="fnDeleteFiles('${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}');"
+                onclick="fnDeleteFiles('${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}');"
                 style="${imgStyle}"
                 loading="lazy"
               />

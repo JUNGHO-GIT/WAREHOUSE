@@ -4,9 +4,9 @@
 <!-- 회원정보(User)의 XML Mapper -->
 <!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.UserDAO">
+<mapper namespace="com.bedone.wms.dao.UserDAO">
 
-  <select id="listUser" parameterType="hashmap" resultType="com.warehouse.container.User">
+  <select id="listUser" parameterType="hashmap" resultType="com.bedone.wms.container.User">
     /* User.listUser */
     <![CDATA[
     SELECT
@@ -29,7 +29,7 @@
     ORDER BY A.userNm ASC
   </select>
 
-  <select id="showUser" parameterType="hashmap" resultType="com.warehouse.container.User">
+  <select id="showUser" parameterType="hashmap" resultType="com.bedone.wms.container.User">
     /* User.showUser */
     SELECT
       userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
@@ -39,7 +39,7 @@
       userID = #{userID}
   </select>
 
-  <select id="saveUser" parameterType="com.warehouse.container.User" resultType="Integer">
+  <select id="saveUser" parameterType="com.bedone.wms.container.User" resultType="Integer">
     /* User.saveUser */
     CALL sp_User (
       #{userID}, #{passwd}, #{userNm}, #{phone}, #{email}, #{uLevel}, #{compCd}, #{uPerm},

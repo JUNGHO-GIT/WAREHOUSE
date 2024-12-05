@@ -29,11 +29,11 @@ var fnInOutChart = function (keyParam, inOutParam, planParam, dateParam) {
       var htmlContent = todayList.map(function(item) {
         return `
           <div class="row mb-2px">
-            <div class="col-6">
+            <div class="col-xs-6">
               <div>${item.prodNm}</div>
               <div class="small text-white text-opacity-50">${item.sessionCnt} session</div>
             </div>
-            <div class="col-6 text-end">
+            <div class="col-xs-6 text-end">
               ${item.qty}
             </div>
           </div>

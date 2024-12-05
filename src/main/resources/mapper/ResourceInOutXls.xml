@@ -4,9 +4,9 @@
 <!-- 자재 입출고 Excel(ResourceInOutXls)의 XML Mapper -->
 <!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.ResourceInOutXlsDAO">
+<mapper namespace="com.bedone.wms.dao.ResourceInOutXlsDAO">
 
-  <select id="saveResourceInOutXls" parameterType="com.warehouse.container.ResourceInOut" resultType="com.warehouse.container.ResourceInOut">
+  <select id="saveResourceInOutXls" parameterType="com.bedone.wms.container.ResourceInOut" resultType="com.bedone.wms.container.ResourceInOut">
     /* ResourceInOutXls.saveResourceInOutXls */
     CALL sp_ResourceInOutXls (
       #{inOutDt}, #{resrcCd}, #{qty}, #{compCd}, #{houseCd}, #{unitPrice}, #{remark},

@@ -34,15 +34,23 @@ var fnGetList01 = function () {
     var imageUrl = "";
     var noImage = "no-image.webp";
     var noGridImage = "noGridImage.webp";
-    var rowImage = ui.rowData.fileUrl;
-    if (rowImage === undefined || rowImage === null) {
-      imageUrl=`<img src=viewFiles?fileUrl=${noImage} class="cards-gridImage" loading="lazy"/>`;
-    }
-    else if (ui.rowData.fileUrl === noGridImage) {
-      imageUrl=`<img src=viewFiles?fileUrl=${noImage} class="cards-emptyImage" loading="lazy"/>`;
+    var rowImage = ui.rowData.fileUrl;if (!rowImage || ui.rowData.fileUrl === noGridImage) {
+      imageUrl = (
+        `<img
+          src="viewFiles?fileUrl=${noImage}"
+          class="w-100p h-auto radius-1 shadow-1"
+          loading="lazy"
+        />`
+      );
     }
     else {
-      imageUrl=`<img src=viewFiles?fileUrl=${rowImage} class="cards-gridImage" loading="lazy"/>`;
+      imageUrl = (
+        `<img
+          src="viewFiles?fileUrl=${rowImage}"
+          class="w-100p h-auto radius-1 shadow-1"
+          loading="lazy"
+        />`
+      );
     }
     return imageUrl;
   };
@@ -138,10 +146,10 @@ var fnGetList01 = function () {
       // 2. title에 안전재고 이하 갯수 표시
       obj.title = `
       <div class="row">
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
           <span>자재 입고 예정</span>
         </div>
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-right ml-n50px">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
           <span class="fsr-1.4 red">●</span>
           <span class="ml-5px mr-5px">안전재고 이하 : </span>
           <span class="red">${obj.calcLowStock(myJsonData)}</span>
@@ -435,7 +443,7 @@ var fnChangeList = function () {
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
-$(document).ready(function() {
+jQuery(function($) {
   var curDate = fnToday();
   $("#inOutDt").datepicker(G_calendar);
   $("#inOutDt").val(curDate);

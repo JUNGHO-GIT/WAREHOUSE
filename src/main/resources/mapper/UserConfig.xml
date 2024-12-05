@@ -4,9 +4,9 @@
 <!-- 회원정보(User)의 XML Mapper -->
 <!-- 생성일 : 2021-04-13 16:38:49 by JDFrame -->
 
-<mapper namespace="com.warehouse.dao.UserConfigDAO">
+<mapper namespace="com.bedone.wms.dao.UserConfigDAO">
 
-  <select id="showUserConfigTab" parameterType="hashmap" resultType="com.warehouse.container.UserConfig">
+  <select id="showUserConfigTab" parameterType="hashmap" resultType="com.bedone.wms.container.UserConfig">
   	/* UserConfig.showUserConfigTab */
   	SELECT
       config
@@ -18,7 +18,7 @@
       issueDate DESC limit 1
   </select>
 
-  <select id="showUserConfigInfo" parameterType="hashmap" resultType="com.warehouse.container.UserConfig">
+  <select id="showUserConfigInfo" parameterType="hashmap" resultType="com.bedone.wms.container.UserConfig">
   	/* UserConfig.showUserConfigInfo */
   	SELECT
       userID userConfigID,
