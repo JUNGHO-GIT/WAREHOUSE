@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "typeRoots": [
+      "./src/main/webapp/resources/types"
+    ],
+    "types": [
+      "global",
+      "jquery",
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "target/**/*"
+  ]
+}
