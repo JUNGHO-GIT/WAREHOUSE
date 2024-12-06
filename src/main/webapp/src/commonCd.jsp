@@ -5,7 +5,7 @@
 
 <!------------------------------------------------------------------------------------------------->
 <body class="nav-md">
-  <div class="container body p-20px">
+  <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
     <div class="row">
@@ -52,73 +52,85 @@
             <div class="row p-10px pl-10px pr-10px">
               <form class="form-horizontal">
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <span>그룹명</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <select id="groupCd" class="form-control"></select>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>아이템코드</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="itemCd" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>아이템</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="itemNm" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <span>순위</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="itemSeq" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <span>메모</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <textarea class="form-control resize-none" rows="1" id="itemMemo"></textarea>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <span>신규등록</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" placeholder="그룹코드@그룹명" id="regGroup" />
                   </div>
                 </div>
                 <hr/>
-                <div class="cards-button">
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <button type="button" class="btn btn-success btn-sm" onclick="fnReset()">
-                      신규
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="fnSave()">
-                      저장
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="fnDel()">
-                      삭제
-                    </button>
+                  <div class="d-row-center">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                      <button
+                        type="button"
+                        class="btn btn-success mr-10px"
+                        onclick="fnReset()"
+                      >
+                        신규
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary mr-10px"
+                        onclick="fnSave()"
+                      >
+                        저장
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="fnDel()"
+                      >
+                        삭제
+                      </button>
+                    </div>
                   </div>
-                </div>
               </form>
             </div>
           </div>

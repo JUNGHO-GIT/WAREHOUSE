@@ -1,24 +1,23 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
     numberCell: {width: 30, minWidth: 30, align: "center"},
     xlsNm: "user.xlsx",
     title: "   사용자 관리",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -27,22 +26,22 @@ function fnGetList01 () {
   };
 
   obj.colModel = [
-    {dataIndx: "userNm", title: "사용자 이름", dataType:"string", align:"center",
+    {dataIndx:"userNm", title:"사용자 이름", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx: "userID", title: "사용자 아이디", dataType:"string", align:"center",
+    {dataIndx:"userID", title:"사용자 아이디", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx: "phone", title: "연락처", dataType:"string", align:"center",
+    {dataIndx:"phone", title:"연락처", dataType:"string", align:"center",
     filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx: "email", title: "E-mail", dataType:"string", align:"center",
+    {dataIndx:"email", title:"E-mail", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx: "uLevel", title: "회원등급", dataType:"string", align:"center",
+    {dataIndx:"uLevel", title:"회원등급", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx: "flagYN", title: "유효여부", dataType:"string", align:"center",
+    {dataIndx:"flagYN", title:"유효여부", dataType:"string", align:"center",
       filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
     },
   ];
@@ -52,11 +51,11 @@ function fnGetList01 () {
     url: "act/listUser",
     data: `findUserNm=${$("#findUserNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -73,18 +72,18 @@ function fnGetPartsUser() {
     url: "act/listUserPerm",
     data: "",
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if(data.length == 0) {
         return;
       }
       var oldMenu = "";
       G_permCnt = data.length;
 
-      for (var i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         var detail = data[i];
         if (i > 0 && oldMenu != detail.page) {
 
@@ -134,7 +133,7 @@ function fnGetPerm() {
 
   G_uPerm = "";
 
-  for (var k = 0; k < G_permCnt;k++) {
+  for (let k = 0; k < G_permCnt;k++) {
     var obj = "user" + k;
     var val = $("input:radio[class=" + obj + "]:checked").val();
     if(val) {
@@ -153,11 +152,11 @@ function fnShow(userID) {
     url: "act/showUser",
     data: `userID=${userID}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
 
       // 비밀번호 초기화
       fnResetPw();
@@ -181,7 +180,7 @@ function fnShow(userID) {
       }
       var divPerms = perms.split(",");
 
-      for (var c = 0; c < G_permCnt; c++) {
+      for (let c = 0; c < G_permCnt; c++) {
         var val = divPerms[c];
 
         if (val != undefined && perms != "") {
@@ -204,7 +203,7 @@ function fnShow(userID) {
 // 3-1. 저장 ---------------------------------------------------------------------------------------
 function fnSave(flagYN) {
 
-	var flagParam = "";
+	let flagParam = "";
 
   if (flagYN === "N") {
     flagParam = "N";
@@ -246,7 +245,7 @@ function fnSave(flagYN) {
   }
 
   var uPerm = "";
-  for (var k = 0; k < G_permCnt; k++) {
+  for (let k = 0; k < G_permCnt; k++) {
     var obj = "user" + k;
     var val = $("input:radio[class=" + obj + "]:checked").val();
     if(val) {
@@ -263,7 +262,7 @@ function fnSave(flagYN) {
   // 비밀번호 변경여부 체크
   $("#changeFlag").val() === "Y"
 
-  var param = {
+  const param = {
     "userID": $("#userID").val(),
     "userNm": $("#userNm").val(),
     "passwd": $("#passwd").val(),
@@ -282,12 +281,12 @@ function fnSave(flagYN) {
     url: "act/saveUser",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
     },
@@ -308,11 +307,11 @@ function fnCheckUserID() {
     url: "act/checkUserID",
     data: `userID=${$("#userID").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if(data == 0) {
         $("#userIDCheck").val("Y");
         alert("사용할 수 있는 아이디 입니다.");
@@ -359,12 +358,12 @@ function fnUpdatePw() {
       url: "act/updatePw",
       data: JSON.stringify(param),
       type: "POST",
-      dataType: "JSON",
+      dataType:"JSON",
       contentType: "application/json; charset=UTF-8",
-      beforeSend: function (xmlHttpRequest) {
+      beforeSend: (xmlHttpRequest) => {
         xmlHttpRequest.setRequestHeader("AJAX", "true");
       },
-      success: function (data) {
+      success: (data) => {
         if (data) {
           alert(data.result);
           $("#passwd").prop("type", "password");
@@ -392,7 +391,7 @@ function fnDel() {
 function fnReset() {
 
   // 권한 초기화
-  for (var k = 0; k < G_permCnt;k++) {
+  for (let k = 0; k < G_permCnt;k++) {
     var obj = "user" + k;
     $("input:radio[class=" + obj + "]:radio[value='']").prop("checked", true);
   }
@@ -430,29 +429,36 @@ function fnResetPw() {
   $("#changeFlag").val("N");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var comboStr = [{part:"comCode", target:"uLevel", groupCd:"0001", format:"combo"}];
+  const comboStr = [{part:"comCode", target:"uLevel", groupCd:"0001", format:"combo"}];
   fnInitCombo(comboStr, function() {
     fnGetList01();
   });

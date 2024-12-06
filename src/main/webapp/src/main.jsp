@@ -7,6 +7,8 @@
 
 <body class="nav-md">
   <div class="container body">
+
+    <!--------------------------------------------------------------------------------------------->
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left_col">
       <div class="scroll-view">
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -63,9 +65,9 @@
     </div>
 
     <!--------------------------------------------------------------------------------------------->
-    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 right_col">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 right_col w-webkit-fill">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 h-10vh">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="gnb_wrap border-bottom-1 shadow-bottom-3">
             <div class="gnb_toggle">
               <i class="fa fa-bars fs-25px light-black pointer-navy" id="menu_toggle"></i>
@@ -93,6 +95,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div id="tabContents"></div>
         </div>

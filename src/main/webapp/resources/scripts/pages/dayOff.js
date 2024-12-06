@@ -1,24 +1,22 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "dayOff.xlsx",
     title: "   휴무일 관리",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -49,11 +47,11 @@ function fnGetList01 () {
     url: "act/listDayOff",
     data: `findUserNm=${$("#findUserNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -70,11 +68,11 @@ function fnShow(offSeq) {
     url: "act/showDayOff",
     data: `offSeq=${offSeq}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       $("#offCntDay").val(data.offDate);
       $("#userID").val(data.userID);
       $("#offSeq").val(data.offSeq);
@@ -105,7 +103,7 @@ function fnSave() {
   var cnt = 0;
   var tempDate = new Date(offDay);
 
-  for (var i = 1;i <= count; i++) {
+  for (let i = 1;i <= count; i++) {
     var chkDate = new Date(offDay);
     chkDate.setDate(tempDate.getDate() + cnt);
     var tempDay = chkDate.getDay();
@@ -134,7 +132,7 @@ function fnSave() {
     return;
   }
 
-  var param = {
+  const param = {
     "flagYN": flagYN,
     "userID": userID,
     "offSeq": offSeq
@@ -144,12 +142,12 @@ function fnSave() {
     url:"act/saveDayOff",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if (data.result == "저장되었습니다.") {
         alert(data.result);
         fnGoPage("dayOff");
@@ -201,11 +199,11 @@ function fnCheckUserID() {
     url: "act/checkUserID",
     data: `userID=${$("#userID").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if (data.cnt == 0) {
         $("#userIDCheck").val("Y");
         alert("사용 가능한 아이디 입니다.");
@@ -228,15 +226,15 @@ function fnGetUserInfo() {
   $.ajax({
     url: "act/getUser",
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if (data == null || data.length == 0) {
         $("#userID").html("<option value=''>결과가 존재하지 않습니다.</option>");
       }
-      for (var k = 0; k < data.length; k++) {
+      for (let k = 0; k < data.length; k++) {
         var option = "<option value=" + data[k].userID + ">" + data[k].userNm + "</option>";
         $("#userID").append(option);
       }
@@ -256,7 +254,7 @@ function fnPressGet01(event) {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
 
   $("#offDay").datepicker(G_calendar);
   $("#offDay").val(curDate);

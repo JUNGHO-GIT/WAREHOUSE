@@ -2,7 +2,7 @@
 function fnInOutChart(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
-  var inOut = inOutParam;
+  let inOut = inOutParam;
   var plan = planParam;
   var date = dateParam;
   var downStr = `${key}${inOut}${plan}${date}`;
@@ -10,7 +10,7 @@ function fnInOutChart(keyParam, inOutParam, planParam, dateParam) {
   $.ajax({
     url: `act/dash?key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     success: function(data) {
 
       var dashBoardData = data[downStr];
@@ -65,7 +65,7 @@ function fnPie(keyParam, inOutParam, planParam, dateParam) {
   var key = keyParam;
   var keyUp = key.charAt(0).toUpperCase() + key.slice(1);
 
-  var inOut = inOutParam;
+  let inOut = inOutParam;
   var plan = planParam;
   var date = dateParam;
 
@@ -108,7 +108,7 @@ function fnPie(keyParam, inOutParam, planParam, dateParam) {
   $.ajax({
     url: `act/dash?key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     success: function(data) {
 
       var dashBoardData = data[downStr];
@@ -242,9 +242,9 @@ function fnProdInChartWeek() {
   $.ajax({
     url: "act/prodInChartWeek",
     type: "POST",
-    dataType: "json",
+    dataType:"json",
     data: {},
-    success: function (data) {
+    success: (data) => {
 
       var chartData = data.prodInChartWeekList;
       var percentData = data.percentMap;
@@ -378,9 +378,9 @@ function fnProdOutChartWeek() {
   $.ajax({
     url: "act/prodOutChartWeek",
     type: "POST",
-    dataType: "json",
+    dataType:"json",
     data: {},
-    success: function (data) {
+    success: (data) => {
 
       var chartData = data.prodOutChartWeekList;
       var percentData = data.percentMap;
@@ -428,8 +428,8 @@ function fnProdProtected() {
   $.ajax({
     url: "act/prodProtected",
     type: "POST",
-    dataType: "JSON",
-    success: function (data) {
+    dataType:"JSON",
+    success: (data) => {
 
       var listData = data.prodProtectedTodayList;
 
@@ -477,7 +477,7 @@ function fnProdProtected() {
 function fnSwitchSpan(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
-  var inOut = inOutParam;
+  let inOut = inOutParam;
   var date = dateParam;
 
   var planId = `${key}${inOut}Plan${date}`;
@@ -535,7 +535,7 @@ function fnSwitchSpan(keyParam, inOutParam, planParam, dateParam) {
 function fnSwitchPie(keyParam, inOutParam, planParam, dateParam) {
 
   var key = keyParam;
-  var inOut = inOutParam;
+  let inOut = inOutParam;
   var date = dateParam;
 
   var planId = `${key}${inOut}PlanPie${date}`;

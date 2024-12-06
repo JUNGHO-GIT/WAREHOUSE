@@ -1,25 +1,23 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
   var showYear = $("#findYear").val();
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "reportStock.xlsx",
     title: "   (제품) 연간 재고 현황",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   obj.colModel = [
@@ -69,11 +67,11 @@ function fnGetList01 () {
     url: "act/listReportProdStock",
     data: `findYear=${$("#findYear").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -84,25 +82,23 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const gridCd = "grid02";
+  const $grid = $(`#grid02`);
   var showYear = $("#findYear").val();
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "reportStock.xlsx",
     title: "   (자재) 연간 재고 현황",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   obj.colModel = [
@@ -151,11 +147,11 @@ function fnGetList02() {
     url: "act/listReportResrcStock",
     data: `findYear=${$("#findYear").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -169,7 +165,7 @@ function fnSetYears(selectId) {
   var select = $("#" + selectId);
   select.empty();
   select.append(`<option value=${year}>${year}</option>`);
-  for (var i = year - 1; i >= 2010; i--) {
+  for (let i = year - 1; i >= 2010; i--) {
     select.append($("<option>", {
       value: i,
       text: i

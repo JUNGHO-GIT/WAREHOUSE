@@ -1,6 +1,6 @@
 /// jquery/jquery-cookie.d.ts
 
-/// <reference types="jquery" />
+/// <reference path="jquery.d.ts" />
 
 interface JQueryCookieOptions
 {

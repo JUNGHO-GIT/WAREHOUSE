@@ -5,7 +5,7 @@
 
 <!------------------------------------------------------------------------------------------------->
 <body class="nav-md">
-  <div class="container body p-20px">
+  <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
     <div class="row">
@@ -20,8 +20,6 @@
       </form>
     </div>
     <!-- /.row 1 -->
-
-    <br/>
 
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">
@@ -41,32 +39,32 @@
                 <input type="hidden" id="houseCd" />
                 <!-- /.hidden -->
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <span>상위 창고</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="parentsHNm" disabled readonly />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>창고 이름</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="houseNm" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>창고 순서</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control"type="text" id="houseOrder" />
                   </div>
                 </div>

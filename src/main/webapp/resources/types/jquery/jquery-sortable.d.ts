@@ -1,6 +1,7 @@
 /// jquery/jquery-sortable.d.ts
 
-/// <reference types="jquery" />
+/// <reference path="jquery.d.ts" />
+/// <reference path="jquery-ui.d.ts" />
 
 declare namespace JQuerySortable
 {

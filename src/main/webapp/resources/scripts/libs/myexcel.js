@@ -101,7 +101,7 @@ $JExcel = {
         "dashDot", "mediumDashDot", "dashDotDot", "mediumDashDotDot", "slantDashDot"];
 
     var borderStylesUpper = [];
-    for (var i = 0; i < $JExcel.borderStyles.length; i++) borderStylesUpper.push($JExcel.borderStyles[i].toUpperCase());
+    for (let i = 0; i < $JExcel.borderStyles.length; i++) borderStylesUpper.push($JExcel.borderStyles[i].toUpperCase());
 
 
 
@@ -147,7 +147,7 @@ $JExcel = {
 
 
 
-    // --------------------- BEGIN Handling of sheets 
+    // --------------------- BEGIN Handling of sheets
     function toWorkBookSheet(sheet) {
         return '<sheet state="visible" name="' + sheet.name + '" sheetId="' + sheet.id + '" r:id="' + sheet.rId + '"/>';
     }
@@ -227,13 +227,13 @@ $JExcel = {
                 var s = '<?xml version="1.0" standalone="yes"?>' +
                     '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
                     '<sheets>';
-                for (var i = 0; i < this.sheets.length; i++) s = s + toWorkBookSheet(this.sheets[i]);
+                for (let i = 0; i < this.sheets.length; i++) s = s + toWorkBookSheet(this.sheets[i]);
                 return s + '</sheets><calcPr/></workbook>';
             },
             toWorkBookRels: function () {
                 var s = '<?xml version="1.0" ?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">';
                 s = s + '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>';                      // rId2 is hardcoded and reserved for STYLES
-                for (var i = 0; i < this.sheets.length; i++) s = s + toWorkBookRel(this.sheets[i], i + 1);
+                for (let i = 0; i < this.sheets.length; i++) s = s + toWorkBookRel(this.sheets[i], i + 1);
                 return s + '</Relationships>';
             },
             toRels: function () {
@@ -246,18 +246,18 @@ $JExcel = {
                 s = s + '<Default ContentType="application/vnd.openxmlformats-package.relationships+xml" Extension="rels"/>';
                 s = s + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" PartName="/xl/workbook.xml"/>';
                 s = s + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml" PartName="/xl/styles.xml" />';
-                for (var i = 1; i <= this.sheets.length; i++) s = s + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet' + i + '.xml"/>';
+                for (let i = 1; i <= this.sheets.length; i++) s = s + '<Override ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" PartName="/xl/worksheets/sheet' + i + '.xml"/>';
                 return s + '</Types>';
             },
             fileData: function (xl) {
-                for (var i = 0; i < this.sheets.length; i++) {
+                for (let i = 0; i < this.sheets.length; i++) {
                     xl.file('worksheets/sheet' + (i + 1) + '.xml', getAsXml(this.sheets[i]));
                 }
             }
         };
         return oSheets;
     }
-    // --------------------- END Handling of sheets 
+    // --------------------- END Handling of sheets
 
     // --------------------- BEGIN Handling of style
 
@@ -281,7 +281,7 @@ $JExcel = {
     function toBorderXml(b) {
         var s = "<border>";
         b = b.split(",");
-        for (var i = 0; i < 4; i++) {
+        for (let i = 0; i < 4; i++) {
             var vals = b[i].split(" ");
             s = s + "<" + borderKind[i];
             if (vals[0] == "NONE") s = s + "/>";
@@ -333,7 +333,7 @@ $JExcel = {
 
     function normalizeFont(fontDescription) {
         fontDescription = replaceAllMultiple(fontDescription, "  ", " ");
-        var fNormalized = ["_", "_", "_", "_"];                                 //  Name - Size - Color - Style (use NONE as placeholder) 
+        var fNormalized = ["_", "_", "_", "_"];                                 //  Name - Size - Color - Style (use NONE as placeholder)
         var i = 0, list = fontDescription.split(" ");                       //  Split by " "
         var name = [];
         while (list[0] && (list[0] != "none") && (isNaN(list[0])) && (list[0].charAt(0) != "#")) {
@@ -343,7 +343,7 @@ $JExcel = {
 
         fNormalized[0] = name.join(" ");
         while (list[0] == "none") list.splice(0, 1);                        // Delete any "none" that we might have
-        if (!isNaN(list[0])) {                                              // IF we have a number then this is the font size    
+        if (!isNaN(list[0])) {                                              // IF we have a number then this is the font size
             fNormalized[1] = list[0];
             list.splice(0, 1);
         }
@@ -371,7 +371,7 @@ $JExcel = {
         b = replaceAllMultiple(b, "  ", " ").trim();
         var l = (b + ",NONE,NONE,NONE,NONE").split(",");
         var p = "";
-        for (var i = 0; i < 4; i++) {
+        for (let i = 0; i < 4; i++) {
             l[i] = l[i].trim().toUpperCase();
             l[i] = ((l[i].substring(0, 4) == "NONE" ? "NONE" : l[i]).trim() + " NONE NONE NONE").trim();
             var st = l[i].split(" ");
@@ -395,7 +395,7 @@ $JExcel = {
                 if (a.font) style.font = findOrAdd(fonts, normalizeFont(a.font.toString().trim()));
                 if (a.format) style.format = findOrAdd(formats, a.format);
                 if (a.align) style.align = normalizeAlign(a.align);
-                if (a.border) style.border = 1 + findOrAdd(borders, normalizeBorders(a.border.toString().trim()));                                          // There is a HARDCODED border         
+                if (a.border) style.border = 1 + findOrAdd(borders, normalizeBorders(a.border.toString().trim()));                                          // There is a HARDCODED border
                 return 1 + pushI(styles, style);                                                            // Add the style and return INDEX+1 because of the DEFAULT HARDCODED style
             }
         };
@@ -405,7 +405,7 @@ $JExcel = {
 
 
         oStyles.register = function (thisOne) {
-            for (var i = 0; i < styles.length; i++) {
+            for (let i = 0; i < styles.length; i++) {
                 if (styles[i].font == thisOne.font && styles[i].format == thisOne.format && styles[i].fill == thisOne.fill && styles[i].border == thisOne.border && styles[i].align == thisOne.align) return i;
             }
             return pushI(styles, thisOne);
@@ -419,26 +419,26 @@ $JExcel = {
                 'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">';
 
             s = s + '<numFmts count="' + (formats.length - baseFormats) + '">';
-            for (var i = baseFormats; i < formats.length; i++) s = s + '<numFmt numFmtId="' + (i) + '" formatCode="' + formats[i] + '"/>';
+            for (let i = baseFormats; i < formats.length; i++) s = s + '<numFmt numFmtId="' + (i) + '" formatCode="' + formats[i] + '"/>';
             s = s + '</numFmts>';
 
 
             s = s + '<fonts count="' + (fonts.length) + '" x14ac:knownFonts="1" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">';
-            for (var i = 0; i < fonts.length; i++) s = s + toFontXml(fonts[i]); //'<font><sz val="8" /><name val="Calibri" /><family val="2" /><scheme val="minor" /></font>' +
+            for (let i = 0; i < fonts.length; i++) s = s + toFontXml(fonts[i]); //'<font><sz val="8" /><name val="Calibri" /><family val="2" /><scheme val="minor" /></font>' +
             s = s + '</fonts>';
 
             s = s + '<fills count="' + (2 + fills.length) + '"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>';
-            for (var i = 0; i < fills.length; i++) s = s + toFillXml(fills[i]);
+            for (let i = 0; i < fills.length; i++) s = s + toFillXml(fills[i]);
             s = s + '</fills>';
 
             s = s + '<borders count="' + (1 + borders.length) + '"><border><left /><right /><top /><bottom /><diagonal /></border>';
-            for (var i = 0; i < borders.length; i++) s = s + toBorderXml(borders[i]);
+            for (let i = 0; i < borders.length; i++) s = s + toBorderXml(borders[i]);
             s = s + '</borders>';
 
             s = s + '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>';
 
             s = s + '<cellXfs count="' + (1 + styles.length) + '"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" />';
-            for (var i = 0; i < styles.length; i++) {
+            for (let i = 0; i < styles.length; i++) {
                 s = s + toStyleXml(styles[i]);
             }
             s = s + '</cellXfs>';
@@ -503,7 +503,7 @@ $JExcel = {
     function generateRow(row, index) {
         var rowIndex = index + 1;
         var oCells = [];
-        for (var i = 0; i < row.cells.length; i++) {
+        for (let i = 0; i < row.cells.length; i++) {
             if (row.cells[i]) oCells.push(generateCell(row.cells[i], i, rowIndex));
         }
         var s = '<row r="' + rowIndex + '" '
@@ -515,7 +515,7 @@ $JExcel = {
 
     function generateRows(rows) {
         var oRows = [];
-        for (var index = 0; index < rows.length; index++) {
+        for (let index = 0; index < rows.length; index++) {
             if (rows[index]) {
                 oRows.push(generateRow(rows[index], index));
             }
@@ -527,7 +527,7 @@ $JExcel = {
         if (columns.length == 0) return;
 
         var s = '<cols>';
-        for (var i = 0; i < columns.length; i++) {
+        for (let i = 0; i < columns.length; i++) {
             var c = columns[i];
             if (c) {
                 s = s + '<col min="' + (i + 1) + '" max="' + (i + 1) + '" ';
@@ -545,29 +545,29 @@ $JExcel = {
     }
 
 
-    //  Loops all rows & columns in sheets. 
+    //  Loops all rows & columns in sheets.
     //  If a row has a style it tries to apply the style componenets to all cells in the row (provided that the cell has not defined is not own style component)
 
     function CombineStyles(sheets, styles) {
         // First lets do the Rows
-        for (var i = 0; i < sheets.length; i++) {
+        for (let i = 0; i < sheets.length; i++) {
             // First let's do the rows
-            for (var j = 0; j < sheets[i].rows.length; j++) {
+            for (let j = 0; j < sheets[i].rows.length; j++) {
                 var row = sheets[i].rows[j];
                 if (row && row.style) {
-                    for (var k = 0; k < row.cells.length; k++) {
+                    for (let k = 0; k < row.cells.length; k++) {
                         if (row.cells[k]) AddStyleToCell(row.cells[k], styles, row.style);
                     }
                 }
             }
 
             // Second let's do the cols
-            for (var c = 0; c < sheets[i].columns.length; c++) {
+            for (let c = 0; c < sheets[i].columns.length; c++) {
                 if (sheets[i].columns[c] && sheets[i].columns[c].style) {
                     var cstyle = sheets[i].columns[c].style;
-                    for (var j = 0; j < sheets[i].rows.length; j++) {
+                    for (let j = 0; j < sheets[i].rows.length; j++) {
                         var row = sheets[i].rows[j];
-                        if (row) for (var k = 0; k < row.cells.length; k++)
+                        if (row) for (let k = 0; k < row.cells.length; k++)
                             if (row.cells[k] && k == c) AddStyleToCell(row.cells[k], styles, cstyle);
                     }
                 }
@@ -584,8 +584,8 @@ $JExcel = {
         var cs = styles.getStyle(cell.s - 1);
         var os = styles.getStyle(toAdd - 1);
         var ns = {}, b = false;
-        for (var x in cs) ns[x] = cs[x];                        // Clone cell style
-        for (var x in os) {
+        for (let x in cs) ns[x] = cs[x];                        // Clone cell style
+        for (let x in os) {
             if (!ns[x]) {
                 ns[x] = os[x];
                 b = true;
@@ -628,13 +628,13 @@ $JExcel = {
         excel.generate = function (filename) {
             CombineStyles(sheets.sheets, styles);
             var zip = new JSZip();                                                                              // Create a ZIP file
-            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS   
+            zip.file('_rels/.rels', sheets.toRels());                                                           // Add WorkBook RELS
             var xl = zip.folder('xl');                                                                          // Add a XL folder for sheets
             xl.file('workbook.xml', sheets.toWorkBook());                                                       // And a WorkBook
             xl.file('styles.xml', styles.toStyleSheet());                                                       // Add styles
             xl.file('_rels/workbook.xml.rels', sheets.toWorkBookRels());                                        // Add WorkBook RELs
             zip.file('[Content_Types].xml', sheets.toContentType());                                            // Add content types
-            sheets.fileData(xl);                                                                                // Zip the rest    
+            sheets.fileData(xl);                                                                                // Zip the rest
             zip.generateAsync({ type: "blob" }).then(function (content) { saveAs(content, filename); });        // And generate !!!
         }
         return excel;

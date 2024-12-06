@@ -1,25 +1,23 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnShowExcel(body) {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
   var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourceXls.xlsx",
     title: "   자재 관리",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable: true,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 유효성검사 (자재 x, 창고 o, 거래처 o)
@@ -111,7 +109,7 @@ function fnSelectAll() {
     // check : true
     $("input:checkbox[class='chkBox']").prop("checked", true);
     // value : true
-    for (var i = 0; i < getData.length; i++) {
+    for (let i = 0; i < getData.length; i++) {
       var row = getData[i];
       row.checkStatus = true;
       // 체크된 경우 fnGetCdWithNm 함수 실행 (자재 x, 창고 o, 거래처 o)
@@ -126,7 +124,7 @@ function fnSelectAll() {
     // check : false
     $("input:checkbox[class='chkBox']").prop("checked", false);
     // value : false
-    for (var i = 0; i < getData.length; i++) {
+    for (let i = 0; i < getData.length; i++) {
       var row = getData[i];
       row.checkStatus = false;
     }
@@ -168,7 +166,7 @@ function fnSave() {
   var validationPassed = true;
 
   // 선택된 행만 검증
-  for (var i = 0; i < colData.length; i++) {
+  for (let i = 0; i < colData.length; i++) {
 
     var row = colData[i];
     row.resrcCd = row.resrcCd ? row.resrcCd.toString().trim() : "";
@@ -202,12 +200,12 @@ function fnSave() {
     url: "act/saveResourceXls",
     data: JSON.stringify({datas: colData}),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnReset();
     },
@@ -254,9 +252,9 @@ function fnFilePicked(oEvent) {
         "resrcNm", "resrcType", "houseNm", "compNm", "maker", "unit", "quality", "option1", "option2", "protectedQty", "unitPrice", "remark"
       ];
 
-      for (var k = 1; k < limit; k++) {
+      for (let k = 1; k < limit; k++) {
         var vals = {};
-        for (var r = 0; r < data[k].length; r++) {
+        for (let r = 0; r < data[k].length; r++) {
           if (keyMap[r]) {
             Object.assign(vals, { [keyMap[r]]: data[k][r] });
           }

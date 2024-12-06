@@ -5,7 +5,7 @@
 <c:set var="rsPath" value="${pageContext.request.contextPath}/resources" />
 
 <body class="nav-md">
-  <div class="container body p-20px">
+  <div class="container px-20px">
     <div class="row">
       <form class="form-horizontal m-0px">
         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
@@ -48,7 +48,7 @@
               <form class="form-horizontal">
                 <input type="hidden" id="shipCd">
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
@@ -64,46 +64,46 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>거래처 담당자 번호</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="toPhone">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>거래처 담당자</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="toMajor">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>출하일</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="shipDt">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="fs-0-8rem fw-500 red mr-10px">
                 ≫
               </div>
                     <span>출하 담당자</span>
                   </label>
-                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <input class="form-control" type="text" id="shipMajor">
                   </div>
                 </div>

@@ -1,24 +1,22 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   자재 입출고 관리",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -34,7 +32,7 @@ function fnGetList01 () {
     };
     // 2. 그리드 데이터가 있을 경우 중복체크
     var duplicateFlag = false;
-    for (var i = 0; i < getData.length; i++) {
+    for (let i = 0; i < getData.length; i++) {
       var row = getData[i];
       if (row.resrcCd === newRow.resrcCd) {
         duplicateFlag = true;
@@ -96,7 +94,7 @@ function fnGetList01 () {
   // 안전재고 이하 갯수 계산
   obj.calcLowStock = function (data) {
     var lowStockCount = 0;
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       var row = data[i];
       row.lowStock = parseInt(row.qty) <= parseInt(row.protectedQty) ? 1 : 0;
       if (row.lowStock === 1) {
@@ -164,11 +162,11 @@ function fnGetList01 () {
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
 
       // 1. 콜백 데이터 할당
       obj.dataModel = {data:myJsonData};
@@ -180,7 +178,7 @@ function fnGetList01 () {
           <span>자재 입출고 관리</span>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
-          <span class="fsr-1.4 red">●</span>
+          <span class="fs-0-9rem red">●</span>
           <span class="ml-5px mr-5px">안전재고 이하 : </span>
           <span class="red">${obj.calcLowStock(myJsonData)}</span>
         </div>
@@ -208,25 +206,23 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const gridCd = "grid02";
+  const $grid = $(`#grid02`);
   var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourceInOutAll.xlsx",
     title: "   일괄 입고",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 셀 클릭시 실행
@@ -300,7 +296,7 @@ function fnCheck() {
 
   var getData = $("#grid02").pqGrid("getData");
   var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
-  var inOut = $("input[name=inOut]:checked").val();
+  let inOut = $("input[name=inOut]:checked").val();
 
   var validationErrors = [];
   var isVerified = true;
@@ -310,7 +306,7 @@ function fnCheck() {
     return;
   }
 
-  for (var c = 0; c < getData.length; c++) {
+  for (let c = 0; c < getData.length; c++) {
     var row = getData[c];
 
     // 데이터 초기화 및 유효성 검사
@@ -321,7 +317,7 @@ function fnCheck() {
     row.qty = row.qty ? row.qty.replace(/,/g, "").trim() : "";
     row.unitPrice = row.unitPrice ? row.unitPrice.replace(/,/g, "").trim() : "";
 
-    var qty = parseInt(row.qty, 10);
+    let qty = parseInt(row.qty, 10);
     var curQty = parseInt(row.curQty, 10);
 
     if (!row.houseCd) {
@@ -371,10 +367,10 @@ function fnCheck() {
 function fnSave() {
 
   var getData = $("#grid02").pqGrid("getData");
-  var inOut = $("input[name=inOut]:checked").val();
+  let inOut = $("input[name=inOut]:checked").val();
 
   // 모든 항목에 대해 inOut 값을 설정
-  for (var i = 0; i < getData.length; i++) {
+  for (let i = 0; i < getData.length; i++) {
     getData[i]["inOut"] = inOut;
   }
 
@@ -384,7 +380,7 @@ function fnSave() {
     alert("제품을 추가해 주세요.");
     return;
   }
-  for (var c = 0; c < getData.length; c++) {
+  for (let c = 0; c < getData.length; c++) {
     var row = getData[c];
     if (row.chkBtn === "" || row.chkBtn === null || typeof row.chkBtn === "undefined") {
       validationError = "검증되지 않은 데이터가 있습니다. 검증 후 저장해 주세요.";
@@ -403,12 +399,12 @@ function fnSave() {
     url: "act/saveResourceInOutAll",
     data: JSON.stringify({datas : getData}),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
       fnGetList02();
@@ -451,7 +447,7 @@ function fnSaveAll() {
     return;
   }
   else {
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       data[i].houseCd = newHouseCd;
       data[i].houseNm = newHouseNm;
       data[i].compCd = newCompCd;
@@ -470,13 +466,13 @@ function fnDel(rowIdx) {
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
 function fnDelAll() {
-  $("#grid02").pqGrid("dataModel", {data: []});
-  $("#grid02").pqGrid("refreshDataAndView");
+	$("#grid02").pqGrid("dataModel", {data: []});
+	$("#grid02").pqGrid("refreshDataAndView");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
-  var curDate = fnToday();
+  const curDate = fnToday();
 
   // 자재 초기화
   $("#qty").val("0");
@@ -513,33 +509,40 @@ function fnResetWhenSearch() {
   $("#grid01").pqGrid("setSelection", null);
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
   $("#inOutDt").datepicker(G_calendar);
   $("#inOutDt").val(curDate);
 
-  var comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format: "combo"}];
+  const comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format: "combo"}];
   fnInitCombo(comboStr, function() {
     fnGetList01();
     fnGetList02();

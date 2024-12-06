@@ -5,14 +5,16 @@
 
 <!------------------------------------------------------------------------------------------------->
 <body class="nav-md">
-  <div class="container body p-20px">
+  <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
-    <div class="row">
-      <form class="form-horizontal m-0px">
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-          <div class="row">
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+    <div class="row my-20px">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+        <!-- form -->
+        <form id="formData1" name="formData1" class="formData1">
+          <div class="row d-row-left">
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 p-5px bg-dark-white mr-10px">
+              <div class="fs-0-8rem fw-600 dark d-right">
               <p class="control-label">년도</p>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mt-2px">

@@ -5,32 +5,43 @@
 
 <!------------------------------------------------------------------------------------------------->
 <body class="nav-md">
-  <div class="container body p-20px">
+  <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
-    <div class="row">
-      <form class="form-horizontal m-0px">
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-          <div class="row">
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-              <p class="control-label">자재 검색</p>
+    <div class="row my-20px">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+        <!-- form -->
+        <form id="formData1" name="formData1" class="formData1">
+          <div class="row d-row-left">
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 p-5px bg-dark-white mr-10px">
+              <div class="fs-0-8rem fw-600 dark d-right">
+                자재 검색
+              </div>
             </div>
-            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mt-2px">
-              <input class="form-control" type="text" id="findResrcNm"
-                onKeyDown="fnPressGet01(event)" placeholder="자재명을 입력해주세요." />
+            <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 mr-10px">
+              <input
+                type="text"
+                id="findResrcNm"
+                name="findResrcNm"
+                class="form-control"
+                placeholder="자재명을 입력해주세요."
+                onKeyDown="fnPressGet01(event)"
+              />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                onclick="fnPressGet01(event)"
+              >
                 조회
               </button>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
     <!-- /.row 1 -->
-
-    <br/>
 
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">

@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 (pCd) {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
   var filter = function (treeId, parentNode, childNodes) {
     if (!childNodes) {
@@ -31,11 +31,11 @@ function fnGetList01 (pCd) {
     url: "act/listHouse",
     data: `id=${pCd}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       $.fn.zTree.init($("#" + gridCd), zSetting, data);
     },
     error: ajaxErrorHandler
@@ -45,24 +45,22 @@ function fnGetList01 (pCd) {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02 (houseData) {
 
-  const gridCd = "grid02";
+  const $grid = $(`#grid02`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   창고별 재고 현황",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 빈값 0으로 출력
@@ -81,7 +79,7 @@ function fnGetList02 (houseData) {
 	};
 
   obj.colModel = [
-    {dataIndx: "prodNm", title: "품명", dataType: "string", align: "center",
+    {dataIndx:"prodNm", title:"품명", dataType:"string", align:"center",
       filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
     },
     {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
@@ -126,22 +124,20 @@ function fnGetList03 (houseData) {
 
   const gridCd = "grid03";
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   창고별 재고 현황",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 빈값 0으로 출력
@@ -160,7 +156,7 @@ function fnGetList03 (houseData) {
 	};
 
   obj.colModel = [
-    {dataIndx: "resrcNm", title: "품명", dataType: "string", align: "center",
+    {dataIndx:"resrcNm", title:"품명", dataType:"string", align:"center",
       filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
     },
     {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
@@ -207,11 +203,11 @@ function fnShow(event, treeId, treeNode) {
     url: "act/showHouse",
     data: `houseCd=${treeNode.id}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
 
       var productPerHouse = data.productPerHouse;
       var resourcePerHouse = data.resourcePerHouse;
@@ -263,7 +259,7 @@ function fnRefreshNode(pId, resultCd) {
 // 3-1. 저장 ---------------------------------------------------------------------------------------
 function fnSave(YN) {
 
-  var flagParam = "";
+  let flagParam = "";
 
   if (YN == "N") {
     flagParam = "N";
@@ -285,7 +281,7 @@ function fnSave(YN) {
     }
   }
 
-  var param = {
+  const param = {
     "houseCd": $("#houseCd").val() || "0",
     "houseNm": $("#houseNm").val() || "",
     "parentsHCd": $("#parentsHCd").val() || "0",
@@ -297,12 +293,12 @@ function fnSave(YN) {
     url: "act/saveHouse",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
 
       var pIdParam = $("#parentsHCd").val();
@@ -392,7 +388,7 @@ function fnPressGet01(event) {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
   $("#inOutDt").datepicker(G_calendar);
   $("#inOutDt").val(curDate);
 

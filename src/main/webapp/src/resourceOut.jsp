@@ -5,10 +5,10 @@
 
 <!------------------------------------------------------------------------------------------------->
 <body class="nav-md">
-  <div class="container body px-20px">
+  <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
-    <div class="row mb-20px">
+    <div class="row my-20px">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
         <!-- form -->
         <form id="formData1" name="formData1" class="formData1">
@@ -52,25 +52,21 @@
             <!-- grid 1 -->
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 px-10px">
               <div class="grid-main">
-                <div class="h-90p" id="grid01"></div>
+                <div class="h-100p" id="grid01"></div>
               </div>
             </div>
             <!-- grid 2 -->
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
               <div class="grid-main">
-                <div class="h-35p" id="grid02"></div>
+                <div class="h-37p" id="grid02"></div>
               </div>
-              <hr
-                id="hr"
-                name="hr"
-                class="hr my-3vh bg-dark"
-              />
+              <hr class="my-1vh bg-dark" />
               <div class="grid-detail">
                 <div class="row mb-3vh">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="d-row-left">
                       <i class="fa fa-list-alt mr-1vw"></i>
-                      <div class="fs-1-20px fw-700 light-black">
+                      <div class="fs-0-9rem fw-700 light-black">
                         자재 출고 상세
                       </div>
                     </div>
@@ -303,21 +299,21 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
                       <button
                         type="button"
-                        class="btn btn-success btn-sm mx-1vw"
+                        class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >
                         신규
                       </button>
                       <button
                         type="button"
-                        class="btn btn-primary btn-sm mx-1vw"
+                        class="btn btn-primary mr-10px"
                         onclick="fnSave()"
                       >
                         저장
                       </button>
                       <button
                         type="button"
-                        class="btn btn-danger btn-sm mx-1vw"
+                        class="btn btn-danger"
                         onclick="fnDel()"
                       >
                         삭제
@@ -340,7 +336,9 @@
       </div>
     </div>
     <!-- /.row 2 -->
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/resourceOut.js"></script>
   </div>
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/pages/resourceOut.js"></script>
 </body>

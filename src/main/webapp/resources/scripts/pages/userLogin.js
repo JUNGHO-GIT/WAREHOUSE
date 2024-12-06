@@ -22,11 +22,11 @@ function fnAuth() {
     url: `auth`,
     type: "POST",
     data: `userID=${$("#uid").val()}&passwd=${$("#pass").val()}`,
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if (data.result == "로그인에 성공하였습니다.") {
         var encryptedItem = {"loginSession": "true"};
         var encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");

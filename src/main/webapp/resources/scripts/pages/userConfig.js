@@ -1,15 +1,15 @@
-// 1. 그리드 설정 및 리스트 호출 ------------------------------------------------------------------>
+// 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnShowUserConfig() {
 
   $.ajax({
     url: "act/showUserConfigTab",
     data: `gridCd=${""}&pageNm=${"tabs"}`,
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     beforeSend : function(xmlHttpRequest){
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       if (data) {
         fnSetTab(data.config);
       }
@@ -18,7 +18,7 @@ function fnShowUserConfig() {
   });
 };
 
-// 2. 팝업 화면 유저정보 -------------------------------------------------------------------------->
+// 2. 팝업 화면 유저정보 ---------------------------------------------------------------------------
 function fnShowUserConfigInfo() {
 
   if ($(`#popup2`).hasClass("d-none")) {
@@ -34,11 +34,11 @@ function fnShowUserConfigInfo() {
     url: "act/showUserConfigInfo",
     data: {},
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
 
       // 비밀번호 초기화
       fnResetPw();
@@ -60,7 +60,7 @@ function fnShowUserConfigInfo() {
   });
 };
 
-// 3-1. 유저정보 저장 ----------------------------------------------------------------------------->
+// 3-1. 유저정보 저장 ------------------------------------------------------------------------------
 function fnSaveUserConfigInfo() {
 
   if ($("#userConfigNm").val() == "") {
@@ -92,7 +92,7 @@ function fnSaveUserConfigInfo() {
   // 비밀번호 변경여부 체크
   $("#changeConfigFlag").val() === "Y"
 
-  var param = {
+  const param = {
     "userConfigID": $("#userConfigID").val(),
     "userConfigNm": $("#userConfigNm").val(),
     "userConfigEmail": $("#userConfigEmail").val(),
@@ -108,23 +108,23 @@ function fnSaveUserConfigInfo() {
     url: "act/saveUserConfigInfo",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
     },
     error: ajaxErrorHandler
   });
 };
 
-// 3-2. 탭 순서 저장 ------------------------------------------------------------------------------>
+// 3-2. 탭 순서 저장 -------------------------------------------------------------------------------
 function fnSaveUserConfigTab() {
 
   var tabs = fnTabOrder();
-  var param = {
+  const param = {
     "configSeq": $("#configSeq").val() || 0,
     "userConfigID": $("#userConfigID").val(),
     "pageNm": "tabs",
@@ -137,19 +137,19 @@ function fnSaveUserConfigTab() {
     url: "act/saveUserConfigTab",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
     },
     error: ajaxErrorHandler
   });
 };
 
-// 3-3. 비밀번호 변경 ----------------------------------------------------------------------------->
+// 3-3. 비밀번호 변경 ------------------------------------------------------------------------------
 function fnUpdateConfigPw() {
 
   var changeConfigFlag = $("#changeConfigFlag").val();
@@ -181,12 +181,12 @@ function fnUpdateConfigPw() {
       url: "act/updateConfigPw",
       data: JSON.stringify(param),
       type: "POST",
-      dataType: "JSON",
+      dataType:"JSON",
       contentType: "application/json; charset=UTF-8",
-      beforeSend: function (xmlHttpRequest) {
+      beforeSend: (xmlHttpRequest) => {
         xmlHttpRequest.setRequestHeader("AJAX", "true");
       },
-      success: function (data) {
+      success: (data) => {
         if (data) {
           alert(data.result);
           $("#userConfigPw").prop("type", "password");
@@ -205,7 +205,7 @@ function fnUpdateConfigPw() {
 	};
 };
 
-// 5-1. 초기화 ------------------------------------------------------------------------------------>
+// 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
   $("#userConfigID").val("");
   $("#userConfigPw").val("");
@@ -217,7 +217,7 @@ function fnReset() {
   $("#userConfigPhone").val("");
 };
 
-// 5-2. 초기화 (비밀번호) ------------------------------------------------------------------------->
+// 5-2. 초기화 (비밀번호) --------------------------------------------------------------------------
 function fnResetPw() {
   // row 클릭했을때 `비번변경`버튼 상태 초기화
   $("#userConfigPw").prop("readonly", true);
@@ -226,7 +226,7 @@ function fnResetPw() {
   $("#changeConfigFlag").val("N");
 };
 
-// 0. 화면 로딩시 실행 ---------------------------------------------------------------------------->
+// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   fnShowUserConfig();
   $("#popup2").draggable({ handle: "#popTop" });

@@ -10,7 +10,7 @@ JSZip uses the library pako released under the MIT license :
 https://github.com/nodeca/pako/blob/master/LICENSE
 */
 
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.JSZip = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.JSZip = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for (let o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 var utils = require('./utils');
 var support = require('./support');
@@ -225,9 +225,9 @@ var utils = require('./utils');
 function makeTable() {
     var c, table = [];
 
-    for(var n =0; n < 256; n++){
+    for (let n =0; n < 256; n++){
         c = n;
-        for(var k =0; k < 8; k++){
+        for (let k =0; k < 8; k++){
             c = ((c&1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
         }
         table[n] = c;
@@ -245,7 +245,7 @@ function crc32(crc, buf, len, pos) {
 
     crc = crc ^ (-1);
 
-    for (var i = pos; i < end; i++ ) {
+    for (let i = pos; i < end; i++ ) {
         crc = (crc >>> 8) ^ t[(crc ^ buf[i]) & 0xFF];
     }
 
@@ -269,7 +269,7 @@ function crc32str(crc, str, len, pos) {
 
     crc = crc ^ (-1);
 
-    for (var i = pos; i < end; i++ ) {
+    for (let i = pos; i < end; i++ ) {
         crc = (crc >>> 8) ^ t[(crc ^ str.charCodeAt(i)) & 0xFF];
     }
 
@@ -398,7 +398,7 @@ exports.uncompressWorker = function () {
 },{"./stream/GenericWorker":28,"./utils":32,"pako":59}],8:[function(require,module,exports){
 'use strict';
 
-var utils = require('../utils');
+var utils = require('.');
 var GenericWorker = require('../stream/GenericWorker');
 var utf8 = require('../utf8');
 var crc32 = require('../crc32');
@@ -835,7 +835,7 @@ ZipFileWorker.prototype.closedSource = function (streamInfo) {
 ZipFileWorker.prototype.flush = function () {
 
     var localDirLength = this.bytesWritten;
-    for(var i = 0; i < this.dirRecords.length; i++) {
+    for (let i = 0; i < this.dirRecords.length; i++) {
         this.push({
             data : this.dirRecords[i],
             meta : {percent:100}
@@ -914,7 +914,7 @@ ZipFileWorker.prototype.error = function (e) {
     if(!GenericWorker.prototype.error.call(this, e)) {
         return false;
     }
-    for(var i = 0; i < sources.length; i++) {
+    for (let i = 0; i < sources.length; i++) {
         try {
             sources[i].error(e);
         } catch(e) {
@@ -930,7 +930,7 @@ ZipFileWorker.prototype.error = function (e) {
 ZipFileWorker.prototype.lock = function () {
     GenericWorker.prototype.lock.call(this);
     var sources = this._sources;
-    for(var i = 0; i < sources.length; i++) {
+    for (let i = 0; i < sources.length; i++) {
         sources[i].lock();
     }
 };
@@ -1026,7 +1026,7 @@ function JSZip() {
     this.root = "";
     this.clone = function() {
         var newObj = new JSZip();
-        for (var i in this) {
+        for (let i in this) {
             if (typeof this[i] !== "function") {
                 newObj[i] = this[i];
             }
@@ -1105,7 +1105,7 @@ module.exports = function(data, options) {
         var promises = [external.Promise.resolve(zipEntries)];
         var files = zipEntries.files;
         if (options.checkCRC32) {
-            for (var i = 0; i < files.length; i++) {
+            for (let i = 0; i < files.length; i++) {
                 promises.push(checkEntryCRC32(files[i]));
             }
         }
@@ -1113,7 +1113,7 @@ module.exports = function(data, options) {
     }).then(function addFiles(results) {
         var zipEntries = results.shift();
         var files = zipEntries.files;
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             var input = files[i];
             zip.file(input.fileNameStr, input.decompressed, {
                 binary: true,
@@ -1137,7 +1137,7 @@ module.exports = function(data, options) {
 },{"./external":6,"./nodejsUtils":14,"./stream/Crc32Probe":25,"./utf8":31,"./utils":32,"./zipEntries":33}],12:[function(require,module,exports){
 "use strict";
 
-var utils = require('../utils');
+var utils = require('.');
 var GenericWorker = require('../stream/GenericWorker');
 
 /**
@@ -1585,7 +1585,7 @@ var out = {
             var kids = this.filter(function(relativePath, file) {
                 return file.name.slice(0, name.length) === name;
             });
-            for (var i = 0; i < kids.length; i++) {
+            for (let i = 0; i < kids.length; i++) {
                 delete this.files[kids[i].name];
             }
         }
@@ -1695,11 +1695,11 @@ module.exports = require("stream");
 },{"stream":undefined}],17:[function(require,module,exports){
 'use strict';
 var DataReader = require('./DataReader');
-var utils = require('../utils');
+var utils = require('.');
 
 function ArrayReader(data) {
     DataReader.call(this, data);
-	for(var i = 0; i < this.data.length; i++) {
+	for (let i = 0; i < this.data.length; i++) {
 		data[i] = data[i] & 0xFF;
 	}
 }
@@ -1718,7 +1718,7 @@ ArrayReader.prototype.lastIndexOfSignature = function(sig) {
         sig1 = sig.charCodeAt(1),
         sig2 = sig.charCodeAt(2),
         sig3 = sig.charCodeAt(3);
-    for (var i = this.length - 4; i >= 0; --i) {
+    for (let i = this.length - 4; i >= 0; --i) {
         if (this.data[i] === sig0 && this.data[i + 1] === sig1 && this.data[i + 2] === sig2 && this.data[i + 3] === sig3) {
             return i - this.zero;
         }
@@ -1753,7 +1753,7 @@ module.exports = ArrayReader;
 
 },{"../utils":32,"./DataReader":18}],18:[function(require,module,exports){
 'use strict';
-var utils = require('../utils');
+var utils = require('.');
 
 function DataReader(data) {
     this.data = data; // type : see implementation
@@ -1872,7 +1872,7 @@ module.exports = DataReader;
 },{"../utils":32}],19:[function(require,module,exports){
 'use strict';
 var Uint8ArrayReader = require('./Uint8ArrayReader');
-var utils = require('../utils');
+var utils = require('.');
 
 function NodeBufferReader(data) {
     Uint8ArrayReader.call(this, data);
@@ -1893,7 +1893,7 @@ module.exports = NodeBufferReader;
 },{"../utils":32,"./Uint8ArrayReader":21}],20:[function(require,module,exports){
 'use strict';
 var DataReader = require('./DataReader');
-var utils = require('../utils');
+var utils = require('.');
 
 function StringReader(data) {
     DataReader.call(this, data);
@@ -1933,7 +1933,7 @@ module.exports = StringReader;
 },{"../utils":32,"./DataReader":18}],21:[function(require,module,exports){
 'use strict';
 var ArrayReader = require('./ArrayReader');
-var utils = require('../utils');
+var utils = require('.');
 
 function Uint8ArrayReader(data) {
     ArrayReader.call(this, data);
@@ -1957,7 +1957,7 @@ module.exports = Uint8ArrayReader;
 },{"../utils":32,"./ArrayReader":17}],22:[function(require,module,exports){
 'use strict';
 
-var utils = require('../utils');
+var utils = require('.');
 var support = require('../support');
 var ArrayReader = require('./ArrayReader');
 var StringReader = require('./StringReader');
@@ -1999,7 +1999,7 @@ exports.DATA_DESCRIPTOR = "PK\x07\x08";
 'use strict';
 
 var GenericWorker = require('./GenericWorker');
-var utils = require('../utils');
+var utils = require('.');
 
 /**
  * A worker which convert chunks to a specified type.
@@ -2028,7 +2028,7 @@ module.exports = ConvertWorker;
 
 var GenericWorker = require('./GenericWorker');
 var crc32 = require('../crc32');
-var utils = require('../utils');
+var utils = require('.');
 
 /**
  * A worker which calculate the crc32 of the data flowing through.
@@ -2052,7 +2052,7 @@ module.exports = Crc32Probe;
 },{"../crc32":4,"../utils":32,"./GenericWorker":28}],26:[function(require,module,exports){
 'use strict';
 
-var utils = require('../utils');
+var utils = require('.');
 var GenericWorker = require('./GenericWorker');
 
 /**
@@ -2083,7 +2083,7 @@ module.exports = DataLengthProbe;
 },{"../utils":32,"./GenericWorker":28}],27:[function(require,module,exports){
 'use strict';
 
-var utils = require('../utils');
+var utils = require('.');
 var GenericWorker = require('./GenericWorker');
 
 // the size of the generated chunks
@@ -2319,7 +2319,7 @@ GenericWorker.prototype = {
      */
     emit : function (name, arg) {
         if (this._listeners[name]) {
-            for(var i = 0; i < this._listeners[name].length; i++) {
+            for (let i = 0; i < this._listeners[name].length; i++) {
                 this._listeners[name][i].call(this, arg);
             }
         }
@@ -2349,7 +2349,7 @@ GenericWorker.prototype = {
         this.streamInfo = previous.streamInfo;
         // ... and adding our own bits
         this.mergeStreamInfo();
-        this.previous =  previous;
+        this.previous = previous;
         var self = this;
         previous.on('data', function (chunk) {
             self.processChunk(chunk);
@@ -2425,7 +2425,7 @@ GenericWorker.prototype = {
      * Merge this worker's streamInfo into the chain's streamInfo.
      */
     mergeStreamInfo : function () {
-        for(var key in this.extraStreamInfo) {
+        for (let key in this.extraStreamInfo) {
             if (!this.extraStreamInfo.hasOwnProperty(key)) {
                 continue;
             }
@@ -2466,7 +2466,7 @@ module.exports = GenericWorker;
 },{}],29:[function(require,module,exports){
 'use strict';
 
-var utils = require('../utils');
+var utils = require('.');
 var ConvertWorker = require('./ConvertWorker');
 var GenericWorker = require('./GenericWorker');
 var base64 = require('../base64');
@@ -2741,7 +2741,7 @@ var GenericWorker = require('./stream/GenericWorker');
 // Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
 // because max possible codepoint is 0x10ffff
 var _utf8len = new Array(256);
-for (var i=0; i<256; i++) {
+for (let i=0; i<256; i++) {
   _utf8len[i] = (i >= 252 ? 6 : i >= 248 ? 5 : i >= 240 ? 4 : i >= 224 ? 3 : i >= 192 ? 2 : 1);
 }
 _utf8len[254]=_utf8len[254]=1; // Invalid sequence start
@@ -3051,7 +3051,7 @@ exports.newBlob = function(parts, type) {
             // deprecated, browser only, old way
             var Builder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder;
             var builder = new Builder();
-            for (var i = 0; i < parts.length; i++) {
+            for (let i = 0; i < parts.length; i++) {
                 builder.append(parts[i]);
             }
             return builder.getBlob(type);
@@ -3081,7 +3081,7 @@ function identity(input) {
  * @return {Array|ArrayBuffer|Uint8Array|Buffer} the updated array.
  */
 function stringToArrayLike(str, array) {
-    for (var i = 0; i < str.length; ++i) {
+    for (let i = 0; i < str.length; ++i) {
         array[i] = str.charCodeAt(i) & 0xFF;
     }
     return array;
@@ -3128,7 +3128,7 @@ var arrayToStringHelper = {
      */
     stringifyByChar: function(array){
         var resultStr = "";
-        for(var i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             resultStr += String.fromCharCode(array[i]);
         }
         return resultStr;
@@ -3207,7 +3207,7 @@ exports.applyFromCharCode = arrayLikeToString;
  * @return {Array|ArrayBuffer|Uint8Array|Buffer} the updated destination array.
  */
 function arrayLikeToArrayLike(arrayFrom, arrayTo) {
-    for (var i = 0; i < arrayFrom.length; i++) {
+    for (let i = 0; i < arrayFrom.length; i++) {
         arrayTo[i] = arrayFrom[i];
     }
     return arrayTo;
@@ -3764,7 +3764,7 @@ var MADE_BY_UNIX = 0x03;
  * @return {Object|null} the JSZip compression object, null if none found.
  */
 var findCompression = function(compressionMethod) {
-    for (var method in compressions) {
+    for (let method in compressions) {
         if (!compressions.hasOwnProperty(method)) {
             continue;
         }
@@ -3974,7 +3974,7 @@ ZipEntry.prototype = {
                 this.fileNameStr = upath;
             } else {
                 // ASCII text or unsupported code page
-                var fileNameByteArray =  utils.transformTo(decodeParamType, this.fileName);
+                var fileNameByteArray = utils.transformTo(decodeParamType, this.fileName);
                 this.fileNameStr = this.loadOptions.decodeFileName(fileNameByteArray);
             }
 
@@ -3983,7 +3983,7 @@ ZipEntry.prototype = {
                 this.fileCommentStr = ucomment;
             } else {
                 // ASCII text or unsupported code page
-                var commentByteArray =  utils.transformTo(decodeParamType, this.fileComment);
+                var commentByteArray = utils.transformTo(decodeParamType, this.fileComment);
                 this.fileCommentStr = this.loadOptions.decodeFileName(commentByteArray);
             }
         }
@@ -4160,7 +4160,7 @@ var removedFn = function () {
     throw new Error("This method has been removed in JSZip 3.0, please check the upgrade guide.");
 };
 
-for(var i = 0; i < removedMethods.length; i++) {
+for (let i = 0; i < removedMethods.length; i++) {
     ZipObject.prototype[removedMethods[i]] = removedFn;
 }
 module.exports = ZipObject;
@@ -5625,7 +5625,7 @@ exports.ungzip  = inflate;
 'use strict';
 
 
-var TYPED_OK =  (typeof Uint8Array !== 'undefined') &&
+var TYPED_OK = (typeof Uint8Array !== 'undefined') &&
                 (typeof Uint16Array !== 'undefined') &&
                 (typeof Int32Array !== 'undefined');
 
@@ -5640,7 +5640,7 @@ exports.assign = function (obj /*from1, from2, from3, ...*/) {
       throw new TypeError(source + 'must be non-object');
     }
 
-    for (var p in source) {
+    for (let p in source) {
       if (source.hasOwnProperty(p)) {
         obj[p] = source[p];
       }
@@ -5667,7 +5667,7 @@ var fnTyped = {
       return;
     }
     // Fallback to ordinary array
-    for (var i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       dest[dest_offs + i] = src[src_offs + i];
     }
   },
@@ -5696,7 +5696,7 @@ var fnTyped = {
 
 var fnUntyped = {
   arraySet: function (dest, src, src_offs, len, dest_offs) {
-    for (var i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       dest[dest_offs + i] = src[src_offs + i];
     }
   },
@@ -5730,7 +5730,7 @@ exports.setTyped(TYPED_OK);
 'use strict';
 
 
-var utils = require('./common');
+var utils = require('../commons/common');
 
 
 // Quick check if we can use fast array to bin string conversion
@@ -5749,7 +5749,7 @@ try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APP
 // Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
 // because max possible codepoint is 0x10ffff
 var _utf8len = new utils.Buf8(256);
-for (var q = 0; q < 256; q++) {
+for (let q = 0; q < 256; q++) {
   _utf8len[q] = (q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1);
 }
 _utf8len[254] = _utf8len[254] = 1; // Invalid sequence start
@@ -5819,7 +5819,7 @@ function buf2binstring(buf, len) {
   }
 
   var result = '';
-  for (var i = 0; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     result += String.fromCharCode(buf[i]);
   }
   return result;
@@ -5835,7 +5835,7 @@ exports.buf2binstring = function (buf) {
 // Convert binary string (typed, when possible)
 exports.binstring2buf = function (str) {
   var buf = new utils.Buf8(str.length);
-  for (var i = 0, len = buf.length; i < len; i++) {
+  for (let i = 0, len = buf.length; i < len; i++) {
     buf[i] = str.charCodeAt(i);
   }
   return buf;
@@ -6010,9 +6010,9 @@ module.exports = {
 function makeTable() {
   var c, table = [];
 
-  for (var n = 0; n < 256; n++) {
+  for (let n = 0; n < 256; n++) {
     c = n;
-    for (var k = 0; k < 8; k++) {
+    for (let k = 0; k < 8; k++) {
       c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
     }
     table[n] = c;
@@ -6031,7 +6031,7 @@ function crc32(crc, buf, len, pos) {
 
   crc ^= -1;
 
-  for (var i = pos; i < end; i++) {
+  for (let i = pos; i < end; i++) {
     crc = (crc >>> 8) ^ t[(crc ^ buf[i]) & 0xFF];
   }
 
@@ -6044,7 +6044,7 @@ module.exports = crc32;
 },{}],67:[function(require,module,exports){
 'use strict';
 
-var utils   = require('../utils/common');
+var utils   = require('../commons/common');
 var trees   = require('./trees');
 var adler32 = require('./adler32');
 var crc32   = require('./crc32');
@@ -8272,7 +8272,7 @@ module.exports = function inflate_fast(strm, start) {
 'use strict';
 
 
-var utils         = require('../utils/common');
+var utils         = require('../commons/common');
 var adler32       = require('./adler32');
 var crc32         = require('./crc32');
 var inflate_fast  = require('./inffast');
@@ -8356,7 +8356,7 @@ var    SYNC = 32;      /* looking for synchronization bytes to restart inflate()
 
 var ENOUGH_LENS = 852;
 var ENOUGH_DISTS = 592;
-//var ENOUGH =  (ENOUGH_LENS+ENOUGH_DISTS);
+//var ENOUGH = (ENOUGH_LENS+ENOUGH_DISTS);
 
 var MAX_WBITS = 15;
 /* 32K LZ77 window */
@@ -9812,7 +9812,7 @@ exports.inflateUndermine = inflateUndermine;
 'use strict';
 
 
-var utils = require('../utils/common');
+var utils = require('../commons/common');
 
 var MAXBITS = 15;
 var ENOUGH_LENS = 852;
@@ -10156,7 +10156,7 @@ module.exports = {
 'use strict';
 
 
-var utils = require('../utils/common');
+var utils = require('../commons/common');
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -10240,13 +10240,13 @@ var REPZ_11_138 = 18;
 /* repeat a zero length 11-138 times  (7 bits of repeat count) */
 
 /* eslint-disable comma-spacing,array-bracket-spacing */
-var extra_lbits =   /* extra bits for each length code */
+var extra_lbits =  /* extra bits for each length code */
   [0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0];
 
-var extra_dbits =   /* extra bits for each distance code */
+var extra_dbits =  /* extra bits for each distance code */
   [0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13];
 
-var extra_blbits =  /* extra bits for each bit length code */
+var extra_blbits = /* extra bits for each bit length code */
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7];
 
 var bl_order =

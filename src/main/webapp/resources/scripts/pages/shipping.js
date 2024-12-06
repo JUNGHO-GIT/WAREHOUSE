@@ -1,24 +1,22 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shipping.xlsx",
     title: "   제품 출고 현황",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -36,7 +34,7 @@ function fnGetList01 () {
     };
     // 2. 그리드 데이터가 있을 경우 중복체크
     var duplicateFlag = false;
-    for (var i = 0; i < getData.length; i++) {
+    for (let i = 0; i < getData.length; i++) {
       var row = getData[i];
       if (row.prodCd === newRow.prodCd) {
         duplicateFlag = true;
@@ -83,11 +81,11 @@ function fnGetList01 () {
     url: "act/listShipping",
     data:`inOutDt=${"P"}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data: myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -98,25 +96,23 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const gridCd = "grid02";
+  const $grid = $(`#grid02`);
   var delBtn = `<button class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "shipDetail.xlsx",
     title: "   제품 출하 대기 목록",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 셀 클릭시 실행
@@ -191,7 +187,7 @@ function fnSaveItems() {
   }
 
   var inOutSeq = "";
-  for (var i = 0; i < rowCnt; i++) {
+  for (let i = 0; i < rowCnt; i++) {
     var gData = $("#grid02").pqGrid("getRowData", {rowIndxPage: i});
     if (inOutSeq != "" && i < rowCnt) {
       inOutSeq += ",";
@@ -208,7 +204,7 @@ function fnSaveItems() {
   var flagYN = "Y";
   var planYN = "N";
 
-  var param = {
+  const param = {
     "shipCd": shipCd,
     "shipDt": shipDt,
     "shipMajor": shipMajor,
@@ -224,12 +220,12 @@ function fnSaveItems() {
     url: "act/saveShipItems",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
       fnReset();
@@ -279,7 +275,7 @@ function fnSavePlan() {
 
   // ex. 125,126,127 ...
   var inOutSeq = "";
-  for (var i = 0; i < rowCnt; i++) {
+  for (let i = 0; i < rowCnt; i++) {
     var gData = $("#grid02").pqGrid("getRowData", {rowIndxPage: i});
     if (inOutSeq != "" && i < rowCnt) {
       inOutSeq += ",";
@@ -287,7 +283,7 @@ function fnSavePlan() {
     inOutSeq += gData.inOutSeq;
   };
 
-  var param = {
+  const param = {
     "shipCd": 0,
     "shipDt": $("#shipDt").val() || "",
     "shipMajor": $("#shipMajor").val() || "",
@@ -303,12 +299,12 @@ function fnSavePlan() {
     url: "act/saveShipPlan",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
       fnReset();
@@ -325,7 +321,7 @@ function fnDelProd(rowIdx) {
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
 
-  var curDate = fnToday();
+  const curDate = fnToday();
 
   // 출하 초기화
   $("#toMajor").val("");
@@ -341,8 +337,8 @@ function fnReset() {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("dataModel", {data: []});
-  $("#grid02").pqGrid("refreshDataAndView");
+	$("#grid02").pqGrid("dataModel", {data: []});
+	$("#grid02").pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
@@ -352,29 +348,36 @@ function fnResetWhenSearch() {
   $("#grid01").pqGrid("setSelection", null);
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
   var pastDate = fnDateAdd(curDate, -30);
   $("#shipDt").datepicker(G_calendar);
   $("#shipDt").val(curDate);

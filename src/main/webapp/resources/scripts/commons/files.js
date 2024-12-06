@@ -6,7 +6,8 @@ function fnUploadFiles(formParam) {
   var tableKey = $("#tableKey").val();
 
   var formData = new FormData(fileUploadForm);
-  var divFile = $("#userFile").val().split(".");
+  var userFileVal = $("#userFile").val();
+  var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
   var fileExt = divFile[(divFile.length - 1)];
 
   if (!$("#userFile").val()) {
@@ -29,7 +30,7 @@ function fnUploadFiles(formParam) {
     processData: false,
     contentType: false,
     cache: false,
-    success: function (data) {
+    success: (data) => {
       // 1. alert
       alert(data);
 
@@ -57,7 +58,8 @@ function fnUploadWarFiles(formParam) {
 
   var fileUploadForm = formParam;
   var formData = new FormData(fileUploadForm);
-  var divFile = $("#userFile").val().split(".");
+  var userFileVal = $("#userFile").val();
+  var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
   var fileExt = divFile[(divFile.length - 1)];
 
   if (!$("#userFile").val()) {
@@ -80,7 +82,7 @@ function fnUploadWarFiles(formParam) {
     processData: false,
     contentType: false,
     cache: false,
-    success: function (data) {
+    success: (data) => {
       alert(data);
       $("#fileUpBtn").html("업로드");
       $("#userFile").val("");
@@ -99,8 +101,8 @@ function fnShowFiles(tableNm, tableKey, target) {
     url: "act/showFiles",
     data: `tableNm=${tableNm}&tableKey=${tableKey}`,
     type: "POST",
-    dataType: "JSON",
-    success: function (data) {
+    dataType:"JSON",
+    success: (data) => {
 
       // 1. 값 초기화
       $("#" + target).empty();
@@ -159,7 +161,7 @@ function fnShowSelectedFiles(fileUrl, rowId) {
   $(`[id^="imageRow"]`).css("background-color", "");
   $("#imageRow" + rowId).css("background-color", "#ccc");
 
-  currentSelectedRow = rowId;
+  /* currentSelectedRow = rowId; */
 };
 
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
@@ -170,8 +172,7 @@ function fnPopupImage(fileUrl) {
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
 function fnDownloadFiles(fileUrl) {
-  var valUrl = "/downloadFiles?fileUrl=" + fileUrl;
-  window.location = valUrl;
+  location.href = `/downloadFiles?fileUrl=${fileUrl}`;
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------
@@ -181,7 +182,7 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
     return;
   }
 
-  var param = {
+  const param = {
     "fileSeq": fileSeq,
     "fileUrl": fileUrl,
     "fileNm": fileNm,
@@ -195,12 +196,12 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
     url: "act/saveFiles",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       // 1. alert
       alert(data.result);
 

@@ -259,14 +259,14 @@ function fnCheckAuth(auth) {
 function fnGReset(layer, except) {
 
   var txtEle = $("#" + layer + " input");
-  for (var i = 0; i < txtEle.length; i++) {
+  for (let i = 0; i < txtEle.length; i++) {
     if (except == undefined) $(txtEle[i]).val("");
     else {
       if (except.indexOf("/" + $(txtEle[i]).attr("id") + "/") < 0) $(txtEle[i]).val("");
     }
   }
   var areaEle = $("#" + layer + " textarea");
-  for (var i = 0; i < areaEle.length; i++) {
+  for (let i = 0; i < areaEle.length; i++) {
     if (except == undefined) $(areaEle[i]).val("");
     else {
       if (except.indexOf("/" + $(areaEle[i]).attr("id") + "/") < 0) $(areaEle[i]).val("");
@@ -274,7 +274,7 @@ function fnGReset(layer, except) {
   }
 
   var selEle = $("#" + layer + " select");
-  for (var i = 0; i < selEle.length; i++) {
+  for (let i = 0; i < selEle.length; i++) {
     if (except == undefined) $(selEle[i]).val("");
     else {
       if (except.indexOf("/" + $(selEle[i]).attr("id") + "/") < 0) $(selEle[i]).val("");
@@ -282,7 +282,7 @@ function fnGReset(layer, except) {
   }
 
   var radEle = $("#" + layer + " radio");
-  for (var i = 0; i < radEle.length; i++) {
+  for (let i = 0; i < radEle.length; i++) {
     if (except == undefined) {
       $(radEle[i]).prop('checked', function () {
         return this.getAttribute('checked') == 'checked';
@@ -298,7 +298,7 @@ function fnGReset(layer, except) {
   }
 
   var chkEle = $("#" + layer + " checkbox");
-  for (var i = 0; i < chkEle.length; i++) {
+  for (let i = 0; i < chkEle.length; i++) {
     if (except == undefined) $(chkEle[i]).prop("checked", false);
     else {
       if (except.indexOf("/" + $(radEle[i]).attr("id") + "/") < 0) $(chkEle[i]).prop("checked", false);
@@ -351,7 +351,7 @@ function fnEditMode(layer, onOff, except) {
 
   var txtEle1 = $("#" + layer + " input");
 
-  for (var i = 0; i < txtEle1.length; i++) {
+  for (let i = 0; i < txtEle1.length; i++) {
     if ($(txtEle1[i]).attr("type") != "checkbox" && $(txtEle1[i]).attr("type") != "radio") {
       if (onOff == "on") {
         if ($(txtEle1[i]).prop("class") != "readOnlyBox") $(txtEle1[i]).attr("class", "inputBox");
@@ -373,14 +373,14 @@ function fnEditMode(layer, onOff, except) {
 
   var txtEle2 = $("#" + layer + " select");
 
-  for (var i = 0; i < txtEle2.length; i++) {
+  for (let i = 0; i < txtEle2.length; i++) {
     if (onOff == "on") $(txtEle2[i]).attr("class", "inputBox");
     else $(txtEle2[i]).attr("class", "readBox");
   }
 
   var txtEle3 = $("#" + layer + " textarea");
 
-  for (var i = 0; i < txtEle3.length; i++) {
+  for (let i = 0; i < txtEle3.length; i++) {
     if (onOff == "on") $(txtEle3[i]).attr("class", "inputTextBox");
     else $(txtEle3[i]).attr("class", "readTextBox");
   }
@@ -395,7 +395,7 @@ function fnReadMode(layer, onOff, except) {
 
   var txtEle1 = $("#" + layer + " input");
 
-  for (var i = 0; i < txtEle1.length; i++) {
+  for (let i = 0; i < txtEle1.length; i++) {
     if (except == undefined) {
       $(txtEle1[i]).prop("readOnly", onOff);
     }
@@ -406,7 +406,7 @@ function fnReadMode(layer, onOff, except) {
 
   var txtEle2 = $("#" + layer + " select");
 
-  for (var i = 0; i < txtEle2.length; i++) {
+  for (let i = 0; i < txtEle2.length; i++) {
     $(txtEle2[i]).prop("readOnly", onOff);
   }
   return;
@@ -576,10 +576,10 @@ function fnSetApi() {
     type: 'POST',
     dataType: 'JSON',
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       G_Api = data.apiKey;
     },
     error: function (request, status, error) {
@@ -715,12 +715,12 @@ function fnRowUpdate(valUrl, param, rowIndx, gridCd) {
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       var gData = $("#" + gridCd).pqGrid("getRowData", {rowIndxPage: rowIndx});
       //if(gData.chk == "E") gData["chk"] = "<span style='color:#FFF;font-weight:bold;background-color:#FF0000;width:30px;'>∨</span>";
@@ -754,12 +754,12 @@ function fnComboComCode(targets) {
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       for (p = 0; p < divTgt.length; p++) {
         $('#' + divTgt[p]).html('');
       }
@@ -800,7 +800,7 @@ function fnCommonCd(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹�
             });
             // 값 check
             var divVal = curVal.split(",");
-            for (var idx in divVal) {
+            for (let idx in divVal) {
                 $("input[id='"+fid+"'][value=" + divVal[idx] + "]").prop("checked", true);
             }
         }
@@ -812,7 +812,7 @@ function fnCommonCd(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹�
             });
             // 값 check
             var divVal = curVal.split(",");
-            for (var idx in divVal) {
+            for (let idx in divVal) {
                 $("input[id='"+fid+"'][value=" + divVal[idx] + "]").prop("checked", true);
             }
         }
@@ -821,7 +821,7 @@ function fnCommonCd(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹�
     $.ajax({
         url: valUrl,
         type: 'POST',
-        dataType: "json",
+        dataType:"json",
         data: param,
         beforeSend : function(xmlHttpRequest){
              xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
@@ -886,12 +886,12 @@ function fnMultiCombo(groupCds, targets, mode) { //groupCds:그룹 코드들, ta
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       fnCheckAuth(data);
       for (c = 0; c < divGroupCd.length; c++) {
 
@@ -940,12 +940,12 @@ function fnFindCombo(valUrl, findStr, curVal, target, showStr) { //valUrl:Master
     $.ajax({
       url: valUrl,
       type: 'POST',
-      dataType: "json",
+      dataType:"json",
       data: param,
-      beforeSend: function (xmlHttpRequest) {
+      beforeSend: (xmlHttpRequest) => {
         xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
       },
-      success: function (data) {
+      success: (data) => {
         fnCheckAuth(data);
         $('#' + target).html('');
 
@@ -978,12 +978,12 @@ function fnFindComboWithParam(valUrl, param, curVal, target, showStr) { //valUrl
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       fnCheckAuth(data);
       $('#' + target).html('');
 
@@ -1017,12 +1017,12 @@ function fnComCombo(valUrl, target, curVal, showStr) { //valUrl:Master Data URL,
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       fnCheckAuth(data);
       $('#' + target).html('');
 
@@ -1074,12 +1074,12 @@ function fnShowThumb(I00SEQNCY, target) {
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       var link = data.T_FILES[0].LINK;
       var img = "";
@@ -1175,12 +1175,12 @@ function fnInitCombo(struct, callback) {
     $.ajax({
         url: valUrl,
         type: 'POST',
-        dataType: "json",
+        dataType:"json",
         data: param,
         beforeSend : function(xmlHttpRequest){
              xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
          },
-        success: function (data) {
+        success: (data) => {
 
             for(k=0; k<struct.length; k++) {
                 $('#'+struct[k].target).html('');
@@ -1278,7 +1278,7 @@ function fnInitCombo(struct, callback) {
 function fnShowHideCol(gridCd, colNm) {
   var CM = $("#" + gridCd).pqGrid("getColModel");
 
-  for (var i = 0; i < CM.length; i++) {
+  for (let i = 0; i < CM.length; i++) {
     var column = CM[i],
       dataIndx = column.dataIndx + "";
     if (dataIndx == colNm) {
@@ -1347,14 +1347,14 @@ function fnExport(gridCd, xlsxNm) {
   if (colCnt < 15) maxWidth = 200;
   if (colCnt < 10) maxWidth = 150;
   if (colCnt < 5) maxWidth = 60;
-  for (var k = 0; k < colCnt; k++) {
+  for (let k = 0; k < colCnt; k++) {
     var cWidth = Math.ceil(column[k]["width"]);
     headers[k] = column[k]["title"].replace(/(<([^>]+)>)/ig, "");
     aligns[k] = column[k]["align"];
     dataTypes[k] = column[k]["dataType"];
     fullWidth += parseInt(column[k]["width"]);
   }
-  for (var k = 0; k < colCnt; k++) { //width 재정의
+  for (let k = 0; k < colCnt; k++) { //width 재정의
     var cWidth = Math.ceil(maxWidth * (column[k]["width"] / fullWidth));
     if (column[k]["hidden"] != true) widths[k] = cWidth;
   }
@@ -1363,7 +1363,7 @@ function fnExport(gridCd, xlsxNm) {
   var sheetNm = xlsxNm.split(".xlsx").join("");
   excel.set({sheet: 0, value: sheetNm});
 
-  for (var i = 0; i <= rowCnt; i++) excel.set({row: i, value: 19.5});
+  for (let i = 0; i <= rowCnt; i++) excel.set({row: i, value: 19.5});
   //excel.set({row:3,value: 30  });
 
   var formatHeader = excel.addStyle({ 															// Format for headers
@@ -1373,7 +1373,7 @@ function fnExport(gridCd, xlsxNm) {
     align: "C C"
   }); 														// 		Font for headers
 
-  for (var i = 0; i < headers.length; i++) {
+  for (let i = 0; i < headers.length; i++) {
     if (i == (colCnt - 1)) {
       formatHeader = excel.addStyle({ 															// Format for headers
         border: "none,thin #bdbdbd,none,thin #bdbdbd", 													// 		Border for header
@@ -1388,8 +1388,8 @@ function fnExport(gridCd, xlsxNm) {
   }
 
 
-  for (var i = 1; i <= rowCnt; i++) {
-    for (var c = 0; c < colCnt; c++) {
+  for (let i = 1; i <= rowCnt; i++) {
+    for (let c = 0; c < colCnt; c++) {
       var cellData = gridData[(i - 1)][column[c]["dataIndx"]];
 
       var css = {};
@@ -1503,15 +1503,15 @@ function fnGetCommonCd (groupCd, target, callback) {
     type: 'GET',
     url: urlVal,
     contentType: "text/plain",
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       if (data.length > 0) {
         $("#" + target).html("<option value=''>=" + data[0].groupNm + "=</option>");
-        for (var z = 0; z < data.length; z++) {
+        for (let z = 0; z < data.length; z++) {
           var row = data[z];
           $("#" + target).append("<option value='" + row.itemCd + "'>" + row.itemNm + "</option>");
         }
@@ -1544,14 +1544,14 @@ function fnGetRooms (target, callback) {
     type: 'GET',
     url: urlVal,
     contentType: "text/plain",
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
-      for (var z = 0; z < data.length; z++) {
+      for (let z = 0; z < data.length; z++) {
         var row = data[z];
         for (d = 0; d < divTarget.length; d++) {
           $("#" + divTarget[d]).append("<option value='" + row.roomCd + "'>" + row.roomNm + "</option>");
@@ -1629,12 +1629,12 @@ function fnInitCombo(struct, callback, m) {
   $.ajax({
     url: urlVal,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       for (k = 0; k < struct.length; k++) {
 
@@ -1752,12 +1752,12 @@ function fnCommonCd(part, groupCd, cd, target, format, findStr) { //part: 구분
   $.ajax({
     url: urlVal,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       $('#' + target).html('');
       var options = "";
@@ -1819,12 +1819,12 @@ function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보�
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       //fnCheckAuth(data);
       $("#" + target).html("");
       var showFiles = "";
@@ -1909,7 +1909,7 @@ function fnDelFile(seq) {
   $.ajax({
       url: valUrl,
       type: 'POST',
-      dataType: "json",
+      dataType:"json",
       data: param,
       beforeSend : function(xmlHttpRequest){
              xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
@@ -1960,7 +1960,7 @@ function fnDelFile(seq) {
      return;
  }
 
- var curDate = fnToday();
+ const curDate = fnToday();
 
  var upGroup = $("#upGroup").val();
  var fileValue = $("#userFile").val().split("\\");
@@ -1993,7 +1993,7 @@ function fnDelFile(seq) {
      url: valUrl,
      type: "POST",
      contentType: "application/json; charset=UTF-8",
-   dataType: "json",
+   dataType:"json",
    data: param,
    beforeSend : function(xmlHttpRequest){
              xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
@@ -2038,12 +2038,12 @@ function fnDelFile(bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, fileFlag) {
     url: valUrl,
     type: "POST",
     contentType: "application/json; charset=UTF-8",
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       $("#userFile").val("");
       if (data.result == "삭제 되었습니다.") {
@@ -2093,12 +2093,12 @@ function fnSaveUserConfigTab() {
     url: valUrl,
     type: 'POST',
     contentType: "application/json; charset=UTF-8",
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
     },
     error: function (request, status, error) {
@@ -2120,12 +2120,12 @@ function fnShowUserConfigTab() {
   $.ajax({
     url: valUrl,
     type: 'POST',
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       if (data) fnSetTab(data.config);
     },
     error: function (request, status, error) {
@@ -2156,12 +2156,12 @@ function fnFindCompany(findCompNm, compCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       //alert(JSON.stringify(data));
 
@@ -2194,12 +2194,12 @@ function fnFindHouse(findhouseNm, houseCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       //alert(JSON.stringify(data));
 
@@ -2235,12 +2235,12 @@ function fnFindResrcNm(findResrcNm, resrcCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       //alert(JSON.stringify(data));
 
@@ -2277,12 +2277,12 @@ function fnFindProdNm(findProdNm, prodCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       //alert(JSON.stringify(data));
 
@@ -2379,12 +2379,12 @@ function fnFindHouseCd(findNm, houseCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       if (data == null || data.length == 0) $("#" + target).html("<option value=''>--No Result--</option>");
       for (k = 0; k < data.length; k++) {
@@ -2423,12 +2423,12 @@ function fnFindCompCd(findNm, findCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
 
       if (data == null || data.length == 0) $("#" + target).html("<option value=''>--No Result--</option>");
       for (k = 0; k < data.length; k++) {
@@ -2467,12 +2467,12 @@ function fnFindProdCd(findNm, findCd, target) {
   $.ajax({
     type: 'POST',
     url: urlVal,
-    dataType: "json",
+    dataType:"json",
     data: param,
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
     },
-    success: function (data) {
+    success: (data) => {
       //alert(JSON.stringify(data));
       if (data == null || data.length == 0) $("#" + target).html("<option value=''>--No Result--</option>");
       for (k = 0; k < data.length; k++) {

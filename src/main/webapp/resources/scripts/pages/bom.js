@@ -1,24 +1,22 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "product.xlsx",
     title: "   제품 정보",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -56,11 +54,11 @@ function fnGetList01 () {
     url: "act/listBom",
     data: param,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -71,24 +69,22 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const gridCd = "grid02";
+  const $grid = $(`#grid02`);
   var insertBtn=`<button type="button" class="btn btn-primary btn-xs insertBtn">&#x25bc;</button>`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   자재 정보",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 셀 클릭시 실행
@@ -107,7 +103,7 @@ function fnGetList02() {
       };
       // 2. 자재 중복체크
       var duplicateFlag = false;
-      for (var i = 0; i < getData.length; i++) {
+      for (let i = 0; i < getData.length; i++) {
         var row = getData[i];
         if (row.resrcCd === newRow.resrcCd) {
           duplicateFlag = true;
@@ -155,11 +151,11 @@ function fnGetList02() {
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -173,21 +169,19 @@ function fnGetList03 () {
   const gridCd = "grid03";
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "bomList.xlsx",
     title: "   BOM 항목",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 셀 클릭시 실행
@@ -234,21 +228,19 @@ function fnShow(prodCd, bomType) {
   const gridCd = "grid03";
   var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resource.xlsx",
     title: "   BOM 정보",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 셀 클릭시 실행
@@ -292,11 +284,11 @@ function fnShow(prodCd, bomType) {
     url: "act/showBom",
     data: `prodCd=${prodCd}&bomType=${bomType}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
       obj.dataModel = {data:myJsonData};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
@@ -321,8 +313,8 @@ function fnSave() {
     return;
   }
 
-  for (var i = 0; i < getData.length; i++) {
-    var qty = parseInt(getData[i].qty, 10);
+  for (let i = 0; i < getData.length; i++) {
+    let qty = parseInt(getData[i].qty, 10);
     var unitQty = parseInt(getData[i].unitQty, 10);
     if (isNaN(unitQty)) {
       alert("소요수량을 입력해주세요");
@@ -346,7 +338,7 @@ function fnSave() {
     return;
   }
 
-  for (var c = 0; c < getData.length; c++) {
+  for (let c = 0; c < getData.length; c++) {
     getData[c]["prodCd"] = String (prodCd) || "0";
     getData[c]["resrcCd"] = String (getData[c]["resrcCd"]) || "0";
     getData[c]["qty"] = String (getData[c]["qty"]) || "0";
@@ -359,12 +351,12 @@ function fnSave() {
     url: "act/saveBom",
     data: JSON.stringify({datas: getData}),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnShow(prodCd, bomType);
     },
@@ -406,12 +398,12 @@ function fnDelResrc(rowIdx) {
     url: "act/saveBom",
     data: JSON.stringify({datas: [bomData]}),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnShow(prodCd, bomType);
     },
@@ -485,15 +477,22 @@ function fnBomInput() {
   });
 }
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
@@ -511,7 +510,7 @@ function fnPressGet02(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
   fnGetList02();
@@ -519,7 +518,7 @@ function fnChangeList() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
   $("#inOutDt").datepicker(G_calendar);
   $("#inOutDt").val(curDate);
 

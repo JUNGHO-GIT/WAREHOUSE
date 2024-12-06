@@ -95,7 +95,7 @@ declare namespace JQuery
        */
       accepts?: PlainObject<string> | undefined;
       /**
-       * By default, all requests are sent asynchronously (i.e. this is set to true by default). If you need synchronous requests, set this option to false. Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation. Note that synchronous requests may temporarily lock the browser, disabling any actions while the request is active. As of jQuery 1.8, the use of async: false with jqXHR ($.Deferred) is deprecated; you must use the success/error/complete callback options instead of the corresponding methods of the jqXHR object such as jqXHR.done().
+       * By default, all requests are sent asynchronously (i.e. this is set to true by default). If you need synchronous requests, set this option to false. Cross-domain requests and dataType:"jsonp" requests do not support synchronous operation. Note that synchronous requests may temporarily lock the browser, disabling any actions while the request is active. As of jQuery 1.8, the use of async: false with jqXHR ($.Deferred) is deprecated; you must use the success/error/complete callback options instead of the corresponding methods of the jqXHR object such as jqXHR.done().
        */
       async?: boolean | undefined;
       /**
@@ -1475,7 +1475,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1582,7 +1582,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1672,7 +1672,7 @@ alert( "Value is ( 2*5 = ) 10: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1750,7 +1750,7 @@ chained.done(function( data ) {
      * **Solution**: In most cases it is sufficient to change all occurrences of `.pipe()` to `.then()`. Ensure that you aren't relying on context/state propagation (e.g., using `this`) or synchronous callback invocation, which were dropped from `.then()` for Promises/A+ interoperability as of jQuery 3.0.
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1822,7 +1822,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1912,7 +1912,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -1972,7 +1972,7 @@ alert( "Value is ( 2*5 = ) 10: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2075,7 +2075,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2176,7 +2176,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2281,7 +2281,7 @@ $( "button" ).on( "click", filterResolve );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2353,7 +2353,7 @@ chained.done(function( data ) {
      * @since 1.8
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2450,7 +2450,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2534,7 +2534,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -2609,7 +2609,7 @@ $( "button" ).on( "click", filterResolve );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3009,7 +3009,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3107,7 +3107,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3191,7 +3191,7 @@ alert( "Value is ( 2*5 = ) 10: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3263,7 +3263,7 @@ chained.done(function( data ) {
      * **Solution**: In most cases it is sufficient to change all occurrences of `.pipe()` to `.then()`. Ensure that you aren't relying on context/state propagation (e.g., using `this`) or synchronous callback invocation, which were dropped from `.then()` for Promises/A+ interoperability as of jQuery 3.0.
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3332,7 +3332,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3416,7 +3416,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3473,7 +3473,7 @@ alert( "Value is ( 2*5 = ) 10: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.pipe(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3573,7 +3573,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3665,7 +3665,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3764,7 +3764,7 @@ $( "button" ).on( "click", filterResolve );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3830,7 +3830,7 @@ chained.done(function( data ) {
      * @since 1.8
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -3924,7 +3924,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -4002,7 +4002,7 @@ alert( "Value is ( 3*6 = ) 18: " + value );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });
@@ -4074,7 +4074,7 @@ $( "button" ).on( "click", filterResolve );
 ```
      * @example ​ ````Chain tasks:
 ```javascript
-var request = $.ajax( url, { dataType: "json" } ),
+var request = $.ajax( url, { dataType:"json" } ),
 chained = request.then(function( data ) {
 return $.ajax( url2, { data: { user: data.userId } } );
 });

@@ -46,7 +46,7 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
     url: `act/find${upStrCd}`,
     data: `findNm=${targetNm}&findCd=${targetCd}`,
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     beforeSend: function(xmlHttpRequest) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -58,7 +58,7 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
         $(`#${str}`).empty();
         $(`#${str}`).html(`<option value="">==${strKo}==</option>`);
 
-        for (var k = 0; k < data.length; k++) {
+        for (let k = 0; k < data.length; k++) {
           var isSelected = targetCd === data[k][strCd] ? "selected" : "";
           var option = `
             <option value="${data[k][strCd]}" ${isSelected}>
@@ -79,7 +79,7 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
         $(`#${str}`).empty();
         $(`#${str}`).html(`<option value="">==${strKo}==</option>`);
 
-        for (var k = 0; k < data.length; k++) {
+        for (let k = 0; k < data.length; k++) {
           var isSelected = targetCd === data[k][strCd] ? "selected" : "";
           var option = `
             <option value="${data[k][strCd]}" ${isSelected}>
@@ -152,7 +152,7 @@ function fnGetCdWithNm(targetNm, targetVal, rowIndx, gridCd) {
       url: `act/find${upStrCd}`,
       data: `findNm=${targetVal}`,
       type: "POST",
-      dataType: "JSON",
+      dataType:"JSON",
       success: function(myJsonData) {
 
         var dynamicRowData = {};
@@ -246,8 +246,8 @@ function fnRemoveComma(obj) {
 // 0. 공급가 계산 ---------------------------------------------------------------------------------
 function fnSupplyPrice() {
   // 콤마를 제거한 후 단가와 수량을 계산
-  var unitPrice = fnRemoveComma($("#unitPrice").val());
-  var qty = fnRemoveComma($("#qty").val());
+  let unitPrice = fnRemoveComma($("#unitPrice").val());
+  let qty = fnRemoveComma($("#qty").val());
 
   // 공급가 계산
   var supplyPrice = unitPrice * qty;
@@ -310,7 +310,7 @@ function fnFormatNum(num) {
 };
 
 
-// 0. 숫자 비율형식 변환 (소숫점 3자리 - input 태그 내에서 호출) ---------------------------------->
+// 0. 숫자 비율형식 변환 (소숫점 3자리 - input 태그 내에서 호출) -----------------------------------
 var fnInputRate = (function() {
   var MAX_INT_VALUE = 2147483647;
   var debounceTimer = null;
@@ -440,38 +440,6 @@ function fnSetTmFormat(tm) {
   }
 };
 
-//## 행당월의 처음날과 마지막날을 반환
-/* function fnSetMonth(mnth, dt) {
-  var divDt = dt.split("-");
-
-  var nextMnth = parseInt(mnth, 10) + 1;
-  if (nextMnth < 10) nextMnth = '0' + nextMnth;
-  var endDt = divDt[0] + '-' + nextMnth + '-01';
-  endDt = fnDateAdd(endDt, -1);
-
-  if (mnth < 10) mnth = '0' + mnth;
-  var startDt = divDt[0] + '-' + mnth + '-01';
-
-  $("#startDt").val(startDt);
-  $("#endDt").val(endDt);
-  //return terms;
-}; */
-
-/* function fnDateAdd(sDate, nDays) {
-  var divDt = sDate.split("-");
-  var yy = divDt[0];
-  var mm = divDt[1];
-  var dd = divDt[2];
-
-  d = new Date(yy, mm - 1, parseInt(dd, 10) + nDays);
-
-  yy = d.getFullYear();
-  mm = d.getMonth() + 1; mm = (mm < 10) ? '0' + mm : mm;
-  dd = d.getDate(); dd = (dd < 10) ? '0' + dd : dd;
-
-  return '' + yy + '-' + mm + '-' + dd;
-}; */
-
 function fnToday() {
   var now = new Date();
   var year = now.getFullYear();
@@ -530,36 +498,84 @@ function onKeyDown (event) {
 };
 
 // -------------------------------------------------------------------------------------------------
-function fnToggleSub(pageGroup) {
+// 그리드 옵션 설정 --------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
-  // ex. A, B, C ...
-  const pageGroupList = document.querySelectorAll(`.${pageGroup}`);
-
-  // 해당 그룹의 자식 요소들을 순회한다.
-  pageGroupList.forEach((pageGroup) => {
-    const pageGroupIcon = pageGroup.querySelector('.main .toggle-icon');
-    const pageGroupMenu = pageGroup.querySelector('.sub.submenu');
-
-    // 토글 아이콘 변경
-    if (pageGroupIcon.classList.contains('fa-chevron-down')) {
-      pageGroupIcon.classList.remove('fa-chevron-down');
-      pageGroupIcon.classList.add('fa-chevron-up');
+// -------------------------------------------------------------------------------------------------
+function calcLowStock(data) {
+  let lowStockCount = 0;
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    row.lowStock = parseInt(row.qty) <= parseInt(row.protectedQty) ? 1 : 0;
+    if (row.lowStock === 1) {
+      lowStockCount++;
     }
-    else {
-      pageGroupIcon.classList.remove('fa-chevron-up');
-      pageGroupIcon.classList.add('fa-chevron-down');
-    }
-
-    // 서브메뉴 토글
-    if (pageGroupMenu.classList.contains('d-none')) {
-      pageGroupMenu.classList.remove('d-none');
-      pageGroupMenu.classList.add('fadeIn');
-      pageGroupMenu.classList.remove('fadeOut');
-    }
-    else {
-      pageGroupMenu.classList.add('d-none');
-      pageGroupMenu.classList.remove('fadeIn');
-      pageGroupMenu.classList.add('fadeOut');
-    }
-  });
+  }
+  return lowStockCount;
 }
+
+// -------------------------------------------------------------------------------------------------
+function displayLowStock (data) {
+  return data.rowData.lowStock === 1 ? `<span class="fs-1-2rem red">●</span>` : "";
+};
+
+// -------------------------------------------------------------------------------------------------
+function calcSum (data, dataIndex) {
+  if (!data) {
+    return "0";
+  }
+  const sum = data.reduce(function(acc, row) {
+    const value = Number(row[dataIndex]);
+    return acc + (isNaN(value) ? 0 : value);
+  }, 0);
+  return sum.toLocaleString();
+};
+
+// -------------------------------------------------------------------------------------------------
+function renderImage (data) {
+  // summary 는 건너뛰기
+  if (data.rowData.pq_rowcls === `summary-row`) {
+    return "";
+  }
+  return (/* javascript */`
+    <img
+      src="viewFiles?fileUrl=${data.rowData.fileUrl || 'noGridImage.webp'}"
+      class="w-100p h-auto radius-1 shadow-1"
+      loading="lazy"
+    />`
+  );
+};
+
+// -------------------------------------------------------------------------------------------------
+function renderZero (data) {
+  return data.cellData ? data.cellData.toLocaleString() : "0";
+}
+
+// -------------------------------------------------------------------------------------------------
+function updateTitle (title="", data={}) {
+  return (/* javascript */`
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
+        <span class="fs-0-8rem">${title}</span>
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
+        <span class="fs-0-9rem red">●</span>
+        <span class="ml-5px mr-5px">안전재고 이하 : </span>
+        <span class="red">${calcLowStock(data)}</span>
+      </div>
+    </div>
+  `);
+};
+
+// -------------------------------------------------------------------------------------------------
+function updateSummary (data={}) {
+  return [{
+    pq_rowcls: "summary-row",
+    fileUrl: "",
+    resrcNm: `<div class="fs-1-0rem fw-700 py-2vh">Total</div>`,
+    protectedQty: calcSum(data, "protectedQty"),
+    inQty: calcSum(data, "inQty"),
+    outQty: calcSum(data, "outQty"),
+    qty: calcSum(data, "qty")
+  }];
+};

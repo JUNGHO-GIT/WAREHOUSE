@@ -24,28 +24,29 @@
   />
 
   <!-- css 1 -->
-  <link rel="stylesheet" href="${rsPath}/styles/bootstrap.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/bootstrap-datepicker.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/font-awesome.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/jquery-ui.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/jquery-pqgrid.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/jquery-pqgrid.ui.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/jquery-pqgrid.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/custom.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/common.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/bootstrap.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/font-awesome.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-ui.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.ui.min.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/commons/custom.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/commons/common.css" />
 
   <!-- js 1 -->
-  <script src="${rsPath}/scripts/utils/jquery.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/jquery-ui.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/jquery-punch.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/jquery-pqgrid.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/moment.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/bootstrap.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/bootstrap-datepicker.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/crypto.min.js"></script>
-  <script defer src="${rsPath}/scripts/utils/script.js"></script>
-  <script defer src="${rsPath}/scripts/utils/common.js"></script>
-  <script defer src="${rsPath}/scripts/utils/init.js"></script>
+  <script src="${rsPath}/scripts/libs/jquery.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/jquery-ui.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/jquery-punch.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/jquery-pqgrid.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/moment.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/bootstrap.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/bootstrap-datepicker.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/crypto.min.js"></script>
+  <script defer src="${rsPath}/scripts/commons/common.js"></script>
+  <script defer src="${rsPath}/scripts/commons/init.js"></script>
+  <script defer src="${rsPath}/scripts/commons/files.js"></script>
+  <script defer src="${rsPath}/scripts/commons/script.js"></script>
 
   <!-- cdn -->
   <link

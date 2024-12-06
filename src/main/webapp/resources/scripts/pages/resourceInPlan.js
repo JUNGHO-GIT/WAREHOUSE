@@ -1,132 +1,76 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourcePlan.xlsx",
     title: "   자재 입고 예정",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
+    summaryData:  [],
+    rowClick: (event, ui) => {
+      fnGetList02(ui.rowData.resrcCd);
+      fnReset();
+      fnFindCd("", ui.rowData.resrcCd, "resrc");
+      fnFindCd("", ui.rowData.houseCd, "house");
+      fnFindCd("", ui.rowData.compCd, "comp");
+    },
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnGetList02(ui.rowData.resrcCd);
-    fnReset();
-    fnFindCd("", ui.rowData.resrcCd, "resrc");
-    fnFindCd("", ui.rowData.houseCd, "house");
-    fnFindCd("", ui.rowData.compCd, "comp");
-  };
-
-  // 이미지 렌더링
-  obj.renderImage = function(ui) {
-    var imageUrl = "";
-    var noImage = "no-image.webp";
-    var noGridImage = "noGridImage.webp";
-    var rowImage = ui.rowData.fileUrl;if (!rowImage || ui.rowData.fileUrl === noGridImage) {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${noImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    else {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${rowImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    return imageUrl;
-  };
-
-  // 빈값 0으로 출력
-  obj.renderZero = function(ui) {
-    return ui.cellData ? ui.cellData : "0";
-  };
-
-  // 푸터 합계 계산
-  obj.calcSum = function (data, dataIndex) {
-    if (!data) {
-      return "0";
-    }
-    var sum = data.reduce(function(acc, row) {
-      var value = Number(row[dataIndex]);
-      return acc + (isNaN(value) ? 0 : value);
-    }, 0);
-    return sum.toLocaleString();
-  };
-
-  // 안전재고 이하 갯수 계산
-  obj.calcLowStock = function (data) {
-    var lowStockCount = 0;
-    for (var i = 0; i < data.length; i++) {
-      var row = data[i];
-      row.lowStock = parseInt(row.qty) <= parseInt(row.protectedQty) ? 1 : 0;
-      if (row.lowStock === 1) {
-        lowStockCount++;
-      }
-    }
-    return lowStockCount;
-  };
-
-  // 안전재고 이하 표시
-  obj.displayLowStock = function (ui) {
-    return ui.rowData.lowStock === 1 ? `<span class="fsr-2.5 red">●</span>` : "";
-  };
-
-  obj.colModel = [
-    {dataIndx:"fileUrl", title:"이미지", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      minWidth:70, maxWidth:70, render: obj.renderImage,
+  const colModel = [
+    {
+      title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
+      minWidth: 70, maxWidth: 70,
+      render: renderImage,
     },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      minWidth:200
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth: 150
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
+    {
+      title:"입고", dataIndx:"inQty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero,
     },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
+    {
+      title:"출고", dataIndx:"outQty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero,
     },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.renderZero
+    {
+      title:"재고", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero,
     },
-    {dataIndx:"lowStock", title:"재고부족", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
-      render: obj.displayLowStock
+    {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth: 100,
+      render: displayLowStock,
     },
-    {dataIndx:"barcode", title:"바코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
+      minWidth: 100,
     },
   ];
 
@@ -135,42 +79,19 @@ function fnGetList01 () {
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
+      gridOption.title = updateTitle("자재 입고 예정", myJsonData);
+      gridOption.summaryData = updateSummary(myJsonData);
 
-      // 1. 콜백 데이터 할당
-      obj.dataModel = {data:myJsonData};
-
-      // 2. title에 안전재고 이하 갯수 표시
-      obj.title = `
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
-          <span>자재 입고 예정</span>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
-          <span class="fsr-1.4 red">●</span>
-          <span class="ml-5px mr-5px">안전재고 이하 : </span>
-          <span class="red">${obj.calcLowStock(myJsonData)}</span>
-        </div>
-      </div>
-      `;
-
-      // 3. footer에 합계표시
-      obj.summaryData = [{
-        pq_rowcls: "summary-row",
-        fileUrl: "noGridImage.webp",
-        resrcNm: `<b>Total : </b>`,
-        protectedQty: obj.calcSum(myJsonData, "protectedQty"),
-        inQty: obj.calcSum(myJsonData, "inQty"),
-        outQty: obj.calcSum(myJsonData, "outQty"),
-        qty: obj.calcSum(myJsonData, "qty")
-      }];
-
-      // 4. 그리드 갱신
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      $grid.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -179,61 +100,76 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02 (resrcCd) {
 
-  const gridCd = "grid02";
-  $("#resrcCd").val(resrcCd);
+  const $grid = $(`#grid02`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "resourceInPlan.xlsx",
     title: "   자재 입고 예정 내역",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
+    rowClick: (event, ui) => {
+      fnShow(ui.rowData.inOutSeq);
+    },
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow(ui.rowData.inOutSeq);
-  };
-
-  obj.colModel = [
-    {dataIndx:"inOutDt", title:"일자", dataType:"string", align:"center"
+  const colModel = [
+    {
+      title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
+      minWidth: 70
     },
-    {dataIndx:"inOut", title:"분류", dataType:"string", align:"center"
+    {
+      title:"분류", dataIndx:"inOut", dataType:"string", align:"center",
+      minWidth: 70
     },
-    {dataIndx:"compNm", title:"거래처", dataType:"string", align:"center"
+    {
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 70
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center"
+    {
+      title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
+      minWidth: 70
     },
-    {dataIndx:"qty", title:"수량", dataType:"string", align:"right", format:"#,###"
+    {
+      title:"수량", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth: 70,
+      render: renderZero,
     },
-    {dataIndx:"unitPrice", title:"표준단가", dataType:"string", align:"right", format:"#,###"
+    {
+      title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"center",
+      minWidth: 70,
+      render: renderZero,
     },
-    {dataIndx:"supplyPrice", title:"공급가", dataType:"string", align:"right", format:"#,###"
-    }
+    {
+      title:"공급가", dataIndx:"supplyPrice", dataType:"string", align:"center",
+      minWidth: 70,
+      render: renderZero,
+    },
   ];
 
-	// ajax 호출
+  $("#resrcCd").val(resrcCd);
   $.ajax({
     url: "act/listResourceInOutPlan",
     data: `resrcCd=${resrcCd}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+    success: (myJsonData) => {
+      gridOption.title = updateTitle("제품 입고 예정 내역", myJsonData);
+      $grid.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -246,11 +182,11 @@ function fnShow(inOutSeq) {
     url: "act/showResourceInOutPlan",
     data: `inOutSeq=${inOutSeq}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
 
       // 1. 자재 관련 (입출고)
       $("#remark").val(data.remark);
@@ -277,9 +213,9 @@ function fnShow(inOutSeq) {
 // 3. 저장 -----------------------------------------------------------------------------------------
 function fnSave(flagYN) {
 
-  var flagParam = "";
-  var planParam = "";
-  var resrcCd = $("#resrcCd").val();
+  let flagParam = "";
+  let planParam = "";
+  let resrcCd = $("#resrcCd").val();
 
   if (flagYN === "N") {
     flagParam = "N";
@@ -327,9 +263,9 @@ function fnSave(flagYN) {
     }
   }
 
-  var inOut = $("#inOut").val();
-  var qty = fnGetNumRemoveComma($("#qty").val());
-  var unitPrice = fnGetNumRemoveComma($("#unitPrice").val());
+  let inOut = $("#inOut").val();
+  let qty = fnGetNumRemoveComma($("#qty").val());
+  let unitPrice = fnGetNumRemoveComma($("#unitPrice").val());
 	if (inOut === "out") {
     qty = qty * -1;
   }
@@ -337,16 +273,16 @@ function fnSave(flagYN) {
     qty = qty * 1;
   }
 
-  var param = {
+  const param = {
     "inOutSeq": $("#inOutSeq").val() || 0,
     "inOutDt": $("#inOutDt").val() || "",
     "inOut": inOut || "",
     "resrcCd": $("#resrc").val() || 0,
     "resrcNm": $("#resrcNm").val() || "",
-    "houseCd": $("#house").val() || 0,
-    "houseNm": $("#houseNm").val() || "",
     "compCd": $("#comp").val() || 0,
     "compNm": $("#compNm").val() || "",
+    "houseCd": $("#house").val() || 0,
+    "houseNm": $("#houseNm").val() || "",
     "remark": $("#remark").val() || "",
     "qty": qty || 0,
     "unitPrice": unitPrice || 0,
@@ -359,12 +295,12 @@ function fnSave(flagYN) {
     url: "act/saveResourceInOutPlan",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
       fnGetList02(resrcCd);
@@ -382,7 +318,7 @@ function fnDel() {
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
 
-  var curDate = fnToday();
+  const curDate = fnToday();
 
   // 자재 초기화
   $("#qty").val("0");
@@ -423,33 +359,40 @@ function fnResetWhenSearch() {
 	$("#grid02").pqGrid("refreshDataAndView");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var curDate = fnToday();
+  const curDate = fnToday();
   $("#inOutDt").datepicker(G_calendar);
   $("#inOutDt").val(curDate);
 
-  var comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format:"combo"}];
+  const comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format:"combo"}];
   fnInitCombo (comboStr, function() {
     fnGetList01();
     fnGetList02();

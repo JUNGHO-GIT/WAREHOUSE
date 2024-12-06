@@ -1,24 +1,22 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const gridCd = "grid01";
+  const $grid = $(`#grid01`);
 
-  /** @type {pq.gridT.options} **/
   const gridOption = {
-    numberCell:{show:true, resizable:false, width:30},
     xlsNm: "company.xlsx",
     title: "   거래처 관리",
-    width: "flex",
-    height: "flex",
+    width: "auto",
+    height: "auto",
     wrap: false,
     hwrap: false,
     editable:false,
     swipeModel: {on:false},
     pasteModel: {on:false},
-    filterModel: {on:true, mode:"AND", header:true},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true}
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    numberCell: {show: true, resizable: false, width: 30},
   };
 
   // 행 클릭시 실행
@@ -65,11 +63,11 @@ function fnGetList01 () {
     url: "act/listCompany",
     data: `findCompNm=${$("#findCompNm").val()}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (myJsonData) {
+    success: (myJsonData) => {
 
       // compCd가 1인 항목을 찾아 맨위로 이동
       var index = myJsonData.findIndex(function(item) {
@@ -93,11 +91,11 @@ function fnShow(compCd) {
     url: "act/showCompany",
     data: `compCd=${compCd}`,
     type: "POST",
-    dataType: "JSON",
-    beforeSend: function (xmlHttpRequest) {
+    dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
 
       // 1. 거래처 관련
       $("#compCd").val(data.compCd);
@@ -125,7 +123,7 @@ function fnShow(compCd) {
 // 3. 저장 -----------------------------------------------------------------------------------------
 function fnSave(flagYN) {
 
-  var flagParam = "";
+  let flagParam = "";
 
   if (flagYN === "N") {
     flagParam = "N";
@@ -151,7 +149,7 @@ function fnSave(flagYN) {
     }
   }
 
-  var param = {
+  const param = {
     "compCd": $("#compCd").val() || "0",
     "compNm": $("#compNm").val() || "",
     "compNo": $("#compNo").val() || "",
@@ -170,12 +168,12 @@ function fnSave(flagYN) {
     url: "act/saveCompany",
     data: JSON.stringify(param),
     type: "POST",
-    dataType: "JSON",
+    dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
-    beforeSend: function (xmlHttpRequest) {
+    beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: function (data) {
+    success: (data) => {
       alert(data.result);
       fnGetList01();
       fnReset();
@@ -219,29 +217,36 @@ function fnReset() {
   fnShowFiles("tblCompany", "0", "files");
 };
 
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
+// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
 function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
+
+  // 1. event가 `onKeyDown`일때 = enter 조건 O
+  if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
     fnReset();
+    fnResetWhenSearch();
+    fnGetList01();
+  }
+
+  // 2. event가 `onClick`일때 = enter 조건 X
+  if (event.type === "click") {
+    event.preventDefault();
+    fnReset();
+    fnResetWhenSearch();
     fnGetList01();
   }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  var findGroupCd = $("#findGroupCd").val();
+  const findGroupCd = $("#findGroupCd").val();
   $("#groupCd").val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  var comboStr = [
+  const comboStr = [
     {part:"comCodeGroup", target:"findGroupCd", cd:""},
     {part:"comCodeGroup", target:"groupCd", cd:""}
   ];

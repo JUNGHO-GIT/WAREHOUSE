@@ -1198,7 +1198,7 @@ div {
 <script>
 $( "img" ).attr({
 src: "/resources/hat.gif",
-title: "jQuery",
+title:"jQuery",
 alt: "jQuery Logo"
 });
 $( "div" ).text( $( "img" ).attr( "alt" ) );

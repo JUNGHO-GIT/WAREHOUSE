@@ -271,7 +271,7 @@ var request = $.ajax({
 url: "script.php",
 method: "POST",
 data: { id : menuId },
-dataType: "html"
+dataType:"html"
 });
 ​
 request.done(function( msg ) {
@@ -287,7 +287,7 @@ alert( "Request failed: " + textStatus );
 $.ajax({
 method: "GET",
 url: "test.js",
-dataType: "script"
+dataType:"script"
 });
 ```
    */
@@ -1772,7 +1772,7 @@ jQuery.cachedScript = function( url, options ) {
 ​
 // Allow user to set any option except for dataType, cache, and url
 options = $.extend( options || {}, {
-  dataType: "script",
+  dataType:"script",
   cache: true,
   url: url
 });
