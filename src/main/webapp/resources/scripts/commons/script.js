@@ -401,16 +401,23 @@ function fnFormatDate(value) {
 }
 
 // -------------------------------------------------------------------------------------------------
-function fnGridPopup (target) {
-  if ($(`#${target}`).hasClass("d-none")) {
-    $(`#${target}`).removeClass("d-none");
-    $(`#${target}`).addClass("d-block");
+function fnGridPopup (target, onOff) {
+
+  if (onOff === "on") {
+    if ($(`#${target}`).hasClass("d-none")) {
+      $(`#${target}`).removeClass("d-none");
+      $(`#${target}`).addClass("d-block");
+    }
   }
-  else {
-    $(`#popup2`).removeClass("d-block");
-    $(`#popup2`).addClass("d-none");
+  if (onOff === "off") {
+    if ($(`#${target}`).hasClass("d-block")) {
+      $(`#${target}`).removeClass("d-block");
+      $(`#${target}`).addClass("d-none");
+    }
   }
-}
+};
+
+// -------------------------------------------------------------------------------------------------
 function fnLayerTop(layer) {
   $(`#${layer}`).css("z-index", "100");
   $(`#popup2`).draggable({
@@ -501,6 +508,7 @@ function onKeyDown (event) {
 // 그리드 옵션 설정 --------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------
 
+
 // -------------------------------------------------------------------------------------------------
 function calcLowStock(data) {
   let lowStockCount = 0;
@@ -579,3 +587,30 @@ function updateSummary (data={}) {
     qty: calcSum(data, "qty")
   }];
 };
+
+// -------------------------------------------------------------------------------------------------
+function insertSpaceWhenMdViewPort() {
+  const dividerMd = document.querySelectorAll(".divider-md");
+  const dividerAll = document.querySelectorAll(".divider-all");
+  const xsToSm = window.matchMedia("(min-width: 0px) and (max-width: 1189px)");
+  const mdToLg = window.matchMedia("(min-width: 1190px) and (max-width: 10000px)");
+
+  dividerMd.forEach((el) => {
+    if (xsToSm.matches && !el.classList.contains("my-3vh")) {
+      el.classList.remove("d-none");
+      el.classList.add("my-3vh");
+    }
+    else if (mdToLg.matches && !el.classList.contains("d-none")) {
+      el.classList.add("d-none");
+      el.classList.remove("my-3vh");
+    }
+  });
+
+  dividerAll.forEach((el) => {
+    el.classList.remove("d-none");
+    el.classList.add("my-3vh");
+  });
+}
+// 이벤트 리스터 등록
+insertSpaceWhenMdViewPort();
+window.addEventListener("resize", insertSpaceWhenMdViewPort);

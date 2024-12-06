@@ -3,12 +3,28 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductXlsDAO">
 
-  <select id="saveProductXls" parameterType="com.WAREHOUSE.container.Product" resultType="com.WAREHOUSE.container.Product">
-  /* ProductXls.saveProductXls */
-  CALL sp_ProductXls (
-    #{prodNm}, #{prodType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},
-    #{option1}, #{option2}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
-  );
+  <select
+  	id="saveProductXls"
+  	parameterType="com.WAREHOUSE.container.Product"
+  	resultType="com.WAREHOUSE.container.Product"
+  >
+    /* ProductXls.saveProductXls */
+    CALL sp_ProductXls (
+      #{prodNm},
+      #{prodType},
+      #{houseCd},
+      #{protectedQty},
+      #{quality},
+      #{unit},
+      #{option1},
+      #{option2},
+      #{maker},
+      #{unitPrice},
+      #{compCd},
+      #{remark},
+      #{flagYN},
+      #{issueID}
+    );
   </select>
 
 </mapper>

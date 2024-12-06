@@ -24,7 +24,7 @@
                 id="findProdNm"
                 name="findProdNm"
                 class="form-control"
-                placeholder="제품명을 입력해주세요."
+                placeholder="제품명을 입력해주세요"
                 onKeyDown="fnPressGet01(event)"
               />
             </div>
@@ -70,7 +70,7 @@
               <button type="button" class="btn btn-primary btn-sm mr-10px" onclick="fnSave()">
                 저장
               </button>
-              <button type="button" class="btn btn-danger btn-sm mr-10px" onclick="fnGridPopup('popupInOutAll','on')">
+              <button type="button" class="btn btn-danger btn-sm mr-10px" onclick="fnGridPopup('popupInOutAll', 'on')">
                 일괄 적용
               </button>
             </div>
@@ -79,9 +79,11 @@
       </div>
     </div>
     <!-- /.row 2 -->
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <%@ include file="./productInOutAllPop.jsp" %>
+    <script defer src="${rsPath}/scripts/pages/productInOutAll.js"></script>
+
   </div>
-  <!-- js -->
-  <%@ include file="./productInOutAllPop.jsp" %>
-  <script defer src="${rsPath}/scripts/pqgrid24/pqgrid.min.js"></script>
-  <script defer src="${rsPath}/scripts/pages/productInOutAll.js"></script>
 </body>

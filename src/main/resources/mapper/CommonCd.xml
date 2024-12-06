@@ -3,17 +3,27 @@
 
 <mapper namespace="com.WAREHOUSE.dao.CommonCdDAO">
 
-  <select id="listAllCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
+  <select
+    id="listAllCommonCd"
+    parameterType="hashmap"
+    resultType="com.WAREHOUSE.container.CommonCd"
+  >
     /* CommonCd.listAllCommonCd */
-  	SELECT
+    <![CDATA[
+    SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYN
-  	FROM
+    FROM
       tblCommonCd
-	  ORDER BY
+    ORDER BY
       itemSeq ASC
+    ]]>
   </select>
 
-  <select id="listCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
+  <select
+  	id="listCommonCd"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.CommonCd"
+  >
   	/* CommonCd.listCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
@@ -28,7 +38,11 @@
 	  ORDER BY groupCd, itemSeq
   </select>
 
-  <select id="showCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
+  <select
+  	id="showCommonCd"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.CommonCd"
+  >
   	/* CommonCd.showCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq
@@ -38,7 +52,11 @@
       groupCd = #{groupCd} AND itemCd = #{itemCd}
   </select>
 
-  <select id="mappingGroupCd" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="mappingGroupCd"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
   	/* CommonCd.mappingGroupCd */
   	SELECT
       groupCd, groupNm
@@ -50,7 +68,11 @@
       groupCd, groupNm
   </select>
 
-  <select id="listComCodeAll" parameterType="hashmap" resultType="com.WAREHOUSE.container.Common">
+  <select
+  	id="listComCodeAll"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Common"
+  >
     /* CommonCd.listComCodeAll */
     SELECT
       groupCd, groupNm, itemCd cd, itemNm nm, #{target} target
@@ -62,7 +84,11 @@
       itemSeq
   </select>
 
-  <select id="listComCodeGroupAll" parameterType="hashmap" resultType="com.WAREHOUSE.container.Common">
+  <select
+  	id="listComCodeGroupAll"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Common"
+  >
     /* CommonCd.listComCodeGroupAll */
     SELECT
       groupCd cd, groupNm nm, #{target} target
@@ -74,10 +100,20 @@
       groupCd, groupNm
   </select>
 
-  <select id="saveCommonCd" parameterType="com.WAREHOUSE.container.CommonCd">
+  <select
+  	id="saveCommonCd"
+  	parameterType="com.WAREHOUSE.container.CommonCd"
+  >
   	/* CommonCd.saveCommonCd */
   	CALL sp_CommonCd (
-      #{groupCd}, #{itemCd}, #{groupNm}, #{itemNm}, #{itemMemo}, #{itemSeq}, #{flagYN}, #{issueID}
+      #{groupCd},
+      #{itemCd},
+      #{groupNm},
+      #{itemNm},
+      #{itemMemo},
+      #{itemSeq},
+      #{flagYN},
+      #{issueID}
     );
   </select>
 

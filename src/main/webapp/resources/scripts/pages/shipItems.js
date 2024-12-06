@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "shipItems.xlsx",
@@ -46,7 +46,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listShipItems",
     data:`shipDt=${"P"}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
@@ -66,7 +65,7 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02 (shipCd) {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
   $("#shipCd").val(shipCd);
 
   const gridOption = {
@@ -98,7 +97,6 @@ function fnGetList02 (shipCd) {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listShipItemsDetail",
     data: `shipCd=${shipCd}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
@@ -172,7 +170,7 @@ function fnDel() {
   }
 
   if (!shipCd) {
-    alert("삭제할 출하 항목을 선택해주세요.");
+    alert("삭제할 출하 항목을 선택해주세요");
     return;
   }
   if (!confirm("해당 출하 항목을 삭제하시겠습니까?")) {
@@ -237,7 +235,7 @@ function fnExcelDown() {
   var shipCd = $("#shipCd").val();
 
   if (!shipCd) {
-    alert("다운받을 출하 항목을 선택해주세요.");
+    alert("다운받을 출하 항목을 선택해주세요");
     return;
   }
   var valUrl = "/shipItemsExcelDown?shipCd="+shipCd;

@@ -759,66 +759,6 @@ legend {
 	font-size: 18px;
 	color: inherit;
 }
-.demo-placeholder {
-	height: 280px;
-}
-.profile_details:nth-child(3n) {
-	clear: both;
-}
-.profile_details .profile_view {
-	display: inline-block;
-	padding: 10px 0 0;
-	background: #fff;
-}
-.profile_details .profile_view .divider {
-	border-top: 1px solid #e5e5e5;
-	padding-top: 5px;
-	margin-top: 5px;
-}
-.profile_details .profile_view .ratings {
-	margin-bottom: 0;
-	text-align: left;
-	font-size: 16px;
-}
-.profile_details .profile_view .bottom {
-	background: #f2f5f7;
-	padding: 9px 0;
-	border-top: 1px solid #e6e9ed;
-}
-.profile_details .profile_view .left {
-	margin-top: 20px;
-}
-.profile_details .profile_view .left p {
-	margin-bottom: 3px;
-}
-.profile_details .profile_view .right {
-	margin-top: 0;
-	padding: 10px;
-}
-.profile_details .profile_view .img-circle {
-	border: 1px solid #e6e9ed;
-	padding: 2px;
-}
-.profile_details .profile_view h2 {
-	margin: 5px 0;
-}
-.profile_details .profile_view .brief {
-	margin: 0;
-	font-weight: 300;
-}
-.profile_details .profile_left {
-	background: #fff;
-}
-.pagination.pagination-split li {
-	display: inline-block;
-	margin-right: 3px;
-}
-.pagination.pagination-split li a {
-	border-radius: 4px;
-	color: #768399;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
 table.tile h3,
 table.tile h4,
 table.tile span {
@@ -2283,35 +2223,6 @@ ul.count2 li h3 {
 }
 ul.count2 li span {
 	font-weight: 300;
-}
-.divider {
-	border-bottom: 1px solid #ddd;
-	margin: 10px;
-}
-.divider-dashed {
-	border-top: 1px dashed #e7eaec;
-	background-color: #fff;
-	height: 1px;
-	margin: 10px 0;
-}
-ul.messages {
-	padding: 0;
-	list-style: none;
-}
-.tasks li,
-ul.messages li {
-	border-bottom: 1px dotted #e6e6e6;
-	padding: 8px 0;
-}
-img.avatar,
-ul.messages li img.avatar {
-	height: 32px;
-	width: 32px;
-	display: inline-block;
-	border-radius: 2px;
-	padding: 2px;
-	background: #f7f7f7;
-	border: 1px solid #e6e6e6;
 }
 ul.messages li .message_date {
 	text-align: right;

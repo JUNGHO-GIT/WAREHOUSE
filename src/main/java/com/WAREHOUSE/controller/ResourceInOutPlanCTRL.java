@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutPlanDAO;
 import com.WAREHOUSE.util.Logs;
@@ -38,7 +39,8 @@ public class ResourceInOutPlanCTRL {
     return "resourceOutPlan";
   }
 
-  // 1-1. 자재 입출고 예정 리스트 ------------------------------------------------------------------
+  // 1-1. 자재 입출고 예정 리스트 -----------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/listResourceInOutPlan", produces="application/json;charset=UTF-8")
   public String listResourceInOutPlan (
     HttpServletRequest request
@@ -50,7 +52,8 @@ public class ResourceInOutPlanCTRL {
     return gson.toJson(resourceInOutList);
   }
 
-  // 1-2. 자재 입출고 예정 상세 --------------------------------------------------------------------
+  // 1-2. 자재 입출고 예정 상세 -------------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/showResourceInOutPlan", produces="application/json;charset=UTF-8")
   public String showResourceInOutPlan (
     HttpServletRequest request
@@ -63,6 +66,7 @@ public class ResourceInOutPlanCTRL {
   }
 
   // 1-3. 자재 입출고 예정 저장 --------------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/saveResourceInOutPlan", produces="application/json;charset=UTF-8")
   public String saveResourceInOutPlan (
     @RequestBody ResourceInOut resourceInOutParam,

@@ -74,12 +74,12 @@ function fnSaveUserConfigInfo() {
     return;
   }
   if ($("#userIDCheck").val() == "N") {
-    alert("사용자 아이디 중복 체크를 해주세요.");
+    alert("사용자 아이디 중복 체크를 해주세요");
     $("#userID").on("focus", function () {});
     return;
   }
   if ($("#userConfigPw").val() == "") {
-    alert("비밀번호를 입력해주세요.");
+    alert("비밀번호를 입력해주세요");
     $("#userConfigPw").on("focus", function () {});
     return;
   }
@@ -156,7 +156,7 @@ function fnUpdateConfigPw() {
 
   // 비번 입력안한 경우
   if ($("#userConfigPw").val() == "") {
-    alert("비밀번호를 입력해주세요.");
+    alert("비밀번호를 입력해주세요");
     $("#userConfigPw").on("focus", function () {});
     return;
   }

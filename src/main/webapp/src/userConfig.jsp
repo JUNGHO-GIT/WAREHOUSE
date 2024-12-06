@@ -13,7 +13,10 @@
             개인정보 변경
           </div>
           <div class="fs-1-0rem fw-600 white ml-auto">
-            <i class="fa fa-close pointer-red mr-10px" onclick="fnGridPopup('popup2')"></i>
+            <i
+              class="fa fa-close pointer-red mr-10px"
+              onclick="fnGridPopup('popup2', 'off')"
+            ></i>
           </div>
         </div>
       </div>
@@ -125,15 +128,15 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
               <button
                 type="button"
-                class="btn btn-primary btn-sm mr-1vw"
+                class="btn btn-primary btn-sm mr-10px"
                 onclick="fnSaveUserConfigInfo()"
               >
                 저장
               </button>
               <button
                 type="button"
-                class="btn btn-danger btn-sm ml-1vw"
-                onclick="fnGridPopup('popup2')"
+                class="btn btn-danger btn-sm"
+                onclick="fnGridPopup('popup2', 'off')"
               >
                 닫기
               </button>
@@ -149,6 +152,9 @@
         </div>
       </div>
     </form>
+
+    <!-- js -->
+    <script defer src="${rsPath}/scripts/pages/userConfig.js"></script>
+
   </div>
-  <script defer src="${rsPath}/scripts/pages/userConfig.js"></script>
 </div>

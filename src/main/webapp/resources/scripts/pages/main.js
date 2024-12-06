@@ -141,16 +141,19 @@ function fnAddTabAll(pageNm, pageUrl, pageNo) {
     }
     else {
       const resultTab = (/* javascript */`
-        <li class="active" id="tab${pageNo}" pageUrl="${pageUrl}">
+        <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
           <div
             class="border-1 shadow-1 p-15px pointer"
-            onclick="fnShowTab('${pageNo}', '${pageUrl}')"
             style="display: flex; justify-content: center; align-items: center;"
           >
-            <div class="fs-0-8rem fw-500 navy pointer-navy">
+            <div
+              class="fs-0-8rem fw-500 navy pointer-navy"
+              onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+            >
               ${pageNm}
             </div>
-            <i class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+            <i
+              class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
               onclick="fnRmTab('${pageNo}', '${pageUrl}')"
             >
             </i>
@@ -179,16 +182,19 @@ function fnAddTab(pageNm, pageUrl, pageNo) {
     fnMkTabCd(pageNo, pageUrl, "add");
 
     const resultTab = (/* javascript */`
-      <li class="active" id="tab${pageNo}" pageUrl="${pageUrl}">
+      <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
         <div
           class="border-1 shadow-1 p-15px pointer"
-          onclick="fnShowTab('${pageNo}', '${pageUrl}')"
           style="display: flex; justify-content: center; align-items: center;"
         >
-          <div class="fs-0-8rem fw-500 navy pointer-navy">
+          <div
+            class="fs-0-8rem fw-500 navy pointer-navy"
+            onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+          >
             ${pageNm}
           </div>
-          <i class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+          <i
+            class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
             onclick="fnRmTab('${pageNo}', '${pageUrl}')"
           >
           </i>
@@ -215,32 +221,14 @@ function fnAddTab(pageNm, pageUrl, pageNo) {
       $(`#tabContents`).append(resultContents);
     }
   }
-};
 
-// 1-3. 탭 제거 ------------------------------------------------------------------------------------
-function fnRmTab(pageNo, pageUrl) {
-
-  let posit = "";
-  let lastTab = "";
-
-  if ($(`#tab${pageNo}`).prop("class") === "active") {
-    posit = "last";
-  }
-  $(`#tab${pageNo}`).remove();
-  $(`#tabContents${pageNo}`).remove();
-
-  lastTab = fnMkTabCd(pageNo, pageUrl, "rm");
-
-  if (posit === "last") {
-    $(`#tab${lastTab}`).prop("class", "active");
-    $(`#tabContents${lastTab}`).css("display", "");
-  }
+  fnConsoleTabInfo(pageNo);
 };
 
 // 1-4. 탭 활성화 ----------------------------------------------------------------------------------
 function fnShowTab(pageNo, pageUrl) {
 
-  const tabContents = document.getElementById(`tabContents${pageNo}`);
+  const tabContents = $(`#tabContents${pageNo}`).html();
 
   if (!tabContents) {
     const resultContents = (/* javascript */`
@@ -269,11 +257,33 @@ function fnShowTab(pageNo, pageUrl) {
   }
   $(`#tab${pageNo}`).prop("class", "active");
   $(`#tabContents${pageNo}`).css("display", "");
+
+  fnConsoleTabInfo(pageNo);
+};
+
+// 1-3. 탭 제거 ------------------------------------------------------------------------------------
+function fnRmTab(pageNo, pageUrl) {
+
+  let posit = "";
+
+  if ($(`#tab${pageNo}`).prop("class") === "active") {
+    posit = "last";
+  }
+  $(`#tab${pageNo}`).remove();
+  $(`#tabContents${pageNo}`).remove();
+
+  const lastTab = fnMkTabCd(pageNo, pageUrl, "rm");
+
+  if (posit === "last") {
+    $(`#tab${lastTab}`).prop("class", "active");
+    $(`#tabContents${lastTab}`).css("display", "");
+  }
+
+  fnConsoleTabInfo(pageNo);
 };
 
 // 1-5. 새로고침 -----------------------------------------------------------------------------------
 function fnIfrRefresh() {
-
   const tabs = TABS.split("/");
   for (let k = 0; k < tabs.length; k++) {
     if (tabs[k]) {
@@ -393,8 +403,8 @@ function fnCheckSession() {
 };
 
 // 0. 현재 열려있는 탭 정보 console에 표시 ---------------------------------------------------------
-function fnConsoleTabInfo(rmTab) {
-  const tabs = document.querySelectorAll("li[id^='tab']");
+function fnConsoleTabInfo (tabNo) {
+  const tabs = document.querySelectorAll(`.tabEl`);
   const tabIdRegex = /^tab\d+$/;
   const info = Array.from(tabs).map((tab) => {
     return tabIdRegex.test(tab.id) ? tab.id : '';
@@ -404,10 +414,14 @@ function fnConsoleTabInfo(rmTab) {
   })
   .join(', ');
 
-  console.log("닫기버튼을 누른 탭: " + rmTab);
-  console.log("현재 열려있는 탭 갯수: " + info.split(",").length);
-  console.log("현재 열려있는 탭: " + info);
-  console.log("TABS: " + TABS);
+  console.log(`
+  =============================
+  닫기버튼을 누른 탭: ${tabNo}
+  현재 열려있는 탭 갯수: ${info.split(",").length}
+  현재 열려있는 탭: ${info}
+  TABS: ${TABS}
+  =============================
+  `);
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------

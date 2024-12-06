@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ShippingDAO">
 
-  <select id="listShipping" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listShipping"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
 		/* Shipping.listShipping */
 		<![CDATA[
     SELECT
@@ -26,11 +30,22 @@
       A.inOutDt DESC
   </select>
 
-  <select id="saveShipping" parameterType="com.WAREHOUSE.container.Shipping">
+  <select
+  	id="saveShipping"
+  	parameterType="com.WAREHOUSE.container.Shipping"
+  >
     /* Shipping.saveShipping */
     CALL sp_Shipping (
-      #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},
-      #{inOutSeq}, #{flagYN}, #{planYN}, #{issueID}
+      #{shipCd},
+      #{compCd},
+      #{toMajor},
+      #{toPhone},
+      #{shipDt},
+      #{shipMajor},
+      #{inOutSeq},
+      #{flagYN},
+      #{planYN},
+      #{issueID}
     );
   </select>
 

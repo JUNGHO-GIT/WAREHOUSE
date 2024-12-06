@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnShowExcel(body) {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
   var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
   const gridOption = {
@@ -141,7 +141,7 @@ function fnSave() {
   });
 
   if (colData.length === 0) {
-    alert("제품을 선택해 주세요.");
+    alert("제품을 선택해 주세요");
     return;
   }
 
@@ -174,13 +174,13 @@ function fnSave() {
     row.compCd = row.compCd ? row.compCd.toString().trim() : "";
 
     if (
-      !validateField(row, "resrcNm", "자재이름을 입력해 주세요.") ||
-      !validateField(row, "resrcType", "자재분류를 입력해 주세요.") ||
-      !validateField(row, "houseNm", "창고 이름을 입력해 주세요.") ||
-      !validateField(row, "compNm", "거래처 이름을 입력해 주세요.") ||
-      !validateField(row, "protectedQty", "안전재고를 입력해 주세요.") ||
+      !validateField(row, "resrcNm", "자재이름을 입력해 주세요") ||
+      !validateField(row, "resrcType", "자재분류를 입력해 주세요") ||
+      !validateField(row, "houseNm", "창고 이름을 입력해 주세요") ||
+      !validateField(row, "compNm", "거래처 이름을 입력해 주세요") ||
+      !validateField(row, "protectedQty", "안전재고를 입력해 주세요") ||
       !validateNumber(row, "protectedQty", "안전재고는 숫자만 입력 가능합니다.") ||
-      !validateField(row, "unitPrice", "표준단가를 입력해 주세요.") ||
+      !validateField(row, "unitPrice", "표준단가를 입력해 주세요") ||
       !validateNumber(row, "unitPrice", "단가는 숫자만 입력 가능합니다.")
     ) {
       validationPassed = false;

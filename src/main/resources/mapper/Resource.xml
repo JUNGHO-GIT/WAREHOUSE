@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceDAO">
 
-  <select id="listResource" parameterType="hashmap" resultType="com.WAREHOUSE.container.Resource">
+  <select
+  	id="listResource"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Resource"
+  >
 		/* Resource.listResource */
 		<![CDATA[
     SELECT
@@ -59,7 +63,11 @@
     ) DESC
   </select>
 
-  <select id="showResource" parameterType="hashmap" resultType="com.WAREHOUSE.container.Resource">
+  <select
+  	id="showResource"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Resource"
+  >
     /* Resource.showResource */
     <![CDATA[
     SELECT
@@ -97,11 +105,28 @@
     ]]>
   </select>
 
-  <select id="saveResource" parameterType="com.WAREHOUSE.container.Resource" resultType="Integer">
+  <select
+  	id="saveResource"
+  	parameterType="com.WAREHOUSE.container.Resource"
+  	resultType="Integer"
+  >
     /* Resource.saveResource */
     CALL sp_Resource (
-      #{resrcCd}, #{resrcNm}, #{resrcType}, #{houseCd}, #{protectedQty}, #{option1}, #{unit},
-      #{option2}, #{quality}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
+      #{resrcCd},
+      #{resrcNm},
+      #{resrcType},
+      #{houseCd},
+      #{protectedQty},
+      #{option1},
+      #{unit},
+      #{option2},
+      #{quality},
+      #{maker},
+      #{unitPrice},
+      #{compCd},
+      #{remark},
+      #{flagYN},
+      #{issueID}
     );
   </select>
 

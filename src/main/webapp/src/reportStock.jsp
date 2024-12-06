@@ -42,7 +42,10 @@
       </div>
     </div>
     <!-- /.row 2 -->
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/reportStock.js"></script>
+
   </div>
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/pages/reportStock.js"></script>
 </body>

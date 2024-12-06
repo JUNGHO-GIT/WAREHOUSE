@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 (pCd) {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   var filter = function (treeId, parentNode, childNodes) {
     if (!childNodes) {
@@ -45,7 +45,7 @@ function fnGetList01 (pCd) {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02 (houseData) {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
 
   const gridOption = {
     xlsNm: "product.xlsx",
@@ -262,12 +262,12 @@ function fnSave(YN) {
   else {
     flagParam = "Y";
     if ($("#houseNm").val() == "") {
-      alert("창고이름을 입력해 주세요.");
+      alert("창고이름을 입력해 주세요");
       $("#houseNm").on("focus", function () {});
       return;
     }
     if ($("#houseOrder").val() == "") {
-      alert("창고순서를 입력해 주세요.");
+      alert("창고순서를 입력해 주세요");
       $("#houseOrder").on("focus", function () {});
       return;
     }
@@ -345,7 +345,7 @@ function fnAddCat() {
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDel() {
   if ($("#houseCd").val() == "0") {
-    alert("삭제할 창고를 선택해 주세요.");
+    alert("삭제할 창고를 선택해 주세요");
     return;
   }
   fnSave("N");

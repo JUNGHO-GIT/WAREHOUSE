@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "commonCd.xlsx",
@@ -56,7 +56,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listCommonCd",
     data: `findGroupCd=${$("#findGroupCd").val()}&findItemNm=${$("#findItemNm").val()}`,
@@ -66,7 +65,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      $grid.pqGrid({
+      $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,

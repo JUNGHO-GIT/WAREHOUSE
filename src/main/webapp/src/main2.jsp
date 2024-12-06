@@ -19,7 +19,7 @@
                 <c:set var="allPage" value=",${sessionScope.uPerm},"/>
                 <c:choose>
                   <c:when test="${page.subPage == '00'}">
-                    <c:if test="${status.index != 0 && sumPage == '1'}">
+                    <c:if test="${status.index != 0 && sumPage == 'ok'}">
                       </ul>
                       </li>
                     </c:if>
@@ -27,7 +27,7 @@
                       <a><i class="fa ${page.pageIcon}"></i>
                       <span>${page.pageNm}</span>
                       <span class="fa fa-chevron-down"></span></a>
-                      <c:set var="sumPage" value="0"/>
+                      <c:set var="sumPage" value="empty"/>
                   </c:when>
                   <c:otherwise>
                     <c:choose>
@@ -53,7 +53,7 @@
                         </li>
                       </c:if>
                     </c:if>
-                    <c:set var="sumPage" value="1"/>
+                    <c:set var="sumPage" value="ok"/>
                   </c:otherwise>
                 </c:choose>
               </c:forEach>

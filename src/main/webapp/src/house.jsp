@@ -99,15 +99,12 @@
       </div>
     </div>
     <!-- /.row 2 -->
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <link rel="stylesheet" href="${rsPath}/styles/libs/ztree.min.css" />
+    <script defer src="${rsPath}/scripts/libs/ztree.min.js"></script>
+    <script defer src="${rsPath}/scripts/pages/bom.js"></script>
+
   </div>
-  <!-- js -->
-  <link rel="stylesheet" href="/inc/build/css/zTreeStyle/zTreeStyle.css" />
-  <script defer src="${rsPath}/scripts/jquery/dist/jquery.min.js"></script>
-  <script defer src="${rsPath}/scripts/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script defer src="${rsPath}/scripts/jquery.ztree.core.min.js"></script>
-	<script defer src="${rsPath}/scripts/pqgrid24/jquery-ui.min.js"></script>
-	<script defer src="${rsPath}/scripts/pqgrid24/pqgrid.min.js"></script>
-  <script defer src="${rsPath}/scripts/export/init.js"></script>
-  <script defer src="${rsPath}/scripts/pages/common.js"></script>
-  <script defer src="${rsPath}/scripts/pages/house.js"></script>
 </body>

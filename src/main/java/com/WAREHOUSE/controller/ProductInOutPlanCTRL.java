@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutPlanDAO;
 import com.WAREHOUSE.util.Logs;
@@ -38,7 +39,8 @@ public class ProductInOutPlanCTRL {
     return "productOutPlan";
   }
 
-  // 1-1. 제품 입출고 예정 리스트 ------------------------------------------------------------------
+  // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/listProductInOutPlan", produces="application/json;charset=UTF-8")
   public String listProductInOutPlan (
     HttpServletRequest request
@@ -50,7 +52,8 @@ public class ProductInOutPlanCTRL {
     return gson.toJson(productInOutList);
   }
 
-  // 1-2. 제품 입출고 예정 상세 --------------------------------------------------------------------
+  // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/showProductInOutPlan", produces="application/json;charset=UTF-8")
   public String showProductInOutPlan (
     HttpServletRequest request
@@ -62,7 +65,8 @@ public class ProductInOutPlanCTRL {
     return gson.toJson(productInOutShow);
   }
 
-  // 1-3. 제품 입출고 예정 저장 --------------------------------------------------------------------
+  // 1-3. 제품 입출고 예정 저장 -------------------------------------------------------------------
+  @ResponseBody
   @PostMapping(value="/act/saveProductInOutPlan", produces="application/json;charset=UTF-8")
   public String saveProductInOutPlan (
     @RequestBody ProductInOut productInOutParam,

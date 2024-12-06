@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.MainDAO">
 
-  <select id="listMain" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listMain"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Main.listMain */
     <![CDATA[
     SELECT
@@ -19,7 +23,11 @@
     	pageOrder
   </select>
 
-  <select id="listSysMenu" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listSysMenu"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
 	  /* Main.listSysMenu */
 	  SELECT
       page, pageUrl, pageNm, pageIcon, pageOrder, pageNo

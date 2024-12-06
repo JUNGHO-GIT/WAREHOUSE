@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "productInOut.xlsx",
@@ -65,7 +65,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth: 50,
       render: displayLowStock,
     },
     {
@@ -74,7 +74,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listProduct",
     data: `findProdNm=${$("#findProdNm").val()}`,
@@ -87,7 +86,7 @@ function fnGetList01 () {
       gridOption.title = updateTitle("제품 입고 관리", myJsonData);
       gridOption.summaryData = updateSummary(myJsonData);
 
-      $grid.pqGrid({
+      $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
@@ -100,7 +99,7 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02 (prodCd) {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
 
   const gridOption = {
     xlsNm: "productInOut.xlsx",
@@ -165,7 +164,7 @@ function fnGetList02 (prodCd) {
     },
     success: (myJsonData) => {
       gridOption.title = updateTitle("제품 입출고 내역", myJsonData);
-      $grid.pqGrid({
+      $grid02.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
@@ -232,32 +231,32 @@ function fnSave(flagYN) {
     flagParam = "Y";
     planParam = "N";
     if ($("#prod").val() == "") {
-      alert("제품 이름을 입력해 주세요.");
+      alert("제품 이름을 입력해 주세요");
       $("#prod").on("focus", function () {});
       return;
     }
     if (!$("#inOutDt").val()) {
-      alert("날짜를 입력해 주세요.");
+      alert("날짜를 입력해 주세요");
       $("#inOutDt").on("focus", function () {});
       return;
     }
     if ($("#comp").val() == "") {
-      alert("거래처를 입력해 주세요.");
+      alert("거래처를 입력해 주세요");
       $("#comp").on("focus", function () {});
       return;
     }
     if ($("#house").val() == "") {
-      alert("창고를 입력해 주세요.");
+      alert("창고를 입력해 주세요");
       $("#house").on("focus", function () {});
       return;
     }
     if ($("#qty").val() == "" || $("#qty").val() == "0") {
-      alert("수량을 입력해 주세요.");
+      alert("수량을 입력해 주세요");
       $("#qty").on("focus", function () {});
       return;
     }
     if ($("#unitPrice").val() == "" || $("#unitPrice").val() == "0") {
-      alert("표준단가를 입력해 주세요.");
+      alert("표준단가를 입력해 주세요");
       $("#unitPrice").on("focus", function () {});
       return;
     }

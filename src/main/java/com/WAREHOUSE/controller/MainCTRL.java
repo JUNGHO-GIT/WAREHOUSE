@@ -87,14 +87,14 @@ public class MainCTRL {
     pageNm = "'" + pageNm + "'";
 
     ArrayList<HashMap<String, Object>> listSysMenuList = dao.listSysMenu(pageNm);
-    logs.info("listSysMenu", gson.toJson(checkList));
+    logs.info("listSysMenu", gson.toJson(listSysMenuList));
 
     return gson.toJson(listSysMenuList);
   }
 
   // -----------------------------------------------------------------------------------------------
   @ResponseBody
-  @PostMapping(value="/showVersion", produces="application/json;charset=UTF-8")
+  @GetMapping(value="/showVersion", produces="application/json;charset=UTF-8")
   public String showVersion(
     Model model
   ) throws Exception {

@@ -3,12 +3,28 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceXlsDAO">
 
-  <select id="saveResourceXls" parameterType="com.WAREHOUSE.container.Resource" resultType="com.WAREHOUSE.container.Resource">
-  /* ResourceXls.saveResourceXls */
-  CALL sp_ResourceXls (
-    #{resrcNm}, #{resrcType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},
-    #{option1}, #{option2}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
-  );
+  <select
+  	id="saveResourceXls"
+  	parameterType="com.WAREHOUSE.container.Resource"
+  	resultType="com.WAREHOUSE.container.Resource"
+  >
+    /* ResourceXls.saveResourceXls */
+    CALL sp_ResourceXls (
+      #{resrcNm},
+      #{resrcType},
+      #{houseCd},
+      #{protectedQty},
+      #{quality},
+      #{unit},
+      #{option1},
+      #{option2},
+      #{maker},
+      #{unitPrice},
+      #{compCd},
+      #{remark},
+      #{flagYN},
+      #{issueID}
+    );
   </select>
 
 </mapper>

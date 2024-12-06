@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "resource.xlsx",
@@ -60,7 +60,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth: 50,
       render: displayLowStock,
     },
     {
@@ -69,7 +69,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
@@ -81,7 +80,7 @@ function fnGetList01 () {
     success: (myJsonData) => {
       gridOption.title = updateTitle("자재 관리", myJsonData);
 
-      $grid.pqGrid({
+      $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
@@ -144,7 +143,7 @@ function fnSave(flagYN) {
   if (flagYN === "N") {
     flagParam = "N";
     if ($("#resrcCd").val() == "") {
-      alert("자재을 선택해 주세요.");
+      alert("자재을 선택해 주세요");
       return;
     }
     if (!confirm("선택하신 자재을 삭제하시겠습니까?")) {
@@ -154,32 +153,32 @@ function fnSave(flagYN) {
   else {
     flagParam = "Y";
     if ($("#resrcNm").val() == "") {
-      alert("자재 이름을 입력해 주세요.");
+      alert("자재 이름을 입력해 주세요");
       $("#resrc").on("focus", function () {});
       return;
     }
     if ($("#resrcType").val() == "") {
-      alert("자재 분류를 입력해 주세요.");
+      alert("자재 분류를 입력해 주세요");
       $("#resrcNm").on("focus", function () {});
       return;
     }
     if ($("#comp").val() == "") {
-      alert("거래처를 입력해 주세요.");
+      alert("거래처를 입력해 주세요");
       $("#comp").on("focus", function () {});
       return;
     }
     if ($("#house").val() == "") {
-      alert("창고를 입력해 주세요.");
+      alert("창고를 입력해 주세요");
       $("#house").on("focus", function () {});
       return;
     }
     if ($("#protectedQty").val() == "" || $("#protectedQty").val() == "0") {
-      alert("안전재고를 입력해 주세요.");
+      alert("안전재고를 입력해 주세요");
       $("#protectedQty").on("focus", function () {});
       return;
     }
     if ($("#unitPrice").val() == "" || $("#unitPrice").val() == "0") {
-      alert("표준단가를 입력해 주세요.");
+      alert("표준단가를 입력해 주세요");
       $("#unitPrice").on("focus", function () {});
       return;
     }

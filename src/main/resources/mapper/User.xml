@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.UserDAO">
 
-  <select id="listUser" parameterType="hashmap" resultType="com.WAREHOUSE.container.User">
+  <select
+  	id="listUser"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.User"
+  >
     /* User.listUser */
     <![CDATA[
     SELECT
@@ -26,7 +30,11 @@
     ORDER BY A.userNm ASC
   </select>
 
-  <select id="showUser" parameterType="hashmap" resultType="com.WAREHOUSE.container.User">
+  <select
+  	id="showUser"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.User"
+  >
     /* User.showUser */
     SELECT
       userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
@@ -36,15 +44,11 @@
       userID = #{userID}
   </select>
 
-  <select id="saveUser" parameterType="com.WAREHOUSE.container.User" resultType="Integer">
-    /* User.saveUser */
-    CALL sp_User (
-      #{userID}, #{passwd}, #{userNm}, #{phone}, #{email}, #{uLevel}, #{compCd}, #{uPerm},
-      #{flagYN}, #{issueID}
-    );
-  </select>
-
-  <select id="checkUserID" parameterType="hashmap" resultType="Integer">
+  <select
+  	id="checkUserID"
+  	parameterType="hashmap"
+  	resultType="Integer"
+  >
     /* User.checkUserID */
     SELECT
       COUNT(*) cnt
@@ -54,7 +58,10 @@
       userID = #{userID}
   </select>
 
-  <update id="updatePw" parameterType="map">
+  <update
+    id="updatePw"
+    parameterType="hashmap"
+  >
     /* User.updatePw */
     UPDATE
       tblUser
@@ -64,7 +71,11 @@
       userID = #{userID}
   </update>
 
-  <select id="listUserPerm" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listUserPerm"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* User.listUserPerm */
     SELECT
       page, subPage, pageUrl, pageNm, pageOrder, pageNo
@@ -74,5 +85,25 @@
       flagYN = 'Y' AND subPage!='00'
     ORDER BY
       pageOrder
+  </select>
+
+  <select
+  	id="saveUser"
+  	parameterType="com.WAREHOUSE.container.User"
+  	resultType="Integer"
+  >
+    /* User.saveUser */
+    CALL sp_User (
+      #{userID},
+      #{passwd},
+      #{userNm},
+      #{phone},
+      #{email},
+      #{uLevel},
+      #{compCd},
+      #{uPerm},
+      #{flagYN},
+      #{issueID}
+    );
   </select>
 </mapper>

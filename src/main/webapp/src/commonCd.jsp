@@ -37,7 +37,7 @@
                 id="findItemNm"
                 name="findItemNm"
                 class="form-control"
-                placeholder="아이템명을 입력해주세요."
+                placeholder="아이템명을 입력해주세요"
                 onKeyDown="fnPressGet01(event)"
               />
             </div>
@@ -67,6 +67,7 @@
               <div class="grid-main">
                 <div class="h-100p" id="grid01"></div>
               </div>
+              <div class="divider-md d-none"></div>
             </div>
             <!-- grid 2 -->
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
@@ -242,5 +243,6 @@
     <!-- js -->
     <div class="h-5vh"></div>
     <script defer src="${rsPath}/scripts/pages/commonCd.js"></script>
+
   </div>
 </body>

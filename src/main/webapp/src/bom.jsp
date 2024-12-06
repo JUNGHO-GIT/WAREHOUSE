@@ -17,7 +17,7 @@
               <p class="control-label">제품 검색</p>
             </div>
             <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mt-2px">
-              <input class="form-control" type="text" id="findProdNm" onKeyDown="fnPressGet01(event)" placeholder="제품명을 입력해주세요." />
+              <input class="form-control" type="text" id="findProdNm" onKeyDown="fnPressGet01(event)" placeholder="제품명을 입력해주세요" />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
@@ -33,7 +33,7 @@
               <p class="control-label">자재 검색</p>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mt-2px">
-              <input class="form-control" type="text" id="findResrcNm" onKeyDown="fnPressGet02(event)" placeholder="자재명을 입력해주세요." />
+              <input class="form-control" type="text" id="findResrcNm" onKeyDown="fnPressGet02(event)" placeholder="자재명을 입력해주세요" />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet02(event)">
@@ -106,8 +106,10 @@
       </div>
     </div>
     <!-- /.row 2 -->
-  </div>
 
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/pages/bom.js"></script>
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/bom.js"></script>
+
+  </div>
 </body>

@@ -3,11 +3,22 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductInOutXlsDAO">
 
-  <select id="saveProductInOutXls" parameterType="com.WAREHOUSE.container.ProductInOut" resultType="com.WAREHOUSE.container.ProductInOut">
+  <select
+  	id="saveProductInOutXls"
+  	parameterType="com.WAREHOUSE.container.ProductInOut"
+  	resultType="com.WAREHOUSE.container.ProductInOut"
+  >
     /* ProductInOutXls.saveProductInOutXls */
     CALL sp_ProductInOutXls (
-      #{inOutDt}, #{prodCd}, #{qty}, #{compCd}, #{houseCd}, #{unitPrice}, #{remark},
-      #{flagYN}, #{issueID}
+      #{inOutDt},
+      #{prodCd},
+      #{qty},
+      #{compCd},
+      #{houseCd},
+      #{unitPrice},
+      #{remark},
+      #{flagYN},
+      #{issueID}
     );
   </select>
 

@@ -19,7 +19,7 @@
             </div>
             <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mt-2px">
               <input class="form-control" type="text" id="findProdNm"
-                onKeyDown="fnPressGet01(event)" placeholder="제품명을 입력해주세요." />
+                onKeyDown="fnPressGet01(event)" placeholder="제품명을 입력해주세요" />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
@@ -43,6 +43,7 @@
               <div class="grid-main">
                 <div class="h-100p" id="grid01"></div>
               </div>
+              <div class="divider-md d-none"></div>
             </div>
             <!-- grid 2 -->
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
@@ -284,10 +285,10 @@
                       </div>
                     </div>
                   </div>
-                    <div class="d-row-center mt-2vh">
-                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-                        <button
-                          type="button"
+                  <div class="d-row-center mt-2vh">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                      <button
+                        type="button"
                         class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >
@@ -313,6 +314,7 @@
                   <div class="hidden-wrapper">
                     <input type="hidden" id="inOut" name="inOut" value="in" />
                     <input type="hidden" id="inOutSeq" name="inOutSeq" />
+                    <input type="hidden" id="prod" name="prod" />
                     <input type="hidden" id="prodCd" name="prodCd" />
                     <input type="hidden" id="compCd" name="compCd" />
                     <input type="hidden" id="houseCd" name="houseCd" />
@@ -329,5 +331,6 @@
     <!-- js -->
     <div class="h-5vh"></div>
     <script defer src="${rsPath}/scripts/pages/productInPlan.js"></script>
+
   </div>
 </body>

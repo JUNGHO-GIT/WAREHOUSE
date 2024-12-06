@@ -50,12 +50,11 @@
       </div>
     </div>
     <!-- /.row 2 -->
-  </div>
 
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/export/init.js"></script>
-  <script defer src="${rsPath}/scripts/pages/common.js"></script>
-  <script defer src="${rsPath}/scripts/json2Xls.js"></script>
-  <script defer src="${rsPath}/scripts/pages/files.js"></script>
-  <script defer src="${rsPath}/scripts/pages/resourceInOutXls.js"></script>
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/libs/json2Xls.js"></script>
+    <script defer src="${rsPath}/scripts/pages/resourceInOutXls.js"></script>
+
+  </div>
 </body>

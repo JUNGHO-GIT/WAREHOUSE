@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "dayOff.xlsx",
@@ -38,7 +38,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listDayOff",
     data: `findUserNm=${$("#findUserNm").val()}`,
@@ -205,7 +204,7 @@ function fnCheckUserID() {
         alert("사용 가능한 아이디 입니다.");
       }
       else {
-        alert("이미 사용중인 아이디 입니다.\n다른 아이디를 입력해 주세요.");
+        alert("이미 사용중인 아이디 입니다.\n다른 아이디를 입력해 주세요");
         $("#userID").on("focus", function () {});
         $("#userIDCheck").val("N");
       }

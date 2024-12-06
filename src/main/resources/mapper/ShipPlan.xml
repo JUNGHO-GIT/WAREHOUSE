@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ShipPlanDAO">
 
-  <select id="listShipPlan" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listShipPlan"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* ShipPlan.listShipPlan */
     <![CDATA[
     SELECT
@@ -36,7 +40,11 @@
       A.shipCd DESC
   </select>
 
-  <select id="listShipPlanDetail" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listShipPlanDetail"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* ShipPlan.listShipPlanDetail */
     <![CDATA[
     SELECT
@@ -75,7 +83,11 @@
       A.shipCd DESC;
   </select>
 
-  <select id="showShipPlan" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="showShipPlan"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* ShipPlan.showShipPlan */
     <![CDATA[
     SELECT
@@ -108,11 +120,22 @@
       A.shipDt DESC
   </select>
 
-  <select id="saveShipPlan" parameterType="com.WAREHOUSE.container.Shipping">
+  <select
+  	id="saveShipPlan"
+  	parameterType="com.WAREHOUSE.container.Shipping"
+  >
     /* ShipPlan.saveShipPlan */
     CALL sp_Shipping (
-      #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},
-      #{inOutSeq}, #{flagYN}, #{planYN}, #{issueID}
+      #{shipCd},
+      #{compCd},
+      #{toMajor},
+      #{toPhone},
+      #{shipDt},
+      #{shipMajor},
+      #{inOutSeq},
+      #{flagYN},
+      #{planYN},
+      #{issueID}
     );
   </select>
 

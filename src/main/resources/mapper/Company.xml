@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.CompanyDAO">
 
-  <select id="listCompany" parameterType="hashmap" resultType="com.WAREHOUSE.container.Company">
+  <select
+  	id="listCompany"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Company"
+  >
 		/* Company.listCompany */
     <![CDATA[
     SELECT
@@ -31,7 +35,11 @@
 		ORDER BY A.compNm ASC
   </select>
 
-  <select id="showCompany" parameterType="hashmap" resultType="com.WAREHOUSE.container.Company">
+  <select
+  	id="showCompany"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Company"
+  >
 		/* Company.showCompany */
     <![CDATA[
     SELECT
@@ -45,11 +53,26 @@
     ]]>
   </select>
 
-  <select id="saveCompany" parameterType="com.WAREHOUSE.container.Company" resultType="Integer">
+  <select
+  	id="saveCompany"
+  	parameterType="com.WAREHOUSE.container.Company"
+  	resultType="Integer"
+  >
 		/* Company.saveCompany */
 		CALL sp_Company (
-      #{compCd}, #{compNm}, #{compNo}, #{owner}, #{major}, #{phone}, #{taxEmail}, #{address},
-      #{compType}, #{compPart}, #{remarks}, #{flagYN}, #{issueID}
+      #{compCd},
+      #{compNm},
+      #{compNo},
+      #{owner},
+      #{major},
+      #{phone},
+      #{taxEmail},
+      #{address},
+      #{compType},
+      #{compPart},
+      #{remarks},
+      #{flagYN},
+      #{issueID}
     );
   </select>
 

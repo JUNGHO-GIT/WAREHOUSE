@@ -143,5 +143,10 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 			</div>
 		</div>
 	</div>
-	<script defer="defer" src="${rsPath}/scripts/pages/shipping.js"></script>
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/shipping.js"></script>
+
+  </div>
 </body>

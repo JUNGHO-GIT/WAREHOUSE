@@ -23,7 +23,7 @@
                 id="findResrcNm"
                 name="findResrcNm"
                 class="form-control"
-                placeholder="자재명을 입력해주세요."
+                placeholder="자재명을 입력해주세요"
                 onKeyDown="fnPressGet01(event)"
               />
             </div>
@@ -53,6 +53,7 @@
               <div class="grid-main">
                 <div class="h-100p" id="grid01"></div>
               </div>
+              <div class="divider-md d-none"></div>
             </div>
             <!-- grid 2 -->
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
@@ -354,28 +355,20 @@
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left ml-2vw">
-                        <form id="fileUpload" name="fileUpload">
-                          <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
-                          <input type="hidden" name="tableKey" id="tableKey" value="0" />
-                          <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
-                          <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                          <input type="hidden" name="fileNm" id="fileNm" />
-                          <input type="hidden" name="fileUrl" id="fileUrl" />
-                          <input
-                            type="file"
-                            name="userFile"
-                            id="userFile"
-                            class="w-100p"
-                          />
-                          <button
-                            class="btn btn-success btn-xs mt-3px"
-                            type="button"
-                            id="fileUpBtn"
-                            onclick="fnUploadFiles(this.form)"
-                          >
-                            업로드
-                          </button>
-                        </form>
+                        <input
+                          type="file"
+                          name="userFile"
+                          id="userFile"
+                          class="w-100p"
+                        />
+                        <button
+                          class="btn btn-success btn-xs mt-3px"
+                          type="button"
+                          id="fileUpBtn"
+                          onclick="fnUploadFiles(this.form)"
+                        >
+                          업로드
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -416,6 +409,15 @@
                       >
                         삭제
                       </button>
+                    </div>
+                    <!-- hidden -->
+                    <div class="hidden-wrapper">
+                      <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
+                      <input type="hidden" name="tableKey" id="tableKey" value="0" />
+                      <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
+                      <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
+                      <input type="hidden" name="fileNm" id="fileNm" />
+                      <input type="hidden" name="fileUrl" id="fileUrl" />
                     </div>
                   </div>
                 </div>

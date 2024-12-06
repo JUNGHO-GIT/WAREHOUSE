@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "product.xlsx",
@@ -45,7 +45,6 @@ function fnGetList01 () {
 
   var param = "findProdNm=" + $("#findProdNm").val();
 
-	// ajax 호출
   $.ajax({
     url: "act/listBom",
     data: param,
@@ -65,7 +64,7 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
   var insertBtn=`<button type="button" class="btn btn-primary btn-xs insertBtn">&#x25bc;</button>`;
 
   const gridOption = {
@@ -142,7 +141,6 @@ function fnGetList02() {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
@@ -275,7 +273,6 @@ function fnShow(prodCd, bomType) {
     }
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/showBom",
     data: `prodCd=${prodCd}&bomType=${bomType}`,

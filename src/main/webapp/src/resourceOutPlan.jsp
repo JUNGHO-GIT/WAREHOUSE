@@ -24,7 +24,7 @@
                 id="findResrcNm"
                 name="findResrcNm"
                 class="form-control"
-                placeholder="자재명을 입력해주세요."
+                placeholder="자재명을 입력해주세요"
                 onKeyDown="fnPressGet01(event)"
               />
             </div>
@@ -54,6 +54,7 @@
               <div class="grid-main">
                 <div class="h-100p" id="grid01"></div>
               </div>
+              <div class="divider-md d-none"></div>
             </div>
             <!-- grid 2 -->
             <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
@@ -295,10 +296,10 @@
                       </div>
                     </div>
                   </div>
-                    <div class="d-row-center mt-2vh">
-                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-                        <button
-                          type="button"
+                  <div class="d-row-center mt-2vh">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                      <button
+                        type="button"
                         class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >
@@ -324,6 +325,7 @@
                   <div class="hidden-wrapper">
                     <input type="hidden" id="inOut" name="inOut" value="out" />
                     <input type="hidden" id="inOutSeq" name="inOutSeq" />
+                    <input type="hidden" id="resrc" name="resrc" />
                     <input type="hidden" id="resrcCd" name="resrcCd" />
                     <input type="hidden" id="compCd" name="compCd" />
                     <input type="hidden" id="houseCd" name="houseCd" />
@@ -340,5 +342,6 @@
     <!-- js -->
     <div class="h-5vh"></div>
     <script defer src="${rsPath}/scripts/pages/resourceOutPlan.js"></script>
+
   </div>
 </body>

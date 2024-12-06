@@ -20,6 +20,7 @@
   <task:scheduler id="jobScheduler" pool-size="10" />
   <task:annotation-driven scheduler="jobScheduler" />
 
+  <resources mapping="/resources/**" location="/resources/" />
   <resources location="/resources/" mapping="/resources/**" />
   <resources location="/src/" mapping="/src/**" />
 

@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductDAO">
 
-  <select id="listProduct" parameterType="hashmap" resultType="com.WAREHOUSE.container.Product">
+  <select
+  	id="listProduct"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Product"
+  >
 		/* Product.listProduct */
 		<![CDATA[
     SELECT
@@ -59,7 +63,11 @@
     ) DESC
   </select>
 
-  <select id="showProduct" parameterType="hashmap" resultType="com.WAREHOUSE.container.Product">
+  <select
+  	id="showProduct"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.Product"
+  >
     /* Product.showProduct */
     <![CDATA[
     SELECT
@@ -97,11 +105,28 @@
     ]]>
   </select>
 
-  <select id="saveProduct" parameterType="com.WAREHOUSE.container.Product" resultType="Integer">
+  <select
+  	id="saveProduct"
+  	parameterType="com.WAREHOUSE.container.Product"
+  	resultType="Integer"
+  >
     /* Product.saveProduct */
     CALL sp_Product (
-      #{prodCd}, #{prodNm}, #{prodType}, #{houseCd}, #{protectedQty}, #{quality}, #{unit},
-      #{option1}, #{option2}, #{maker}, #{unitPrice}, #{compCd}, #{remark}, #{flagYN}, #{issueID}
+      #{prodCd},
+      #{prodNm},
+      #{prodType},
+      #{houseCd},
+      #{protectedQty},
+      #{quality},
+      #{unit},
+      #{option1},
+      #{option2},
+      #{maker},
+      #{unitPrice},
+      #{compCd},
+      #{remark},
+      #{flagYN},
+      #{issueID}
     );
   </select>
 

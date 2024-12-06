@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ReportDAO">
 
-  <select id="listReportProdIn" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportProdIn"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportProdIn */
     <![CDATA[
     SELECT
@@ -41,7 +45,11 @@
     ORDER BY Z.prodNm
   </select>
 
-  <select id="listReportResrcIn" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportResrcIn"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportResrcIn */
     <![CDATA[
     SELECT
@@ -79,7 +87,11 @@
     ORDER BY Z.resrcNm
   </select>
 
-  <select id="listReportProdOut" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportProdOut"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportProdOut */
     <![CDATA[
     SELECT
@@ -117,7 +129,11 @@
     ORDER BY Z.prodNm
   </select>
 
-  <select id="listReportResrcOut" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportResrcOut"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportResrcOut */
     <![CDATA[
     SELECT
@@ -155,7 +171,11 @@
     ORDER BY Z.resrcNm
   </select>
 
-  <select id="listReportProdStock" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportProdStock"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportProdStock*/
     <![CDATA[
     SELECT
@@ -282,7 +302,11 @@
     ORDER BY Z.prodNm
   </select>
 
-  <select id="listReportResrcStock" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="listReportResrcStock"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Report.listReportResrcStock*/
     <![CDATA[
     SELECT

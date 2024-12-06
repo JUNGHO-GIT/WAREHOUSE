@@ -4,7 +4,11 @@
 <mapper namespace="com.WAREHOUSE.dao.DashDAO">
 
   <!-- 0. 공통 (입고, 출고) -->
-  <select id="getInOutData" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getInOutData"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getInOutData */
     <![CDATA[
     SELECT
@@ -39,7 +43,11 @@
     ]]>
   </select>
 
-  <select id="getShipData" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getShipData"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getShipData */
     SELECT
       A.shipCd, A.shipDt, A.sessionCnt, F.prodNm, C.prodCd, C.inOutSeq,
@@ -106,7 +114,11 @@
   </select>
 
   <!-- 1-1. 금일 입고 예정 (제품) -->
-  <select id="getProdInPlanToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdInPlanToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdInPlanToday */
     <![CDATA[
     SELECT
@@ -132,7 +144,11 @@
   </select>
 
   <!-- 1-2. 금일 출고 예정 (제품) -->
-  <select id="getProdOutPlanToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdOutPlanToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdOutPlanToday */
     <![CDATA[
     SELECT
@@ -158,7 +174,11 @@
   </select>
 
   <!-- 1-3. 금일 출하 예정 (제품) -->
-  <select id="getShipPlanToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getShipPlanToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getShipPlanToday */
     <![CDATA[
     SELECT
@@ -207,7 +227,11 @@
   </select>
 
   <!-- 2-1. 금일 입고 현황 (제품) -->
-  <select id="getProdInToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdInToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdInToday */
     <![CDATA[
     SELECT
@@ -233,7 +257,11 @@
   </select>
 
   <!-- 2-2. 금일 출고 현황 (제품) -->
-  <select id="getProdOutToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdOutToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdOutToday */
     <![CDATA[
     SELECT
@@ -259,7 +287,11 @@
   </select>
 
   <!-- 3-3. 금일 출하 현황 (제품) -->
-  <select id="getShipToday" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getShipToday"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getShipToday */
     <![CDATA[
     SELECT
@@ -308,7 +340,11 @@
   </select>
 
   <!-- 3-1. 금주 입고 현황 (제품) -->
-  <select id="getProdInWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdInWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdInWeek */
     <![CDATA[
     SELECT
@@ -334,7 +370,11 @@
   </select>
 
   <!-- 3-2. 금주 출고 현황 (제품) -->
-  <select id="getProdOutWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdOutWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdOutWeek */
     <![CDATA[
     SELECT
@@ -360,7 +400,11 @@
   </select>
 
   <!-- 3-3. 금주 출하 현황 (제품) -->
-  <select id="getShipWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getShipWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getShipWeek */
     <![CDATA[
     SELECT
@@ -386,7 +430,11 @@
   </select>
 
   <!-- 4-1. 안전 재고 현황 (제품) -->
-  <select id="getProdProtected" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdProtected"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdProtected */
     <![CDATA[
     SELECT
@@ -417,7 +465,11 @@
   </select>
 
   <!-- 5-1. 주간 입고 현황 (제품) -->
-  <select id="getProdInChartWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdInChartWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdInChartWeek */
     <![CDATA[
     SELECT
@@ -438,7 +490,11 @@
   </select>
 
   <!-- 5-2. 주간 출고 현황 (제품) -->
-  <select id="getProdOutChartWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getProdOutChartWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getProdOutChartWeek */
     <![CDATA[
     SELECT
@@ -459,7 +515,11 @@
   </select>
 
   <!-- 5-3. 주간 출하 현황 (제품) -->
-  <select id="getShipChartWeek" parameterType="hashmap" resultType="hashmap">
+  <select
+  	id="getShipChartWeek"
+  	parameterType="hashmap"
+  	resultType="hashmap"
+  >
     /* Dash.getShipChartWeek */
     <![CDATA[
     SELECT

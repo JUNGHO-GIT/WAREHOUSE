@@ -14,7 +14,7 @@
               <p class="control-label">거래처 검색</p>
             </div>
             <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mt-2px">
-              <input class="form-control" type="text" id="findCompNm" onKeyDown="fnPressGet01(event)" placeholder="거래처를 입력해주세요." />
+              <input class="form-control" type="text" id="findCompNm" onKeyDown="fnPressGet01(event)" placeholder="거래처를 입력해주세요" />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
@@ -199,7 +199,10 @@
       </div>
     </div>
     <!-- /.row 2 -->
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/company.js"></script>
+
   </div>
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/pages/company.js"></script>
 </body>

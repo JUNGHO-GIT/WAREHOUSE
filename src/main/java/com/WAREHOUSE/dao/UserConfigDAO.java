@@ -4,7 +4,6 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Param;
 import com.WAREHOUSE.container.UserConfig;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 // -------------------------------------------------------------------------------------------------
 @Mapper

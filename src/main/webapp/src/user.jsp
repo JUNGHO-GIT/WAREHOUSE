@@ -16,7 +16,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 								type="text"
 								class="form-control"
 								onkeydown="fnPressGet01 (event)"
-								placeholder="사용자를 입력해주세요."
+								placeholder="사용자를 입력해주세요"
 							/>
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-2">
@@ -238,5 +238,10 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 			</div>
 		</div>
 	</div>
-	<script defer="defer" src="${rsPath}/scripts/pages/user.js"></script>
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/user.js"></script>
+
+  </div>
 </body>

@@ -6,7 +6,6 @@ import com.WAREHOUSE.container.Bom;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 // -------------------------------------------------------------------------------------------------
 @Mapper

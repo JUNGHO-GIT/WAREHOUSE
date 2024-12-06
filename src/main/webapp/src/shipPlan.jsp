@@ -128,5 +128,10 @@
       </div>
     </div>
   </div>
-  <script defer src="${rsPath}/scripts/pages/shipPlan.js"></script>
+
+    <!-- js -->
+    <div class="h-5vh"></div>
+    <script defer src="${rsPath}/scripts/pages/shipPlan.js"></script>
+
+  </div>
 </body>

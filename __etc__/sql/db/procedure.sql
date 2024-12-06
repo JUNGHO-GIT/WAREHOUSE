@@ -550,6 +550,7 @@ CREATE PROCEDURE `sp_ProductInOut`(
 	IN `@remark` VARCHAR(1000),
 	IN `@compCd` INT(10),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -569,6 +570,7 @@ BEGIN
       remark,
       compCd,
       flagYN,
+      planYN,
       regDate,
       issueDate,
       issueID
@@ -582,6 +584,7 @@ BEGIN
       `@remark`,
       `@compCd`,
       `@flagYN`,
+      `@planYN`,
       NOW(),
       NOW(),
       `@issueID`
@@ -598,6 +601,7 @@ BEGIN
       remark=`@remark`,
       compCd=`@compCd`,
       flagYN=`@flagYN`,
+      planYN=`@planYN`,
       issueDate=NOW(),
       issueID=`@issueID`
     WHERE
@@ -617,6 +621,7 @@ CREATE PROCEDURE `sp_ProductInOutXls`(
 	IN `@unitPrice` NUMERIC(15,0),
 	IN `@remark` VARCHAR(1000),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -645,6 +650,7 @@ BEGIN
     remark,
     compCd,
     flagYN,
+    planYN,
     regDate,
     issueDate,
     issueID
@@ -658,6 +664,7 @@ BEGIN
     `@remark`,
     `@compCd`,
     `@flagYN`,
+    `@planYN`,
     NOW(),
     NOW(),
     `@issueID`
@@ -863,6 +870,7 @@ CREATE PROCEDURE `sp_ResourceInOut`(
 	IN `@remark` VARCHAR(1000),
 	IN `@compCd` INT(10),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -882,6 +890,7 @@ BEGIN
       remark,
       compCd,
       flagYN,
+      planYN,
       regDate,
       issueDate,
       issueID
@@ -895,6 +904,7 @@ BEGIN
       `@remark`,
       `@compCd`,
       `@flagYN`,
+      `@planYN`,
       NOW(),
       NOW(),
       `@issueID`
@@ -911,6 +921,7 @@ BEGIN
       remark=`@remark`,
       compCd=`@compCd`,
       flagYN=`@flagYN`,
+      planYN=`@planYN`,
       issueDate=NOW(),
       issueID=`@issueID`
     WHERE
@@ -930,6 +941,7 @@ CREATE PROCEDURE `sp_ResourceInOutXls`(
 	IN `@unitPrice` NUMERIC(15,0),
 	IN `@remark` VARCHAR(1000),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -958,6 +970,7 @@ BEGIN
     remark,
     compCd,
     flagYN,
+    planYN,
     regDate,
     issueDate,
     issueID
@@ -971,6 +984,7 @@ BEGIN
     `@remark`,
     `@compCd`,
     `@flagYN`,
+    `@planYN`,
     NOW(),
     NOW(),
     `@issueID`

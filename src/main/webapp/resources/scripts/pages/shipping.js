@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
 
   const gridOption = {
     xlsNm: "shipping.xlsx",
@@ -69,7 +69,6 @@ function fnGetList01 () {
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listShipping",
     data:`inOutDt=${"P"}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
@@ -89,7 +88,7 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
   var delBtn = `<button class="btn btn-danger btn-xs delBtn">x</button>`;
 
   const gridOption = {
@@ -147,11 +146,11 @@ function fnSaveItems() {
   var rowCnt = getData.length;
 
   if (rowCnt < 1) {
-    alert("제품을 추가해 주세요.");
+    alert("제품을 추가해 주세요");
     return;
   }
   if ($("#comp").val() == "") {
-    alert("거래처를 입력해 주세요.");
+    alert("거래처를 입력해 주세요");
     $("#compNm").on("focus", function () {});
     return;
   }
@@ -234,11 +233,11 @@ function fnSavePlan() {
   var rowCnt = getData.length;
 
   if (rowCnt < 1) {
-    alert("제품을 추가해 주세요.");
+    alert("제품을 추가해 주세요");
     return;
   }
   if ($("#comp").val() == "") {
-    alert("거래처를 입력해 주세요.");
+    alert("거래처를 입력해 주세요");
     $("#compNm").on("focus", function () {});
     return;
   }

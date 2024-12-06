@@ -4,9 +4,7 @@
 <%@ include file="./layouts/header.jsp" %>
 <c:set var="rsPath" value="${pageContext.request.contextPath}/resources" />
 
-<!-- main -->
 <body class="container-fluid d-center">
-  <!-- detail -->
   <div class="row border-1 shadow-1 radius-2 p-20px">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <!-- form -->
@@ -84,7 +82,9 @@
         </div>
       </form>
     </div>
+
+    <!-- js -->
+    <script defer src="${rsPath}/scripts/pages/userLogin.js"></script>
+
   </div>
-  <!-- js -->
-  <script defer src="${rsPath}/scripts/pages/userLogin.js"></script>
 </body>

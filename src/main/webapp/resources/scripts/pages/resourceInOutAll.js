@@ -1,10 +1,11 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
+  const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "resource.xlsx",
+    xlsNm: "resourceInOutAll.xlsx",
     title: "   자재 입출고 관리",
     width: "auto",
     height: "auto",
@@ -17,137 +18,94 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
+    summaryData:  [],
+    rowClick: (event, ui) => {
+      const today = fnToday();
+      const getData = $("#grid02").pqGrid("getData");
+      const newRow = {
+        resrcCd: ui.rowData.resrcCd,
+        resrcNm: ui.rowData.resrcNm,
+        curQty: ui.rowData.qty,
+        inOutDt: today
+      };
 
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    // 1. grid02에 추가 (resrcCd, resrcNm, qty)
-    var today = fnToday();
-    var getData = $("#grid02").pqGrid("getData");
-    var newRow = {
-      resrcCd: ui.rowData.resrcCd,
-      resrcNm: ui.rowData.resrcNm,
-      curQty: ui.rowData.qty,
-      inOutDt: today
-    };
-    // 2. 그리드 데이터가 있을 경우 중복체크
-    var duplicateFlag = false;
-    for (let i = 0; i < getData.length; i++) {
-      var row = getData[i];
-      if (row.resrcCd === newRow.resrcCd) {
-        duplicateFlag = true;
-        break;
+      let duplicateFlag = false;
+      for (let i = 0; i < getData.length; i++) {
+        const row = getData[i];
+        if (row.resrcCd === newRow.resrcCd) {
+          duplicateFlag = true;
+          break;
+        }
       }
-    }
-    if (duplicateFlag) {
-      alert("이미 추가된 자재입니다.");
-      return;
-    }
-    getData.push(newRow);
-    $("#grid02").pqGrid("option", "dataModel", {data: getData});
-    $("#grid02").pqGrid("refreshDataAndView");
-  };
-
-  // 이미지 렌더링
-  obj.renderImage = function(ui) {
-    var imageUrl = "";
-    var noImage = "no-image.webp";
-    var noGridImage = "noGridImage.webp";
-    var rowImage = ui.rowData.fileUrl;if (!rowImage || ui.rowData.fileUrl === noGridImage) {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${noImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    else {
-      imageUrl = (
-        `<img
-          src="viewFiles?fileUrl=${rowImage}"
-          class="w-100p h-auto radius-1 shadow-1"
-          loading="lazy"
-        />`
-      );
-    }
-    return imageUrl;
-  };
-
-  // 빈값 0으로 출력
-  obj.renderZero = function(ui) {
-    return ui.cellData ? ui.cellData : "0";
-  };
-
-  // 푸터 합계 계산
-  obj.calcSum = function (data, dataIndex) {
-    if (!data) {
-      return "0";
-    }
-    var sum = data.reduce(function(acc, row) {
-      var value = Number(row[dataIndex]);
-      return acc + (isNaN(value) ? 0 : value);
-    }, 0);
-    return sum.toLocaleString();
-  };
-
-  // 안전재고 이하 갯수 계산
-  obj.calcLowStock = function (data) {
-    var lowStockCount = 0;
-    for (let i = 0; i < data.length; i++) {
-      var row = data[i];
-      row.lowStock = parseInt(row.qty) <= parseInt(row.protectedQty) ? 1 : 0;
-      if (row.lowStock === 1) {
-        lowStockCount++;
+      if (duplicateFlag) {
+        alert("이미 추가된 자재입니다.");
+        return;
       }
+      getData.push(newRow);
+      $grid02.pqGrid("option", "dataModel", {data: getData});
+      $grid02.pqGrid("refreshDataAndView");
     }
-    return lowStockCount;
   };
-
-  // 안전재고 이하 표시
-  obj.displayLowStock = function (ui) {
-    return ui.rowData.lowStock === 1 ? `<span class="fsr-2.5 red">●</span>` : "";
-  };
-
   const colModel = [
-    {dataIndx:"fileUrl", title:"이미지", dataType:"string", align:"center",,
-      minWidth:70, maxWidth:70, render: obj.renderImage,
+    {
+      title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
+      minWidth: 70, maxWidth: 70,
+      render: renderImage,
     },
-    {dataIndx:"resrcCd", title:"자재코드", dataType:"integer", align:"center",
+    {
+      title:"자재코드", dataIndx:"resrcCd", dataType:"integer", align:"center",
       hidden:true, editable:false,
     },
-    {dataIndx:"compCd", title:"거래처코드", dataType:"integer", align:"center",
+    {
+      title:"거래처코드", dataIndx:"compCd", dataType:"integer", align:"center",
       hidden:true, editable:false,
     },
-    {dataIndx:"houseCd", title:"창고코드", dataType:"integer", align:"center",
+    {
+      title:"창고코드", dataIndx:"houseCd", dataType:"integer", align:"center",
       hidden:true, editable:false,
     },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",,
-      minWidth:200, hidden:false, editable:false,
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth: 150, hidden: false, editable: false,
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center",,
+    {
+      title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"center",
+    {
+      title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",,
-      render: obj.renderZero
+    {
+      title:"입고", dataIndx:"inQty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero
     },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",,
-      render: obj.renderZero
+    {
+      title:"출고", dataIndx:"outQty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero
     },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",,
-      render: obj.renderZero
+    {
+      title:"재고", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth: 100,
+      render: renderZero
     },
-    {dataIndx:"lowStock", title:"재고부족", dataType:"string", align:"center",,
-      render: obj.displayLowStock
+    {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth: 50,
+      render: displayLowStock
     },
-    {dataIndx:"barcode", title:"바코드", dataType:"string", align:"center",
+    {
+      title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
+      minWidth: 100
     },
   ];
 
-	// ajax 호출
   $.ajax({
     url: "act/listResource",
     data: `findResrcNm=${$("#findResrcNm").val()}`,
@@ -157,37 +115,14 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
+      gridOption.title = updateTitle("자재 입출고 관리", myJsonData.length);
+      gridOption.summaryData = updateSummary(myJsonData);
 
-      // 1. 콜백 데이터 할당
-      obj.dataModel = {data:myJsonData};
-
-      // 2. title에 안전재고 이하 갯수 표시
-      obj.title = `
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
-          <span>자재 입출고 관리</span>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
-          <span class="fs-0-9rem red">●</span>
-          <span class="ml-5px mr-5px">안전재고 이하 : </span>
-          <span class="red">${obj.calcLowStock(myJsonData)}</span>
-        </div>
-      </div>
-      `;
-
-      // 3. footer에 합계표시
-      obj.summaryData = [{
-        pq_rowcls: "summary-row",
-        fileUrl: "noGridImage.webp",
-        resrcNm: `<b>Total : </b>`,
-        protectedQty: obj.calcSum(myJsonData, "protectedQty"),
-        inQty: obj.calcSum(myJsonData, "inQty"),
-        outQty: obj.calcSum(myJsonData, "outQty"),
-        qty: obj.calcSum(myJsonData, "qty")
-      }];
-
-      // 4. 그리드 갱신
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -196,9 +131,9 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const $grid = $(`#grid02`);
-  var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
-  var delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
+  const $grid02 = $(`#grid02`);
+  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
+  const delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
 
   const gridOption = {
     xlsNm: "resourceInOutAll.xlsx",
@@ -213,91 +148,106 @@ function fnGetList02() {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
-
-  // 셀 클릭시 실행
-  obj.cellClick = function (event, ui) {
-    if (ui.colIndx == 3) {
-      fnDel(ui.rowIndx);
+    cellClick: (event, ui) => {
+      if (ui.colIndx == 3) {
+        fnDel(ui.rowIndx);
+      }
+    },
+    cellBeforeSave: (event, ui) => {
+      if (ui.dataIndx === "houseNm" || ui.dataIndx === "compNm") {
+        fnGetCdWithNm(ui.dataIndx, ui.newVal, ui.rowIndx, "grid02");
+      }
+    },
+    editable: (ui) => {
+      if (ui.rowData && ui.rowData["isVerified"]) {
+        return false;
+      }
+      else {
+        return true;
+      }
     }
   };
-
-  obj.cellBeforeSave = function(event, ui) {
-    if (ui.dataIndx === "houseNm" || ui.dataIndx === "compNm") {
-      fnGetCdWithNm(ui.dataIndx, ui.newVal, ui.rowIndx, gridCd);
-    }
-  };
-
-  obj.editable = function(ui) {
-    // 편집 불가능하게
-    if (ui.rowData && ui.rowData["isVerified"]) {
-      return false;
-    }
-    // 편집 가능하게
-    else {
-      return true;
-    }
-  };
-
   const colModel = [
-    {dataIndx:"resrcCd", title:"자재코드", dataType:"string", align:"center",
-      editable:true, hidden:true,
+    {
+      title:"자재코드", dataIndx:"resrcCd", dataType:"integer", align:"center",
+      hidden:true, editable:false,
     },
-    {dataIndx:"houseCd", title:"창고코드", dataType:"string", align:"center",
-      editable:true, hidden:true,
+    {
+      title:"거래처코드", dataIndx:"compCd", dataType:"integer", align:"center",
+      hidden:true, editable:false,
     },
-    {dataIndx:"compCd", title:"거래처코드", dataType:"string", align:"center",
-      editable:true, hidden:true,
+    {
+      title:"창고코드", dataIndx:"houseCd", dataType:"integer", align:"center",
+      hidden:true, editable:false,
     },
-    {dataIndx:"delBtn", title: delBtn, dataType:"string", align:"center",
-      editable:false, sortable:false, minWidth:30, maxWidth:30,
-      render:function () {return delBtn;}
+    {
+      title:delBtn, dataIndx:"delBtn", dataType:"string", align:"center",
+      minWidth: 30, maxWidth: 30,
+      render: () => delBtn,
     },
-    {dataIndx:"chkBtn", title: chkBtn, dataType:"string", align:"center",
-      editable:false, sortable:false, minWidth:30, maxWidth:30,
+    {
+      title:chkBtn, dataIndx:"chkBtn", dataType:"string", align:"center",
+      minWidth: 30, maxWidth: 30,
     },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center"
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth: 150
     },
-    {dataIndx:"inOutDt", title:"일자", dataType:"string", align:"center",
+    {
+      title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"curQty", title:"재고", dataType:"string", align:"center",
-      editable:false,
+    {
+      title:"재고", dataIndx:"curQty", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center", cls:"lightYellow",
-      editable:true,
+    {
+      title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
+      minWidth: 100, editable:true,
     },
-    {dataIndx:"compNm", title:"거래처", dataType:"string", align:"center", cls:"lightYellow",
-      editable:true,
+    {
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 100, editable:true,
     },
-    {dataIndx:"qty", title:"수량", dataType:"string", align:"right", cls:"lightYellow",
+    {
+      title:"수량", dataIndx:"qty", dataType:"string", align:"right",
+      minWidth: 100, editable:true, cls:"lightYellow",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
-      editable:true,
     },
-    {dataIndx:"unitPrice", title:"표준단가", dataType:"string", align:"right", cls:"lightYellow",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
-      editable:true,
+    {
+      title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"right",
+      minWidth: 100, editable:true, cls:"lightYellow",
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg:"숫자만 입력 가능합니다."}],
     },
   ];
-  $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+
+  $grid02.pqGrid({
+    ...gridOption,
+    colModel: colModel,
+  }).pqGrid("refreshDataAndView");
 };
 
 // 1-2. 검증 ---------------------------------------------------------------------------------------
 function fnCheck() {
 
-  var getData = $("#grid02").pqGrid("getData");
-  var chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
-  let inOut = $("input[name=inOut]:checked").val();
+  const $grid02 = $(`#grid02`);
+  const getData = $grid02.pqGrid("getData");
+  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
+  const inOut = $("input[name=inOut]:checked").val();
 
-  var validationErrors = [];
-  var isVerified = true;
+  let validationErrors = [];
+  let isVerified = true;
 
   if (getData.length === 0) {
-    alert("자재를 추가해 주세요.");
+    alert("자재를 추가해 주세요");
     return;
   }
 
-  for (let c = 0; c < getData.length; c++) {
-    var row = getData[c];
+  console.log("getData", JSON.stringify(getData, null, 2));
+
+  // for - in
+  for (let key in getData) {
+    const row = getData[key];
 
     // 데이터 초기화 및 유효성 검사
     row.resrcCd = row.resrcCd ? row.resrcCd.toString().trim() : "";
@@ -307,86 +257,95 @@ function fnCheck() {
     row.qty = row.qty ? row.qty.replace(/,/g, "").trim() : "";
     row.unitPrice = row.unitPrice ? row.unitPrice.replace(/,/g, "").trim() : "";
 
-    let qty = parseInt(row.qty, 10);
-    var curQty = parseInt(row.curQty, 10);
-
-    if (!row.houseCd) {
+    if (!row.resrcCd) {
       isVerified = false;
-      alert("창고를 입력해 주세요.");
+      validationErrors.push("자재를 입력해 주세요");
+      break;
+    }
+    else if (!row.houseCd) {
+      isVerified = false;
+      validationErrors.push("창고를 입력해 주세요");
       break;
     }
     else if (!row.compCd) {
       isVerified = false;
-      alert("거래처를 입력해 주세요.");
+      validationErrors.push("거래처를 입력해 주세요");
       break;
     }
     else if (!row.qty) {
       isVerified = false;
-      alert("수량을 입력해 주세요.");
+      validationErrors.push("수량을 입력해 주세요");
       break;
     }
     else if (!row.unitPrice) {
       isVerified = false;
-      alert("표준단가를 입력해 주세요.");
+      validationErrors.push("표준단가를 입력해 주세요");
       break;
     }
-    else if (inOut === "out" && curQty < qty) {
+    else if (inOut === "out" && parseInt(row.qty, 10) > parseInt(row.curQty, 10)) {
       isVerified = false;
       validationErrors.push("재고보다 많은 수량이 입력되었습니다.");
       break;
     }
   }
 
+  console.log("validationErrors", validationErrors);
+
+  if (!isVerified) {
+    validationErrors.length > 0 && validationErrors.filter((item, i) => {
+      // 중복된 에러 메시지 1회만 출력
+      if (validationErrors.indexOf(item) === i) {
+        alert(item);
+      }
+    });
+    return;
+  }
+
   // 검증이 완료된 row에 isVerified 플래그를 설정
   if (isVerified) {
     alert("검증이 완료되었습니다.");
-    getData.forEach(function(row) {
+    getData.forEach((row) => {
       row["isVerified"] = true;
       row["chkBtn"] = chkBtn;
     });
-    $("#grid02").pqGrid("refreshDataAndView");
-  }
-  else {
-    if (validationErrors.length > 0) {
-      alert(validationErrors.join(", "));
-    }
+
+    $grid02.pqGrid("refreshDataAndView");
   }
 };
 
 // 3-1. 저장 (선택) --------------------------------------------------------------------------------
 function fnSave() {
 
-  var getData = $("#grid02").pqGrid("getData");
-  let inOut = $("input[name=inOut]:checked").val();
+  const $grid02 = $("#grid02");
+  const getData = $grid02.pqGrid("getData");
+  const inOut = $("input[name=inOut]:checked").val();
 
-  // 모든 항목에 대해 inOut 값을 설정
-  for (let i = 0; i < getData.length; i++) {
-    getData[i]["inOut"] = inOut;
-  }
-
-  var validationError = "";
+  let validationError = "";
 
   if (getData.length === 0) {
-    alert("제품을 추가해 주세요.");
+    alert("자재를 추가해 주세요");
     return;
   }
+
   for (let c = 0; c < getData.length; c++) {
-    var row = getData[c];
-    if (row.chkBtn === "" || row.chkBtn === null || typeof row.chkBtn === "undefined") {
-      validationError = "검증되지 않은 데이터가 있습니다. 검증 후 저장해 주세요.";
+    const row = getData[c];
+    if (!row.chkBtn) {
+      validationError = "검증되지 않은 데이터가 있습니다. 검증 후 저장해 주세요";
       break;
     }
   }
+
   if (validationError) {
     alert(validationError);
     return;
   }
-  if (!confirm("입출고 내역을 일괄 저장 하시겠습니까?")) {
+
+  if (!confirm("입출고 내역을 저장 하시겠습니까?")) {
     return;
   }
 
   $.ajax({
-    url: "act/saveResourceInOutAll",
+    url: "act/saveResourceInOut",
     data: JSON.stringify({datas : getData}),
     type: "POST",
     dataType:"JSON",
@@ -407,46 +366,46 @@ function fnSave() {
 // 3-2. 저장 (전체) --------------------------------------------------------------------------------
 function fnSaveAll() {
 
-  var grid = $("#grid02").pqGrid("getInstance").grid;
-  var data = grid.option("dataModel.data");
+  const $grid02 = $("#grid02");
+  const getData = $grid02.pqGrid("getData");
 
   // 모든 행에 일괄적으로 적용할 값을 설정
-  var newHouseCd = $("#house").val();
-  var newHouseNm = $("#house option:selected").text().trim();
-  var newCompCd = $("#comp").val();
-  var newCompNm = $("#comp option:selected").text().trim();
+  const newHouseCd = $(`#house`).val();
+  const newHouseNm = $(`#house option:selected`).text().trim();
+  const newCompCd = $(`#comp`).val();
+  const newCompNm = $(`#comp option:selected`).text().trim();
 
   // 1. 그리드에 행이 없을 경우
-  if (data.length === 0) {
-    alert("제품을 추가해 주세요.");
+  if (getData.length === 0) {
+    alert("자재를 추가해 주세요");
     return;
   }
 
   // 2. houseCd나 compNm값이 없을 경우
   if (!newHouseCd) {
-    alert("창고를 선택해 주세요.");
+    alert("창고를 선택해 주세요");
     return;
   }
   if (!newCompCd) {
-    alert("거래처를 선택해 주세요.");
+    alert("거래처를 선택해 주세요");
     return;
   }
 
   // 3. 정상적으로 저장된 경우
-  if (!confirm("창고 및 거래처를 일괄 적용 하시겠습니까?")) {
+  if (!confirm("입출고 내역을 일괄 저장 하시겠습니까?")) {
     return;
   }
   else {
-    for (let i = 0; i < data.length; i++) {
-      data[i].houseCd = newHouseCd;
-      data[i].houseNm = newHouseNm;
-      data[i].compCd = newCompCd;
-      data[i].compNm = newCompNm;
+    for (let i = 0; i < getData.length; i++) {
+      getData[i].houseCd = newHouseCd;
+      getData[i].houseNm = newHouseNm;
+      getData[i].compCd = newCompCd;
+      getData[i].compNm = newCompNm;
     }
     fnGridPopup("popupInOutAll","off")
   }
 
-  grid.refreshDataAndView();
+  $grid02.pqGrid("refreshDataAndView");
 }
 
 // 4-1. 삭제 (선택) --------------------------------------------------------------------------------

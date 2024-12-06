@@ -3,7 +3,11 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductInOutDAO">
 
-  <select id="listProductInOut" parameterType="hashmap" resultType="com.WAREHOUSE.container.ProductInOut">
+  <select
+  	id="listProductInOut"
+  	parameterType="hashmap"
+  	resultType="com.WAREHOUSE.container.ProductInOut"
+  >
 		/* ProductInOut.listProductInOut */
 		<![CDATA[
 		SELECT
@@ -41,7 +45,11 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
-  <select id="showProductInOut" parameterType="int" resultType="com.WAREHOUSE.container.ProductInOut">
+  <select
+  	id="showProductInOut"
+  	parameterType="int"
+  	resultType="com.WAREHOUSE.container.ProductInOut"
+  >
 		/* ProductInOut.showProductInOut */
     <![CDATA[
     SELECT
@@ -72,11 +80,24 @@
     ]]>
   </select>
 
-  <select id="saveProductInOut" parameterType="com.WAREHOUSE.container.ProductInOut" resultType="Integer">
+  <select
+  	id="saveProductInOut"
+  	parameterType="com.WAREHOUSE.container.ProductInOut"
+  	resultType="Integer"
+  >
     /* ProductInOut.saveProductInOut */
     CALL sp_ProductInOut (
-      #{inOutSeq}, #{inOutDt}, #{prodCd}, #{qty}, #{houseCd}, #{unitPrice}, #{remark}, #{compCd},
-      #{flagYN}, #{planYN}, #{issueID}
+      #{inOutSeq},
+      #{inOutDt},
+      #{prodCd},
+      #{qty},
+      #{houseCd},
+      #{unitPrice},
+      #{remark},
+      #{compCd},
+      #{flagYN},
+      #{planYN},
+      #{issueID}
     );
   </select>
 

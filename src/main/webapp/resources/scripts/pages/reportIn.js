@@ -1,7 +1,7 @@
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
-  const $grid = $(`#grid01`);
+  const $grid01 = $(`#grid01`);
   var showYear = $("#findYear").val();
 
   const gridOption = {
@@ -69,7 +69,7 @@ function fnGetList01 () {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList02() {
 
-  const $grid = $(`#grid02`);
+  const $grid02 = $(`#grid02`);
   var showYear = $("#findYear").val();
 
   const gridOption = {
