@@ -24,37 +24,28 @@ function fnGetList01 () {
     fnShow (ui.rowData.compCd);
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"compCd", title:"거래처 코드", dataType:"string", align:"center", hidden: true,
     },
-    {dataIndx:"compNm", title:"거래처 이름", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"compNm", title:"거래처 이름", dataType:"string", align:"center",,
       minWidth:150, maxWidth:150,
     },
-    {dataIndx:"compNo", title:"사업자등록번호", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"compNo", title:"사업자등록번호", dataType:"string", align:"center",,
       minWidth:150, maxWidth:150,
     },
     {dataIndx:"owner", title:"대표자", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"major", title:"담당자", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"phone", title:"연락처", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"address", title:"주소", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"compType", title:"업태", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"compPart", title:"종목", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"flagYN", title:"유효", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 

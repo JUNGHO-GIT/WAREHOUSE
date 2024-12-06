@@ -355,7 +355,7 @@ function fnResetWhenSearch() {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("dataModel", {data: []});
+  $("#grid01").pqGrid("option",
 	$("#grid02").pqGrid("refreshDataAndView");
 };
 

@@ -50,29 +50,22 @@ function fnGetList01 () {
     $("#grid02").pqGrid("refreshDataAndView");
   };
 
-  obj.colModel = [
-    {dataIndx:"inOutSeq", title:"입출고코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"inOutSeq", title:"입출고코드", dataType:"string", align:"center",,
       hidden:true,
     },
-    {dataIndx:"prodCd", title:"제품코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"prodCd", title:"제품코드", dataType:"string", align:"center",,
       hidden:true,
     },
     {dataIndx:"inOutDt", title:"출고일", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"prodNm", title:"제품", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"option2", title:"규격(사이즈)", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"qty", title:"출고수량", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 
@@ -122,7 +115,7 @@ function fnGetList02() {
     }
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"inOutSeq", title:"입출고코드", align:"center", dataType:"string",
       hidden:true,
     },
@@ -337,7 +330,7 @@ function fnReset() {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("dataModel", {data: []});
+	$("#grid02").pqGrid("option", "dataModel.data", []);
 	$("#grid02").pqGrid("refreshDataAndView");
 };
 

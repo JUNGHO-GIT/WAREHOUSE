@@ -262,7 +262,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-row-center mb-3vh">
+                  <div class="d-row-center mb-1vh">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                       <div class="p-7px bg-dark-white d-row-left">
                         <div class="fs-0-8rem fw-500 red mr-10px">
@@ -284,10 +284,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-row-center">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-                      <button
-                        type="button"
+                    <div class="d-row-center mt-2vh">
+                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                        <button
+                          type="button"
                         class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >

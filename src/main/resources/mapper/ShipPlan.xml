@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 출하 계획 관리 (ShipPlan) -->
-<!-- 생성일 : 2021-05-22 10:5:56 by JDFrame -->
-
-<mapper namespace="com.bedone.wms.dao.ShipPlanDAO">
+<mapper namespace="com.WAREHOUSE.dao.ShipPlanDAO">
 
   <select id="listShipPlan" parameterType="hashmap" resultType="hashmap">
     /* ShipPlan.listShipPlan */
@@ -111,7 +108,7 @@
       A.shipDt DESC
   </select>
 
-  <select id="saveShipPlan" parameterType="com.bedone.wms.container.Shipping">
+  <select id="saveShipPlan" parameterType="com.WAREHOUSE.container.Shipping">
     /* ShipPlan.saveShipPlan */
     CALL sp_Shipping (
       #{shipCd}, #{compCd}, #{toMajor}, #{toPhone}, #{shipDt}, #{shipMajor},

@@ -37,6 +37,7 @@
   <!-- js 1 -->
   <script src="${rsPath}/scripts/libs/jquery.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/jquery-ui.min.js"></script>
+  <script defer src="${rsPath}/scripts/libs/jquery-cookie.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/jquery-punch.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/jquery-pqgrid.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/moment.min.js"></script>

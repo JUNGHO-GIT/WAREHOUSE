@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- Bom관리(Bom)의 XML Mapper -->
-<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+<mapper namespace="com.WAREHOUSE.dao.BomDAO">
 
-<mapper namespace="com.bedone.wms.dao.BomDAO">
-
-  <select id="listBom" parameterType="hashmap" resultType="com.bedone.wms.container.Product">
+  <select id="listBom" parameterType="hashmap" resultType="com.WAREHOUSE.container.Product">
     <![CDATA[
     SELECT
       B.*,
@@ -39,7 +36,7 @@
     </if>
   </select>
 
-  <select id="showBom" parameterType="hashmap" resultType="com.bedone.wms.container.Resource">
+  <select id="showBom" parameterType="hashmap" resultType="com.WAREHOUSE.container.Resource">
     /* Bom.showBom */
     <![CDATA[
     SELECT
@@ -84,7 +81,7 @@
     ORDER BY B.resrcNm
   </select>
 
-  <select id="saveBom" parameterType="com.bedone.wms.container.Bom" resultType="Integer">
+  <select id="saveBom" parameterType="com.WAREHOUSE.container.Bom" resultType="Integer">
 		/* Bom.saveBom*/
 		CALL sp_Bom (
       #{prodCd}, #{resrcCd}, #{bomType}, #{qty}, #{unitQty}, #{flagYN}, #{issueID}

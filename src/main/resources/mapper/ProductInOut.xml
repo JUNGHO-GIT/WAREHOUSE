@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 제품입출고관리(ProductInOut)의 XML Mapper -->
-<!-- 생성일 : 2021-05-11 13:12:55 by JDFrame -->
+<mapper namespace="com.WAREHOUSE.dao.ProductInOutDAO">
 
-<mapper namespace="com.bedone.wms.dao.ProductInOutDAO">
-
-  <select id="listProductInOut" parameterType="hashmap" resultType="com.bedone.wms.container.ProductInOut">
+  <select id="listProductInOut" parameterType="hashmap" resultType="com.WAREHOUSE.container.ProductInOut">
 		/* ProductInOut.listProductInOut */
 		<![CDATA[
 		SELECT
@@ -44,7 +41,7 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
-  <select id="showProductInOut" parameterType="int" resultType="com.bedone.wms.container.ProductInOut">
+  <select id="showProductInOut" parameterType="int" resultType="com.WAREHOUSE.container.ProductInOut">
 		/* ProductInOut.showProductInOut */
     <![CDATA[
     SELECT
@@ -75,7 +72,7 @@
     ]]>
   </select>
 
-  <select id="saveProductInOut" parameterType="com.bedone.wms.container.ProductInOut" resultType="Integer">
+  <select id="saveProductInOut" parameterType="com.WAREHOUSE.container.ProductInOut" resultType="Integer">
     /* ProductInOut.saveProductInOut */
     CALL sp_ProductInOut (
       #{inOutSeq}, #{inOutDt}, #{prodCd}, #{qty}, #{houseCd}, #{unitPrice}, #{remark}, #{compCd},

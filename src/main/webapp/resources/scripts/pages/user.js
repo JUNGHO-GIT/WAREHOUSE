@@ -25,7 +25,7 @@ function fnGetList01 () {
     fnShow(ui.rowData.userID);
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"userNm", title:"사용자 이름", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
@@ -41,8 +41,7 @@ function fnGetList01 () {
     {dataIndx:"uLevel", title:"회원등급", dataType:"string", align:"center",
       filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
     },
-    {dataIndx:"flagYN", title:"유효여부", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"flagYN", title:"유효여부", dataType:"string", align:"center",,
     },
   ];
 

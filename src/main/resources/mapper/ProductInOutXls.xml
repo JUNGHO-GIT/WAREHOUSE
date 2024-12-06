@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 제품 입출고 Excel(ProductInOutXls)의 XML Mapper -->
-<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+<mapper namespace="com.WAREHOUSE.dao.ProductInOutXlsDAO">
 
-<mapper namespace="com.bedone.wms.dao.ProductInOutXlsDAO">
-
-  <select id="saveProductInOutXls" parameterType="com.bedone.wms.container.ProductInOut" resultType="com.bedone.wms.container.ProductInOut">
+  <select id="saveProductInOutXls" parameterType="com.WAREHOUSE.container.ProductInOut" resultType="com.WAREHOUSE.container.ProductInOut">
     /* ProductInOutXls.saveProductInOutXls */
     CALL sp_ProductInOutXls (
       #{inOutDt}, #{prodCd}, #{qty}, #{compCd}, #{houseCd}, #{unitPrice}, #{remark},

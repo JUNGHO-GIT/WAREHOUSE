@@ -80,7 +80,6 @@ function fnGetList01 () {
     },
     success: (myJsonData) => {
       gridOption.title = updateTitle("제품 관리", myJsonData);
-
       $grid.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
@@ -298,7 +297,9 @@ function fnChangeList() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  const comboStr = [{part: "comCode", target: "prodType", groupCd: "0002", format: "combo"}];
+  const comboStr = [
+    {part:"comCode", target:"prodType", groupCd:"0002", format:"combo"}
+  ];
   fnInitCombo (comboStr, function () {
     fnGetList01();
   });

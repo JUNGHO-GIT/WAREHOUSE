@@ -11,14 +11,17 @@
   http://www.springframework.org/schema/context
   https://www.springframework.org/schema/context/spring-context.xsd
   http://www.springframework.org/schema/task
-  http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+  https://www.springframework.org/schema/task/spring-task.xsd"
+>
 
   <annotation-driven />
+  <context:component-scan base-package="com.WAREHOUSE" />
+
   <task:scheduler id="jobScheduler" pool-size="10" />
   <task:annotation-driven scheduler="jobScheduler" />
-  <context:component-scan base-package="com.bedone.wms" />
-  <resources location="/src/" mapping="/src/**" />
+
   <resources location="/resources/" mapping="/resources/**" />
+  <resources location="/src/" mapping="/src/**" />
 
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/src/" />
@@ -36,9 +39,8 @@
 
   <interceptors>
     <interceptor>
-      <mapping path="**" />
       <mapping path="/act/**" />
-      <beans:bean id="commonInterceptor" class="com.bedone.wms.util.LoginCheckInterceptor" />
+      <beans:bean id="commonInterceptor" class="com.WAREHOUSE.util.LoginCheckInterceptor" />
     </interceptor>
   </interceptors>
 

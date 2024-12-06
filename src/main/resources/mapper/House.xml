@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 창고관리(House)의 XML Mapper -->
-<!-- 생성일 : 2021-05-01 19:14:54 by JDFrame -->
+<mapper namespace="com.WAREHOUSE.dao.HouseDAO">
 
-<mapper namespace="com.bedone.wms.dao.HouseDAO">
-
-  <select id="listHouse" parameterType="hashmap" resultType="com.bedone.wms.container.House">
+  <select id="listHouse" parameterType="hashmap" resultType="com.WAREHOUSE.container.House">
     /* House.listHouse*/
     <![CDATA[
     SELECT
@@ -105,7 +102,7 @@
       G.resrcCd, A.houseCd
   </select>
 
-  <select id="saveHouse" parameterType="com.bedone.wms.container.House" resultType="hashmap">
+  <select id="saveHouse" parameterType="com.WAREHOUSE.container.House" resultType="hashmap">
     /* House.saveHouse*/
     CALL sp_House (
       #{houseCd}, #{houseNm}, #{parentsHCd}, #{houseOrder}, #{flagYN}, #{issueID}

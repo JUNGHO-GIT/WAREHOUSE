@@ -25,32 +25,24 @@ function fnGetList01 () {
     fnGetList02(ui.rowData.shipCd);
   };
 
-  obj.colModel = [
-    {dataIndx:"shipCd", title:"출하코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"shipCd", title:"출하코드", dataType:"string", align:"center",,
       hidden:true,
     },
     {dataIndx:"shipDt", title:"출하일", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
-    {dataIndx:"compCd", title:"거래처코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"compCd", title:"거래처코드", dataType:"string", align:"center",,
       hidden:true,
     },
     {dataIndx:"compNm", title:"거래처", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"toMajor", title:"거래처담당자", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"toPhone", title:"담당자번호", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"shipMajor", title:"출하담당자", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"cnt", title:"출하항목수", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 
@@ -93,7 +85,7 @@ function fnGetList02 (shipCd) {
     numberCell: {show: true, resizable: false, width: 30},
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"shipDt", title:"출하일", dataType:"string", align:"center"
     },
     {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center"
@@ -236,7 +228,7 @@ function fnReset() {
 
   // 그리드 초기화
   $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("dataModel", {data: []});
+	$("#grid02").pqGrid("option", "dataModel.data", []);
 	$("#grid02").pqGrid("refreshDataAndView");
 };
 

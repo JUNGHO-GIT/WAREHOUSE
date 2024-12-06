@@ -78,20 +78,16 @@ function fnGetList02 (houseData) {
 	  return sum.toLocaleString();
 	};
 
-  obj.colModel = [
-    {dataIndx:"prodNm", title:"품명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"prodNm", title:"품명", dataType:"string", align:"center",,
     },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
   ];
@@ -155,20 +151,16 @@ function fnGetList03 (houseData) {
 	  return sum.toLocaleString();
 	};
 
-  obj.colModel = [
-    {dataIndx:"resrcNm", title:"품명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"resrcNm", title:"품명", dataType:"string", align:"center",,
     },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
   ];

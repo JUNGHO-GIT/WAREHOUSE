@@ -109,9 +109,8 @@ function fnGetList01 () {
     return ui.rowData.lowStock === 1 ? `<span class="fsr-2.5 red">●</span>` : "";
   };
 
-  obj.colModel = [
-    {dataIndx:"fileUrl", title:"이미지", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"fileUrl", title:"이미지", dataType:"string", align:"center",,
       minWidth:70, maxWidth:70, render: obj.renderImage,
     },
     {dataIndx:"resrcCd", title:"자재코드", dataType:"integer", align:"center",
@@ -123,37 +122,28 @@ function fnGetList01 () {
     {dataIndx:"houseCd", title:"창고코드", dataType:"integer", align:"center",
       hidden:true, editable:false,
     },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",,
       minWidth:200, hidden:false, editable:false,
     },
-    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"houseNm", title:"창고", dataType:"string", align:"center",,
     },
     {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
-    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"inQty", title:"입고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"outQty", title:"출고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"qty", title:"재고", dataType:"string", align:"center",,
       render: obj.renderZero
     },
-    {dataIndx:"lowStock", title:"재고부족", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"lowStock", title:"재고부족", dataType:"string", align:"center",,
       render: obj.displayLowStock
     },
     {dataIndx:"barcode", title:"바코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 
@@ -249,7 +239,7 @@ function fnGetList02() {
     }
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"resrcCd", title:"자재코드", dataType:"string", align:"center",
       editable:true, hidden:true,
     },
@@ -466,7 +456,7 @@ function fnDel(rowIdx) {
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
 function fnDelAll() {
-	$("#grid02").pqGrid("dataModel", {data: []});
+	$("#grid02").pqGrid("option", "dataModel.data", []);
 	$("#grid02").pqGrid("refreshDataAndView");
 };
 

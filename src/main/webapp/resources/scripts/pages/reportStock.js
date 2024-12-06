@@ -20,46 +20,33 @@ function fnGetList01 () {
     numberCell: {show: true, resizable: false, width: 30},
   };
 
-  obj.colModel = [
-    {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center",,
       minWidth:200
     },
     {dataIndx:"01", title: showYear + "년 1월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"02", title: showYear + "년 2월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"03", title: showYear + "년 3월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"04", title: showYear + "년 4월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"05", title: showYear + "년 5월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"06", title: showYear + "년 6월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"07", title: showYear + "년 7월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"08", title: showYear + "년 8월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"09", title: showYear + "년 9월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"10", title: showYear + "년 10월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"11", title: showYear + "년 11월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"12", title: showYear + "년 12월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 
@@ -101,46 +88,33 @@ function fnGetList02() {
     numberCell: {show: true, resizable: false, width: 30},
   };
 
-  obj.colModel = [
-    {dataIndx:"resrcNm", title:"제품명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+  const colModel = [
+    {dataIndx:"resrcNm", title:"제품명", dataType:"string", align:"center",,
       minWidth:200
     },
     {dataIndx:"01", title: showYear + "년 1월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"02", title: showYear + "년 2월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"03", title: showYear + "년 3월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"04", title: showYear + "년 4월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"05", title: showYear + "년 5월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"06", title: showYear + "년 6월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"07", title: showYear + "년 7월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"08", title: showYear + "년 8월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"09", title: showYear + "년 9월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"10", title: showYear + "년 10월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"11", title: showYear + "년 11월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"12", title: showYear + "년 12월", dataType:"string", align:"center", format:"#,###",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
   $.ajax({

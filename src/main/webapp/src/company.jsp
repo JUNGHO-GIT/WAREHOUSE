@@ -167,10 +167,10 @@
                   </div>
                 </div>
                 <hr/>
-                  <div class="d-row-center">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-                      <button
-                        type="button"
+                    <div class="d-row-center mt-2vh">
+                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                        <button
+                          type="button"
                         class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >

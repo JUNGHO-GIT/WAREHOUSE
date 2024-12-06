@@ -344,80 +344,78 @@
                       </div>
                     </div>
                   </div>
-                  <div id="fileShow">
-                    <div class="d-row-center mb-1vh">
-                      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="p-7px bg-dark-white d-row-left">
-                          <div class="fs-0-8rem fw-600 light-black">
-                            파일
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                        <div class="d-row-left ml-2vw">
-                          <form id="fileUpload" name="fileUpload">
-                            <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
-                            <input type="hidden" name="tableKey" id="tableKey" value="0" />
-                            <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
-                            <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                            <input type="hidden" name="fileNm" id="fileNm" />
-                            <input type="hidden" name="fileUrl" id="fileUrl" />
-                            <input
-                              type="file"
-                              name="userFile"
-                              id="userFile"
-                              class="w-100p"
-                            />
-                            <button
-                              class="btn btn-success btn-xs mt-3px"
-                              type="button"
-                              id="fileUpBtn"
-                              onclick="fnUploadFiles(this.form)"
-                            >
-                              업로드
-                            </button>
-                          </form>
+                  <div class="d-row-center mb-1vh" id="fileShow">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="p-7px bg-dark-white d-row-left">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          파일
                         </div>
                       </div>
                     </div>
-                    <div class="d-row-center mb-3vh">
-                      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <div class="p-7px bg-dark-white d-row-left">
-                          <div class="fs-0-8rem fw-600 light-black">
-                            파일목록
-                          </div>
-                        </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left ml-2vw">
+                        <form id="fileUpload" name="fileUpload">
+                          <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
+                          <input type="hidden" name="tableKey" id="tableKey" value="0" />
+                          <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
+                          <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
+                          <input type="hidden" name="fileNm" id="fileNm" />
+                          <input type="hidden" name="fileUrl" id="fileUrl" />
+                          <input
+                            type="file"
+                            name="userFile"
+                            id="userFile"
+                            class="w-100p"
+                          />
+                          <button
+                            class="btn btn-success btn-xs mt-3px"
+                            type="button"
+                            id="fileUpBtn"
+                            onclick="fnUploadFiles(this.form)"
+                          >
+                            업로드
+                          </button>
+                        </form>
                       </div>
-                      <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                        <div class="d-row-left ml-2vw">
-                          <div class="form-control cards-imageWrapper" id="files"></div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="p-7px bg-dark-white d-row-left">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          파일목록
                         </div>
                       </div>
                     </div>
-                    <div class="d-row-center">
-                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-                        <button
-                          type="button"
-                          class="btn btn-success mr-10px"
-                          onclick="fnReset()"
-                        >
-                          신규
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary mr-10px"
-                          onclick="fnSave()"
-                        >
-                          저장
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          onclick="fnDel()"
-                        >
-                          삭제
-                        </button>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left ml-2vw">
+                        <div class="form-control cards-imageWrapper" id="files"></div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mt-2vh">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                      <button
+                        type="button"
+                        class="btn btn-success mr-10px"
+                        onclick="fnReset()"
+                      >
+                        신규
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary mr-10px"
+                        onclick="fnSave()"
+                      >
+                        저장
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="fnDel()"
+                      >
+                        삭제
+                      </button>
                     </div>
                   </div>
                 </div>

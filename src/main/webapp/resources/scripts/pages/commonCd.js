@@ -17,37 +17,42 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    rowClick: (event, ui) => {
+      fnShow (ui.rowData.groupCd, ui.rowData.itemCd);
+    },
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow (ui.rowData.groupCd, ui.rowData.itemCd);
-  };
-
-  obj.colModel = [
-    {dataIndx:"commonCd", title:"코드", dataType:"string", align:"center",
+  const colModel = [
+    {
+      title:"코드", dataIndx:"commonCd", dataType:"string", align:"center",
       hidden:true,
     },
-    {dataIndx:"groupCd", title:"그룹코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {
+      title:"그룹코드", dataIndx:"groupCd", dataType:"string", align:"center",
+      minWidth: 70,
     },
-    {dataIndx:"groupNm", title:"그룹명", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {
+      title:"그룹명", dataIndx:"groupNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"itemCd", title:"아이템코드", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"아이템코드", dataIndx:"itemCd", dataType:"string", align:"center",
+      minWidth: 70,
     },
-    {dataIndx:"itemNm", title:"아이템", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"아이템", dataIndx:"itemNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"itemSeq", title:"순위", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"순위", dataIndx:"itemSeq", dataType:"string", align:"center",
+      minWidth: 70,
     },
-    {dataIndx:"flagYN", title:"유효", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {
+      title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
+      minWidth: 70,
     },
-    {dataIndx:"itemMemo", title:"메모", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
+    {
+      title:"메모", dataIndx:"itemMemo", dataType:"string", align:"center",
+      minWidth: 100,
     },
   ];
 
@@ -61,8 +66,11 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      $grid.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      }).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -72,10 +80,10 @@ function fnGetList01 () {
 function fnShow(groupCd, itemCd) {
 
   $.ajax({
-    type: "POST",
     url: "act/showCommonCd",
-    dataType:"JSON",
     data: `groupCd=${groupCd}&itemCd=${itemCd}`,
+    type: "POST",
+    dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -97,9 +105,9 @@ function fnShow(groupCd, itemCd) {
 function fnSave(flagYN) {
 
   let flagParam = "";
-  var groupCd = $("#groupCd").val();
-  var regGroup = $("#regGroup").val();
-  var groupNm = "";
+  let groupCd = $("#groupCd").val();
+  let regGroup = $("#regGroup").val();
+  let groupNm = "";
 
   if (flagYN === "N") {
     flagParam = "N";
@@ -136,7 +144,7 @@ function fnSave(flagYN) {
     }
     if (regGroup) {
       if (confirm("신규 그룹을 등록하시겠습니까?")) {
-        var regSplit = regGroup.split("@");
+        let regSplit = (typeof regGroup === 'string' ? regGroup : '').split("@");
         if (regSplit.length != 2) {
           alert("그룹코드@그룹명 형태로 등록해주세요");
           $("#regGroup").on("focus", function () {});
@@ -235,7 +243,7 @@ jQuery(function($) {
     {part:"comCodeGroup", target:"findGroupCd", cd:""},
     {part:"comCodeGroup", target:"groupCd", cd:""}
   ];
-  fnInitCombo(comboStr, function() {
+  fnInitCombo (comboStr, function() {
     fnGetList01();
   });
 });

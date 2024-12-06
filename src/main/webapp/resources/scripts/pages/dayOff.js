@@ -24,21 +24,17 @@ function fnGetList01 () {
     fnShow(ui.rowData.offSeq);
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"offSeq", title:"offSeq", dataType:"string", align:"center",
       hidden: true,
     },
     {dataIndx:"offDate", title:"날짜", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"offDay", title:"요일", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"userNm", title:"사용자 이름", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"restCnt", title:"잔여휴무일", dataType:"string", align:"center",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
   ];
 

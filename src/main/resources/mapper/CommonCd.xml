@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 공통코드(CommonCd)의 XML Mapper -->
-<!-- 생성일 : 2021-05-19 19:32:39 by JDFrame -->
+<mapper namespace="com.WAREHOUSE.dao.CommonCdDAO">
 
-<mapper namespace="com.bedone.wms.dao.CommonCdDAO">
-
-  <select id="listAllCommonCd" parameterType="hashmap" resultType="com.bedone.wms.container.CommonCd">
+  <select id="listAllCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
     /* CommonCd.listAllCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYN
@@ -16,7 +13,7 @@
       itemSeq ASC
   </select>
 
-  <select id="listCommonCd" parameterType="hashmap" resultType="com.bedone.wms.container.CommonCd">
+  <select id="listCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
   	/* CommonCd.listCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
@@ -31,7 +28,7 @@
 	  ORDER BY groupCd, itemSeq
   </select>
 
-  <select id="showCommonCd" parameterType="hashmap" resultType="com.bedone.wms.container.CommonCd">
+  <select id="showCommonCd" parameterType="hashmap" resultType="com.WAREHOUSE.container.CommonCd">
   	/* CommonCd.showCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq
@@ -53,7 +50,7 @@
       groupCd, groupNm
   </select>
 
-  <select id="listComCodeAll" parameterType="hashmap" resultType="com.bedone.wms.container.Common">
+  <select id="listComCodeAll" parameterType="hashmap" resultType="com.WAREHOUSE.container.Common">
     /* CommonCd.listComCodeAll */
     SELECT
       groupCd, groupNm, itemCd cd, itemNm nm, #{target} target
@@ -65,7 +62,7 @@
       itemSeq
   </select>
 
-  <select id="listComCodeGroupAll" parameterType="hashmap" resultType="com.bedone.wms.container.Common">
+  <select id="listComCodeGroupAll" parameterType="hashmap" resultType="com.WAREHOUSE.container.Common">
     /* CommonCd.listComCodeGroupAll */
     SELECT
       groupCd cd, groupNm nm, #{target} target
@@ -77,7 +74,7 @@
       groupCd, groupNm
   </select>
 
-  <select id="saveCommonCd" parameterType="com.bedone.wms.container.CommonCd">
+  <select id="saveCommonCd" parameterType="com.WAREHOUSE.container.CommonCd">
   	/* CommonCd.saveCommonCd */
   	CALL sp_CommonCd (
       #{groupCd}, #{itemCd}, #{groupNm}, #{itemNm}, #{itemMemo}, #{itemSeq}, #{flagYN}, #{issueID}

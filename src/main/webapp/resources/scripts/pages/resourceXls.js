@@ -49,7 +49,7 @@ function fnShowExcel(body) {
     return `<input type="checkbox" class="chkBox" ${row.checkStatus ? "checked" : ""}>`;
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"checkStatus", title:inputBox, dataType:"bool", align:"center", type: "checkBox",
       editable:false, sortable:false, cb: {all:true, header:true, select:true, deselect:true},
       minWidth:30, maxWidth:30, render: obj.checkBoxRender
@@ -218,7 +218,7 @@ function fnReset() {
   // 파일 초기화
   $("#resourceXls").val("");
   // 그리드 초기화
-  $("#grid01").pqGrid("dataModel", {data: []});
+  $("#grid01").pqGrid("option", "dataModel.data", []);
   $("#grid01").pqGrid("refreshDataAndView");
 };
 

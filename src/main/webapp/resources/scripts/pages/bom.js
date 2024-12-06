@@ -25,25 +25,21 @@ function fnGetList01 () {
     fnShow (ui.rowData.prodCd, ui.rowData.bomType);
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"bomType", title:"bomType", align:"center", dataType:"string",
       hidden: true
     },
     {dataIndx:"prodCd", title:"prodCd", align:"center", dataType:"string",
       hidden: true
     },
-    {dataIndx:"prodNm", title:"제품명", align:"center", dataType:"string",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"prodNm", title:"제품명", align:"center", dataType:"string",,
       minWidth:200
     },
     {dataIndx:"option1", title:"재질", align:"center", dataType:"string",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
     {dataIndx:"option2", title:"규격", align:"center", dataType:"string",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]}
     },
-    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
-      filter:{type:"textbox", condition:"contain", listeners:["keyup"]},
+    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",,
     },
   ];
 
@@ -120,7 +116,7 @@ function fnGetList02() {
     }
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"resrcCd", title:"자재 코드", align:"center", dataType:"string",
       editable:false, hidden: true
     },
@@ -191,7 +187,7 @@ function fnGetList03 () {
     }
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
       editable:false, hidden: true
     },
@@ -250,7 +246,7 @@ function fnShow(prodCd, bomType) {
     }
   };
 
-  obj.colModel = [
+  const colModel = [
     {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
       editable:false, hidden: true
     },
@@ -417,7 +413,7 @@ function fnNew() {
   fnReset();
 
   // 그리드 비우기
-  $("#grid03").pqGrid("dataModel", {data: []});
+  $("#grid03").pqGrid("option", "dataModel.data", []);
 
   // 그리드 포커스 제거
   $("#grid01").pqGrid("setSelection", null);
@@ -451,7 +447,7 @@ function fnResetWhenSearch() {
 
   // 그리드 초기화
   $("#grid03").pqGrid("setSelection", null);
-	$("#grid03").pqGrid("dataModel", {data: []});
+	$("#grid03").pqGrid("option", "dataModel.data", []);
 	$("#grid03").pqGrid("refreshDataAndView");
 };
 
@@ -463,7 +459,7 @@ function fnBomInput() {
     if (e.keyCode === 13) {
       fnReset();
       $("#grid03").pqGrid("setSelection", null);
-      $("#grid03").pqGrid("dataModel", {data: []});
+      $("#grid03").pqGrid("option", "dataModel.data", []);
       $("#grid03").pqGrid("refreshDataAndView");
     }
   });
