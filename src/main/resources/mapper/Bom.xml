@@ -40,12 +40,12 @@
     </if>
   </select>
 
+  <!-- Bom.showBom  -->
   <select
   	id="showBom"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Resource"
   >
-    /* Bom.showBom */
     <![CDATA[
     SELECT
       A.prodCd, A.resrcCd, A.bomType, A.unitQty, A.flagYN,
@@ -89,12 +89,12 @@
     ORDER BY B.resrcNm
   </select>
 
+  <!-- Bom.saveBom -->
   <select
   	id="saveBom"
   	parameterType="com.WAREHOUSE.container.Bom"
   	resultType="Integer"
   >
-		/* Bom.saveBom*/
 		CALL sp_Bom (
       #{prodCd},
       #{resrcCd},

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceXlsDAO">
 
+  <!-- ResourceXls.saveResourceXls  -->
   <select
   	id="saveResourceXls"
   	parameterType="com.WAREHOUSE.container.Resource"
   	resultType="com.WAREHOUSE.container.Resource"
   >
-    /* ResourceXls.saveResourceXls */
     CALL sp_ResourceXls (
       #{resrcNm},
       #{resrcType},

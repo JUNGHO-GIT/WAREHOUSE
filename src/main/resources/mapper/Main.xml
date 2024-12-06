@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.MainDAO">
 
+  <!-- Main.listMain  -->
   <select
   	id="listMain"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Main.listMain */
     <![CDATA[
     SELECT
       page, subPage, parentsPage, pageUrl, pageNm, pageIcon, pageOrder,
@@ -23,12 +23,12 @@
     	pageOrder
   </select>
 
+  <!-- Main.listSysMenu  -->
   <select
   	id="listSysMenu"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-	  /* Main.listSysMenu */
 	  SELECT
       page, pageUrl, pageNm, pageIcon, pageOrder, pageNo
     FROM

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductXlsDAO">
 
+  <!-- ProductXls.saveProductXls  -->
   <select
   	id="saveProductXls"
   	parameterType="com.WAREHOUSE.container.Product"
   	resultType="com.WAREHOUSE.container.Product"
   >
-    /* ProductXls.saveProductXls */
     CALL sp_ProductXls (
       #{prodNm},
       #{prodType},

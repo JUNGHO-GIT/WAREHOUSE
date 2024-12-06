@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductInOutDAO">
 
+  <!-- ProductInOut.listProductInOut  -->
   <select
   	id="listProductInOut"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ProductInOut"
   >
-		/* ProductInOut.listProductInOut */
 		<![CDATA[
 		SELECT
       A.inOutSeq, A.inOutDt, A.prodCd, A.qty, A.unitPrice, A.remark, A.flagYN,
@@ -45,12 +45,12 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
+  <!-- ProductInOut.showProductInOut  -->
   <select
   	id="showProductInOut"
   	parameterType="int"
   	resultType="com.WAREHOUSE.container.ProductInOut"
   >
-		/* ProductInOut.showProductInOut */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.prodCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
@@ -80,12 +80,12 @@
     ]]>
   </select>
 
+  <!-- ProductInOut.saveProductInOut  -->
   <select
   	id="saveProductInOut"
   	parameterType="com.WAREHOUSE.container.ProductInOut"
   	resultType="Integer"
   >
-    /* ProductInOut.saveProductInOut */
     CALL sp_ProductInOut (
       #{inOutSeq},
       #{inOutDt},

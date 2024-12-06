@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.HouseDAO">
 
+  <!-- House.listHouse -->
   <select
   	id="listHouse"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.House"
   >
-    /* House.listHouse*/
     <![CDATA[
     SELECT
       (A.houseCd) id,
@@ -32,12 +32,12 @@
       A.houseOrder
   </select>
 
+  <!-- House.showHousePerProduct  -->
   <select
   	id="showHousePerProduct"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* House.showHousePerProduct */
     <![CDATA[
     SELECT
       A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
@@ -73,12 +73,12 @@
       G.prodCd, A.houseCd
   </select>
 
+  <!-- House.showHousePerResource -->
   <select
   	id="showHousePerResource"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* House.showHousePerResource*/
     <![CDATA[
     SELECT
       A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
@@ -114,12 +114,12 @@
       G.resrcCd, A.houseCd
   </select>
 
+  <!-- House.saveHouse -->
   <select
   	id="saveHouse"
   	parameterType="com.WAREHOUSE.container.House"
   	resultType="hashmap"
   >
-    /* House.saveHouse*/
     CALL sp_House (
       #{houseCd},
       #{houseNm},

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ProductDAO">
 
+  <!-- Product.listProduct  -->
   <select
   	id="listProduct"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Product"
   >
-		/* Product.listProduct */
 		<![CDATA[
     SELECT
       A.prodCd, A.prodNm, A.prodType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
@@ -63,12 +63,12 @@
     ) DESC
   </select>
 
+  <!-- Product.showProduct  -->
   <select
   	id="showProduct"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Product"
   >
-    /* Product.showProduct */
     <![CDATA[
     SELECT
       A.prodCd, A.prodNm, A.prodType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
@@ -105,12 +105,12 @@
     ]]>
   </select>
 
+  <!-- Product.saveProduct  -->
   <select
   	id="saveProduct"
   	parameterType="com.WAREHOUSE.container.Product"
   	resultType="Integer"
   >
-    /* Product.saveProduct */
     CALL sp_Product (
       #{prodCd},
       #{prodNm},

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.UserDAO">
 
+  <!-- User.listUser  -->
   <select
   	id="listUser"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.User"
   >
-    /* User.listUser */
     <![CDATA[
     SELECT
       A.userID, A.userNm, A.phone, A.email, A.uLevel, B.itemNm,
@@ -30,12 +30,12 @@
     ORDER BY A.userNm ASC
   </select>
 
+  <!-- User.showUser  -->
   <select
   	id="showUser"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.User"
   >
-    /* User.showUser */
     SELECT
       userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
     FROM
@@ -44,12 +44,12 @@
       userID = #{userID}
   </select>
 
+  <!-- User.checkUserID  -->
   <select
   	id="checkUserID"
   	parameterType="hashmap"
   	resultType="Integer"
   >
-    /* User.checkUserID */
     SELECT
       COUNT(*) cnt
     FROM
@@ -71,12 +71,12 @@
       userID = #{userID}
   </update>
 
+  <!-- User.listUserPerm  -->
   <select
   	id="listUserPerm"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* User.listUserPerm */
     SELECT
       page, subPage, pageUrl, pageNm, pageOrder, pageNo
     FROM
@@ -87,12 +87,12 @@
       pageOrder
   </select>
 
+  <!-- User.saveUser  -->
   <select
   	id="saveUser"
   	parameterType="com.WAREHOUSE.container.User"
   	resultType="Integer"
   >
-    /* User.saveUser */
     CALL sp_User (
       #{userID},
       #{passwd},

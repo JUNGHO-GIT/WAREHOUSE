@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.CommonDAO">
 
+  <!-- Common.findBom -->
   <select
   	id="findBom"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Product"
   >
-    /* Common.findBom */
     <![CDATA[
     SELECT
       A.prodCd, B.prodNm, B.bomType
@@ -38,12 +38,12 @@
     </if>
   </select>
 
+  <!-- Common.findCompNm  -->
   <select
   	id="findCompNm"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Company"
   >
-    /* Common.findCompNm */
     <![CDATA[
     SELECT
       A.compCd, A.compNm
@@ -59,12 +59,12 @@
 		ORDER BY A.compCd ASC;
   </select>
 
+  <!-- Common.findCompCd  -->
   <select
   	id="findCompCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Company"
   >
-    /* Common.findCompCd */
     <![CDATA[
     SELECT
       A.compCd, A.compNm
@@ -87,12 +87,12 @@
     ORDER BY A.compCd ASC;
   </select>
 
+  <!-- Common.findProdNm  -->
   <select
   	id="findProdNm"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Product"
   >
-    /* Common.findProdNm */
 		<![CDATA[
     SELECT
       A.prodCd, A.prodNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
@@ -120,12 +120,12 @@
 		ORDER BY A.prodNm ASC
   </select>
 
+  <!-- Common.findProdCd  -->
   <select
   	id="findProdCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Product"
   >
-    /* Common.findProdCd */
     <![CDATA[
     SELECT
       A.prodCd, A.prodNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
@@ -160,12 +160,12 @@
     ORDER BY A.prodNm ASC
   </select>
 
+  <!-- Common.findResrcNm  -->
   <select
   	id="findResrcNm"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Resource"
   >
-    /* Common.findResrcNm */
     <![CDATA[
     SELECT
       A.resrcCd, A.resrcNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
@@ -193,12 +193,12 @@
     ORDER BY A.resrcNm ASC
   </select>
 
+  <!-- Common.findResrcCd  -->
   <select
   	id="findResrcCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Resource"
   >
-    /* Common.findResrcCd */
     <![CDATA[
     SELECT
       A.resrcCd, A.resrcNm, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
@@ -233,12 +233,12 @@
     ORDER BY A.resrcNm ASC
   </select>
 
+  <!-- Common.findHouseNm  -->
   <select
   	id="findHouseNm"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.House"
   >
-    /* Common.findHouseNm */
     <![CDATA[
     SELECT
       A.houseCd, A.houseNm
@@ -254,12 +254,12 @@
 		ORDER BY A.houseCd ASC;
   </select>
 
+  <!-- Common.findHouseCd  -->
   <select
   	id="findHouseCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.House"
   >
-    /* Common.findHouseCd */
     <![CDATA[
     SELECT
       A.houseCd, A.houseNm

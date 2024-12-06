@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceInOutDAO">
 
+  <!-- ResourceInOut.listResourceInOut  -->
   <select
   	id="listResourceInOut"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ResourceInOut"
   >
-		/* ResourceInOut.listResourceInOut */
   	<![CDATA[
 		SELECT
       A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.unitPrice, A.remark, A.flagYN,
@@ -45,12 +45,12 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
+  <!-- ResourceInOut.showResourceInOut  -->
   <select
   	id="showResourceInOut"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ResourceInOut"
   >
-		/* ResourceInOut.showResourceInOut */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
@@ -80,12 +80,12 @@
     ]]>
   </select>
 
+  <!-- ResourceInOut.saveResourceInOut  -->
   <select
   	id="saveResourceInOut"
   	parameterType="com.WAREHOUSE.container.ResourceInOut"
   	resultType="Integer"
   >
-    /* ResourceInOut.saveResourceInOut */
     CALL sp_ResourceInOut (
       #{inOutSeq},
       #{inOutDt},

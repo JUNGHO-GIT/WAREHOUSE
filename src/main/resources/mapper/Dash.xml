@@ -4,12 +4,12 @@
 <mapper namespace="com.WAREHOUSE.dao.DashDAO">
 
   <!-- 0. 공통 (입고, 출고) -->
+  <!-- Dash.getInOutData  -->
   <select
   	id="getInOutData"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getInOutData */
     <![CDATA[
     SELECT
       A.${paramMap.keyCd}, A.inOutDt, A.qty, A.sessionCnt, D.${paramMap.keyNm},
@@ -43,12 +43,12 @@
     ]]>
   </select>
 
+  <!-- Dash.getShipData  -->
   <select
   	id="getShipData"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getShipData */
     SELECT
       A.shipCd, A.shipDt, A.sessionCnt, F.prodNm, C.prodCd, C.inOutSeq,
       (D.qty * -1) qty, G.totalQty
@@ -114,12 +114,12 @@
   </select>
 
   <!-- 1-1. 금일 입고 예정 (제품) -->
+  <!-- Dash.getProdInPlanToday  -->
   <select
   	id="getProdInPlanToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdInPlanToday */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -144,12 +144,12 @@
   </select>
 
   <!-- 1-2. 금일 출고 예정 (제품) -->
+  <!-- Dash.getProdOutPlanToday  -->
   <select
   	id="getProdOutPlanToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdOutPlanToday */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -174,12 +174,12 @@
   </select>
 
   <!-- 1-3. 금일 출하 예정 (제품) -->
+  <!-- Dash.getShipPlanToday  -->
   <select
   	id="getShipPlanToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getShipPlanToday */
     <![CDATA[
     SELECT
       A.shipDt, A.shipCd, A.sessionCnt, B.inOutSeq, C.inOutDt, F.prodCd, F.prodNm,
@@ -227,12 +227,12 @@
   </select>
 
   <!-- 2-1. 금일 입고 현황 (제품) -->
+  <!-- Dash.getProdInToday  -->
   <select
   	id="getProdInToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdInToday */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -257,12 +257,12 @@
   </select>
 
   <!-- 2-2. 금일 출고 현황 (제품) -->
+  <!-- Dash.getProdOutToday  -->
   <select
   	id="getProdOutToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdOutToday */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -287,12 +287,12 @@
   </select>
 
   <!-- 3-3. 금일 출하 현황 (제품) -->
+  <!-- Dash.getShipToday  -->
   <select
   	id="getShipToday"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getShipToday */
     <![CDATA[
     SELECT
       A.shipDt, A.shipCd, A.sessionCnt, B.inOutSeq, C.inOutDt, F.prodCd, F.prodNm,
@@ -340,12 +340,12 @@
   </select>
 
   <!-- 3-1. 금주 입고 현황 (제품) -->
+  <!-- Dash.getProdInWeek  -->
   <select
   	id="getProdInWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdInWeek */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -370,12 +370,12 @@
   </select>
 
   <!-- 3-2. 금주 출고 현황 (제품) -->
+  <!-- Dash.getProdOutWeek  -->
   <select
   	id="getProdOutWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdOutWeek */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -400,12 +400,12 @@
   </select>
 
   <!-- 3-3. 금주 출하 현황 (제품) -->
+  <!-- Dash.getShipWeek  -->
   <select
   	id="getShipWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getShipWeek */
     <![CDATA[
     SELECT
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
@@ -430,12 +430,12 @@
   </select>
 
   <!-- 4-1. 안전 재고 현황 (제품) -->
+  <!-- Dash.getProdProtected  -->
   <select
   	id="getProdProtected"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdProtected */
     <![CDATA[
     SELECT
       A.prodCd, A.prodNm, A.protectedQty,
@@ -465,12 +465,12 @@
   </select>
 
   <!-- 5-1. 주간 입고 현황 (제품) -->
+  <!-- Dash.getProdInChartWeek  -->
   <select
   	id="getProdInChartWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdInChartWeek */
     <![CDATA[
     SELECT
       DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
@@ -490,12 +490,12 @@
   </select>
 
   <!-- 5-2. 주간 출고 현황 (제품) -->
+  <!-- Dash.getProdOutChartWeek  -->
   <select
   	id="getProdOutChartWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getProdOutChartWeek */
     <![CDATA[
     SELECT
       DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
@@ -515,12 +515,12 @@
   </select>
 
   <!-- 5-3. 주간 출하 현황 (제품) -->
+  <!-- Dash.getShipChartWeek  -->
   <select
   	id="getShipChartWeek"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Dash.getShipChartWeek */
     <![CDATA[
     SELECT
       A.shipDt,

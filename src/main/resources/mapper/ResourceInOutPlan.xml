@@ -4,12 +4,12 @@
 <mapper namespace="com.WAREHOUSE.dao.ResourceInOutPlanDAO">
 
   <!-- 1-1. 자재 입출고 예정 리스트 -->
+  <!-- ResourcePlan.listResourceInOutPlan  -->
   <select
   	id="listResourceInOutPlan"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ResourceInOut"
   >
-    /* ResourcePlan.listResourceInOutPlan */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.unitPrice,
@@ -37,12 +37,12 @@
   </select>
 
   <!-- 1-2. 자재 입출고 예정 상세 -->
+  <!-- ResourcePlan.showResourceInOutPlan  -->
   <select
   	id="showResourceInOutPlan"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ResourceInOut"
   >
-    /* ResourcePlan.showResourceInOutPlan */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.resrcCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
@@ -73,12 +73,12 @@
   </select>
 
   <!-- 1-3. 자재 입출고 예정 저장 -->
+  <!-- ResourcePlan.saveResourceInOutPlan  -->
   <select
   	id="saveResourceInOutPlan"
   	parameterType="com.WAREHOUSE.container.ResourceInOut"
   	resultType="Integer"
   >
-    /* ResourcePlan.saveResourceInOutPlan */
     CALL sp_ResourceInOut (
       #{inOutSeq},
       #{inOutDt},

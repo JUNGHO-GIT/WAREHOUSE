@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.FilesDAO">
 
+  <!-- Files.listFiles  -->
   <select
   	id="listFiles"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Files"
   >
-    /* Files.listFiles */
     <![CDATA[
     SELECT
       fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
@@ -19,12 +19,12 @@
     ]]>
   </select>
 
+  <!-- Files.showFiles  -->
   <select
   	id="showFiles"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* Files.showFiles */
     <![CDATA[
     SELECT
       fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
@@ -50,12 +50,12 @@
    	]]>
   </update>
 
+  <!-- Files.saveFiles  -->
   <select
   	id="saveFiles"
   	parameterType="com.WAREHOUSE.container.Files"
   	resultType="Integer"
   >
-    /* Files.saveFiles */
     CALL sp_Files (
       #{fileSeq},
       #{tableNm},

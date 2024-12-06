@@ -4,12 +4,12 @@
 <mapper namespace="com.WAREHOUSE.dao.ProductInOutPlanDAO">
 
   <!-- 1-1. 제품 입출고 예정 리스트 -->
+  <!-- ProductPlan.listProductInOutPlan  -->
   <select
   	id="listProductInOutPlan"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ProductInOut"
   >
-    /* ProductPlan.listProductInOutPlan */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.prodCd, A.qty, A.unitPrice,
@@ -37,12 +37,12 @@
   </select>
 
   <!-- 1-2. 제품 입출고 예정 상세 -->
+  <!-- ProductPlan.showProductInOutPlan  -->
   <select
   	id="showProductInOutPlan"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.ProductInOut"
   >
-    /* ProductPlan.showProductInOutPlan */
     <![CDATA[
     SELECT
       A.inOutSeq, A.inOutDt, A.prodCd, A.qty, A.houseCd, A.unitPrice, A.remark, A.compCd,
@@ -73,12 +73,12 @@
   </select>
 
   <!-- 1-3. 제품 입출고 예정 저장 -->
+  <!-- ProductPlan.saveProductInOutPlan  -->
   <select
   	id="saveProductInOutPlan"
   	parameterType="com.WAREHOUSE.container.ProductInOut"
   	resultType="Integer"
   >
-    /* ProductPlan.saveProductInOutPlan */
     CALL sp_ProductInOut (
       #{inOutSeq},
       #{inOutDt},

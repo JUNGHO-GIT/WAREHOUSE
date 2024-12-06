@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.ShipItemsDAO">
 
+  <!-- ShipItems.listShipItems  -->
   <select
   	id="listShipItems"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* ShipItems.listShipItems */
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
@@ -40,12 +40,12 @@
       A.shipCd DESC
   </select>
 
+  <!-- ShipItems.listShipItemsDetail  -->
   <select
   	id="listShipItemsDetail"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* ShipItems.listShipItemsDetail */
     <![CDATA[
     SELECT
       A.shipDt, A.shipCd,
@@ -83,12 +83,12 @@
       A.shipCd DESC;
   </select>
 
+  <!-- ShipItems.showShipItems  -->
   <select
   	id="showShipItems"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-    /* ShipItems.showShipItems */
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,

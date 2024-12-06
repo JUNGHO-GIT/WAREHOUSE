@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.UserConfigDAO">
 
+  <!-- UserConfig.showUserConfigTab  -->
   <select
   	id="showUserConfigTab"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.UserConfig"
   >
-  	/* UserConfig.showUserConfigTab */
   	SELECT
       config
     FROM
@@ -19,12 +19,12 @@
       issueDate DESC limit 1
   </select>
 
+  <!-- UserConfig.showUserConfigInfo  -->
   <select
   	id="showUserConfigInfo"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.UserConfig"
   >
-  	/* UserConfig.showUserConfigInfo */
   	SELECT
       userID userConfigID,
       passwd userConfigPw,
@@ -54,12 +54,12 @@
       userID = #{userConfigID}
   </update>
 
+  <!-- UserConfig.saveUserConfigTab  -->
   <select
   	id="saveUserConfigTab"
   	parameterType="hashmap"
   	resultType="Integer"
   >
-  	/* UserConfig.saveUserConfigTab */
   	CALL sp_UserConfig (
       #{configSeq},
       #{userID},
@@ -71,12 +71,12 @@
     );
   </select>
 
+  <!-- UserConfig.saveUserConfigInfo  -->
   <select
   	id="saveUserConfigInfo"
   	parameterType="hashmap"
   	resultType="Integer"
   >
-  	/* UserConfig.saveUserConfigInfo */
   	CALL sp_UserConfig (
       #{configSeq},
       #{userID},

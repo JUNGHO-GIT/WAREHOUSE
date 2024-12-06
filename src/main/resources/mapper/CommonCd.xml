@@ -3,12 +3,12 @@
 
 <mapper namespace="com.WAREHOUSE.dao.CommonCdDAO">
 
+  <!-- CommonCd.listAllCommonCd  -->
   <select
     id="listAllCommonCd"
     parameterType="hashmap"
     resultType="com.WAREHOUSE.container.CommonCd"
   >
-    /* CommonCd.listAllCommonCd */
     <![CDATA[
     SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYN
@@ -19,12 +19,12 @@
     ]]>
   </select>
 
+  <!-- CommonCd.listCommonCd  -->
   <select
   	id="listCommonCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.CommonCd"
   >
-  	/* CommonCd.listCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
       CASE WHEN flagYN = 'Y' THEN '유효' ELSE '삭제' END flagYN
@@ -38,12 +38,12 @@
 	  ORDER BY groupCd, itemSeq
   </select>
 
+  <!-- CommonCd.showCommonCd  -->
   <select
   	id="showCommonCd"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.CommonCd"
   >
-  	/* CommonCd.showCommonCd */
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq
   	FROM
@@ -52,12 +52,12 @@
       groupCd = #{groupCd} AND itemCd = #{itemCd}
   </select>
 
+  <!-- CommonCd.mappingGroupCd  -->
   <select
   	id="mappingGroupCd"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
-  	/* CommonCd.mappingGroupCd */
   	SELECT
       groupCd, groupNm
 	  FROM
@@ -68,12 +68,12 @@
       groupCd, groupNm
   </select>
 
+  <!-- CommonCd.listComCodeAll  -->
   <select
   	id="listComCodeAll"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Common"
   >
-    /* CommonCd.listComCodeAll */
     SELECT
       groupCd, groupNm, itemCd cd, itemNm nm, #{target} target
     FROM
@@ -84,12 +84,12 @@
       itemSeq
   </select>
 
+  <!-- CommonCd.listComCodeGroupAll  -->
   <select
   	id="listComCodeGroupAll"
   	parameterType="hashmap"
   	resultType="com.WAREHOUSE.container.Common"
   >
-    /* CommonCd.listComCodeGroupAll */
     SELECT
       groupCd cd, groupNm nm, #{target} target
     FROM
@@ -100,11 +100,12 @@
       groupCd, groupNm
   </select>
 
+  <!--
   <select
   	id="saveCommonCd"
   	parameterType="com.WAREHOUSE.container.CommonCd"
+  	resultType="Integer"
   >
-  	/* CommonCd.saveCommonCd */
   	CALL sp_CommonCd (
       #{groupCd},
       #{itemCd},
