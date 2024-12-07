@@ -1,3 +1,4 @@
+
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
@@ -21,28 +22,31 @@ function fnGetList01 () {
     summaryData:  [],
     rowClick: (event, ui) => {
       const today = fnToday();
-      const getData = $("#grid02").pqGrid("getData");
+      const getData02 = $grid02.pqGrid("getData");
+      let duplicateFlag = false;
+
       const newRow = {
         resrcCd: ui.rowData.resrcCd,
         resrcNm: ui.rowData.resrcNm,
         curQty: ui.rowData.qty,
         inOutDt: today
       };
-
-      let duplicateFlag = false;
-      for (let i = 0; i < getData.length; i++) {
-        const row = getData[i];
+      getData02.forEach((row) => {
         if (row.resrcCd === newRow.resrcCd) {
           duplicateFlag = true;
-          break;
         }
-      }
+      });
+
       if (duplicateFlag) {
         alert("이미 추가된 자재입니다.");
         return;
       }
-      getData.push(newRow);
-      $grid02.pqGrid("option", "dataModel", {data: getData});
+      getData02.push(newRow);
+
+      $grid02.pqGrid({
+        dataModel: { data: getData02 },
+      });
+
       $grid02.pqGrid("refreshDataAndView");
     }
   };
@@ -54,19 +58,19 @@ function fnGetList01 () {
     },
     {
       title:"자재코드", dataIndx:"resrcCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:"거래처코드", dataIndx:"compCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:"창고코드", dataIndx:"houseCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
-      minWidth: 150, hidden: false, editable: false,
+      minWidth: 150,
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
@@ -122,7 +126,9 @@ function fnGetList01 () {
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      });
+
+      $grid01.pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -170,15 +176,15 @@ function fnGetList02() {
   const colModel = [
     {
       title:"자재코드", dataIndx:"resrcCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:"거래처코드", dataIndx:"compCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:"창고코드", dataIndx:"houseCd", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {
       title:delBtn, dataIndx:"delBtn", dataType:"string", align:"center",
@@ -224,7 +230,8 @@ function fnGetList02() {
   $grid02.pqGrid({
     ...gridOption,
     colModel: colModel,
-  }).pqGrid("refreshDataAndView");
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 1-2. 검증 ---------------------------------------------------------------------------------------
@@ -232,8 +239,8 @@ function fnCheck() {
 
   const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
-  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
   const inOut = $("input[name=inOut]:checked").val();
+  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
 
   let validationErrors = [];
   let isVerified = true;
@@ -243,9 +250,6 @@ function fnCheck() {
     return;
   }
 
-  console.log("getData", JSON.stringify(getData, null, 2));
-
-  // for - in
   for (let key in getData) {
     const row = getData[key];
 
@@ -289,8 +293,6 @@ function fnCheck() {
     }
   }
 
-  console.log("validationErrors", validationErrors);
-
   if (!isVerified) {
     validationErrors.length > 0 && validationErrors.filter((item, i) => {
       // 중복된 에러 메시지 1회만 출력
@@ -308,15 +310,16 @@ function fnCheck() {
       row["isVerified"] = true;
       row["chkBtn"] = chkBtn;
     });
-
-    $grid02.pqGrid("refreshDataAndView");
+    $grid02.pqGrid({
+      dataModel: { data: getData },
+    })
+    .pqGrid("refreshDataAndView");
   }
 };
 
 // 3-1. 저장 (선택) --------------------------------------------------------------------------------
 function fnSave() {
-
-  const $grid02 = $("#grid02");
+  const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
   const inOut = $("input[name=inOut]:checked").val();
 
@@ -415,8 +418,10 @@ function fnDel(rowIdx) {
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
 function fnDelAll() {
-	$("#grid02").pqGrid("option", "dataModel.data", []);
-	$("#grid02").pqGrid("refreshDataAndView");
+
+  $('#grid02').pqGrid({
+    dataModel: { data: [] },
+  }).pqGrid("refreshDataAndView");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------

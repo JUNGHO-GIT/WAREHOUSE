@@ -29,15 +29,13 @@ interface JQuerySupport extends JQuery.PlainObject {}
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Deferred.Callback }\` or \`{@link JQuery.Deferred.CallbackBase }\`.
  */
-interface JQueryPromiseCallback<T>
-{
+interface JQueryPromiseCallback<T> {
   (value?: T, ...args: any[]): void;
 }
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQueryStatic.param JQueryStatic&#91;'param'&#93;}\`.
  */
-interface JQueryParam
-{
+interface JQueryParam {
   /**
    * Create a serialized representation of an array or object, suitable for use in a URL query string or Ajax request.
    * @param obj An array or object to serialize.
@@ -48,8 +46,7 @@ interface JQueryParam
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Event }\`.
  */
-interface BaseJQueryEventObject extends Event
-{
+interface BaseJQueryEventObject extends Event {
   /**
    * The current DOM element within the event bubbling phase.
    * @see \`{@link https://api.jquery.com/event.currentTarget/ }\`
@@ -144,8 +141,7 @@ interface BaseJQueryEventObject extends Event
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Event }\`.
  */
-interface JQueryInputEventObject extends BaseJQueryEventObject
-{
+interface JQueryInputEventObject extends BaseJQueryEventObject {
   altKey: boolean;
   ctrlKey: boolean;
   metaKey: boolean;
@@ -154,8 +150,7 @@ interface JQueryInputEventObject extends BaseJQueryEventObject
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Event }\`.
  */
-interface JQueryMouseEventObject extends JQueryInputEventObject
-{
+interface JQueryMouseEventObject extends JQueryInputEventObject {
   button: number;
   clientX: number;
   clientY: number;
@@ -169,8 +164,7 @@ interface JQueryMouseEventObject extends JQueryInputEventObject
 /**
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Event }\`.
  */
-interface JQueryKeyEventObject extends JQueryInputEventObject
-{
+interface JQueryKeyEventObject extends JQueryInputEventObject {
   /** @deprecated */
   char: string;
   /** @deprecated */
@@ -183,13 +177,11 @@ interface JQueryKeyEventObject extends JQueryInputEventObject
  * @deprecated ​ Deprecated. Use \`{@link JQuery.Event }\`.
  */
 interface JQueryEventObject
-  extends BaseJQueryEventObject, JQueryInputEventObject, JQueryMouseEventObject, JQueryKeyEventObject
-{}
+  extends BaseJQueryEventObject, JQueryInputEventObject, JQueryMouseEventObject, JQueryKeyEventObject {}
 /**
  * @deprecated ​ Deprecated.
  */
-interface JQueryPromiseOperator<T, U>
-{
+interface JQueryPromiseOperator<T, U> {
   (
     callback1: JQuery.TypeOrArray<JQueryPromiseCallback<T>>,
     ...callbacksN: Array<JQuery.TypeOrArray<JQueryPromiseCallback<any>>>
@@ -198,15 +190,13 @@ interface JQueryPromiseOperator<T, U>
 /**
  * @deprecated ​ Deprecated. Internal. See \`{@link https://github.com/jquery/api.jquery.com/issues/912 }\`.
  */
-interface JQueryEasingFunction
-{
+interface JQueryEasingFunction {
   (percent: number): number;
 }
 /**
  * @deprecated ​ Deprecated. Internal. See \`{@link https://github.com/jquery/api.jquery.com/issues/912 }\`.
  */
-interface JQueryEasingFunctions
-{
+interface JQueryEasingFunctions {
   [name: string]: JQueryEasingFunction;
   linear: JQueryEasingFunction;
   swing: JQueryEasingFunction;

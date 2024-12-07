@@ -1,6 +1,5 @@
 // jquery/index.d.ts
 
-/// <reference types="sizzle" />
 /// <reference path="jquery.d.ts" />
 /// <reference path="jquery-legacy.d.ts" />
 /// <reference path="jquery-misc.d.ts" />

@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.UserDAO">
 
-  <!-- User.listUser  -->
+  <!-- User.listUser -->
   <select
   	id="listUser"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.User"
+  	resultType="User"
   >
     <![CDATA[
     SELECT
@@ -30,11 +34,11 @@
     ORDER BY A.userNm ASC
   </select>
 
-  <!-- User.showUser  -->
+  <!-- User.showUser -->
   <select
   	id="showUser"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.User"
+  	resultType="User"
   >
     SELECT
       userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
@@ -44,7 +48,7 @@
       userID = #{userID}
   </select>
 
-  <!-- User.checkUserID  -->
+  <!-- User.checkUserID -->
   <select
   	id="checkUserID"
   	parameterType="hashmap"
@@ -71,7 +75,7 @@
       userID = #{userID}
   </update>
 
-  <!-- User.listUserPerm  -->
+  <!-- User.listUserPerm -->
   <select
   	id="listUserPerm"
   	parameterType="hashmap"
@@ -87,10 +91,10 @@
       pageOrder
   </select>
 
-  <!-- User.saveUser  -->
+  <!-- User.saveUser -->
   <select
   	id="saveUser"
-  	parameterType="com.WAREHOUSE.container.User"
+  	parameterType="User"
   	resultType="Integer"
   >
     CALL sp_User (

@@ -1,7 +1,6 @@
 /// jquery/jquery-misc.d.ts
 
-declare namespace JQuery
-{
+declare namespace JQuery {
   type TypeOrArray<T> = T | T[];
   type Node = Element | Text | Comment | Document | DocumentFragment;
 
@@ -19,13 +18,11 @@ declare namespace JQuery
    *
    * **Note**: The type declaration of PlainObject is imprecise. It includes host objects and user-defined arrays which do not match jQuery's definition.
    */
-  interface PlainObject<T = any>
-  {
+  interface PlainObject<T = any> {
     [key: string]: T;
   }
 
-  interface Selectors extends Sizzle.Selectors
-  {
+  interface Selectors extends Sizzle.Selectors {
     /**
      * @deprecated ​ Deprecated since 3.0. Use \`{@link Selectors#pseudos }\`.
      *
@@ -47,24 +44,21 @@ declare namespace JQuery
   // region Ajax
   // #region Ajax
 
-  interface AjaxSettings<TContext = any> extends Ajax.AjaxSettingsBase<TContext>
-  {
+  interface AjaxSettings<TContext = any> extends Ajax.AjaxSettingsBase<TContext> {
     /**
      * A string containing the URL to which the request is sent.
      */
     url?: string | undefined;
   }
 
-  interface UrlAjaxSettings<TContext = any> extends Ajax.AjaxSettingsBase<TContext>
-  {
+  interface UrlAjaxSettings<TContext = any> extends Ajax.AjaxSettingsBase<TContext> {
     /**
      * A string containing the URL to which the request is sent.
      */
     url: string;
   }
 
-  namespace Ajax
-  {
+  namespace Ajax {
     type SuccessTextStatus = "success" | "notmodified" | "nocontent";
     type ErrorTextStatus = "timeout" | "error" | "abort" | "parsererror";
     type TextStatus = SuccessTextStatus | ErrorTextStatus;
@@ -88,8 +82,7 @@ declare namespace JQuery
     /**
      * @see \`{@link https://api.jquery.com/jquery.ajax/#jQuery-ajax-settings }\`
      */
-    interface AjaxSettingsBase<TContext>
-    {
+    interface AjaxSettingsBase<TContext> {
       /**
        * A set of key/value pairs that map a given dataType to its MIME type, which gets sent in the Accept request header. This header tells the server what kind of response it will accept in return.
        */
@@ -679,20 +672,17 @@ declare namespace JQuery
 
     // Writable properties on XMLHttpRequest
     interface XHRFields
-      extends Partial<Pick<XMLHttpRequest, "onreadystatechange" | "responseType" | "timeout" | "withCredentials">>
-    {
+      extends Partial<Pick<XMLHttpRequest, "onreadystatechange" | "responseType" | "timeout" | "withCredentials">> {
       msCaching?: string | undefined;
     }
   }
 
-  interface Transport
-  {
+  interface Transport {
     send (headers: PlainObject, completeCallback: Transport.SuccessCallback): void;
     abort (): void;
   }
 
-  namespace Transport
-  {
+  namespace Transport {
     type SuccessCallback = (
       status: number,
       statusText: Ajax.TextStatus,
@@ -728,8 +718,7 @@ declare namespace JQuery
       | "status"
       | "statusText"
     >,
-    Partial<Pick<XMLHttpRequest, "responseXML">>
-  {
+    Partial<Pick<XMLHttpRequest, "responseXML">> {
     responseJSON?: any;
     abort (statusText?: string): void;
 
@@ -742,17 +731,14 @@ declare namespace JQuery
     statusCode (map: Ajax.StatusCodeCallbacks<any>): void;
   }
 
-  namespace jqXHR
-  {
+  namespace jqXHR {
     interface DoneCallback<TResolve = any, TjqXHR = jqXHR<TResolve>>
-      extends Deferred.Callback3<TResolve, Ajax.SuccessTextStatus, TjqXHR>
-    {}
+      extends Deferred.Callback3<TResolve, Ajax.SuccessTextStatus, TjqXHR> {}
 
     interface FailCallback<TjqXHR> extends Deferred.Callback3<TjqXHR, Ajax.ErrorTextStatus, string> {}
 
     interface AlwaysCallback<TResolve = any, TjqXHR = jqXHR<TResolve>>
-      extends Deferred.Callback3<TResolve | TjqXHR, Ajax.TextStatus, TjqXHR | string>
-    {}
+      extends Deferred.Callback3<TResolve | TjqXHR, Ajax.TextStatus, TjqXHR | string> {}
   }
 
   // #endregion
@@ -760,8 +746,7 @@ declare namespace JQuery
   // region Callbacks
   // #region Callbacks
 
-  interface CallbacksStatic
-  {
+  interface CallbacksStatic {
     /**
      * A multi-purpose callbacks list object that provides a powerful way to manage callback lists.
      * @param flags An optional list of space-separated flags that change how the callback list behaves.
@@ -775,8 +760,7 @@ declare namespace JQuery
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  interface Callbacks<T extends Function = Function>
-  {
+  interface Callbacks<T extends Function = Function> {
     /**
      * Add a callback or a collection of callbacks to a callback list.
      * @param callback A function, or array of functions, that are to be added to the callback list.
@@ -1194,14 +1178,12 @@ callbacks.fire( "world" );
       | Pick<_CSSHook<TElement>, "set">
     );
 
-  interface _CSSHook<TElement>
-  {
+  interface _CSSHook<TElement> {
     get (elem: TElement, computed: any, extra: any): any;
     set (elem: TElement, value: any): void;
   }
 
-  interface CSSHooks
-  {
+  interface CSSHooks {
     // Set to HTMLElement to minimize breaks but should probably be Element.
     [propertyName: string]: CSSHook<HTMLElement>;
   }
@@ -1235,8 +1217,7 @@ callbacks.fire( "world" );
    * This object provides a subset of the methods of the Deferred object (then, done, fail, always, pipe, progress, state and promise) to prevent users from changing the state of the Deferred.
    * @see \`{@link https://api.jquery.com/Types/#Promise }\`
    */
-  interface PromiseBase<TR, TJ, TN, UR, UJ, UN, VR, VJ, VN, SR, SJ, SN>
-  {
+  interface PromiseBase<TR, TJ, TN, UR, UJ, UN, VR, VJ, VN, SR, SJ, SN> {
     /**
      * Add handlers to be called when the Deferred object is either resolved or rejected.
      * @param alwaysCallback A function, or array of functions, that is called when the Deferred is resolved or rejected.
@@ -2691,16 +2672,14 @@ alert( "$.get failed!" );
    * @see \`{@link https://api.jquery.com/Types/#Promise }\`
    */
   interface Promise3<TR, TJ, TN, UR, UJ, UN, VR, VJ, VN>
-    extends PromiseBase<TR, TJ, TN, UR, UJ, UN, VR, VJ, VN, never, never, never>
-  {}
+    extends PromiseBase<TR, TJ, TN, UR, UJ, UN, VR, VJ, VN, never, never, never> {}
 
   /**
    * This object provides a subset of the methods of the Deferred object (then, done, fail, always, pipe, progress, state and promise) to prevent users from changing the state of the Deferred.
    * @see \`{@link https://api.jquery.com/Types/#Promise }\`
    */
   interface Promise2<TR, TJ, TN, UR, UJ, UN>
-    extends PromiseBase<TR, TJ, TN, UR, UJ, UN, never, never, never, never, never, never>
-  {}
+    extends PromiseBase<TR, TJ, TN, UR, UJ, UN, never, never, never, never, never, never> {}
 
   /**
    * This object provides a subset of the methods of the Deferred object (then, done, fail, always, pipe, progress, state and promise) to prevent users from changing the state of the Deferred.
@@ -2708,8 +2687,7 @@ alert( "$.get failed!" );
    */
   interface Promise<TR, TJ = any, TN = any> extends PromiseBase<TR, TJ, TN, TR, TJ, TN, TR, TJ, TN, TR, TJ, TN> {}
 
-  interface DeferredStatic
-  {
+  interface DeferredStatic {
     // https://jquery.com/upgrade-guide/3.0/#callback-exit
     exceptionHook: any;
     /**
@@ -2723,8 +2701,7 @@ alert( "$.get failed!" );
     ): Deferred<TR, TJ, TN>;
   }
 
-  interface Deferred<TR, TJ = any, TN = any>
-  {
+  interface Deferred<TR, TJ = any, TN = any> {
     /**
      * Call the progressCallbacks on a Deferred object with the given args.
      * @param args Optional arguments that are passed to the progressCallbacks.
@@ -4145,8 +4122,7 @@ alert( "$.get failed!" );
     ): PromiseBase<ARF, AJF, ANF, BRF, BJF, BNF, CRF, CJF, CNF, RRF, RJF, RNF>;
   }
 
-  namespace Deferred
-  {
+  namespace Deferred {
     type CallbackBase<T, U, V, R> = (t: T, u: U, v: V, ...r: R[]) => void;
 
     interface Callback3<T, U, V> extends CallbackBase<T, U, V, never> {}
@@ -4184,8 +4160,7 @@ alert( "$.get failed!" );
   /**
    * @see \`{@link https://api.jquery.com/animate/#animate-properties-options }\`
    */
-  interface EffectsOptions<TElement> extends PlainObject
-  {
+  interface EffectsOptions<TElement> extends PlainObject {
     /**
      * A function to be called when the animation on an element completes or stops without completing (its Promise object is either resolved or rejected).
      */
@@ -4239,8 +4214,7 @@ alert( "$.get failed!" );
    * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#animation-factory }\`
    * @since 1.8
    */
-  interface AnimationStatic
-  {
+  interface AnimationStatic {
     /**
      * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#animation-factory }\`
      * @since 1.8
@@ -4296,8 +4270,7 @@ alert( "$.get failed!" );
       never,
       never,
       number
-    >
-  {
+    > {
     /**
      * The duration specified in ms
      * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#animation-factory }\`
@@ -4370,8 +4343,7 @@ alert( "$.get failed!" );
    * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#tweens }\`
    * @since 1.8
    */
-  interface TweenStatic
-  {
+  interface TweenStatic {
     /**
      * `jQuery.Tween.propHooks[ prop ]` is a hook point that replaces `jQuery.fx.step[ prop ]` (which is being deprecated.) These hooks are used by the tween to get and set values on elements.
      * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#tween-hooks }\`
@@ -4408,8 +4380,7 @@ set: function( tween ) {
    * @since 1.8
    */
   // This should be a class but doesn't work correctly under the JQuery namespace. Tween should be an inner class of jQuery.
-  interface Tween<TElement>
-  {
+  interface Tween<TElement> {
     /**
      * The easing used
      * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#tweens }\`
@@ -4500,8 +4471,7 @@ set: function( tween ) {
    * @see \`{@link https://gist.github.com/gnarf/54829d408993526fe475#tween-hooks }\`
    * @since 1.8
    */
-  interface PropHooks
-  {
+  interface PropHooks {
     [property: string]: PropHook<Node>;
   }
 
@@ -4512,8 +4482,7 @@ set: function( tween ) {
 
   type EasingMethod = (percent: number) => number;
 
-  interface Easings
-  {
+  interface Easings {
     [name: string]: EasingMethod;
   }
 
@@ -4522,8 +4491,7 @@ set: function( tween ) {
   // region Effects (fx)
   // #region Effects (fx)
 
-  interface Effects
-  {
+  interface Effects {
     /**
      * The rate (in milliseconds) at which animations fire.
      * @see \`{@link https://api.jquery.com/jQuery.fx.interval/ }\`
@@ -4647,8 +4615,7 @@ $( "div" ).toggle( "slow" );
    */
   type AnimationHook<TElement> = (fx: Tween<TElement>) => void;
 
-  interface TickFunction<TElement>
-  {
+  interface TickFunction<TElement> {
     anim: Animation<TElement>;
     elem: TElement;
     queue: boolean | string;
@@ -4710,8 +4677,7 @@ $( "div" ).toggle( "slow" );
    * The standard events in the Document Object Model are: `blur`, `focus`, `load`, `resize`, `scroll`, `unload`, `beforeunload`, `click`, `dblclick`, `mousedown`, `mouseup`, `mousemove`, `mouseover`, `mouseout`, `mouseenter`, `mouseleave`, `change`, `select`, `submit`, `keydown`, `keypress`, and `keyup`. Since the DOM event names have predefined meanings for some elements, using them for other purposes is not recommended. jQuery's event model can trigger an event by any name on an element, and it is propagated up the DOM tree to which that element belongs, if any.
    * @see \`{@link https://api.jquery.com/category/events/event-object/ }\`
    */
-  interface EventStatic
-  {
+  interface EventStatic {
     /**
      * The jQuery.Event constructor is exposed and can be used when calling trigger. The new operator is optional.
      *
@@ -4771,8 +4737,7 @@ jQuery( "body" ).trigger( e );
    * @see \`{@link https://api.jquery.com/category/events/event-object/ }\`
    * @see \`{@link TriggeredEvent }\`
    */
-  interface Event
-  {
+  interface Event {
     // region Copied properties
     // #region Copied properties
 
@@ -5251,8 +5216,7 @@ event.stopPropagation();
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends Event
-  {
+  > extends Event {
     /**
      * The current DOM element within the event bubbling phase.
      * @see \`{@link https://api.jquery.com/event.currentTarget/ }\`
@@ -5476,8 +5440,7 @@ $( "p" ).html( event.result );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TriggeredEvent<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TriggeredEvent<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -5714,8 +5677,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "change";
   }
 
@@ -5724,8 +5686,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "resize";
   }
 
@@ -5734,8 +5695,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "scroll";
   }
 
@@ -5744,8 +5704,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "select";
   }
 
@@ -5754,8 +5713,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends EventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "submit";
   }
 
@@ -5769,8 +5727,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TriggeredEvent<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TriggeredEvent<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     // Event
 
     bubbles: boolean;
@@ -5793,8 +5750,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6020,8 +5976,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6043,8 +5998,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6066,8 +6020,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6089,8 +6042,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6112,8 +6064,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     // Special handling by jQuery.
     type: "mouseover";
   }
@@ -6123,8 +6074,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     // Special handling by jQuery.
     type: "mouseout";
   }
@@ -6134,8 +6084,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6157,8 +6106,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "mouseout";
   }
 
@@ -6167,8 +6115,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "mouseover";
   }
 
@@ -6177,8 +6124,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends MouseEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6203,8 +6149,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     originalEvent?: _DragEvent | undefined;
   }
 
@@ -6213,8 +6158,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "drag";
   }
 
@@ -6223,8 +6167,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragend";
   }
 
@@ -6233,8 +6176,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragenter";
   }
 
@@ -6243,8 +6185,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragexit";
   }
 
@@ -6253,8 +6194,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragleave";
   }
 
@@ -6263,8 +6203,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragover";
   }
 
@@ -6273,8 +6212,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "dragstart";
   }
 
@@ -6283,8 +6221,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends DragEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "drop";
   }
 
@@ -6300,8 +6237,7 @@ alert( event.relatedTarget.nodeName ); // "DIV"
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6528,8 +6464,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "keydown";
   }
 
@@ -6538,8 +6473,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "keypress";
   }
 
@@ -6548,8 +6482,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends KeyboardEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "keyup";
   }
 
@@ -6563,8 +6496,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -6790,8 +6722,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "touchcancel";
   }
 
@@ -6800,8 +6731,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "touchend";
   }
 
@@ -6810,8 +6740,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "touchmove";
   }
 
@@ -6820,8 +6749,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends TouchEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "touchstart";
   }
 
@@ -6835,8 +6763,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends UIEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     /**
      * The other DOM element involved in the event, if any.
      * @see \`{@link https://api.jquery.com/event.relatedTarget/ }\`
@@ -7062,8 +6989,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "blur";
   }
 
@@ -7072,8 +6998,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "focus";
   }
 
@@ -7082,8 +7007,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "focusin";
   }
 
@@ -7092,8 +7016,7 @@ $( "#display" ).text( event.metaKey );
     TData = any,
     TCurrentTarget = any,
     TTarget = any,
-  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends FocusEventBase<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     type: "focusout";
   }
 
@@ -7106,8 +7029,7 @@ $( "#display" ).text( event.metaKey );
     TData,
     TCurrentTarget,
     TTarget,
-  >
-  {
+  > {
     // Event
 
     change: ChangeEvent<TDelegateTarget, TData, TCurrentTarget, TTarget>;
@@ -7189,8 +7111,7 @@ $( "#display" ).text( event.metaKey );
     TData,
     TCurrentTarget,
     TTarget,
-  > extends _TypeEventHandlers<TDelegateTarget, TData, TCurrentTarget, TTarget>
-  {
+  > extends _TypeEventHandlers<TDelegateTarget, TData, TCurrentTarget, TTarget> {
     // No idea why it's necessary to include `object` in the union but otherwise TypeScript complains that
     // derived types of Event are not assignable to Event.
     [type: string]:
@@ -7215,8 +7136,7 @@ $( "#display" ).text( event.metaKey );
   // region Event extensions
   // #region Event extensions
 
-  interface EventExtensions
-  {
+  interface EventExtensions {
     /**
      * The jQuery special event hooks are a set of per-event-name functions and properties that allow code to control the behavior of event processing within jQuery. The mechanism is similar to `fixHooks` in that the special event information is stored in `jQuery.event.special.NAME`, where `NAME` is the name of the special event. Event names are case sensitive.
      *
@@ -7321,8 +7241,7 @@ $( "#display" ).text( event.metaKey );
     [key: string]: any;
   };
 
-  interface SpecialEventHooks
-  {
+  interface SpecialEventHooks {
     [event: string]: SpecialEventHook<EventTarget, any>;
   }
 
@@ -7330,8 +7249,7 @@ $( "#display" ).text( event.metaKey );
    * Many of the special event hook functions below are passed a `handleObj` object that provides more information about the event, how it was attached, and its current state. This object and its contents should be treated as read-only data, and only the properties below are documented for use by special event handlers.
    * @see \`{@link https://learn.jquery.com/events/event-extensions/#the-handleobj-object }\`
    */
-  interface HandleObject<TTarget, TData>
-  {
+  interface HandleObject<TTarget, TData> {
     /**
      * The type of event, such as `"click"`. When special event mapping is used via `bindType` or `delegateType`, this will be the mapped type.
      */
@@ -7364,8 +7282,7 @@ $( "#display" ).text( event.metaKey );
 
   // #endregion
 
-  interface NameValuePair
-  {
+  interface NameValuePair {
     name: string;
     value: string;
   }
@@ -7373,8 +7290,7 @@ $( "#display" ).text( event.metaKey );
   // region Coordinates
   // #region Coordinates
 
-  interface Coordinates
-  {
+  interface Coordinates {
     left: number;
     top: number;
   }
@@ -7399,8 +7315,7 @@ $( "#display" ).text( event.metaKey );
     [key: string]: never;
   };
 
-  interface ValHooks
-  {
+  interface ValHooks {
     // Set to HTMLElement to minimize breaks but should probably be Element.
     [nodeName: string]: ValHook<HTMLElement>;
   }
@@ -7428,8 +7343,7 @@ type _FocusEvent = FocusEvent;
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Iterable<T> {}
 
-interface SymbolConstructor
-{
+interface SymbolConstructor {
   /**
    * A String value that is used in the creation of the default string description of an object.
    * Called by the built-in method Object.prototype.toString.

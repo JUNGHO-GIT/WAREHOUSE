@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.CommonCdDAO">
 
-  <!-- CommonCd.listAllCommonCd  -->
+  <!-- CommonCd.listAllCommonCd -->
   <select
     id="listAllCommonCd"
     parameterType="hashmap"
-    resultType="com.WAREHOUSE.container.CommonCd"
+    resultType="CommonCd"
   >
     <![CDATA[
     SELECT
@@ -19,12 +23,13 @@
     ]]>
   </select>
 
-  <!-- CommonCd.listCommonCd  -->
+  <!-- CommonCd.listCommonCd -->
   <select
   	id="listCommonCd"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.CommonCd"
+  	resultType="CommonCd"
   >
+    <![CDATA[
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
       CASE WHEN flagYN = 'Y' THEN '유효' ELSE '삭제' END flagYN
@@ -32,32 +37,36 @@
       tblCommonCd
 	  WHERE
       itemNm LIKE CONCAT('%', #{findItemNm}, '%')
+    ]]>
     <if test='findGroupCd!="" and findGroupCd!=null'>
       AND groupCd = #{findGroupCd}
     </if>
 	  ORDER BY groupCd, itemSeq
   </select>
 
-  <!-- CommonCd.showCommonCd  -->
+  <!-- CommonCd.showCommonCd -->
   <select
   	id="showCommonCd"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.CommonCd"
+  	resultType="CommonCd"
   >
+    <![CDATA[
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq
   	FROM
       tblCommonCd
   	WHERE
       groupCd = #{groupCd} AND itemCd = #{itemCd}
+    ]]>
   </select>
 
-  <!-- CommonCd.mappingGroupCd  -->
+  <!-- CommonCd.mappingGroupCd -->
   <select
   	id="mappingGroupCd"
   	parameterType="hashmap"
   	resultType="hashmap"
   >
+    <![CDATA[
   	SELECT
       groupCd, groupNm
 	  FROM
@@ -66,14 +75,16 @@
       itemCd IS NOT NULL
 	  GROUP BY
       groupCd, groupNm
+    ]]>
   </select>
 
-  <!-- CommonCd.listComCodeAll  -->
+  <!-- CommonCd.listComCodeAll -->
   <select
   	id="listComCodeAll"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Common"
+  	resultType="Common"
   >
+    <![CDATA[
     SELECT
       groupCd, groupNm, itemCd cd, itemNm nm, #{target} target
     FROM
@@ -82,14 +93,16 @@
       flagYN = 'Y' and groupCd = #{groupCd}
     ORDER BY
       itemSeq
+    ]]>
   </select>
 
-  <!-- CommonCd.listComCodeGroupAll  -->
+  <!-- CommonCd.listComCodeGroupAll -->
   <select
   	id="listComCodeGroupAll"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Common"
+  	resultType="Common"
   >
+    <![CDATA[
     SELECT
       groupCd cd, groupNm nm, #{target} target
     FROM
@@ -98,12 +111,13 @@
       flagYN = 'Y'
     GROUP BY
       groupCd, groupNm
+    ]]>
   </select>
 
-  <!--
+  <!-- CommonCd.saveCommonCd -->
   <select
   	id="saveCommonCd"
-  	parameterType="com.WAREHOUSE.container.CommonCd"
+  	parameterType="CommonCd"
   	resultType="Integer"
   >
   	CALL sp_CommonCd (

@@ -2,216 +2,190 @@
 function fnFindCd(targetNm, targetCd, targetId, event) {
 
   // ex. house, houseCd, houseNm
-  var str = targetId;
-  var strCd = `${str}Cd`;
-  var strNm = `${str}Nm`;
+  const str = targetId;
+  const strCd = `${str}Cd`;
+  const strNm = `${str}Nm`;
+  const strEl = getById(str);
+  const strCdEl = getById(strCd);
 
   // ex. House, HouseCd, HouseNm
-  var upStr = str.charAt(0).toUpperCase() + str.slice(1);
-  var upStrCd = `${upStr}Cd`;
-  var upStrNm = `${upStr}Nm`;
+  const upStr = str.charAt(0).toUpperCase() + str.slice(1);
+  const upStrCd = `${upStr}Cd`;
 
   // ex. 창고, 거래처 ...
-  var strKo;
-  if (str === "prod") {
-    strKo = "제품";
-  }
-  else if (str === "resrc") {
-    strKo = "자재";
-  }
-  else if (str === "house") {
-    strKo = "창고";
-  }
-  else if (str === "comp") {
-    strKo = "거래처";
-  }
-  else {
-    strKo = str;
-  }
+  const strKo = (
+    str === "prod" ? "제품" :
+    str === "resrc" ? "자재" :
+    str === "house" ? "창고" :
+    str === "comp" ? "거래처" :
+    str
+  );
 
   // Enter 키를 누르면 페이지 새로고침 방지
   if (event && event.key === "Enter") {
     event.preventDefault();
   }
-  if (event && event.key !== "Enter") {
-    return;
-  }
 
   // 이벤트 한 번만 설정
-  $(`#${str}`).on("change", function() {
-    $(`#${strCd}`).val($(`#${str}`).val());
+  strEl.removeEventListener("change", () => {
+    setValue(strCdEl, getValue(strEl));
   });
 
-  $.ajax({
-    url: `act/find${upStrCd}`,
-    data: `findNm=${targetNm}&findCd=${targetCd}`,
-    type: "POST",
-    dataType:"JSON",
-    beforeSend: function(xmlHttpRequest) {
-      xmlHttpRequest.setRequestHeader("AJAX", "true");
+  fetch(`act/find${upStrCd}`, {
+    method: "POST",
+    body: `findNm=${targetNm}&findCd=${targetCd}`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "AJAX": "true"
     },
-    success: function(data) {
+  })
+  .then(async (response) => {
+    const data = await response.json();
+    // 1. targetNm 과 targetCd 가 모두 없는 경우 (전체 조회인 경우)
+    if (!targetNm && !targetCd) {
+      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
 
-      // 1. targetNm 과 targetCd 가 모두 없는 경우 (전체 조회인 경우)
-      if (!targetNm && !targetCd) {
-
-        $(`#${str}`).empty();
-        $(`#${str}`).html(`<option value="">==${strKo}==</option>`);
-
-        for (let k = 0; k < data.length; k++) {
-          var isSelected = targetCd === data[k][strCd] ? "selected" : "";
-          var option = `
-            <option value="${data[k][strCd]}" ${isSelected}>
-              ${data[k][strNm]}
-            </option>
-          `;
-          $(`#${str}`).append(option);
-        }
-      }
-      // 2-1. targetNm 과 targetCd 가 있는 경우 (결과 없는 경우)
-      else if (data == null || data.length === 0) {
-        $(`#${str}`).empty();
-        $(`#${str}`).html(`<option value="">==${strKo}==</option>`);
-      }
-      // 2-2. targetNm 과 targetCd 가 있는 경우 (결과 있는 경우)
-      else if (data != null && data.length > 0) {
-
-        $(`#${str}`).empty();
-        $(`#${str}`).html(`<option value="">==${strKo}==</option>`);
-
-        for (let k = 0; k < data.length; k++) {
-          var isSelected = targetCd === data[k][strCd] ? "selected" : "";
-          var option = `
-            <option value="${data[k][strCd]}" ${isSelected}>
-              ${data[k][strNm]}
-            </option>
-          `;
-          // append (o)
-          $(`#${str}`).append(option);
-        }
-      }
-      // 선택된 option에 따라 #strCd 값을 갱신
-      $(`#${strCd}`).val($(`#${str}`).val());
-    },
-    error: function(request, status, error) {
-      if (request.status === 477) {
-        alert("세션이 종료 되었습니다.");
-        fnGoPage("reLogin");
-      }
-      else {
-        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }
+      data.forEach((item) => {
+        const isSelected = targetCd === item[strCd] ? "selected" : "";
+        const option = `<option value="${item[strCd]}" ${isSelected}>${item[strNm]}</option>`;
+        strEl.innerHTML += option;
+      });
     }
+    // 2-1. targetNm 과 targetCd 가 있는 경우 (결과 없는 경우)
+    else if (!data || data.length === 0) {
+      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
+    }
+    // 2-2. targetNm 과 targetCd 가 있는 경우 (결과 있는 경우)
+    else if (data && data.length > 0) {
+      // 2-2-1. 결과가 1개인 경우
+      if (data.length === 1) {
+        if (data[0][strNm] === targetNm) {
+          setValue(strCdEl, data[0][strCd]);
+        }
+        else {
+          setValue(strCdEl, "");
+        }
+      }
+      // 2-2-2. 결과가 1개 이상인 경우
+      else {
+        const exactMatch = data.find((item) => item[strNm] === targetNm);
+        if (exactMatch) {
+          setValue(strCdEl, exactMatch[strCd]);
+        }
+        else {
+          const partialMatches = data.filter((item) => item[strNm].startsWith(targetNm));
+          if (partialMatches.length === 1) {
+            setValue(strCdEl, partialMatches[0][strCd]);
+          }
+          else {
+            setValue(strCdEl, "");
+          }
+        }
+      }
+      // 2-2-3. 결과를 select option 으로 표시
+      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
+      data.forEach((item) => {
+        const isSelected = targetCd === item[strCd] ? "selected" : "";
+        const option = `<option value="${item[strCd]}" ${isSelected}>${item[strNm]}</option>`;
+        strEl.innerHTML += option;
+      });
+    }
+    // 선택된 option에 따라 #strCd 값을 갱신
+    strEl.addEventListener("change", () => {
+      setValue(strCdEl, getValue(strEl));
+    });
+  })
+  .catch((error) => {
+    console.error("Error:", error);
   });
 };
 
 // 0.fnGetCdWithNm ---------------------------------------------------------------------------------
 function fnGetCdWithNm(targetNm, targetVal, rowIndx, gridCd) {
-  return new Promise(function(resolve, reject) {
 
-    // ex. grid00
-    var gridId = `#${gridCd}`;
+  // ex. grid00
+  const gridId = `#${gridCd}`;
 
-    // ex. house, houseCd, houseNm
-    var str = targetNm.slice(0, -2);
-    var strCd = `${str}Cd`;
-    var strNm = `${str}Nm`;
+  // ex. house, houseCd, houseNm
+  const str = targetNm.slice(0, -2);
+  const strCd = `${str}Cd`;
+  const strNm = `${str}Nm`;
 
-    // ex. House, HouseCd, HouseNm
-    var upStr = str.charAt(0).toUpperCase() + str.slice(1);
-    var upStrCd = `${upStr}Cd`;
-    var upStrNm = `${upStr}Nm`;
+  // ex. House, HouseCd, HouseNm
+  const upStr = str.charAt(0).toUpperCase() + str.slice(1);
+  const upStrCd = `${upStr}Cd`;
 
-    // ex. 창고, 거래처 ...
-    var strKo;
-    if (str === "prod") {
-      strKo = "제품";
+  // ex. 창고, 거래처 ...
+  const strKo = (
+    str === "prod" ? "제품" :
+    str === "resrc" ? "자재" :
+    str === "house" ? "창고" :
+    str === "comp" ? "거래처" :
+    str
+  );
+
+  // strNm 값이 변경되었을 경우에는 strCd 값도 변경되어야 함
+  const rowData = $(gridId).pqGrid("getRowData", {rowIndx: rowIndx});
+  if (rowData[strCd] && rowData[strNm] === targetVal) {
+    return;
+  }
+
+  fetch(`act/find${upStrCd}`, {
+    method: "POST",
+    body: `findNm=${targetVal}`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "AJAX": "true"
+    },
+  })
+  .then(async (response) => {
+    const data = await response.json();
+    const dynamicRowData = {};
+
+    // 1. 값이 0개인 경우
+    if (data.length === 0) {
+      alert(`존재하지 않는 ${strKo}가 있습니다. ${strKo}를 다시 입력해주세요`);
+      dynamicRowData[strCd] = "";
+      dynamicRowData[strNm] = "";
     }
-    else if (str === "resrc") {
-      strKo = "자재명";
-    }
-    else if (str === "house") {
-      strKo = "창고명";
-    }
-    else if (str === "comp") {
-      strKo = "거래처명";
-    }
-    else {
-      strKo = str;
-    }
-
-    // 만약 해당 그리드 row에 strCd 값이 있으면 skip
-    // strNm 값이 변경되었을 경우에는 strCd 값도 변경되어야 함
-    var rowData = $(gridId).pqGrid("getRowData", {rowIndx: rowIndx});
-    if (rowData[strCd] && rowData[strNm] === targetVal) {
-      resolve(console.log("fnGetCdWithNm : skip"));
-      return;
-    }
-
-    $.ajax({
-      url: `act/find${upStrCd}`,
-      data: `findNm=${targetVal}`,
-      type: "POST",
-      dataType:"JSON",
-      success: function(myJsonData) {
-
-        var dynamicRowData = {};
+    // 2-1. 값이 1개인 경우
+    else if (data.length === 1) {
+      if (data[0][strNm] === targetVal) {
+        dynamicRowData[strCd] = data[0][strCd];
+      }
+      else {
+        alert(`존재하지 않는 ${strKo}가 있습니다. ${strKo}를 다시 입력해주세요`);
         dynamicRowData[strCd] = "";
-
-        // 1. 값이 0개인 경우 ----------------------------------------------------------------------
-        if (myJsonData.length === 0) {
-          alert(`존재하지 않는 ${strKo}이 있습니다. ${strKo}를 다시 입력해주세요.`);
-          dynamicRowData = {[strCd]:"", [strNm]:""};
-        }
-        // 2-1. 값이 1개인 경우 --------------------------------------------------------------------
-        else if (myJsonData.length === 1) {
-          if (myJsonData[0][strNm] === targetVal) {
-            dynamicRowData[strCd] = myJsonData[0][strCd];
-          }
-          else {
-            alert(`존재하지 않는 ${strKo}이 있습니다. ${strKo}를 다시 입력해주세요.`);
-            dynamicRowData = {[strCd]:"", [strNm]:""};
-          }
-        }
-        // 2-2. 값이 1개 이상인 경우 ---------------------------------------------------------------
-        else if (myJsonData.length > 1) {
-          var exactMatch = myJsonData.find(function(item) {
-            return item[strNm] === targetVal;
-          });
-          if (exactMatch) {
-            dynamicRowData[strCd] = exactMatch[strCd];
-          }
-          else {
-            var partialMatches = myJsonData.filter(function(item) {
-              return item[strNm].startsWith(targetVal);
-            });
-            if (partialMatches.length === 1) {
-              dynamicRowData[strCd] = partialMatches[0][strCd];
-            }
-            else {
-              alert(`일치하는 ${strKo}이 여러개입니다. ${strKo} 이름을 다시 입력해주세요.`);
-              dynamicRowData = {[strCd]:"", [strNm]:""};
-            }
-          }
-        }
-        // 3. 그리드 업데이트 ----------------------------------------------------------------------
-        $(gridId).pqGrid("updateRow", {
-          rowIndx: rowIndx,
-          row: dynamicRowData
-        });
-        resolve(console.log("fnGetCdWithNm : success"));
-      },
-      error: function (request, status, error) {
-        if (request.status == 477) {
-          alert("세션이 종료 되었습니다.");
-          fnGoPage("reLogin");
+        dynamicRowData[strNm] = "";
+      }
+    }
+    // 2-2. 값이 1개 이상인 경우
+    else if (data.length > 1) {
+      const exactMatch = data.find((item) => item[strNm] === targetVal);
+      if (exactMatch) {
+        dynamicRowData[strCd] = exactMatch[strCd];
+      }
+      else {
+        const partialMatches = data.filter((item) => item[strNm].startsWith(targetVal));
+        if (partialMatches.length === 1) {
+          dynamicRowData[strCd] = partialMatches[0][strCd];
         }
         else {
-          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-          reject("fnGetCdWithNm : failed" + error);
+          alert(`일치하는 ${strKo}이 여러개입니다. ${strKo} 이름을 다시 입력해주세요`);
+          dynamicRowData[strCd] = "";
+          dynamicRowData[strNm] = "";
         }
       }
-    });
+    }
+    // 그리드 업데이트
+    $(gridId).pqGrid("updateRow", {
+      rowIndx: rowIndx,
+      row: dynamicRowData
+    })
+    .pqGrid("refreshDataAndView");
+  })
+  .catch((error) => {
+    console.error("Error:", error);
   });
 };
 

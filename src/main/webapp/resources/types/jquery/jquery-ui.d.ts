@@ -2,12 +2,10 @@
 
 /// <reference path="jquery.d.ts" />
 
-declare namespace JQueryUI
-{
+declare namespace JQueryUI {
   // Accordion //////////////////////////////////////////////////
 
-  interface AccordionOptions extends AccordionEvents
-  {
+  interface AccordionOptions extends AccordionEvents {
     active?: any; // boolean or number
     animate?: any; // boolean, number, string or object
     collapsible?: boolean | undefined;
@@ -18,34 +16,29 @@ declare namespace JQueryUI
     icons?: any;
   }
 
-  interface AccordionUIParams
-  {
+  interface AccordionUIParams {
     newHeader: JQuery;
     oldHeader: JQuery;
     newPanel: JQuery;
     oldPanel: JQuery;
   }
 
-  interface AccordionEvent
-  {
+  interface AccordionEvent {
     (event: JQueryEventObject, ui: AccordionUIParams): void;
   }
 
-  interface AccordionEvents
-  {
+  interface AccordionEvents {
     activate?: AccordionEvent | undefined;
     beforeActivate?: AccordionEvent | undefined;
     create?: AccordionEvent | undefined;
   }
 
-  interface Accordion extends Widget, AccordionOptions
-  {
+  interface Accordion extends Widget, AccordionOptions {
   }
 
   // Autocomplete //////////////////////////////////////////////////
 
-  interface AutocompleteOptions extends AutocompleteEvents
-  {
+  interface AutocompleteOptions extends AutocompleteEvents {
     appendTo?: any; // Selector;
     autoFocus?: boolean | undefined;
     delay?: number | undefined;
@@ -56,14 +49,12 @@ declare namespace JQueryUI
     classes?: AutocompleteClasses | undefined;
   }
 
-  interface AutocompleteClasses
-  {
+  interface AutocompleteClasses {
     "ui-autocomplete"?: string | undefined;
     "ui-autocomplete-input"?: string | undefined;
   }
 
-  interface AutocompleteUIParams
-  {
+  interface AutocompleteUIParams {
     /**
      * The item selected from the menu, if any. Otherwise the property is null
      */
@@ -71,13 +62,11 @@ declare namespace JQueryUI
     content?: any;
   }
 
-  interface AutocompleteEvent
-  {
+  interface AutocompleteEvent {
     (event: JQueryEventObject, ui: AutocompleteUIParams): void;
   }
 
-  interface AutocompleteEvents
-  {
+  interface AutocompleteEvents {
     change?: AutocompleteEvent | undefined;
     close?: AutocompleteEvent | undefined;
     create?: AutocompleteEvent | undefined;
@@ -88,16 +77,14 @@ declare namespace JQueryUI
     select?: AutocompleteEvent | undefined;
   }
 
-  interface Autocomplete extends Widget, AutocompleteOptions
-  {
+  interface Autocomplete extends Widget, AutocompleteOptions {
     escapeRegex: (value: string) => string;
     filter: (array: any, term: string) => any;
   }
 
   // Button //////////////////////////////////////////////////
 
-  interface ButtonOptions
-  {
+  interface ButtonOptions {
     disabled?: boolean | undefined;
     icons?: any;
     label?: string | undefined;
@@ -105,14 +92,12 @@ declare namespace JQueryUI
     click?: ((event?: Event) => void) | undefined;
   }
 
-  interface Button extends Widget, ButtonOptions
-  {
+  interface Button extends Widget, ButtonOptions {
   }
 
   // Datepicker //////////////////////////////////////////////////
 
-  interface DatepickerOptions
-  {
+  interface DatepickerOptions {
     /**
      * An input element that is to be updated with the selected date from the datepicker. Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
      */
@@ -345,16 +330,14 @@ declare namespace JQueryUI
     endDate?: Date | undefined;
   }
 
-  interface DatepickerFormatDateOptions
-  {
+  interface DatepickerFormatDateOptions {
     dayNamesShort?: string[] | undefined;
     dayNames?: string[] | undefined;
     monthNamesShort?: string[] | undefined;
     monthNames?: string[] | undefined;
   }
 
-  interface Datepicker extends Widget, DatepickerOptions
-  {
+  interface Datepicker extends Widget, DatepickerOptions {
     regional: {[languageCod3: string]: any;};
     setDefaults (defaults: DatepickerOptions): void;
     formatDate (format: string, date: Date, settings?: DatepickerFormatDateOptions): string;
@@ -365,8 +348,7 @@ declare namespace JQueryUI
 
   // Dialog //////////////////////////////////////////////////
 
-  interface DialogOptions extends DialogEvents
-  {
+  interface DialogOptions extends DialogEvents {
     autoOpen?: boolean | undefined;
     buttons?: {[buttonText: string]: (event?: Event) => void;} | DialogButtonOptions[] | undefined;
     closeOnEscape?: boolean | undefined;
@@ -395,8 +377,7 @@ declare namespace JQueryUI
     close?: DialogEvent | undefined;
   }
 
-  interface DialogClasses
-  {
+  interface DialogClasses {
     "ui-dialog"?: string | undefined;
     "ui-dialog-content"?: string | undefined;
     "ui-dialog-dragging"?: string | undefined;
@@ -410,8 +391,7 @@ declare namespace JQueryUI
     "ui-widget-overlay"?: string | undefined;
   }
 
-  interface DialogButtonOptions
-  {
+  interface DialogButtonOptions {
     icons?: any;
     showText?: string | boolean | undefined;
     text?: string | undefined;
@@ -419,25 +399,21 @@ declare namespace JQueryUI
     [attr: string]: any; // attributes for the <button> element
   }
 
-  interface DialogShowHideOptions
-  {
+  interface DialogShowHideOptions {
     effect: string;
     delay?: number | undefined;
     duration?: number | undefined;
     easing?: string | undefined;
   }
 
-  interface DialogUIParams
-  {
+  interface DialogUIParams {
   }
 
-  interface DialogEvent
-  {
+  interface DialogEvent {
     (event: JQueryEventObject, ui: DialogUIParams): void;
   }
 
-  interface DialogEvents
-  {
+  interface DialogEvents {
     beforeClose?: DialogEvent | undefined;
     close?: DialogEvent | undefined;
     create?: DialogEvent | undefined;
@@ -451,27 +427,23 @@ declare namespace JQueryUI
     resizeStop?: DialogEvent | undefined;
   }
 
-  interface Dialog extends Widget, DialogOptions
-  {
+  interface Dialog extends Widget, DialogOptions {
   }
 
   // Draggable //////////////////////////////////////////////////
 
-  interface DraggableEventUIParams
-  {
+  interface DraggableEventUIParams {
     helper: JQuery;
     position: {top: number; left: number;};
     originalPosition: {top: number; left: number;};
     offset: {top: number; left: number;};
   }
 
-  interface DraggableEvent
-  {
+  interface DraggableEvent {
     (event: JQueryEventObject, ui: DraggableEventUIParams): void;
   }
 
-  interface DraggableOptions extends DraggableEvents
-  {
+  interface DraggableOptions extends DraggableEvents {
     disabled?: boolean | undefined;
     addClasses?: boolean | undefined;
     appendTo?: any;
@@ -503,43 +475,37 @@ declare namespace JQueryUI
     zIndex?: number | undefined;
   }
 
-  interface DraggableClasses
-  {
+  interface DraggableClasses {
     "ui-draggable"?: string | undefined;
     "ui-draggable-disabled"?: string | undefined;
     "ui-draggable-dragging"?: string | undefined;
     "ui-draggable-handle"?: string | undefined;
   }
 
-  interface DraggableEvents
-  {
+  interface DraggableEvents {
     create?: DraggableEvent | undefined;
     start?: DraggableEvent | undefined;
     drag?: DraggableEvent | undefined;
     stop?: DraggableEvent | undefined;
   }
 
-  interface Draggable extends Widget, DraggableOptions, DraggableEvent
-  {
+  interface Draggable extends Widget, DraggableOptions, DraggableEvent {
   }
 
   // Droppable //////////////////////////////////////////////////
 
-  interface DroppableEventUIParam
-  {
+  interface DroppableEventUIParam {
     draggable: JQuery;
     helper: JQuery;
     position: {top: number; left: number;};
     offset: {top: number; left: number;};
   }
 
-  interface DroppableEvent
-  {
+  interface DroppableEvent {
     (event: JQueryEventObject, ui: DroppableEventUIParam): void;
   }
 
-  interface DroppableOptions extends DroppableEvents
-  {
+  interface DroppableOptions extends DroppableEvents {
     accept?: any;
     activeClass?: string | undefined;
     addClasses?: boolean | undefined;
@@ -550,8 +516,7 @@ declare namespace JQueryUI
     tolerance?: string | undefined;
   }
 
-  interface DroppableEvents
-  {
+  interface DroppableEvents {
     create?: DroppableEvent | undefined;
     activate?: DroppableEvent | undefined;
     deactivate?: DroppableEvent | undefined;
@@ -560,14 +525,12 @@ declare namespace JQueryUI
     drop?: DroppableEvent | undefined;
   }
 
-  interface Droppable extends Widget, DroppableOptions
-  {
+  interface Droppable extends Widget, DroppableOptions {
   }
 
   // Menu //////////////////////////////////////////////////
 
-  interface MenuOptions extends MenuEvents
-  {
+  interface MenuOptions extends MenuEvents {
     disabled?: boolean | undefined;
     icons?: any;
     menus?: string | undefined;
@@ -575,61 +538,51 @@ declare namespace JQueryUI
     role?: string | undefined;
   }
 
-  interface MenuUIParams
-  {
+  interface MenuUIParams {
     item?: JQuery | undefined;
   }
 
-  interface MenuEvent
-  {
+  interface MenuEvent {
     (event: JQueryEventObject, ui: MenuUIParams): void;
   }
 
-  interface MenuEvents
-  {
+  interface MenuEvents {
     blur?: MenuEvent | undefined;
     create?: MenuEvent | undefined;
     focus?: MenuEvent | undefined;
     select?: MenuEvent | undefined;
   }
 
-  interface Menu extends Widget, MenuOptions
-  {
+  interface Menu extends Widget, MenuOptions {
   }
 
   // Progressbar //////////////////////////////////////////////////
 
-  interface ProgressbarOptions extends ProgressbarEvents
-  {
+  interface ProgressbarOptions extends ProgressbarEvents {
     disabled?: boolean | undefined;
     value?: number | boolean | undefined;
     max?: number | undefined;
   }
 
-  interface ProgressbarUIParams
-  {
+  interface ProgressbarUIParams {
   }
 
-  interface ProgressbarEvent
-  {
+  interface ProgressbarEvent {
     (event: JQueryEventObject, ui: ProgressbarUIParams): void;
   }
 
-  interface ProgressbarEvents
-  {
+  interface ProgressbarEvents {
     change?: ProgressbarEvent | undefined;
     complete?: ProgressbarEvent | undefined;
     create?: ProgressbarEvent | undefined;
   }
 
-  interface Progressbar extends Widget, ProgressbarOptions
-  {
+  interface Progressbar extends Widget, ProgressbarOptions {
   }
 
   // Resizable //////////////////////////////////////////////////
 
-  interface ResizableOptions extends ResizableEvents
-  {
+  interface ResizableOptions extends ResizableEvents {
     alsoResize?: any; // Selector, JQuery or Element
     animate?: boolean | undefined;
     animateDuration?: any; // number or string
@@ -652,8 +605,7 @@ declare namespace JQueryUI
     minWidth?: number | undefined;
   }
 
-  interface ResizableUIParams
-  {
+  interface ResizableUIParams {
     element: JQuery;
     helper: JQuery;
     originalElement: JQuery;
@@ -663,21 +615,18 @@ declare namespace JQueryUI
     size: any;
   }
 
-  interface ResizableEvent
-  {
+  interface ResizableEvent {
     (event: JQueryEventObject, ui: ResizableUIParams): void;
   }
 
-  interface ResizableEvents
-  {
+  interface ResizableEvents {
     resize?: ResizableEvent | undefined;
     start?: ResizableEvent | undefined;
     stop?: ResizableEvent | undefined;
     create?: ResizableEvent | undefined;
   }
 
-  interface Resizable extends Widget, ResizableOptions
-  {
+  interface Resizable extends Widget, ResizableOptions {
   }
 
   type ResizableHandleDirection =
@@ -701,8 +650,7 @@ declare namespace JQueryUI
 
   // Selectable //////////////////////////////////////////////////
 
-  interface SelectableOptions extends SelectableEvents
-  {
+  interface SelectableOptions extends SelectableEvents {
     autoRefresh?: boolean | undefined;
     cancel?: string | undefined;
     delay?: number | undefined;
@@ -712,8 +660,7 @@ declare namespace JQueryUI
     tolerance?: string | undefined;
   }
 
-  interface SelectableEvents
-  {
+  interface SelectableEvents {
     selected?(event: JQueryEventObject, ui: {selected?: Element | undefined;}): void;
     selecting?(event: JQueryEventObject, ui: {selecting?: Element | undefined;}): void;
     start?(event: JQueryEventObject, ui: any): void;
@@ -722,14 +669,12 @@ declare namespace JQueryUI
     unselecting?(event: JQueryEventObject, ui: {unselecting: Element;}): void;
   }
 
-  interface Selectable extends Widget, SelectableOptions
-  {
+  interface Selectable extends Widget, SelectableOptions {
   }
 
   // SelectMenu //////////////////////////////////////////////////
 
-  interface SelectMenuOptions extends SelectMenuEvents
-  {
+  interface SelectMenuOptions extends SelectMenuEvents {
     appendTo?: string | undefined;
     classes?: SelectMenuClasses | undefined;
     disabled?: boolean | undefined;
@@ -738,8 +683,7 @@ declare namespace JQueryUI
     width?: number | undefined;
   }
 
-  interface SelectMenuClasses
-  {
+  interface SelectMenuClasses {
     "ui-selectmenu-button"?: string | undefined;
     "ui-selectmenu-button-closed"?: string | undefined;
     "ui-selectmenu-button-open"?: string | undefined;
@@ -750,18 +694,15 @@ declare namespace JQueryUI
     "ui-selectmenu-optgroup"?: string | undefined;
   }
 
-  interface SelectMenuUIParams
-  {
+  interface SelectMenuUIParams {
     item?: JQuery | undefined;
   }
 
-  interface SelectMenuEvent
-  {
+  interface SelectMenuEvent {
     (event: JQueryEventObject, ui: SelectMenuUIParams): void;
   }
 
-  interface SelectMenuEvents
-  {
+  interface SelectMenuEvents {
     change?: SelectMenuEvent | undefined;
     close?: SelectMenuEvent | undefined;
     create?: SelectMenuEvent | undefined;
@@ -770,14 +711,12 @@ declare namespace JQueryUI
     select?: SelectMenuEvent | undefined;
   }
 
-  interface SelectMenu extends Widget, SelectMenuOptions
-  {
+  interface SelectMenu extends Widget, SelectMenuOptions {
   }
 
   // Slider //////////////////////////////////////////////////
 
-  interface SliderOptions extends SliderEvents
-  {
+  interface SliderOptions extends SliderEvents {
     animate?: any; // boolean, string or number
     disabled?: boolean | undefined;
     max?: number | undefined;
@@ -791,8 +730,7 @@ declare namespace JQueryUI
     classes?: SliderClasses | undefined;
   }
 
-  interface SliderClasses
-  {
+  interface SliderClasses {
     "ui-slider"?: string | undefined;
     "ui-slider-horizontal"?: string | undefined;
     "ui-slider-vertical"?: string | undefined;
@@ -802,20 +740,17 @@ declare namespace JQueryUI
     "ui-slider-range-max"?: string | undefined;
   }
 
-  interface SliderUIParams
-  {
+  interface SliderUIParams {
     handle?: JQuery | undefined;
     value?: number | undefined;
     values?: number[] | undefined;
   }
 
-  interface SliderEvent
-  {
+  interface SliderEvent {
     (event: JQueryEventObject, ui: SliderUIParams): void;
   }
 
-  interface SliderEvents
-  {
+  interface SliderEvents {
     change?: SliderEvent | undefined;
     create?: SliderEvent | undefined;
     slide?: SliderEvent | undefined;
@@ -823,14 +758,12 @@ declare namespace JQueryUI
     stop?: SliderEvent | undefined;
   }
 
-  interface Slider extends Widget, SliderOptions
-  {
+  interface Slider extends Widget, SliderOptions {
   }
 
   // Sortable //////////////////////////////////////////////////
 
-  interface SortableOptions extends SortableEvents
-  {
+  interface SortableOptions extends SortableEvents {
     appendTo?: any; // jQuery, Element, Selector or string
     attribute?: string | undefined;
     axis?: string | undefined;
@@ -859,8 +792,7 @@ declare namespace JQueryUI
     zIndex?: number | undefined;
   }
 
-  interface SortableUIParams
-  {
+  interface SortableUIParams {
     helper: JQuery;
     item: JQuery;
     offset: any;
@@ -870,13 +802,11 @@ declare namespace JQueryUI
     placeholder: JQuery;
   }
 
-  interface SortableEvent
-  {
+  interface SortableEvent {
     (event: JQueryEventObject, ui: SortableUIParams): void;
   }
 
-  interface SortableEvents
-  {
+  interface SortableEvents {
     activate?: SortableEvent | undefined;
     beforeStop?: SortableEvent | undefined;
     change?: SortableEvent | undefined;
@@ -891,14 +821,12 @@ declare namespace JQueryUI
     update?: SortableEvent | undefined;
   }
 
-  interface Sortable extends Widget, SortableOptions, SortableEvents
-  {
+  interface Sortable extends Widget, SortableOptions, SortableEvents {
   }
 
   // Spinner //////////////////////////////////////////////////
 
-  interface SpinnerOptions extends SpinnerEvents
-  {
+  interface SpinnerOptions extends SpinnerEvents {
     culture?: string | undefined;
     disabled?: boolean | undefined;
     icons?: any;
@@ -910,18 +838,15 @@ declare namespace JQueryUI
     step?: any; // number or string
   }
 
-  interface SpinnerUIParam
-  {
+  interface SpinnerUIParam {
     value: number;
   }
 
-  interface SpinnerEvent<T>
-  {
+  interface SpinnerEvent<T> {
     (event: JQueryEventObject, ui: T): void;
   }
 
-  interface SpinnerEvents
-  {
+  interface SpinnerEvents {
     change?: SpinnerEvent<{}> | undefined;
     create?: SpinnerEvent<{}> | undefined;
     spin?: SpinnerEvent<SpinnerUIParam> | undefined;
@@ -929,14 +854,12 @@ declare namespace JQueryUI
     stop?: SpinnerEvent<{}> | undefined;
   }
 
-  interface Spinner extends Widget, SpinnerOptions
-  {
+  interface Spinner extends Widget, SpinnerOptions {
   }
 
   // Tabs //////////////////////////////////////////////////
 
-  interface TabsOptions extends TabsEvents
-  {
+  interface TabsOptions extends TabsEvents {
     active?: any; // boolean or number
     classes?: TabClasses | undefined;
     collapsible?: boolean | undefined;
@@ -947,8 +870,7 @@ declare namespace JQueryUI
     show?: any; // boolean, number, string or object
   }
 
-  interface TabClasses
-  {
+  interface TabClasses {
     "ui-tabs"?: string | undefined;
     "ui-tabs-collapsible"?: string | undefined;
     "ui-tabs-nav"?: string | undefined;
@@ -959,35 +881,30 @@ declare namespace JQueryUI
     "ui-tabs-panel"?: string | undefined;
   }
 
-  interface TabsActivationUIParams
-  {
+  interface TabsActivationUIParams {
     newTab: JQuery;
     oldTab: JQuery;
     newPanel: JQuery;
     oldPanel: JQuery;
   }
 
-  interface TabsBeforeLoadUIParams
-  {
+  interface TabsBeforeLoadUIParams {
     tab: JQuery;
     panel: JQuery;
     jqXHR: JQueryXHR;
     ajaxSettings: any;
   }
 
-  interface TabsCreateOrLoadUIParams
-  {
+  interface TabsCreateOrLoadUIParams {
     tab: JQuery;
     panel: JQuery;
   }
 
-  interface TabsEvent<UI>
-  {
+  interface TabsEvent<UI> {
     (event: JQueryEventObject, ui: UI): void;
   }
 
-  interface TabsEvents
-  {
+  interface TabsEvents {
     activate?: TabsEvent<TabsActivationUIParams> | undefined;
     beforeActivate?: TabsEvent<TabsActivationUIParams> | undefined;
     beforeLoad?: TabsEvent<TabsBeforeLoadUIParams> | undefined;
@@ -995,14 +912,12 @@ declare namespace JQueryUI
     create?: TabsEvent<TabsCreateOrLoadUIParams> | undefined;
   }
 
-  interface Tabs extends Widget, TabsOptions
-  {
+  interface Tabs extends Widget, TabsOptions {
   }
 
   // Tooltip //////////////////////////////////////////////////
 
-  interface TooltipOptions extends TooltipEvents
-  {
+  interface TooltipOptions extends TooltipEvents {
     content?: any; // () or string
     disabled?: boolean | undefined;
     hide?: any; // boolean, number, string or object
@@ -1014,121 +929,101 @@ declare namespace JQueryUI
     classes?: {[key: string]: string;} | undefined;
   }
 
-  interface TooltipUIParams
-  {
+  interface TooltipUIParams {
     tooltip: JQuery;
   }
 
-  interface TooltipEvent
-  {
+  interface TooltipEvent {
     (event: JQueryEventObject, ui: TooltipUIParams): void;
   }
 
-  interface TooltipEvents
-  {
+  interface TooltipEvents {
     close?: TooltipEvent | undefined;
     open?: TooltipEvent | undefined;
   }
 
-  interface Tooltip extends Widget, TooltipOptions
-  {
+  interface Tooltip extends Widget, TooltipOptions {
   }
 
   // Effects //////////////////////////////////////////////////
 
-  interface EffectOptions
-  {
+  interface EffectOptions {
     effect: string;
     easing?: string | undefined;
     duration?: number | undefined;
     complete: Function;
   }
 
-  interface BlindEffect
-  {
+  interface BlindEffect {
     direction?: string | undefined;
   }
 
-  interface BounceEffect
-  {
+  interface BounceEffect {
     distance?: number | undefined;
     times?: number | undefined;
   }
 
-  interface ClipEffect
-  {
+  interface ClipEffect {
     direction?: number | undefined;
   }
 
-  interface DropEffect
-  {
+  interface DropEffect {
     direction?: number | undefined;
   }
 
-  interface ExplodeEffect
-  {
+  interface ExplodeEffect {
     pieces?: number | undefined;
   }
 
   interface FadeEffect {}
 
-  interface FoldEffect
-  {
+  interface FoldEffect {
     size?: any;
     horizFirst?: boolean | undefined;
   }
 
-  interface HighlightEffect
-  {
+  interface HighlightEffect {
     color?: string | undefined;
   }
 
-  interface PuffEffect
-  {
+  interface PuffEffect {
     percent?: number | undefined;
   }
 
-  interface PulsateEffect
-  {
+  interface PulsateEffect {
     times?: number | undefined;
   }
 
-  interface ScaleEffect
-  {
+  interface ScaleEffect {
     direction?: string | undefined;
     origin?: string[] | undefined;
     percent?: number | undefined;
     scale?: string | undefined;
   }
 
-  interface ShakeEffect
-  {
+  interface ShakeEffect {
     direction?: string | undefined;
     distance?: number | undefined;
     times?: number | undefined;
   }
 
-  interface SizeEffect
-  {
+  interface SizeEffect {
     to?: any;
     origin?: string[] | undefined;
     scale?: string | undefined;
   }
 
-  interface SlideEffect
-  {
+  interface SlideEffect {
     direction?: string | undefined;
     distance?: number | undefined;
   }
 
-  interface TransferEffect
-  {
+  interface TransferEffect {
     className?: string | undefined;
     to?: string | undefined;
   }
 
-  interface JQueryPositionOptions
-  {
+  interface JQueryPositionOptions {
     my?: string | undefined;
     at?: string | undefined;
     of?: any;
@@ -1139,15 +1034,13 @@ declare namespace JQueryUI
 
   // UI //////////////////////////////////////////////////
 
-  interface MouseOptions
-  {
+  interface MouseOptions {
     cancel?: string | undefined;
     delay?: number | undefined;
     distance?: number | undefined;
   }
 
-  interface KeyCode
-  {
+  interface KeyCode {
     BACKSPACE: number;
     COMMA: number;
     DELETE: number;
@@ -1172,8 +1065,7 @@ declare namespace JQueryUI
     UP: number;
   }
 
-  interface UI
-  {
+  interface UI {
     mouse (method: string): JQuery;
     mouse (options: MouseOptions): JQuery;
     mouse (optionLiteral: string, optionName: string, optionValue: any): JQuery;
@@ -1198,15 +1090,13 @@ declare namespace JQueryUI
 
   // Widget //////////////////////////////////////////////////
 
-  interface WidgetOptions
-  {
+  interface WidgetOptions {
     disabled?: boolean | undefined;
     hide?: any;
     show?: any;
   }
 
-  interface WidgetCommonProperties
-  {
+  interface WidgetCommonProperties {
     element: JQuery;
     defaultElement: string;
     document: Document;
@@ -1217,8 +1107,7 @@ declare namespace JQueryUI
     window: Window;
   }
 
-  interface Widget
-  {
+  interface Widget {
     (methodName: string): JQuery;
     (options: WidgetOptions): JQuery;
     (options: AccordionOptions): JQuery;
@@ -1233,8 +1122,7 @@ declare namespace JQueryUI
   ////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-interface JQuery
-{
+interface JQuery {
   accordion (): JQuery;
   accordion (methodName: "destroy"): void;
   accordion (methodName: "disable"): void;
@@ -2112,16 +2000,14 @@ interface JQuery
   jQuery: JQueryStatic;
 }
 
-interface JQueryStatic
-{
+interface JQueryStatic {
   ui: JQueryUI.UI;
   datepicker: JQueryUI.Datepicker;
   widget: JQueryUI.Widget;
   Widget: JQueryUI.Widget;
 }
 
-interface JQueryEasingFunctions
-{
+interface JQueryEasingFunctions {
   easeInQuad: JQueryEasingFunction;
   easeOutQuad: JQueryEasingFunction;
   easeInOutQuad: JQueryEasingFunction;

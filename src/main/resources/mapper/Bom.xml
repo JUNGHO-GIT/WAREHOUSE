@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.BomDAO">
 
   <select
   	id="listBom"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Product"
+  	resultType="Product"
   >
     <![CDATA[
     SELECT
@@ -40,11 +44,11 @@
     </if>
   </select>
 
-  <!-- Bom.showBom  -->
+  <!-- Bom.showBom -->
   <select
   	id="showBom"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Resource"
+  	resultType="Resource"
   >
     <![CDATA[
     SELECT
@@ -92,7 +96,7 @@
   <!-- Bom.saveBom -->
   <select
   	id="saveBom"
-  	parameterType="com.WAREHOUSE.container.Bom"
+  	parameterType="Bom"
   	resultType="Integer"
   >
 		CALL sp_Bom (

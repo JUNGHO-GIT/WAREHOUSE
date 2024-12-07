@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ReportDAO">
 
-  <!-- Report.listReportProdIn  -->
+  <!-- Report.listReportProdIn -->
   <select
   	id="listReportProdIn"
   	parameterType="hashmap"
@@ -45,7 +49,7 @@
     ORDER BY Z.prodNm
   </select>
 
-  <!-- Report.listReportResrcIn  -->
+  <!-- Report.listReportResrcIn -->
   <select
   	id="listReportResrcIn"
   	parameterType="hashmap"
@@ -87,7 +91,7 @@
     ORDER BY Z.resrcNm
   </select>
 
-  <!-- Report.listReportProdOut  -->
+  <!-- Report.listReportProdOut -->
   <select
   	id="listReportProdOut"
   	parameterType="hashmap"
@@ -129,7 +133,7 @@
     ORDER BY Z.prodNm
   </select>
 
-  <!-- Report.listReportResrcOut  -->
+  <!-- Report.listReportResrcOut -->
   <select
   	id="listReportResrcOut"
   	parameterType="hashmap"

@@ -110,13 +110,13 @@ function fnGetList01 () {
       minWidth:70, maxWidth:70, render: obj.renderImage,
     },
     {dataIndx:"prodCd", title:"제품코드", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {dataIndx:"compCd", title:"거래처코드", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {dataIndx:"houseCd", title:"창고코드", dataType:"integer", align:"center",
-      hidden:true, editable:false,
+      hidden:true
     },
     {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center",,
       minWidth:200, hidden:false, editable:false,

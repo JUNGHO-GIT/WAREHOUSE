@@ -1,7 +1,6 @@
 /// jquery/jquery-static.d.ts
 
-interface JQueryStatic
-{
+interface JQueryStatic {
   /**
    * @see \`{@link https://api.jquery.com/jquery.ajax/#jQuery-ajax1 }\`
    * @deprecated ​ Deprecated. Use \`{@link ajaxSetup }\`.
@@ -2115,8 +2114,7 @@ span {
 <script>
 function stub() {}
 var objs = [
-function() {},
-{ x:15, y:20 },
+function() {}, { x:15, y:20 },
 null,
 stub,
 "function"

@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.UserConfigDAO">
 
-  <!-- UserConfig.showUserConfigTab  -->
+  <!-- UserConfig.showUserConfigTab -->
   <select
   	id="showUserConfigTab"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.UserConfig"
+  	resultType="UserConfig"
   >
   	SELECT
       config
@@ -19,11 +23,11 @@
       issueDate DESC limit 1
   </select>
 
-  <!-- UserConfig.showUserConfigInfo  -->
+  <!-- UserConfig.showUserConfigInfo -->
   <select
   	id="showUserConfigInfo"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.UserConfig"
+  	resultType="UserConfig"
   >
   	SELECT
       userID userConfigID,
@@ -54,7 +58,7 @@
       userID = #{userConfigID}
   </update>
 
-  <!-- UserConfig.saveUserConfigTab  -->
+  <!-- UserConfig.saveUserConfigTab -->
   <select
   	id="saveUserConfigTab"
   	parameterType="hashmap"
@@ -71,7 +75,7 @@
     );
   </select>
 
-  <!-- UserConfig.saveUserConfigInfo  -->
+  <!-- UserConfig.saveUserConfigInfo -->
   <select
   	id="saveUserConfigInfo"
   	parameterType="hashmap"

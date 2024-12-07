@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.CommonDAO">
 
@@ -7,7 +11,7 @@
   <select
   	id="findBom"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Product"
+  	resultType="Product"
   >
     <![CDATA[
     SELECT
@@ -38,60 +42,11 @@
     </if>
   </select>
 
-  <!-- Common.findCompNm  -->
-  <select
-  	id="findCompNm"
-  	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Company"
-  >
-    <![CDATA[
-    SELECT
-      A.compCd, A.compNm
-    FROM (
-      SELECT compCd, compNm
-      FROM tblCompany
-      WHERE flagYN = 'Y'
-    ) A
-    ]]>
-    <if test='findCompNm!="" and findCompNm!=null'>
-		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
-		</if>
-		ORDER BY A.compCd ASC;
-  </select>
-
-  <!-- Common.findCompCd  -->
-  <select
-  	id="findCompCd"
-  	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Company"
-  >
-    <![CDATA[
-    SELECT
-      A.compCd, A.compNm
-    FROM (
-      SELECT compCd, compNm
-      FROM tblCompany
-      WHERE flagYN = 'Y'
-    ) A
-    ]]>
-    <choose>
-      <when test='findCompNm!="" and findCompNm!=null'>
-        WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
-      </when>
-      <otherwise>
-        <if test='findCompCd!="" and findCompCd!=null'>
-          WHERE A.compCd = #{findCompCd}
-        </if>
-      </otherwise>
-    </choose>
-    ORDER BY A.compCd ASC;
-  </select>
-
-  <!-- Common.findProdNm  -->
+  <!-- Common.findProdNm -->
   <select
   	id="findProdNm"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Product"
+  	resultType="Product"
   >
 		<![CDATA[
     SELECT
@@ -120,11 +75,11 @@
 		ORDER BY A.prodNm ASC
   </select>
 
-  <!-- Common.findProdCd  -->
+  <!-- Common.findProdCd -->
   <select
   	id="findProdCd"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Product"
+  	resultType="Product"
   >
     <![CDATA[
     SELECT
@@ -160,11 +115,11 @@
     ORDER BY A.prodNm ASC
   </select>
 
-  <!-- Common.findResrcNm  -->
+  <!-- Common.findResrcNm -->
   <select
   	id="findResrcNm"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Resource"
+  	resultType="Resource"
   >
     <![CDATA[
     SELECT
@@ -193,11 +148,11 @@
     ORDER BY A.resrcNm ASC
   </select>
 
-  <!-- Common.findResrcCd  -->
+  <!-- Common.findResrcCd -->
   <select
   	id="findResrcCd"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Resource"
+  	resultType="Resource"
   >
     <![CDATA[
     SELECT
@@ -233,11 +188,11 @@
     ORDER BY A.resrcNm ASC
   </select>
 
-  <!-- Common.findHouseNm  -->
+  <!-- Common.findHouseNm -->
   <select
   	id="findHouseNm"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.House"
+  	resultType="House"
   >
     <![CDATA[
     SELECT
@@ -248,17 +203,17 @@
       WHERE flagYN = 'Y'
     ) A
     ]]>
-    <if test='findHouseNm!="" and findHouseNm!=null'>
+    <if test='findHouseNm != "" and findHouseNm != null'>
 		  WHERE A.houseNm LIKE CONCAT('%', #{findHouseNm}, '%')
 		</if>
 		ORDER BY A.houseCd ASC;
   </select>
 
-  <!-- Common.findHouseCd  -->
+  <!-- Common.findHouseCd -->
   <select
   	id="findHouseCd"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.House"
+  	resultType="House"
   >
     <![CDATA[
     SELECT
@@ -280,6 +235,55 @@
       </otherwise>
     </choose>
     ORDER BY A.houseCd ASC
+  </select>
+
+  <!-- Common.findCompNm -->
+  <select
+  	id="findCompNm"
+  	parameterType="hashmap"
+  	resultType="Company"
+  >
+    <![CDATA[
+    SELECT
+      A.compCd, A.compNm
+    FROM (
+      SELECT compCd, compNm
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <if test='findCompNm!="" and findCompNm!=null'>
+		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
+		</if>
+		ORDER BY A.compCd ASC;
+  </select>
+
+  <!-- Common.findCompCd -->
+  <select
+  	id="findCompCd"
+  	parameterType="hashmap"
+  	resultType="Company"
+  >
+    <![CDATA[
+    SELECT
+      A.compCd, A.compNm
+    FROM (
+      SELECT compCd, compNm
+      FROM tblCompany
+      WHERE flagYN = 'Y'
+    ) A
+    ]]>
+    <choose>
+      <when test='findCompNm!="" and findCompNm!=null'>
+        WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
+      </when>
+      <otherwise>
+        <if test='findCompCd!="" and findCompCd!=null'>
+          WHERE A.compCd = #{findCompCd}
+        </if>
+      </otherwise>
+    </choose>
+    ORDER BY A.compCd ASC;
   </select>
 
 </mapper>

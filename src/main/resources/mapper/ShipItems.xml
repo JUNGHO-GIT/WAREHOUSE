@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ShipItemsDAO">
 
-  <!-- ShipItems.listShipItems  -->
+  <!-- ShipItems.listShipItems -->
   <select
   	id="listShipItems"
   	parameterType="hashmap"
@@ -40,7 +44,7 @@
       A.shipCd DESC
   </select>
 
-  <!-- ShipItems.listShipItemsDetail  -->
+  <!-- ShipItems.listShipItemsDetail -->
   <select
   	id="listShipItemsDetail"
   	parameterType="hashmap"
@@ -83,7 +87,7 @@
       A.shipCd DESC;
   </select>
 
-  <!-- ShipItems.showShipItems  -->
+  <!-- ShipItems.showShipItems -->
   <select
   	id="showShipItems"
   	parameterType="hashmap"
@@ -122,7 +126,7 @@
 
   <select
   	id="saveShipItems"
-  	parameterType="com.WAREHOUSE.container.Shipping"
+  	parameterType="Shipping"
   >
     /* ShipItems.saveShipItems */
     CALL sp_Shipping (

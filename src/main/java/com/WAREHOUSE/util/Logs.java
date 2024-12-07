@@ -83,11 +83,10 @@ public class Logs {
     }
 
     String message = String.format(
-      "%s\n%s%s\n%s%s\n%s\n",
+      "%s\n%s%s\n%s%s\n",
       divider,
       timeStr, levelStr,
-      prefixStr, formattedMessage,
-      divider
+      prefixStr, formattedMessage
     );
 
     System.out.println(message);

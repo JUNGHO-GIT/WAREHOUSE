@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ShippingDAO">
 
-  <!-- Shipping.listShipping  -->
+  <!-- Shipping.listShipping -->
   <select
   	id="listShipping"
   	parameterType="hashmap"
@@ -32,7 +36,7 @@
 
   <select
   	id="saveShipping"
-  	parameterType="com.WAREHOUSE.container.Shipping"
+  	parameterType="Shipping"
   >
     /* Shipping.saveShipping */
     CALL sp_Shipping (

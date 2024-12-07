@@ -45,6 +45,7 @@
   <script defer src="${rsPath}/scripts/libs/bootstrap-datepicker.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/crypto.min.js"></script>
   <script defer src="${rsPath}/scripts/commons/common.js"></script>
+  <script defer src="${rsPath}/scripts/commons/dom.js"></script>
   <script defer src="${rsPath}/scripts/commons/init.js"></script>
   <script defer src="${rsPath}/scripts/commons/files.js"></script>
   <script defer src="${rsPath}/scripts/commons/script.js"></script>

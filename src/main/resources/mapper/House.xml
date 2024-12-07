@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.HouseDAO">
 
@@ -7,7 +11,7 @@
   <select
   	id="listHouse"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.House"
+  	resultType="House"
   >
     <![CDATA[
     SELECT
@@ -32,7 +36,7 @@
       A.houseOrder
   </select>
 
-  <!-- House.showHousePerProduct  -->
+  <!-- House.showHousePerProduct -->
   <select
   	id="showHousePerProduct"
   	parameterType="hashmap"
@@ -117,7 +121,7 @@
   <!-- House.saveHouse -->
   <select
   	id="saveHouse"
-  	parameterType="com.WAREHOUSE.container.House"
+  	parameterType="House"
   	resultType="hashmap"
   >
     CALL sp_House (

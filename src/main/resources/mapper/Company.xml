@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.CompanyDAO">
 
-  <!-- Company.listCompany  -->
+  <!-- Company.listCompany -->
   <select
   	id="listCompany"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Company"
+  	resultType="Company"
   >
     <![CDATA[
     SELECT
@@ -35,11 +39,11 @@
 		ORDER BY A.compNm ASC
   </select>
 
-  <!-- Company.showCompany  -->
+  <!-- Company.showCompany -->
   <select
   	id="showCompany"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Company"
+  	resultType="Company"
   >
     <![CDATA[
     SELECT
@@ -53,10 +57,10 @@
     ]]>
   </select>
 
-  <!-- Company.saveCompany  -->
+  <!-- Company.saveCompany -->
   <select
   	id="saveCompany"
-  	parameterType="com.WAREHOUSE.container.Company"
+  	parameterType="Company"
   	resultType="Integer"
   >
 		CALL sp_Company (

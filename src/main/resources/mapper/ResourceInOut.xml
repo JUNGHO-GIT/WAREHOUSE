@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceInOutDAO">
 
-  <!-- ResourceInOut.listResourceInOut  -->
+  <!-- ResourceInOut.listResourceInOut -->
   <select
   	id="listResourceInOut"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.ResourceInOut"
+  	resultType="ResourceInOut"
   >
   	<![CDATA[
 		SELECT
@@ -45,11 +49,11 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
-  <!-- ResourceInOut.showResourceInOut  -->
+  <!-- ResourceInOut.showResourceInOut -->
   <select
   	id="showResourceInOut"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.ResourceInOut"
+  	resultType="ResourceInOut"
   >
     <![CDATA[
     SELECT
@@ -80,10 +84,10 @@
     ]]>
   </select>
 
-  <!-- ResourceInOut.saveResourceInOut  -->
+  <!-- ResourceInOut.saveResourceInOut -->
   <select
   	id="saveResourceInOut"
-  	parameterType="com.WAREHOUSE.container.ResourceInOut"
+  	parameterType="ResourceInOut"
   	resultType="Integer"
   >
     CALL sp_ResourceInOut (

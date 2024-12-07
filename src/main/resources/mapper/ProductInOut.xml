@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ProductInOutDAO">
 
-  <!-- ProductInOut.listProductInOut  -->
+  <!-- ProductInOut.listProductInOut -->
   <select
   	id="listProductInOut"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.ProductInOut"
+  	resultType="ProductInOut"
   >
 		<![CDATA[
 		SELECT
@@ -45,11 +49,11 @@
       A.inOutDt DESC, A.issueDate DESC
   </select>
 
-  <!-- ProductInOut.showProductInOut  -->
+  <!-- ProductInOut.showProductInOut -->
   <select
   	id="showProductInOut"
   	parameterType="int"
-  	resultType="com.WAREHOUSE.container.ProductInOut"
+  	resultType="ProductInOut"
   >
     <![CDATA[
     SELECT
@@ -80,10 +84,10 @@
     ]]>
   </select>
 
-  <!-- ProductInOut.saveProductInOut  -->
+  <!-- ProductInOut.saveProductInOut -->
   <select
   	id="saveProductInOut"
-  	parameterType="com.WAREHOUSE.container.ProductInOut"
+  	parameterType="ProductInOut"
   	resultType="Integer"
   >
     CALL sp_ProductInOut (

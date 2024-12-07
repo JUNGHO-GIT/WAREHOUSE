@@ -11,7 +11,7 @@ function fnInOutChart(keyParam, inOutParam, planParam, dateParam) {
     url: `act/dash?key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
     type: "POST",
     dataType:"JSON",
-    success: function(data) {
+    success: (data) => {
 
       var dashBoardData = data[downStr];
 
@@ -109,7 +109,7 @@ function fnPie(keyParam, inOutParam, planParam, dateParam) {
     url: `act/dash?key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
     type: "POST",
     dataType:"JSON",
-    success: function(data) {
+    success: (data) => {
 
       var dashBoardData = data[downStr];
 

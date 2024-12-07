@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
 
 <mapper namespace="com.WAREHOUSE.dao.ResourceDAO">
 
-  <!-- Resource.listResource  -->
+  <!-- Resource.listResource -->
   <select
   	id="listResource"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Resource"
+  	resultType="Resource"
   >
 		<![CDATA[
     SELECT
@@ -63,11 +67,11 @@
     ) DESC
   </select>
 
-  <!-- Resource.showResource  -->
+  <!-- Resource.showResource -->
   <select
   	id="showResource"
   	parameterType="hashmap"
-  	resultType="com.WAREHOUSE.container.Resource"
+  	resultType="Resource"
   >
     <![CDATA[
     SELECT
@@ -105,10 +109,10 @@
     ]]>
   </select>
 
-  <!-- Resource.saveResource  -->
+  <!-- Resource.saveResource -->
   <select
   	id="saveResource"
-  	parameterType="com.WAREHOUSE.container.Resource"
+  	parameterType="Resource"
   	resultType="Integer"
   >
     CALL sp_Resource (

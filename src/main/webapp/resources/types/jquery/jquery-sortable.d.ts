@@ -3,18 +3,15 @@
 /// <reference path="jquery.d.ts" />
 /// <reference path="jquery-ui.d.ts" />
 
-declare namespace JQuerySortable
-{
-  interface Position
-  {
+declare namespace JQuerySortable {
+  interface Position {
     top: number;
     left: number;
   }
 
   type Dimensions = number[];
 
-  interface ContainerGroup
-  {
+  interface ContainerGroup {
     $document: JQuery;
     containerDimensions: Dimensions[];
     containers: Container[];
@@ -37,8 +34,7 @@ declare namespace JQuerySortable
     scrollProxy: any;
   }
 
-  interface Container
-  {
+  interface Container {
     el: JQuery;
     options: Options;
     group: ContainerGroup;
@@ -62,8 +58,7 @@ declare namespace JQuerySortable
   // Deliberately typing $children as an any here as it makes it much easier to use. Actual type is JQuery | any[]
   type SerializeFunc = ($parent: JQuery, $children: any, parentIsContainer: boolean) => void;
 
-  interface GroupOptions
-  {
+  interface GroupOptions {
     afterMove?: (($placeholder: JQuery, container: Container, $closestItemOrContainer: JQuery) => void) | undefined;
     containerPath?: string | undefined;
     containerSelector?: string | undefined;
@@ -84,8 +79,7 @@ declare namespace JQuerySortable
     tolerance?: number | undefined;
   }
 
-  interface ContainerOptions
-  {
+  interface ContainerOptions {
     drag?: boolean | undefined;
     drop?: boolean | undefined;
     exclude?: string | undefined;
@@ -93,14 +87,12 @@ declare namespace JQuerySortable
     vertical?: boolean | undefined;
   }
 
-  interface Options extends GroupOptions, ContainerOptions
-  {
+  interface Options extends GroupOptions, ContainerOptions {
     group?: string | undefined;
   }
 }
 
-interface JQuery
-{
+interface JQuery {
   sortable (methodName: "enable"): JQuery;
   sortable (methodName: "disable"): JQuery;
   sortable (methodName: "refresh"): JQuery;

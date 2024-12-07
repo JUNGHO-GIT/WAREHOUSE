@@ -1,7 +1,6 @@
 /// jquery/jquery.d.ts
 
-interface JQuery<TElement = HTMLElement> extends Iterable<TElement>
-{
+interface JQuery<TElement = HTMLElement> extends Iterable<TElement> {
   /**
    * A string containing the jQuery version number.
    * @see \`{@link https://api.jquery.com/jquery-2/#jquery1 }\`

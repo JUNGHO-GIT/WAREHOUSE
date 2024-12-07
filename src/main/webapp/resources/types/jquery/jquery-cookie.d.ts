@@ -2,8 +2,7 @@
 
 /// <reference path="jquery.d.ts" />
 
-interface JQueryCookieOptions
-{
+interface JQueryCookieOptions {
   /**
    * Define lifetime of the cookie. Value can be a Number which will be interpreted as days from time of creation or a Date object. If omitted, the cookie becomes a session cookie.
    */
@@ -28,8 +27,7 @@ interface JQueryCookieOptions
 // The ordering here matters. For example, the read function with the converter parameter is purposefully after
 // the set function. This is because the intellisense that shows up after you press comma should be the set first,
 // since that is more common, then the conversion function if user starts typing a parameter with a function type
-interface JQueryCookieStatic
-{
+interface JQueryCookieStatic {
   /**
    * By default the cookie value is encoded/decoded when writing/reading, using encodeURIComponent/decodeURIComponent. Bypass this by setting raw to true:
    */
@@ -85,8 +83,7 @@ interface JQueryCookieStatic
   (name: string, value: any, options: JQueryCookieOptions): void;
 }
 
-interface JQueryStatic
-{
+interface JQueryStatic {
   /**
    * A simple, lightweight jQuery plugin for reading, writing and deleting cookies.
    */
