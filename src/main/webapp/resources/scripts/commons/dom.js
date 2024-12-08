@@ -3,31 +3,29 @@
 * @return {Element | null}
 * @desc 쿼리 셀렉터
 **/
-function getElem(el) {
+function getEl(el) {
   const element = document.querySelector(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.warn(`getElem: '${el}' not found`);
+
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
 * @param {string} el
-* @return {NodeListOf<Element>}
+* @return {NodeListOf<Element> | []}
 * @desc 쿼리 셀렉터 올
 **/
-function getElemAll(el) {
+function getElAll(el) {
   const elements = document.querySelectorAll(el);
-  if (elements.length > 0) {
-    return elements;
+
+  if (!elements || elements.length === 0) {
+    return [];
   }
-  else {
-    console.warn(`getElemAll: '${el}' not found`);
-    return elements;
-  }
+
+  return elements;
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -37,13 +35,11 @@ function getElemAll(el) {
 **/
 function getById(el) {
   const element = document.getElementById(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.warn(`getById: '${el}' not found`);
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -53,13 +49,11 @@ function getById(el) {
 **/
 function getByClass(el) {
   const element = document.getElementsByClassName(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.warn(`getByClass: '${el}' not found`);
+  if (!element || element.length === 0) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -69,13 +63,11 @@ function getByClass(el) {
 **/
 function getByName(el) {
   const element = document.getElementsByName(el);
-  if (element) {
-    return element;
-  }
-  else {
-    console.warn(`getByName: '${el}' not found`);
+  if (!element || element.length === 0) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -85,43 +77,37 @@ function getByName(el) {
 **/
 function getFormByName(el) {
   const element = document.forms[el];
-  if (element) {
-    return element;
-  }
-  else {
-    console.warn(`getFormByName: '${el}' not found`);
+  if (!element) {
     return null;
   }
+
+  return element;
 }
 
 /** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement} el
-* @return {string}
+* @return {string | null}
 * @desc innerHTML 값 얻기
 **/
 function getInnerHTML(el) {
-  if (el && el instanceof HTMLElement) {
-    return el.innerHTML ? String(el.innerHTML).trim() : "";
+  if (!el || !(el instanceof HTMLElement)) {
+    return null;
   }
-  else {
-    console.warn(`getInnerHTML: '${el}' not found`);
-    return "";
-  }
+
+  return String(el.innerHTML).trim();
 }
 
 /** ------------------------------------------------------------------------------------------------
 * @param {HTMLElement | null} el
-* @return {string}
+* @return {string | null}
 * @desc value 값 얻기
 **/
 function getValue(el) {
-  if (el && el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement) {
-    return el.value ? String(el.value).trim() : "";
+  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
+    return null;
   }
-  else {
-    console.warn(`getValue: '${el}' not found`);
-    return "";
-  }
+
+  return String(el.value).trim();
 }
 
 /** ------------------------------------------------------------------------------------------------
@@ -131,12 +117,11 @@ function getValue(el) {
 * @desc value 값 설정
 **/
 function setValue(el, text) {
-  if (el && el instanceof HTMLInputElement) {
-    el.value = text ? String(text).trim() : "";
+  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
+    return;
   }
-  else {
-    console.warn(`setValue: '${el}' not found`);
-  }
+
+  el.value = text ? String(text).trim() : "";
 };
 
 /** ------------------------------------------------------------------------------------------------
@@ -146,10 +131,9 @@ function setValue(el, text) {
 * @desc innerHTML 값 설정
 **/
 function setInnerHTML(el, text) {
-  if (el && el instanceof HTMLElement) {
-    el.innerHTML = text ? String(text).trim() : "";
+  if (!el || !(el instanceof HTMLElement)) {
+    return;
   }
-  else {
-    console.warn(`setInnerHTML: '${el}' not found`);
-  }
+
+  el.innerHTML = text ? String(text).trim() : "";
 };

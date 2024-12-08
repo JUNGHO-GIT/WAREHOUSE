@@ -16,9 +16,9 @@
     CALL sp_ProductInOutXls (
       #{inOutDt},
       #{prodCd},
-      #{qty},
-      #{compCd},
       #{houseCd},
+      #{compCd},
+      #{qty},
       #{unitPrice},
       #{remark},
       #{flagYN},

@@ -49,7 +49,7 @@
                 <input type="hidden" id="shipCd">
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>거래처</span>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>거래처 담당자 번호</span>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>거래처 담당자</span>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>출하일</span>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>출하 담당자</span>

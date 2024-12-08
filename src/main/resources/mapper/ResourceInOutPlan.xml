@@ -87,11 +87,11 @@
       #{inOutSeq},
       #{inOutDt},
       #{resrcCd},
-      #{qty},
       #{houseCd},
+      #{compCd},
+      #{qty},
       #{unitPrice},
       #{remark},
-      #{compCd},
       #{flagYN},
       #{planYN},
       #{issueID}

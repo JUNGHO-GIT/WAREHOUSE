@@ -45,6 +45,11 @@ function fnGetList01 () {
       minWidth: 100
     },
     {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth: 70,
+      render: displayLowStock,
+    },
+    {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
       minWidth: 100,
     },
@@ -62,11 +67,6 @@ function fnGetList01 () {
       title:"재고", dataIndx:"qty", dataType:"string", align:"center",
       minWidth: 100,
       render: renderZero,
-    },
-    {
-      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 50,
-      render: displayLowStock,
     },
     {
       title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",

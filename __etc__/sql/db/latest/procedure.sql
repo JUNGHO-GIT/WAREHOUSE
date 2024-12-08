@@ -264,61 +264,6 @@ DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$
-CREATE PROCEDURE `sp_DayOff`(
-	IN `@offSeq` INT(10),
-	IN `@userID` VARCHAR(20),
-	IN `@offDate` VARCHAR(500),
-	IN `@restCnt` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
-)
-BEGIN
-  DECLARE `@isCd` INTEGER DEFAULT 0;
-
-	SELECT COUNT(*) INTO `@isCd`
-  FROM tblDayOff
-  WHERE offSeq=`@offSeq`;
-
-	IF `@isCd`=0 THEN
-    INSERT INTO tblDayOff (
-      userID,
-      offDate,
-      unitQty,
-      restCnt,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
-    )
-    VALUES (
-      `@userID`,
-      `@offDate`,
-      `@unitQty`,
-      `@restCnt`,
-      `@flagYN`,
-      NOW(),
-      NOW(),
-      `@issueID`
-    );
-  ELSE
-    UPDATE
-      tblDayOff
-    SET
-      userID=`@userID`,
-      offDate=`@offDate`,
-      unitQty=`@unitQty`,
-      restCnt=`@restCnt`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
-    WHERE
-      offSeq=`@offSeq`;
-  END IF;
-END $$
-DELIMITER ;
-
-/**************************************************************************************************/
-DELIMITER $$
 CREATE PROCEDURE `sp_Files`(
 	IN `@fileSeq` INT(20),
 	IN `@tableNm` VARCHAR(20),
@@ -444,6 +389,7 @@ CREATE PROCEDURE `sp_Product`(
 	IN `@prodNm` VARCHAR(300),
 	IN `@prodType` VARCHAR(5),
 	IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
 	IN `@protectedQty` SMALLINT(10),
 	IN `@quality` VARCHAR(50),
 	IN `@unit` VARCHAR(5),
@@ -451,7 +397,6 @@ CREATE PROCEDURE `sp_Product`(
 	IN `@option2` VARCHAR(50),
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
-	IN `@compCd` INT(10),
 	IN `@remark` VARCHAR(3000),
 	IN `@flagYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
@@ -469,6 +414,7 @@ BEGIN
       prodNm,
       prodType,
       houseCd,
+      compCd,
       protectedQty,
       quality,
       unit,
@@ -476,7 +422,6 @@ BEGIN
       option2,
       maker,
       unitPrice,
-      compCd,
       remark,
       flagYN,
       regDate,
@@ -487,6 +432,7 @@ BEGIN
       `@prodNm`,
       `@prodType`,
       `@houseCd`,
+      `@compCd`,
       `@protectedQty`,
       `@quality`,
       `@unit`,
@@ -494,7 +440,6 @@ BEGIN
       `@option2`,
       `@maker`,
       `@unitPrice`,
-      `@compCd`,
       `@remark`,
       `@flagYN`,
       NOW(),
@@ -508,6 +453,7 @@ BEGIN
       prodNm=`@prodNm`,
       prodType=`@prodType`,
       houseCd=`@houseCd`,
+      compCd=`@compCd`,
       protectedQty=`@protectedQty`,
       quality=`@quality`,
       unit=`@unit`,
@@ -515,7 +461,6 @@ BEGIN
       option2=`@option2`,
       maker=`@maker`,
       unitPrice=`@unitPrice`,
-      compCd=`@compCd`,
       remark=`@remark`,
       flagYN=`@flagYN`,
       issueDate=NOW(),
@@ -544,12 +489,13 @@ CREATE PROCEDURE `sp_ProductInOut`(
 	IN `@inOutSeq` INT(10),
 	IN `@inOutDt` VARCHAR(10),
 	IN `@prodCd` INT(10),
-	IN `@qty` INT(10),
 	IN `@houseCd` INT(10),
+	IN `@compCd` INT(10),
+	IN `@qty` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
 	IN `@remark` VARCHAR(1000),
-	IN `@compCd` INT(10),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -563,12 +509,13 @@ BEGIN
     INSERT INTO tblProductInOut (
       inOutDt,
       prodCd,
-      qty,
       houseCd,
+      compCd,
+      qty,
       unitPrice,
       remark,
-      compCd,
       flagYN,
+      planYN,
       regDate,
       issueDate,
       issueID
@@ -576,12 +523,13 @@ BEGIN
     VALUES (
       `@inOutDt`,
       `@prodCd`,
-      `@qty`,
       `@houseCd`,
+      `@compCd`,
+      `@qty`,
       `@unitPrice`,
       `@remark`,
-      `@compCd`,
       `@flagYN`,
+      `@planYN`,
       NOW(),
       NOW(),
       `@issueID`
@@ -598,6 +546,7 @@ BEGIN
       remark=`@remark`,
       compCd=`@compCd`,
       flagYN=`@flagYN`,
+      planYN=`@planYN`,
       issueDate=NOW(),
       issueID=`@issueID`
     WHERE
@@ -608,104 +557,30 @@ DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$
-CREATE PROCEDURE `sp_ProductInOutXls`(
-	IN `@inOutDt` VARCHAR(10),
-	IN `@prodNm` VARCHAR(1000),
-	IN `@qty` INT(10),
-  IN `@compNm` VARCHAR(1000),
-	IN `@houseNm` VARCHAR(1000),
-	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
-)
-BEGIN
-  DECLARE `@prodCd` INTEGER DEFAULT 0;
-	DECLARE `@houseCd` INTEGER DEFAULT 0;
-	DECLARE `@compCd` INTEGER DEFAULT 0;
-
-	SELECT prodCd INTO `@prodCd`
-  FROM tblProduct
-  WHERE prodNm=`@prodNm`;
-
-	SELECT compCd INTO `@compCd`
-  FROM tblCompany
-  WHERE compNm=`@compNm`;
-
-	SELECT houseCd INTO `@houseCd`
-  FROM tblHouse
-  WHERE houseNm=`@houseNm`;
-
-	INSERT INTO tblProductInOut (
-		inOutDt,
-    prodCd,
-    qty,
-    houseCd,
-    unitPrice,
-    remark,
-    compCd,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
-  )
-	VALUES (
-		`@inOutDt`,
-    `@prodCd`,
-    `@qty`,
-    `@houseCd`,
-    `@unitPrice`,
-    `@remark`,
-    `@compCd`,
-    `@flagYN`,
-    NOW(),
-    NOW(),
-    `@issueID`
-  );
-END $$
-DELIMITER ;
-
-/**************************************************************************************************/
-DELIMITER $$
 CREATE PROCEDURE `sp_ProductXls`(
-	IN `@prodNm` VARCHAR(300),
-	IN `@prodTypeNm` VARCHAR(50),
-	IN `@houseCd` INT(10),
-	IN `@protectedQty` SMALLINT(10),
-	IN `@quality` VARCHAR(50),
-	IN `@unit` VARCHAR(5),
-	IN `@option1` VARCHAR(50),
-	IN `@option2` VARCHAR(50),
-	IN `@maker` VARCHAR(50),
-	IN `@unitPrice` NUMERIC(18,0),
-	IN `@compNm` VARCHAR(50),
+  IN `@prodCd` INT(10),
+  IN `@prodType` VARCHAR(5),
+  IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
+  IN `@protectedQty` SMALLINT(10),
+  IN `@quality` VARCHAR(50),
+  IN `@unit` VARCHAR(5),
+  IN `@option1` VARCHAR(50),
+  IN `@option2` VARCHAR(50),
+  IN `@maker` VARCHAR(50),
+  IN `@unitPrice` NUMERIC(18,0),
 	IN `@remark` VARCHAR(3000),
 	IN `@flagYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
-  DECLARE `@isCd` INTEGER DEFAULT 0;
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
-	DECLARE `@prodType` VARCHAR(5) DEFAULT '';
-	DECLARE `@compCd` INTEGER DEFAULT 0;
-	DECLARE `@prodCd` INTEGER DEFAULT 0;
-
-	SELECT itemCd INTO `@prodType`
-  FROM tblCommonCd
-  WHERE groupCd='0002' AND itemNm=`@prodTypeNm`;
-
-	SELECT compCd INTO `@compCd`
-  FROM tblCompany
-  WHERE compNm=`@compNm`;
-
-	SELECT COUNT(*) INTO `@isCd`
-  FROM tblProduct
-  WHERE prodCd=`@prodCd`;
 
 	INSERT INTO tblProduct (
-		prodNm,
+		prodCd,
     prodType,
     houseCd,
+    compCd,
     protectedQty,
     quality,
     unit,
@@ -713,17 +588,17 @@ BEGIN
     option2,
     maker,
     unitPrice,
-    compCd,
     remark,
     flagYN,
     regDate,
     issueDate,
     issueID
-	)
-	VALUES (
-		`@prodNm`,
+  )
+  	VALUES (
+		`@prodCd`,
     `@prodType`,
     `@houseCd`,
+    `@compCd`,
     `@protectedQty`,
     `@quality`,
     `@unit`,
@@ -731,7 +606,6 @@ BEGIN
     `@option2`,
     `@maker`,
     `@unitPrice`,
-    `@compCd`,
     `@remark`,
     `@flagYN`,
     NOW(),
@@ -752,11 +626,58 @@ DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$
+CREATE PROCEDURE `sp_ProductInOutXls`(
+	IN `@inOutDt` VARCHAR(10),
+  IN `@prodCd` INT(10),
+  IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
+  IN `@qty` INT(10),
+  IN `@unitPrice` NUMERIC(15,0),
+  IN `@remark` VARCHAR(1000),
+  IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
+  IN `@issueID` VARCHAR(20)
+)
+BEGIN
+	INSERT INTO tblProductInOut (
+		inOutDt,
+    prodCd,
+    houseCd,
+    compCd,
+    qty,
+    unitPrice,
+    remark,
+    flagYN,
+    planYN,
+    regDate,
+    issueDate,
+    issueID
+  )
+	VALUES (
+		`@inOutDt`,
+    `@prodCd`,
+    `@houseCd`,
+    `@compCd`,
+    `@qty`,
+    `@unitPrice`,
+    `@remark`,
+    `@flagYN`,
+    `@planYN`,
+    NOW(),
+    NOW(),
+    `@issueID`
+  );
+END $$
+DELIMITER ;
+
+/**************************************************************************************************/
+DELIMITER $$
 CREATE PROCEDURE `sp_Resource`(
 	IN `@resrcCd` INT(10),
 	IN `@resrcNm` VARCHAR(300),
 	IN `@resrcType` VARCHAR(5),
 	IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
 	IN `@protectedQty` SMALLINT(10),
 	IN `@quality` VARCHAR(50),
 	IN `@unit` VARCHAR(5),
@@ -764,7 +685,6 @@ CREATE PROCEDURE `sp_Resource`(
   IN `@option2` VARCHAR(50),
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
-	IN `@compCd` INT(10),
 	IN `@remark` VARCHAR(3000),
 	IN `@flagYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
@@ -782,6 +702,7 @@ BEGIN
       resrcNm,
       resrcType,
       houseCd,
+      compCd,
       protectedQty,
       quality,
       unit,
@@ -789,7 +710,6 @@ BEGIN
       option2,
       maker,
       unitPrice,
-      compCd,
       remark,
       flagYN,
       regDate,
@@ -800,6 +720,7 @@ BEGIN
       `@resrcNm`,
       `@resrcType`,
       `@houseCd`,
+      `@compCd`,
       `@protectedQty`,
       `@quality`,
       `@unit`,
@@ -807,7 +728,6 @@ BEGIN
       `@option2`,
       `@maker`,
       `@unitPrice`,
-      `@compCd`,
       `@remark`,
       `@flagYN`,
       NOW(),
@@ -821,6 +741,7 @@ BEGIN
       resrcNm=`@resrcNm`,
       resrcType=`@resrcType`,
       houseCd=`@houseCd`,
+      compCd=`@compCd`,
       protectedQty=`@protectedQty`,
       quality=`@quality`,
       unit=`@unit`,
@@ -828,7 +749,6 @@ BEGIN
       option2=`@option2`,
       maker=`@maker`,
       unitPrice=`@unitPrice`,
-      compCd=`@compCd`,
       remark=`@remark`,
       flagYN=`@flagYN`,
       issueDate=NOW(),
@@ -857,12 +777,13 @@ CREATE PROCEDURE `sp_ResourceInOut`(
 	IN `@inOutSeq` INT(10),
 	IN `@inOutDt` VARCHAR(10),
 	IN `@resrcCd` INT(10),
-	IN `@qty` INT(10),
 	IN `@houseCd` INT(10),
+	IN `@compCd` INT(10),
+	IN `@qty` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
 	IN `@remark` VARCHAR(1000),
-	IN `@compCd` INT(10),
 	IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
 )
 BEGIN
@@ -876,12 +797,13 @@ BEGIN
     INSERT INTO tblResourceInOut (
       inOutDt,
       resrcCd,
-      qty,
       houseCd,
+      compCd,
+      qty,
       unitPrice,
       remark,
-      compCd,
       flagYN,
+      planYN,
       regDate,
       issueDate,
       issueID
@@ -889,12 +811,13 @@ BEGIN
     VALUES (
       `@inOutDt`,
       `@resrcCd`,
-      `@qty`,
       `@houseCd`,
+      `@compCd`,
+      `@qty`,
       `@unitPrice`,
       `@remark`,
-      `@compCd`,
       `@flagYN`,
+      `@planYN`,
       NOW(),
       NOW(),
       `@issueID`
@@ -905,12 +828,13 @@ BEGIN
     SET
       inOutDt=`@inOutDt`,
       resrcCd=`@resrcCd`,
-      qty=`@qty`,
       houseCd=`@houseCd`,
+      compCd=`@compCd`,
+      qty=`@qty`,
       unitPrice=`@unitPrice`,
       remark=`@remark`,
-      compCd=`@compCd`,
       flagYN=`@flagYN`,
+      planYN=`@planYN`,
       issueDate=NOW(),
       issueID=`@issueID`
     WHERE
@@ -923,54 +847,41 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_ResourceInOutXls`(
 	IN `@inOutDt` VARCHAR(10),
-	IN `@resrcNm` VARCHAR(1000),
-	IN `@qty` INT(10),
-	IN `@houseNm` VARCHAR(1000),
-	IN `@compNm` VARCHAR(1000),
-	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+  IN `@resrcCd` INT(10),
+  IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
+  IN `@qty` INT(10),
+  IN `@unitPrice` NUMERIC(15,0),
+  IN `@remark` VARCHAR(1000),
+  IN `@flagYN` VARCHAR(1),
+  IN `@planYN` VARCHAR(1),
+  IN `@issueID` VARCHAR(20)
 )
 BEGIN
-  DECLARE `@resrcCd` INTEGER DEFAULT 0;
-	DECLARE `@houseCd` INTEGER DEFAULT 0;
-	DECLARE `@compCd` INTEGER DEFAULT 0;
-
-	SELECT resrcCd INTO `@resrcCd`
-  FROM tblResource
-  WHERE resrcNm=`@resrcNm`;
-
-	SELECT compCd INTO `@compCd`
-  FROM tblCompany
-  WHERE compNm=`@compNm`;
-
-	SELECT houseCd INTO `@houseCd`
-  FROM tblHouse
-  WHERE houseNm=`@houseNm`;
-
 	INSERT INTO tblResourceInOut (
 		inOutDt,
     resrcCd,
-    qty,
     houseCd,
+    compCd,
+    qty,
     unitPrice,
     remark,
-    compCd,
     flagYN,
+    planYN,
     regDate,
     issueDate,
     issueID
-	)
+  )
 	VALUES (
 		`@inOutDt`,
     `@resrcCd`,
-    `@qty`,
     `@houseCd`,
+    `@compCd`,
+    `@qty`,
     `@unitPrice`,
     `@remark`,
-    `@compCd`,
     `@flagYN`,
+    `@planYN`,
     NOW(),
     NOW(),
     `@issueID`
@@ -981,44 +892,29 @@ DELIMITER ;
 /**************************************************************************************************/
 DELIMITER $$
 CREATE PROCEDURE `sp_ResourceXls`(
-	IN `@resrcNm` VARCHAR(300),
-	IN `@resrcTypeNm` VARCHAR(50),
-	IN `@houseCd` INT(10),
-	IN `@protectedQty` SMALLINT(10),
-	IN `@quality` VARCHAR(50),
-	IN `@unit` VARCHAR(5),
+  IN `@resrcCd` INT(10),
+  IN `@resrcType` VARCHAR(5),
+  IN `@houseCd` INT(10),
+  IN `@compCd` INT(10),
+  IN `@protectedQty` SMALLINT(10),
+  IN `@quality` VARCHAR(50),
+  IN `@unit` VARCHAR(5),
   IN `@option1` VARCHAR(50),
   IN `@option2` VARCHAR(50),
-	IN `@maker` VARCHAR(50),
-	IN `@unitPrice` NUMERIC(18,0),
-	IN `@compNm` VARCHAR(50),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+  IN `@maker` VARCHAR(50),
+  IN `@unitPrice` NUMERIC(18,0),
+  IN `@remark` VARCHAR(3000),
+  IN `@flagYN` VARCHAR(1),
+  IN `@issueID` VARCHAR(20)
 )
 BEGIN
- 	DECLARE `@isCd` INTEGER DEFAULT 0;
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
-	DECLARE `@resrcType` VARCHAR(5) DEFAULT '';
-	DECLARE `@compCd` INTEGER DEFAULT 0;
-	DECLARE `@resrcCd` INTEGER DEFAULT 0;
-
-	SELECT itemCd INTO `@resrcType`
-  FROM tblCommonCd
-  WHERE groupCd='0003' AND itemNm=`@resrcTypeNm`;
-
-	SELECT compCd INTO `@compCd`
-  FROM tblCompany
-  WHERE compNm=`@compNm`;
-
-	SELECT COUNT(*) INTO `@isCd`
-  FROM tblResource
-  WHERE resrcCd=`@resrcCd`;
 
 	INSERT INTO tblResource (
-		resrcNm,
+		resrcCd,
     resrcType,
     houseCd,
+    compCd,
     protectedQty,
     quality,
     unit,
@@ -1026,17 +922,17 @@ BEGIN
     option2,
     maker,
     unitPrice,
-    compCd,
     remark,
     flagYN,
     regDate,
     issueDate,
     issueID
-	)
-	VALUES (
-		`@resrcNm`,
+  )
+  	VALUES (
+		`@resrcCd`,
     `@resrcType`,
     `@houseCd`,
+    `@compCd`,
     `@protectedQty`,
     `@quality`,
     `@unit`,
@@ -1044,7 +940,6 @@ BEGIN
     `@option2`,
     `@maker`,
     `@unitPrice`,
-    `@compCd`,
     `@remark`,
     `@flagYN`,
     NOW(),
@@ -1061,7 +956,6 @@ BEGIN
   WHERE resrcCd=`@resrcCd` AND barcode='';
 
 END $$
-DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$

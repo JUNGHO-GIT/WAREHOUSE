@@ -59,7 +59,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 							<form class="form-horizontal">
 								<div class="form-group">
 									<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-										<div class="fs-0-8rem fw-500 red mr-10px">
+										<div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
 										<span>거래처</span>
@@ -80,7 +80,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 								</div>
 								<div class="form-group">
 									<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-										<div class="fs-0-8rem fw-500 red mr-10px">
+										<div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
 										<span>거래처 담당자</span>
@@ -91,7 +91,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 								</div>
 								<div class="form-group">
 									<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-										<div class="fs-0-8rem fw-500 red mr-10px">
+										<div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
 										<span>담당자 번호</span>
@@ -102,7 +102,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 								</div>
 								<div class="form-group">
 									<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-										<div class="fs-0-8rem fw-500 red mr-10px">
+										<div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
 										<span>출하일</span>
@@ -113,7 +113,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 								</div>
 								<div class="form-group">
 									<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-										<div class="fs-0-8rem fw-500 red mr-10px">
+										<div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
 										<span>출하담당자</span>

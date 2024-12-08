@@ -27,7 +27,7 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
   }
 
   // 이벤트 한 번만 설정
-  strEl.removeEventListener("change", () => {
+  strEl && strEl.removeEventListener("change", () => {
     setValue(strCdEl, getValue(strEl));
   });
 
@@ -43,17 +43,17 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
     const data = await response.json();
     // 1. targetNm 과 targetCd 가 모두 없는 경우 (전체 조회인 경우)
     if (!targetNm && !targetCd) {
-      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
+      strEl && (strEl.innerHTML = `<option value="">==${strKo}==</option>`);
 
       data.forEach((item) => {
         const isSelected = targetCd === item[strCd] ? "selected" : "";
         const option = `<option value="${item[strCd]}" ${isSelected}>${item[strNm]}</option>`;
-        strEl.innerHTML += option;
+        strEl && (strEl.innerHTML += option);
       });
     }
     // 2-1. targetNm 과 targetCd 가 있는 경우 (결과 없는 경우)
     else if (!data || data.length === 0) {
-      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
+      strEl && (strEl.innerHTML = `<option value="">==${strKo}==</option>`);
     }
     // 2-2. targetNm 과 targetCd 가 있는 경우 (결과 있는 경우)
     else if (data && data.length > 0) {
@@ -83,15 +83,15 @@ function fnFindCd(targetNm, targetCd, targetId, event) {
         }
       }
       // 2-2-3. 결과를 select option 으로 표시
-      strEl.innerHTML = `<option value="">==${strKo}==</option>`;
+      strEl && (strEl.innerHTML = `<option value="">==${strKo}==</option>`);
       data.forEach((item) => {
         const isSelected = targetCd === item[strCd] ? "selected" : "";
         const option = `<option value="${item[strCd]}" ${isSelected}>${item[strNm]}</option>`;
-        strEl.innerHTML += option;
+        strEl && (strEl.innerHTML += option);
       });
     }
     // 선택된 option에 따라 #strCd 값을 갱신
-    strEl.addEventListener("change", () => {
+    strEl && strEl.addEventListener("change", () => {
       setValue(strCdEl, getValue(strEl));
     });
   })
@@ -204,7 +204,7 @@ function fnSwitchTab(newTab) {
 
     // 그리드 제목 변경
     const title = newTab === "in" ? "일괄 입고" : "일괄 출고";
-    $(`#grid02`).pqGrid("options.title", title);
+    $(`#grid02`).pqGrid("option", "title", title);
     $(`#grid02`).pqGrid("refreshDataAndView");
 
     // 현재 탭 업데이트
@@ -413,12 +413,13 @@ function fnSetTm(t, target) {
 };
 
 function fnSetTmFormat(tm) {
-  if (tm) {
-    var hr = tm.substr(0, 2);
-    var min = tm.substr(2, 2);
-
-    return hr + ":" + min;
+  if (!tm) {
+    return "";
   }
+  var hr = tm.substr(0, 2);
+  var min = tm.substr(2, 2);
+
+  return hr + ":" + min;
 };
 
 function fnToday() {

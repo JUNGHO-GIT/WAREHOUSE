@@ -66,7 +66,7 @@
               <form class="form-horizontal">
                 <div class="form-group">
                   <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>제품</span>

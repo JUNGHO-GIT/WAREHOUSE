@@ -120,6 +120,7 @@
       #{resrcNm},
       #{resrcType},
       #{houseCd},
+      #{compCd},
       #{protectedQty},
       #{option1},
       #{unit},
@@ -127,7 +128,6 @@
       #{quality},
       #{maker},
       #{unitPrice},
-      #{compCd},
       #{remark},
       #{flagYN},
       #{issueID}

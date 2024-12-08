@@ -46,7 +46,7 @@
                 <!-- /.hidden -->
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>거래처 이름</span>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                   <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="fs-0-8rem fw-500 red mr-3px">
                 ≫
               </div>
                     <span>사업자 등록번호</span>

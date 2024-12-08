@@ -75,9 +75,9 @@
                 </div>
                 <div class="row">
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -85,8 +85,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="inOutDt"
@@ -97,9 +97,9 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -108,7 +108,7 @@
                       </div>
                     </div>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                      <div class="d-row-left ml-2vw">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="resrcNm"
@@ -119,8 +119,8 @@
                         />
                       </div>
                     </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                      <div class="d-row-left mr-2vw">
                         <select
                           id="resrc"
                           name="resrc"
@@ -133,44 +133,9 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
-                          ≫
-                        </div>
-                        <div class="fs-0-8rem fw-600 light-black">
-                          거래처
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                      <div class="d-row-left ml-2vw">
-                        <input
-                          type="text"
-                          id="compNm"
-                          name="compNm"
-                          class="form-control"
-                          placeholder="검색"
-                          onKeyDown="fnFindCd(this.value,'','comp',event)"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                      <div class="d-row-left ml-2vw">
-                        <select
-                          id="comp"
-                          name="comp"
-                          class="form-control"
-                        >
-                          <option value="">==거래처==</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -179,7 +144,7 @@
                       </div>
                     </div>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                      <div class="d-row-left ml-2vw">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="houseNm"
@@ -190,8 +155,8 @@
                         />
                       </div>
                     </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                      <div class="d-row-left mr-2vw">
                         <select
                           id="house"
                           name="house"
@@ -203,9 +168,56 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
+                          ≫
+                        </div>
+                        <div class="fs-0-8rem fw-600 light-black">
+                          거래처
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="compNm"
+                          name="compNm"
+                          class="form-control"
+                          placeholder="검색"
+                          onKeyDown="fnFindCd(this.value,'','comp',event)"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                      <div class="d-row-left mr-2vw">
+                        <select
+                          id="comp"
+                          name="comp"
+                          class="form-control"
+                        >
+                          <option value="">==거래처==</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                      <div class="d-row-left mr-2vw">
+                        <select
+                          id="house"
+                          name="house"
+                          class="form-control"
+                        >
+                          <option value="">==창고==</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -213,8 +225,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="qty"
@@ -227,9 +239,9 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -237,8 +249,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="unitPrice"
@@ -251,9 +263,9 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -261,8 +273,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                      <div class="d-row-left mr-2vw">
                         <input
                           type="text"
                           id="supplyPrice"
@@ -275,9 +287,9 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="p-7px bg-dark-white d-row-left">
-                        <div class="fs-0-8rem fw-500 red mr-10px">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                      <div class="d-row-left">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
                         <div class="fs-0-8rem fw-600 light-black">
@@ -285,8 +297,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="d-row-left ml-2vw">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                      <div class="d-row-left mr-2vw">
                         <textarea
                           id="remark"
                           name="remark"

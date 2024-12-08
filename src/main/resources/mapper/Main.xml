@@ -33,12 +33,14 @@
   	parameterType="hashmap"
   	resultType="hashmap"
   >
+    <![CDATA[
 	  SELECT
       page, pageUrl, pageNm, pageIcon, pageOrder, pageNo
     FROM
       tblSysMenu
 	  WHERE
       flagYN = 'Y' AND subPage!='00' AND pageUrl IN (${pageNm})
+    ]]>
   </select>
 
 </mapper>

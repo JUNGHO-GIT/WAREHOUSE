@@ -115,39 +115,6 @@ INSERT INTO `tblCompany` VALUES (1,'주식회사 비던','110111-7268562','박�
 /*!40000 ALTER TABLE `tblCompany` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `tblDayOff`
---
-
-DROP TABLE IF EXISTS `tblDayOff`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tblDayOff` (
-  `offSeq` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '휴무시퀀스',
-  `userID` varchar(20) DEFAULT NULL COMMENT '사용자 아이디',
-  `offDate` varchar(500) DEFAULT NULL COMMENT '휴무일',
-  `restCnt` int(11) DEFAULT '0' COMMENT '잔여일',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '유효여부',
-  `issueID` varchar(20) DEFAULT NULL COMMENT '작성자',
-  `regDate` datetime DEFAULT NULL COMMENT '등록일시',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종수정일시',
-  PRIMARY KEY (`offSeq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='휴무관리';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tblDayOff`
---
-
-LOCK TABLES `tblDayOff` WRITE;
-/*!40000 ALTER TABLE `tblDayOff` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tblDayOff` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tblFiles`
---
-
 DROP TABLE IF EXISTS `tblFiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -907,72 +874,6 @@ BEGIN
     WHERE tableNm='tblCompany' AND tableKey=0;
   END IF;
 
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_DayOff` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE  PROCEDURE `sp_DayOff`(
-	IN `@offSeq` INT(10),
-	IN `@userID` VARCHAR(20),
-	IN `@offDate` VARCHAR(500),
-	IN `@restCnt` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
-)
-BEGIN
-  DECLARE `@isCd` INTEGER DEFAULT 0;
-
-	SELECT COUNT(*) INTO `@isCd`
-  FROM tblDayOff
-  WHERE offSeq=`@offSeq`;
-
-	IF `@isCd`=0 THEN
-    INSERT INTO tblDayOff (
-      userID,
-      offDate,
-      unitQty,
-      restCnt,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
-    )
-    VALUES (
-      `@userID`,
-      `@offDate`,
-      `@unitQty`,
-      `@restCnt`,
-      `@flagYN`,
-      NOW(),
-      NOW(),
-      `@issueID`
-    );
-  ELSE
-    UPDATE
-      tblDayOff
-    SET
-      userID=`@userID`,
-      offDate=`@offDate`,
-      unitQty=`@unitQty`,
-      restCnt=`@restCnt`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
-    WHERE
-      offSeq=`@offSeq`;
-  END IF;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

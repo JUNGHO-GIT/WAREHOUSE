@@ -65,7 +65,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 50,
+      minWidth: 70,
       render: displayLowStock,
     },
     {
