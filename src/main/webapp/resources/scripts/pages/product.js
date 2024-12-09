@@ -75,7 +75,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listResource",
-    data: `findProdNm=${$("#findProdNm").val()}`,
+    data: `findProdNm=${$(`#findProdNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -107,20 +107,20 @@ function fnShow(prodCd) {
     success: (data) => {
 
       // 1. 제품 관련
-      $("#prodCd").val(data.prodCd);
-      $("#prodNm").val(data.prodNm);
-      $("#prodType").val(data.prodType);
+      $(`#prodCd`).val(data.prodCd);
+      $(`#prodNm`).val(data.prodNm);
+      $(`#prodType`).val(data.prodType);
 
-      $("#option1").val(data.option1);
-      $("#unit").val(data.unit);
-      $("#option2").val(data.option2);
-      $("#quality").val(data.quality);
-      $("#maker").val(data.maker);
-      $("#remark").val(data.remark);
-      $("#barcode").val(data.barcode);
-      $("#flagYN").val("Y");
-      $("#protectedQty").val(parseInt(data.protectedQty).toLocaleString());
-      $("#unitPrice").val(parseInt(data.unitPrice).toLocaleString());
+      $(`#option1`).val(data.option1);
+      $(`#unit`).val(data.unit);
+      $(`#option2`).val(data.option2);
+      $(`#quality`).val(data.quality);
+      $(`#maker`).val(data.maker);
+      $(`#remark`).val(data.remark);
+      $(`#barcode`).val(data.barcode);
+      $(`#flagYN`).val("Y");
+      $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
+      $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
       // 3. 창고 관련
       fnFindCd("", data.houseCd, "house");
@@ -129,9 +129,9 @@ function fnShow(prodCd) {
       fnFindCd("", data.compCd, "comp");
 
       // 5. file 관련
-      $("#tableNm").val("tblResource");
-      $("#keyColumn").val("prodCd");
-      $("#tableKey").val(data.prodCd);
+      $(`#tableNm`).val("tblResource");
+      $(`#keyColumn`).val("prodCd");
+      $(`#tableKey`).val(data.prodCd);
       fnShowFiles("tblResource", data.prodCd, "files");
     },
     error: ajaxErrorHandler
@@ -145,7 +145,7 @@ function fnSave(flagYN) {
 
   if (flagYN === "N") {
     flagParam = "N";
-    if ($("#prodCd").val() == "") {
+    if ($(`#prodCd`).val() == "") {
       alert("제품을 선택해 주세요");
       return;
     }
@@ -155,52 +155,52 @@ function fnSave(flagYN) {
   }
   else {
     flagParam = "Y";
-    if ($("#prodNm").val() == "") {
+    if ($(`#prodNm`).val() == "") {
       alert("제품 이름을 입력해 주세요");
-      $("#prod").on("focus", function () {});
+      $(`#prod`).on("focus", function () {});
       return;
     }
-    if ($("#prodType").val() == "") {
+    if ($(`#prodType`).val() == "") {
       alert("제품 분류를 입력해 주세요");
-      $("#prodNm").on("focus", function () {});
+      $(`#prodNm`).on("focus", function () {});
       return;
     }
-    if ($("#comp").val() == "") {
+    if ($(`#comp`).val() == "") {
       alert("거래처를 입력해 주세요");
-      $("#comp").on("focus", function () {});
+      $(`#comp`).on("focus", function () {});
       return;
     }
-    if ($("#house").val() == "") {
+    if ($(`#house`).val() == "") {
       alert("창고를 입력해 주세요");
-      $("#house").on("focus", function () {});
+      $(`#house`).on("focus", function () {});
       return;
     }
-    if ($("#protectedQty").val() == "" || $("#protectedQty").val() == "0") {
+    if ($(`#protectedQty`).val() == "" || $(`#protectedQty`).val() == "0") {
       alert("안전재고를 입력해 주세요");
-      $("#protectedQty").on("focus", function () {});
+      $(`#protectedQty`).on("focus", function () {});
       return;
     }
-    if ($("#unitPrice").val() == "" || $("#unitPrice").val() == "0") {
+    if ($(`#unitPrice`).val() == "" || $(`#unitPrice`).val() == "0") {
       alert("표준단가를 입력해 주세요");
-      $("#unitPrice").on("focus", function () {});
+      $(`#unitPrice`).on("focus", function () {});
       return;
     }
   }
 
   const param = {
-    "prodCd": $("#prodCd").val() || "0",
-    "prodNm": $("#prodNm").val() || "",
-    "prodType": $("#prodType").val() || "",
-    "houseCd": $("#house").val() || "0",
-    "compCd": $("#comp").val() || "0",
-    "unit": $("#unit").val() || "",
-    "option1": $("#option1").val() || "",
-    "option2": $("#option2").val() || "",
-    "quality": $("#quality").val() || "",
-    "maker": $("#maker").val() || "",
-    "remark": $("#remark").val() || "",
-    "protectedQty": parseInt(String($("#protectedQty").val()).replace(/,/gm, "")) || 0,
-    "unitPrice": parseInt(String($("#unitPrice").val()).replace(/,/gm, "")) || 0,
+    "prodCd": $(`#prodCd`).val() || "0",
+    "prodNm": $(`#prodNm`).val() || "",
+    "prodType": $(`#prodType`).val() || "",
+    "houseCd": $(`#house`).val() || "0",
+    "compCd": $(`#comp`).val() || "0",
+    "unit": $(`#unit`).val() || "",
+    "option1": $(`#option1`).val() || "",
+    "option2": $(`#option2`).val() || "",
+    "quality": $(`#quality`).val() || "",
+    "maker": $(`#maker`).val() || "",
+    "remark": $(`#remark`).val() || "",
+    "protectedQty": parseInt(String($(`#protectedQty`).val()).replace(/,/gm, "")) || 0,
+    "unitPrice": parseInt(String($(`#unitPrice`).val()).replace(/,/gm, "")) || 0,
     "flagYN": flagParam
   };
 
@@ -216,7 +216,7 @@ function fnSave(flagYN) {
     success: (data) => {
       alert(data.result);
       fnGetList01();
-      $("#grid01").pqGrid("setSelection", {rowIndxPage:0});
+      $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       fnReset();
     },
     error: ajaxErrorHandler
@@ -232,42 +232,42 @@ function fnDel() {
 function fnReset() {
 
   // 제품 초기화
-  $("#prodCd").val("0");
-  $("#prodNm").val("");
-  $("#prodType").val("");
-  $("#protectedQty").val("0");
-  $("#unit").val("");
-  $("#option1").val("");
-  $("#option2").val("");
-  $("#quality").val("");
-  $("#maker").val("");
-  $("#unitPrice").val("0");
-  $("#compCd").val("");
-  $("#remark").val("");
-  $("#barcode").val("");
-  $("#flagYN").val("Y");
+  $(`#prodCd`).val("0");
+  $(`#prodNm`).val("");
+  $(`#prodType`).val("");
+  $(`#protectedQty`).val("0");
+  $(`#unit`).val("");
+  $(`#option1`).val("");
+  $(`#option2`).val("");
+  $(`#quality`).val("");
+  $(`#maker`).val("");
+  $(`#unitPrice`).val("0");
+  $(`#compCd`).val("");
+  $(`#remark`).val("");
+  $(`#barcode`).val("");
+  $(`#flagYN`).val("Y");
 
   // 창고 초기화
-  $("#houseCd").val("");
-  $("#houseNm").val("");
-  $("#house").val("");
-  $("#house").html(`<option value="">==창고==</option>`);
+  $(`#houseCd`).val("");
+  $(`#houseNm`).val("");
+  $(`#house`).val("");
+  $(`#house`).html(`<option value="">==창고==</option>`);
 
   // 거래처 초기화
-  $("#compCd").val("");
-  $("#compNm").val("");
-  $("#comp").val("");
-  $("#comp").html(`<option value="">==거래처==</option>`);
+  $(`#compCd`).val("");
+  $(`#compNm`).val("");
+  $(`#comp`).val("");
+  $(`#comp`).html(`<option value="">==거래처==</option>`);
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 
   // 파일 초기화
-  $("#userFile").val("");
-  $("#tableNm").val("tblResource");
-  $("#tableKey").val("0");
-  $("#keyColumn").val("prodCd");
+  $(`#userFile`).val("");
+  $(`#tableNm`).val("tblResource");
+  $(`#tableKey`).val("0");
+  $(`#keyColumn`).val("prodCd");
   fnShowFiles("tblResource", "0", "files");
 };
 
@@ -293,8 +293,8 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 

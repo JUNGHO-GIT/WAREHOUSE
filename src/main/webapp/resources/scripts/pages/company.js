@@ -51,7 +51,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listCompany",
-    data: `findCompNm=${$("#findCompNm").val()}`,
+    data: `findCompNm=${$(`#findCompNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -88,22 +88,22 @@ function fnShow(compCd) {
     success: (data) => {
 
       // 1. 거래처 관련
-      $("#compCd").val(data.compCd);
-      $("#compNm").val(data.compNm);
-      $("#compNo").val(data.compNo);
-      $("#owner").val(data.owner);
-      $("#major").val(data.major);
-      $("#phone").val(data.phone);
-      $("#taxEmail").val(data.taxEmail);
-      $("#address").val(data.address);
-      $("#compType").val(data.compType);
-      $("#compPart").val(data.compPart);
-      $("#remarks").val(data.remarks);
+      $(`#compCd`).val(data.compCd);
+      $(`#compNm`).val(data.compNm);
+      $(`#compNo`).val(data.compNo);
+      $(`#owner`).val(data.owner);
+      $(`#major`).val(data.major);
+      $(`#phone`).val(data.phone);
+      $(`#taxEmail`).val(data.taxEmail);
+      $(`#address`).val(data.address);
+      $(`#compType`).val(data.compType);
+      $(`#compPart`).val(data.compPart);
+      $(`#remarks`).val(data.remarks);
 
       // 2. file 관련
-      $("#tableNm").val("tblCompany");
-      $("#tableKey").val(data.compCd);
-      $("#keyColumn").val("compCd");
+      $(`#tableNm`).val("tblCompany");
+      $(`#tableKey`).val(data.compCd);
+      $(`#keyColumn`).val("compCd");
       fnShowFiles("tblCompany", data.compCd, "files");
     },
     error: ajaxErrorHandler
@@ -117,7 +117,7 @@ function fnSave(flagYN) {
 
   if (flagYN === "N") {
     flagParam = "N";
-    if ($("#compCd").val() == "") {
+    if ($(`#compCd`).val() == "") {
       alert("거래처를 선택해 주세요");
       return;
     }
@@ -127,30 +127,30 @@ function fnSave(flagYN) {
   }
   else {
     flagParam = "Y";
-    if ($("#compNm").val() == "") {
+    if ($(`#compNm`).val() == "") {
       alert("거래처 이름을 입력해 주세요");
-      $("#compNm").on("focus", function () {});
+      $(`#compNm`).on("focus", function () {});
       return;
     }
-    if ($("#compNo").val() == "") {
+    if ($(`#compNo`).val() == "") {
       alert("사업자 등록번호를 입력해 주세요");
-      $("#compNo").on("focus", function () {});
+      $(`#compNo`).on("focus", function () {});
       return;
     }
   }
 
   const param = {
-    "compCd": $("#compCd").val() || "0",
-    "compNm": $("#compNm").val() || "",
-    "compNo": $("#compNo").val() || "",
-    "owner": $("#owner").val() || "",
-    "major": $("#major").val() || "",
-    "phone": $("#phone").val() || "",
-    "taxEmail": $("#taxEmail").val() || "",
-    "address": $("#address").val() || "",
-    "compType": $("#compType").val() || "",
-    "compPart": $("#compPart").val() || "",
-    "remarks": $("#remarks").val() || "",
+    "compCd": $(`#compCd`).val() || "0",
+    "compNm": $(`#compNm`).val() || "",
+    "compNo": $(`#compNo`).val() || "",
+    "owner": $(`#owner`).val() || "",
+    "major": $(`#major`).val() || "",
+    "phone": $(`#phone`).val() || "",
+    "taxEmail": $(`#taxEmail`).val() || "",
+    "address": $(`#address`).val() || "",
+    "compType": $(`#compType`).val() || "",
+    "compPart": $(`#compPart`).val() || "",
+    "remarks": $(`#remarks`).val() || "",
     "flagYN": flagParam
   };
 
@@ -181,29 +181,29 @@ function fnDel() {
 function fnReset() {
 
   // 거래처 초기화
-  $("#compCd").val("0");
-  $("#compNm").val("");
-  $("#compNo").val("");
-  $("#owner").val("");
-  $("#major").val("");
-  $("#phone").val("");
-  $("#taxEmail").val("");
-  $("#address").val("");
-  $("#addressDetail").val("");
-  $("#compType").val("");
-  $("#compPart").val("");
-  $("#remarks").val("");
-  $("#flagYN").val("Y");
+  $(`#compCd`).val("0");
+  $(`#compNm`).val("");
+  $(`#compNo`).val("");
+  $(`#owner`).val("");
+  $(`#major`).val("");
+  $(`#phone`).val("");
+  $(`#taxEmail`).val("");
+  $(`#address`).val("");
+  $(`#addressDetail`).val("");
+  $(`#compType`).val("");
+  $(`#compPart`).val("");
+  $(`#remarks`).val("");
+  $(`#flagYN`).val("Y");
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 
   // 파일 초기화
-  $("#userFile").val("");
-  $("#tableNm").val("tblCompany");
-  $("#tableKey").val("0");
-  $("#keyColumn").val("compCd");
+  $(`#userFile`).val("");
+  $(`#tableNm`).val("tblCompany");
+  $(`#tableKey`).val("0");
+  $(`#keyColumn`).val("compCd");
   fnShowFiles("tblCompany", "0", "files");
 };
 
@@ -229,8 +229,8 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 

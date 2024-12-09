@@ -47,7 +47,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listUser",
-    data: `findUserNm=${$("#findUserNm").val()}`,
+    data: `findUserNm=${$(`#findUserNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -64,7 +64,7 @@ function fnGetList01 () {
 // 1-2. 회원등급 -----------------------------------------------------------------------------------
 function fnGetPartsUser() {
 
-  $("#userPerms").empty();
+  $(`#userPerms`).empty();
 
   $.ajax({
     url: "act/listUserPerm",
@@ -87,7 +87,7 @@ function fnGetPartsUser() {
 
           var space = `<hr class="hr mt-5px mb-5px"/>`;
 
-          $("#userPerms").append(space);
+          $(`#userPerms`).append(space);
         }
         var userText = `
           <div class="row mt-10px" style="white-space:nowrap;">
@@ -117,7 +117,7 @@ function fnGetPartsUser() {
             </div>
           </div>
         `;
-        $("#userPerms").append(userText);
+        $(`#userPerms`).append(userText);
 
         oldMenu = detail.page;
       }
@@ -160,16 +160,16 @@ function fnShow(userID) {
       fnResetPw();
 
       // 회원정보 설정
-      $("#userIDCheck").val("Y");
-      $("#userID").val(data.userID);
-      $("#userNm").val(data.userNm);
-      $("#phone").val(data.phone);
-      $("#email").val(data.email);
-      $("#uLevel").val(data.uLevel);
-      $("#flagYN").val("Y");
+      $(`#userIDCheck`).val("Y");
+      $(`#userID`).val(data.userID);
+      $(`#userNm`).val(data.userNm);
+      $(`#phone`).val(data.phone);
+      $(`#email`).val(data.email);
+      $(`#uLevel`).val(data.uLevel);
+      $(`#flagYN`).val("Y");
 
       // 암호화된 비밀번호
-      $("#passwd").val("BCryptPassword");
+      $(`#passwd`).val("BCryptPassword");
 
       // 권한 설정
       var perms = data.uPerm;
@@ -190,8 +190,8 @@ function fnShow(userID) {
       }
 
       // file upload 관련 파라미터 설정
-      $("#tableNm").val("tblUser");
-      $("#tableKey").val(data.userID);
+      $(`#tableNm`).val("tblUser");
+      $(`#tableKey`).val(data.userID);
       fnShowFiles("tblUser", data.userID, "files");
     },
     error: ajaxErrorHandler
@@ -205,7 +205,7 @@ function fnSave(flagYN) {
 
   if (flagYN === "N") {
     flagParam = "N";
-    if ($("#userID").val() == "") {
+    if ($(`#userID`).val() == "") {
       alert("사용자를 선택해 주세요");
       return;
     }
@@ -215,29 +215,29 @@ function fnSave(flagYN) {
   }
   else {
     flagParam = "Y";
-    if ($("#userNm").val() == "") {
+    if ($(`#userNm`).val() == "") {
       alert("사용자 이름을 입력해 주세요");
-      $("#userNm").on("focus", function () {});
+      $(`#userNm`).on("focus", function () {});
       return;
     }
-    if ($("#userID").val() == "") {
+    if ($(`#userID`).val() == "") {
       alert("사용자 아이디를 입력해 주세요");
-      $("#userID").on("focus", function () {});
+      $(`#userID`).on("focus", function () {});
       return;
     }
-    if ($("#userIDCheck").val() == "N") {
+    if ($(`#userIDCheck`).val() == "N") {
       alert("사용자 아이디 중복 체크를 해주세요");
-      $("#userID").on("focus", function () {});
+      $(`#userID`).on("focus", function () {});
       return;
     }
-    if ($("#passwd").val() == "") {
+    if ($(`#passwd`).val() == "") {
       alert("비밀번호를 입력해 주세요");
-      $("#passwd").on("focus", function () {});
+      $(`#passwd`).on("focus", function () {});
       return;
     }
-    if ($("#uLevel").val() == "") {
+    if ($(`#uLevel`).val() == "") {
       alert("회원등급을 선택해 주세요");
-      $("#uLevel").on("focus", function () {});
+      $(`#uLevel`).on("focus", function () {});
       return;
     }
   }
@@ -255,19 +255,19 @@ function fnSave(flagYN) {
   }
 
   // 신규등록인지 여부 체크
-  var signUpCheck = $("#signUpCheck").val();
+  var signUpCheck = $(`#signUpCheck`).val();
 
   // 비밀번호 변경여부 체크
-  $("#changeFlag").val() === "Y"
+  $(`#changeFlag`).val() === "Y"
 
   const param = {
-    "userID": $("#userID").val(),
-    "userNm": $("#userNm").val(),
-    "passwd": $("#passwd").val(),
-    "email":$("#email").val(),
-    "phone": $("#phone").val(),
-    "uLevel": $("#uLevel").val(),
-    "compCd": $("#compCd").val() || 0,
+    "userID": $(`#userID`).val(),
+    "userNm": $(`#userNm`).val(),
+    "passwd": $(`#passwd`).val(),
+    "email":$(`#email`).val(),
+    "phone": $(`#phone`).val(),
+    "uLevel": $(`#uLevel`).val(),
+    "compCd": $(`#compCd`).val() || 0,
     "uPerm": uPerm,
     "flagYN": flagParam,
     "signUpCheck": signUpCheck
@@ -295,15 +295,15 @@ function fnSave(flagYN) {
 // 3-2. 아이디 중복 체크 ---------------------------------------------------------------------------
 function fnCheckUserID() {
 
-  if ($("#userID").val() == "") {
+  if ($(`#userID`).val() == "") {
     alert("아이디를 바르게 입력해 주세요");
-    $("#userID").on("focus", function () {});
+    $(`#userID`).on("focus", function () {});
     return;
   }
 
   $.ajax({
     url: "act/checkUserID",
-    data: `userID=${$("#userID").val()}`,
+    data: `userID=${$(`#userID`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -311,13 +311,13 @@ function fnCheckUserID() {
     },
     success: (data) => {
       if(data == 0) {
-        $("#userIDCheck").val("Y");
-        alert("사용할 수 있는 아이디 입니다.");
+        $(`#userIDCheck`).val("Y");
+        alert("사용할 수 있는 아이디 입니다");
       }
       else {
         alert("이미 사용중인 아이디 입니다.\n 다른 아이디를 입력해 주세요");
-        $("#userID").on("focus", function () {});
-        $("#userIDCheck").val("N");
+        $(`#userID`).on("focus", function () {});
+        $(`#userIDCheck`).val("N");
       }
     },
     error: ajaxErrorHandler
@@ -327,29 +327,29 @@ function fnCheckUserID() {
 // 3-3. 비밀번호 변경 ------------------------------------------------------------------------------
 function fnUpdatePw() {
 
-  var changeFlag = $("#changeFlag").val();
+  var changeFlag = $(`#changeFlag`).val();
 
   // 비번 입력안한 경우
-  if ($("#passwd").val() == "") {
+  if ($(`#passwd`).val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $("#passwd").on("focus", function () {});
+    $(`#passwd`).on("focus", function () {});
     return;
   }
 
   // 비밀번호 필드 활성화
   if (changeFlag === "N") {
-    $("#passwd").prop("readonly", false);
-    $("#passwd").val("");
-    $("#changePw").text("비번저장");
-    $("#changeFlag").val("Y");
+    $(`#passwd`).prop("readonly", false);
+    $(`#passwd`).val("");
+    $(`#changePw`).text("비번저장");
+    $(`#changeFlag`).val("Y");
     return;
   }
 
   if (changeFlag == "Y") {
 
     var param = {
-      "userID": $("#userID").val(),
-      "passwd": $("#passwd").val(),
+      "userID": $(`#userID`).val(),
+      "passwd": $(`#passwd`).val(),
     };
 
     $.ajax({
@@ -364,15 +364,15 @@ function fnUpdatePw() {
       success: (data) => {
         if (data) {
           alert(data.result);
-          $("#passwd").prop("type", "password");
-          $("#passwd").val("BCryptPassword");
-          $("#passwd").prop("readonly", true);
-          $("#changePw").html("비번변경");
-          $("#changeFlag").val("N");
+          $(`#passwd`).prop("type", "password");
+          $(`#passwd`).val("BCryptPassword");
+          $(`#passwd`).prop("readonly", true);
+          $(`#changePw`).html("비번변경");
+          $(`#changeFlag`).val("N");
         }
         else {
-          $("#passwd").prop("readonly", true);
-          $("#changeFlag").val("N");
+          $(`#passwd`).prop("readonly", true);
+          $(`#changeFlag`).val("N");
         }
       },
       error: ajaxErrorHandler
@@ -395,36 +395,36 @@ function fnReset() {
   }
 
   // 회원 초기화
-  $("#userID").val("");
-  $("#passwd").val("");
-  $("#userNm").val("");
-  $("#phone").val("");
-  $("#email").val("");
-  $("#uLevel").val("");
-  $("#compCd").val("");
-  $("#uPerm").val("");
-  $("#flagYN").val("Y");
-  $("#userIDCheck").val("N");
+  $(`#userID`).val("");
+  $(`#passwd`).val("");
+  $(`#userNm`).val("");
+  $(`#phone`).val("");
+  $(`#email`).val("");
+  $(`#uLevel`).val("");
+  $(`#compCd`).val("");
+  $(`#uPerm`).val("");
+  $(`#flagYN`).val("Y");
+  $(`#userIDCheck`).val("N");
 
   // 입력필드 상태 초기화
-  $("#userNm").removeAttr("readonly");
-  $("#passwd").removeAttr("readonly");
+  $(`#userNm`).removeAttr("readonly");
+  $(`#passwd`).removeAttr("readonly");
 
   // signUpCheck 설정
-  $("#signUpCheck").val("Y");
+  $(`#signUpCheck`).val("Y");
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (비밀번호) --------------------------------------------------------------------------
 function fnResetPw() {
   // row 클릭했을때 `비번변경`버튼 상태 초기화
-  $("#passwd").prop("readonly", true);
-  $("#passwd").val("BCryptPassword");
-  $("#changePw").html("비번변경");
-  $("#changeFlag").val("N");
+  $(`#passwd`).prop("readonly", true);
+  $(`#passwd`).val("BCryptPassword");
+  $(`#changePw`).html("비번변경");
+  $(`#changeFlag`).val("N");
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -449,8 +449,8 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 

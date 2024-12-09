@@ -48,7 +48,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listShipPlan",
-    data:`shipDt=${"P"}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
+    data:`shipDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -66,7 +66,7 @@ function fnGetList01 () {
 function fnGetList02 (shipCd) {
 
   const $grid02 = $(`#grid02`);
-  $("#shipCd").val(shipCd);
+  $(`#shipCd`).val(shipCd);
 
   const gridOption = {
     xlsNm: "shippingList.xlsx",
@@ -99,7 +99,7 @@ function fnGetList02 (shipCd) {
 
   $.ajax({
     url: "act/listShipPlanDetail",
-    data: `shipCd=${shipCd}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
+    data: `shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -123,7 +123,7 @@ function fnShow(shipCd) {
 
   $.ajax({
     url: "act/showShipPlan",
-    data: `shipCd=${shipCd}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
+    data: `shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -132,11 +132,11 @@ function fnShow(shipCd) {
     success: (data) => {
 
       // 1. 출하 관련
-      $("#shipCd").val(data.shipCd);
-      $("#toMajor").val(data.toMajor);
-      $("#toPhone").val(data.toPhone);
-      $("#shipDt").val(data.shipDt);
-      $("#shipMajor").val(data.shipMajor);
+      $(`#shipCd`).val(data.shipCd);
+      $(`#toMajor`).val(data.toMajor);
+      $(`#toPhone`).val(data.toPhone);
+      $(`#shipDt`).val(data.shipDt);
+      $(`#shipMajor`).val(data.shipMajor);
 
       // 2. 거래처 관련
       fnFindCd("", data.compCd, "comp");
@@ -148,7 +148,7 @@ function fnShow(shipCd) {
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDel() {
 
-  var getData = $("#grid01").pqGrid("getData");
+  var getData = $(`#grid01`).pqGrid("getData");
   var shipCd = "";
   var shipDt = "";
   var shipMajor = "";
@@ -213,26 +213,26 @@ function fnReset() {
   const curDate = fnToday();
 
   // 출하 초기화
-  $("#toMajor").val("");
-  $("#toPhone").val("");
-  $("#shipDt").val(curDate);
-  $("#shipMajor").val("");
+  $(`#toMajor`).val("");
+  $(`#toPhone`).val("");
+  $(`#shipDt`).val(curDate);
+  $(`#shipMajor`).val("");
 
   // 거래처 초기화
-  $("#compCd").val("");
-  $("#compNm").val("");
-  $("#comp").val("");
-  $("#comp").html(`<option value="">==거래처==</option>`);
+  $(`#compCd`).val("");
+  $(`#compNm`).val("");
+  $(`#comp`).val("");
+  $(`#comp`).html(`<option value="">==거래처==</option>`);
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("option", "dataModel.data", []);
-	$("#grid02").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+	$(`#grid02`).pqGrid("option", "dataModel.data", []);
+	$(`#grid02`).pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
 function fnExcelDown() {
-  var shipCd = $("#shipCd").val();
+  var shipCd = $(`#shipCd`).val();
 
   if (!shipCd) {
     alert("다운받을 출하 계획 항목을 선택해주세요");
@@ -266,12 +266,12 @@ function fnPressGet01(event) {
 jQuery(function($) {
   const curDate = fnToday();
   var pastDate = fnDateAdd(curDate, -30);
-  $("#inOutDt").datepicker(G_calendar);
-  $("#inOutDt").val(curDate);
-  $("#findStartDt").datepicker(G_calendar);
-  $("#findEndDt").datepicker(G_calendar);
-  $("#findStartDt").val(pastDate);
-  $("#findEndDt").val(curDate);
+  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).val(curDate);
+  $(`#findStartDt`).datepicker(G_calendar);
+  $(`#findEndDt`).datepicker(G_calendar);
+  $(`#findStartDt`).val(pastDate);
+  $(`#findEndDt`).val(curDate);
 
   fnGetList01();
   fnGetList02();

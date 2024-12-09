@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CompanyDAO {
 
-  public abstract ArrayList<Company> listCompany(
+  public ArrayList<Company> listCompany(
     @Param("findCompNm") String findCompNm
   );
 
-  public abstract Company showCompany(
+  public Company showCompany(
     @Param("compCd") Integer compCd
   );
 
-  public abstract void saveCompany(
+  public void saveCompany(
     Company company
   );
 }

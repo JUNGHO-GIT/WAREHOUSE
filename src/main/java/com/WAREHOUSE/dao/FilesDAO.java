@@ -11,21 +11,21 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FilesDAO {
 
-  public abstract ArrayList<Files> listFiles (
+  public ArrayList<Files> listFiles (
     @Param("tableNm") String tableNm,
     @Param("tableKey") String tableKey
   );
 
-  public abstract List<Map<String, Object>> showFiles (
+  public List<Map<String, Object>> showFiles (
     @Param("tableNm") String tableNm,
     @Param("tableKey") String tableKey
   );
 
-  public abstract void saveFiles (
+  public void saveFiles (
     Files files
   );
 
-  public abstract void updateIssueDate (
+  public void updateIssueDate (
     @Param("tableNm") String tableNm,
     @Param("tableKey") String tableKey,
     @Param("keyColumn") String keyColumn

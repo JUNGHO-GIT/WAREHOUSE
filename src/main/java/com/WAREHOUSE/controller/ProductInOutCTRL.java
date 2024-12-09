@@ -3,96 +3,111 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ProductInOutCTRL {
 
-  @Autowired
-  private ProductInOutDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final ProductInOutDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productIn", produces="text/html;charset=UTF-8")
-  public String productIn () throws Exception {
+  public ModelAndView productIn () throws Exception {
 
-    return "productIn";
+    try {
+      logs.info("page", "productIn");
+      return new ModelAndView("productIn");
+    }
+    catch (Exception e) {
+      logs.error("productIn", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productOut", produces="text/html;charset=UTF-8")
-  public String productOut () throws Exception {
+  public ModelAndView productOut () throws Exception {
 
-    return "productOut";
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/listProductInOut", produces="application/json;charset=UTF-8")
-  public String listProductInOut (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String prodCd = request.getParameter("prodCd");
-    ArrayList<ProductInOut> productInOutList = dao.listProductInOut(prodCd);
-
-    return gson.toJson(productInOutList);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/showProductInOut", produces="application/json;charset=UTF-8")
-  public String showProductInOut (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String inOutSeq = request.getParameter("inOutSeq");
-    ProductInOut productInOutShow = dao.showProductInOut(Integer.valueOf(inOutSeq));
-
-    return gson.toJson(productInOutShow);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/saveProductInOut", produces="application/json;charset=UTF-8")
-  public String saveProductInOut (
-    @RequestBody ProductInOut productInOutParam,
-    HttpServletRequest request,
-    HttpSession session
-  ) throws Exception {
-
-    String userID = (String) session.getAttribute("userID");
-    String flagYN = (String) productInOutParam.getFlagYN();
-    String msg = "저장되었습니다.";
-
-    if (flagYN.equals("N")) {
-      msg = "삭제되었습니다.";
-    }
     try {
-      productInOutParam.setIssueID(userID);
-      dao.saveProductInOut(productInOutParam);
+      logs.info("page", "productOut");
+      return new ModelAndView("productOut");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("productOut", e.getMessage());
+      return null;
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
+  }
 
-    return gson.toJson(map);
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/listProductInOut", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> listProductInOut(
+    @RequestParam("prodCd") String prodCd
+  ) throws Exception {
+
+    try {
+      ArrayList<ProductInOut> list = dao.listProductInOut(prodCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listProductInOut", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/showProductInOut", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> showProductInOut (
+    @RequestParam("inOutSeq") Integer inOutSeq
+  ) throws Exception {
+
+    try {
+      ProductInOut show = dao.showProductInOut(inOutSeq);
+      return ResponseEntity.ok(show);
+    }
+    catch (Exception e) {
+      logs.error("showProductInOut", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/saveProductInOut", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> saveProductInOut (
+    @RequestBody ProductInOut param,
+    @SessionAttribute("userID") String userID
+  ) throws Exception {
+
+    Map<String, Object> map = new HashMap<String, Object>();
+
+    try {
+      param.setIssueID(userID);
+      dao.saveProductInOut(param);
+      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+    }
+    catch (Exception e) {
+      logs.error("saveProductInOut", e.getMessage());
+      map.put("result", "저장 실패");
+    }
+
+    return ResponseEntity.ok(map);
   }
 }

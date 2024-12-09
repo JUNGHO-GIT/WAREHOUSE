@@ -11,32 +11,32 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommonCdDAO {
 
-  public abstract ArrayList<CommonCd> listAllCommonCd(
+  public ArrayList<CommonCd> listAllCommonCd(
   );
 
-  public abstract List<CommonCd> mappingGroupCd(
+  public List<CommonCd> mappingGroupCd(
   );
 
-  public abstract ArrayList<CommonCd> listCommonCd(
+  public ArrayList<CommonCd> listCommonCd(
     @Param("findGroupCd") String findGroupCd,
     @Param("findItemNm") String findItemNm
   );
 
-  public abstract CommonCd showCommonCd(
+  public CommonCd showCommonCd(
     @Param("groupCd") String groupCd,
     @Param("itemCd") String itemCd
   );
 
-  public abstract ArrayList<Common> listComCodeAll(
+  public ArrayList<Common> listComCodeAll(
     @Param("groupCd") String groupCd,
     @Param("target") String target
   );
 
-  public abstract ArrayList<Common> listComCodeGroupAll(
+  public ArrayList<Common> listComCodeGroupAll(
     @Param("target") String target
   );
 
-  public abstract void saveCommonCd(
+  public void saveCommonCd(
     CommonCd commonCd
   );
 }

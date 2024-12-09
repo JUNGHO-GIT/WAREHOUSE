@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ResourceInOutDAO {
 
-  public abstract ArrayList<ResourceInOut> listResourceInOut(
+  public ArrayList<ResourceInOut> listResourceInOut(
     @Param("resrcCd") String resrcCd
   );
 
-  public abstract ResourceInOut showResourceInOut(
+  public ResourceInOut showResourceInOut(
     @Param("inOutSeq") Integer inOutSeq
   );
 
-  public abstract void saveResourceInOut(
+  public void saveResourceInOut(
     ResourceInOut resourceInOut
   );
 }

@@ -1,146 +1,181 @@
 package com.WAREHOUSE.controller;
 
 import java.util.ArrayList;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.container.House;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.CommonDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class CommonCTRL {
 
-  @Autowired
-  private CommonDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final CommonDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findBom", produces="application/json;charset=UTF-8")
-  public String findBom (
-    HttpServletRequest request
+  public ResponseEntity<?> findBom (
+    @RequestParam("findBom") String findBom
   ) throws Exception {
 
-    String findBom = request.getParameter("findBom");
-    ArrayList<Product> productList = dao.findBom(findBom);
+    try {
+      ArrayList<Product> list = dao.findBom(findBom);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findBom", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(productList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findHouseNm", produces="application/json;charset=UTF-8")
-  public String findHouseNm (
-    HttpServletRequest request
+  public ResponseEntity<?> findHouseNm (
+    @RequestParam("findHouseNm") String findHouseNm
   ) throws Exception {
 
-    String findHouseNm = request.getParameter("findHouseNm");
-    ArrayList<House> houseList = dao.findHouseNm(findHouseNm);
+    try {
+      ArrayList<House> list = dao.findHouseNm(findHouseNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findHouseNm", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(houseList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findHouseCd", produces="application/json;charset=UTF-8")
-  public String findHouseCd (
-    HttpServletRequest request
+  public ResponseEntity<?> findHouseCd (
+    @RequestParam("findNm") String findNm,
+    @RequestParam("findCd") String findCd
   ) throws Exception {
 
-    String findNm = request.getParameter("findNm");
-    String findCd = request.getParameter("findCd");
-    ArrayList<House> houseList = dao.findHouseCd(findNm, findCd);
+    try {
+      ArrayList<House> list = dao.findHouseCd(findNm, findCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findHouseCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(houseList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findCompNm", produces="application/json;charset=UTF-8")
-  public String findCompNm (
-    HttpServletRequest request
+  public ResponseEntity<?> findCompNm (
+    @RequestParam("findCompNm") String findCompNm
   ) throws Exception {
 
-    String findCompNm = request.getParameter("findCompNm");
-    ArrayList<Company> companyList = dao.findCompNm(findCompNm);
+    try {
+      ArrayList<Company> list = dao.findCompNm(findCompNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findCompNm", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(companyList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findCompCd", produces="application/json;charset=UTF-8")
-  public String findCompCd (
-    HttpServletRequest request
+  public ResponseEntity<?> findCompCd (
+    @RequestParam("findNm") String findNm,
+    @RequestParam("findCd") String findCd
   ) throws Exception {
 
-    String findNm = request.getParameter("findNm");
-    String findCd = request.getParameter("findCd");
-    ArrayList<Company> companyList = dao.findCompCd(findNm, findCd);
+    try {
+      ArrayList<Company> list = dao.findCompCd(findNm, findCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findCompCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(companyList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findProdNm", produces="application/json;charset=UTF-8")
-  public String findProdNm (
-    HttpServletRequest request
+  public ResponseEntity<?> findProdNm (
+    @RequestParam("findProdNm") String findProdNm
   ) throws Exception {
 
-    String findProdNm = request.getParameter("findProdNm");
-    ArrayList<Product> productList = dao.findProdNm(findProdNm);
+    try {
+      ArrayList<Product> list = dao.findProdNm(findProdNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findProdNm", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(productList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findProdCd", produces="application/json;charset=UTF-8")
-  public String findProdCd (
-    HttpServletRequest request
+  public ResponseEntity<?> findProdCd (
+    @RequestParam("findNm") String findNm,
+    @RequestParam("findCd") String findCd
   ) throws Exception {
 
-    String findNm = request.getParameter("findNm");
-    String findCd = request.getParameter("findCd");
-    ArrayList<Product> productList = dao.findProdCd(findNm, findCd);
+    try {
+      ArrayList<Product> list = dao.findProdCd(findNm, findCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findProdCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(productList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findResrcNm", produces="application/json;charset=UTF-8")
-  public String findResrcNm (
-    HttpServletRequest request
+  public ResponseEntity<?> findResrcNm (
+    @RequestParam("findResrcNm") String findResrcNm
   ) throws Exception {
 
-    String findResrcNm = request.getParameter("findResrcNm");
-    ArrayList<Resource> resourceList = dao.findResrcNm(findResrcNm);
+    try {
+      ArrayList<Resource> list = dao.findResrcNm(findResrcNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findResrcNm", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(resourceList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/findResrcCd", produces="application/json;charset=UTF-8")
-  public String findResrcCd (
-    HttpServletRequest request
+  public ResponseEntity<?> findResrcCd (
+    @RequestParam("findNm") String findNm,
+    @RequestParam("findCd") String findCd
   ) throws Exception {
 
-    String findNm = request.getParameter("findNm");
-    String findCd = request.getParameter("findCd");
-    ArrayList<Resource> resourceList = dao.findResrcCd(findNm, findCd);
+    try {
+      ArrayList<Resource> list = dao.findResrcCd(findNm, findCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("findResrcCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(resourceList);
   }
 }

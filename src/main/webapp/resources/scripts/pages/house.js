@@ -101,7 +101,7 @@ function fnGetList02 (houseData) {
 
   // title 표시
   obj.title = `
-    <span class="fs-0-8rem fw-600 mr-15px">${$("#houseNm").val()||"창고"}</span><b>제품</b> 재고 현황
+    <span class="fs-0-8rem fw-600 mr-15px">${$(`#houseNm`).val()||"창고"}</span><b>제품</b> 재고 현황
   `;
 
   // footer 합계표시
@@ -174,7 +174,7 @@ function fnGetList03 (houseData) {
 
   // title 표시
   obj.title = `
-    <span class="fs-0-8rem fw-600 mr-15px">${$("#houseNm").val()||"창고"}</span><b>자재</b> 재고 현황
+    <span class="fs-0-8rem fw-600 mr-15px">${$(`#houseNm`).val()||"창고"}</span><b>자재</b> 재고 현황
   `;
 
   // footer 합계표시
@@ -208,11 +208,11 @@ function fnShow(event, treeId, treeNode) {
       var houseData = productPerHouse.concat(resourcePerHouse);
 
       // 창고 초기화
-      $("#parentsHNm").val(houseData[0].parentsHNm);
-      $("#parentsHCd").val(houseData[0].parentsHCd);
-      $("#houseCd").val(houseData[0].houseCd);
-      $("#houseNm").val(houseData[0].houseNm);
-      $("#houseOrder").val(houseData[0].houseOrder);
+      $(`#parentsHNm`).val(houseData[0].parentsHNm);
+      $(`#parentsHCd`).val(houseData[0].parentsHCd);
+      $(`#houseCd`).val(houseData[0].houseCd);
+      $(`#houseNm`).val(houseData[0].houseNm);
+      $(`#houseOrder`).val(houseData[0].houseOrder);
 
       // fnGetList02 호출
       fnGetList02(productPerHouse);
@@ -261,23 +261,23 @@ function fnSave(YN) {
   }
   else {
     flagParam = "Y";
-    if ($("#houseNm").val() == "") {
+    if ($(`#houseNm`).val() == "") {
       alert("창고이름을 입력해 주세요");
-      $("#houseNm").on("focus", function () {});
+      $(`#houseNm`).on("focus", function () {});
       return;
     }
-    if ($("#houseOrder").val() == "") {
+    if ($(`#houseOrder`).val() == "") {
       alert("창고순서를 입력해 주세요");
-      $("#houseOrder").on("focus", function () {});
+      $(`#houseOrder`).on("focus", function () {});
       return;
     }
   }
 
   const param = {
-    "houseCd": $("#houseCd").val() || "0",
-    "houseNm": $("#houseNm").val() || "",
-    "parentsHCd": $("#parentsHCd").val() || "0",
-    "houseOrder": $("#houseOrder").val() || "99",
+    "houseCd": $(`#houseCd`).val() || "0",
+    "houseNm": $(`#houseNm`).val() || "",
+    "parentsHCd": $(`#parentsHCd`).val() || "0",
+    "houseOrder": $(`#houseOrder`).val() || "99",
     "flagYN": flagParam
   };
 
@@ -293,8 +293,8 @@ function fnSave(YN) {
     success: (data) => {
       alert(data.result);
 
-      var pIdParam = $("#parentsHCd").val();
-      var nameParam = $("#houseNm").val();
+      var pIdParam = $(`#parentsHCd`).val();
+      var nameParam = $(`#houseNm`).val();
 
       // 1. 저장인 경우 (트리노드에 포커스)
       if (flagParam === "Y") {
@@ -314,11 +314,11 @@ function fnSave(YN) {
       else if (flagParam === "N") {
         fnRefreshNode(pIdParam, null);
         // 창고 초기화
-			  $("#parentsHCd").val("0");
-			  $("#parentsHNm").val("");
-			  $("#houseCd").val("0");
-			  $("#houseNm").val("");
-			  $("#houseOrder").val("99");
+			  $(`#parentsHCd`).val("0");
+			  $(`#parentsHNm`).val("");
+			  $(`#houseCd`).val("0");
+			  $(`#houseNm`).val("");
+			  $(`#houseOrder`).val("99");
 			  fnGetList02(null);
 			  fnGetList03(null);
       }
@@ -330,21 +330,21 @@ function fnSave(YN) {
 // 3-2. 하위 창고 추가 -----------------------------------------------------------------------------
 function fnAddCat() {
 
-  if ($("#houseCd").val() == "0" || $("#houseCd").val() == "") {
-    alert("하위 창고항목을 생성 할 수 없습니다.");
+  if ($(`#houseCd`).val() == "0" || $(`#houseCd`).val() == "") {
+    alert("하위 창고항목을 생성 할 수 없습니다");
     return;
   }
 
-  $("#parentsHNm").val($("#houseNm").val());
-  $("#parentsHCd").val($("#houseCd").val());
-  $("#houseCd").val("0");
-  $("#houseNm").val("");
-  $("#houseOrder").val("99");
+  $(`#parentsHNm`).val($(`#houseNm`).val());
+  $(`#parentsHCd`).val($(`#houseCd`).val());
+  $(`#houseCd`).val("0");
+  $(`#houseNm`).val("");
+  $(`#houseOrder`).val("99");
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDel() {
-  if ($("#houseCd").val() == "0") {
+  if ($(`#houseCd`).val() == "0") {
     alert("삭제할 창고를 선택해 주세요");
     return;
   }
@@ -359,11 +359,11 @@ function fnReset() {
   fnGetList01("0");
 
   // 창고 초기화
-  $("#parentsHCd").val("0");
-  $("#parentsHNm").val("");
-  $("#houseCd").val("0");
-  $("#houseNm").val("");
-  $("#houseOrder").val("99");
+  $(`#parentsHCd`).val("0");
+  $(`#parentsHNm`).val("");
+  $(`#houseCd`).val("0");
+  $(`#houseNm`).val("");
+  $(`#houseOrder`).val("99");
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -381,8 +381,8 @@ function fnPressGet01(event) {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $("#inOutDt").datepicker(G_calendar);
-  $("#inOutDt").val(curDate);
+  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).val(curDate);
 
   fnGetList01("0");
   fnGetList02(null);

@@ -12,38 +12,38 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommonDAO {
 
-  public abstract ArrayList<Product> findBom(
+  public ArrayList<Product> findBom(
     @Param("findBom") String findBom
   );
 
-  public abstract ArrayList<Company> findCompNm(
+  public ArrayList<Company> findCompNm(
     @Param("findCompNm") String findCompNm
   );
-  public abstract ArrayList<Company> findCompCd(
+  public ArrayList<Company> findCompCd(
     @Param("findCompNm") String findCompNm,
     @Param("findCompCd") String findCompCd
   );
 
-  public abstract ArrayList<Product> findProdNm(
+  public ArrayList<Product> findProdNm(
     @Param("findProdNm") String findProdNm
   );
-  public abstract ArrayList<Product> findProdCd(
+  public ArrayList<Product> findProdCd(
     @Param("findProdNm") String findProdNm,
     @Param("findProdCd") String findProdCd
   );
 
-  public abstract ArrayList<Resource> findResrcNm(
+  public ArrayList<Resource> findResrcNm(
     @Param("findResrcNm") String findResrcNm
   );
-  public abstract ArrayList<Resource> findResrcCd(
+  public ArrayList<Resource> findResrcCd(
     @Param("findResrcNm") String findResrcNm,
     @Param("findResrcCd") String findResrcCd
   );
 
-  public abstract ArrayList<House> findHouseNm(
+  public ArrayList<House> findHouseNm(
     @Param("findHouseNm") String findHouseNm
   );
-  public abstract ArrayList<House> findHouseCd(
+  public ArrayList<House> findHouseCd(
     @Param("findHouseNm") String findHouseNm,
     @Param("findHouseCd") String findHouseCd
   );

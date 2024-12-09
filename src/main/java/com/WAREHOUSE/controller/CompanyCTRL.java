@@ -3,88 +3,96 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class CompanyCTRL {
 
-  @Autowired
-  private CompanyDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final CompanyDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/company", produces="text/html;charset=UTF-8")
-  public String company () throws Exception {
+  public ModelAndView company () throws Exception {
 
-    return "company";
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/listCompany", produces="application/json;charset=UTF-8")
-  public String listCompany (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String findCompNm = request.getParameter("findCompNm");
-    ArrayList<Company> companyList = dao.listCompany(findCompNm);
-
-    return gson.toJson(companyList);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/showCompany", produces="application/json;charset=UTF-8")
-  public String showCompany (
-    HttpServletRequest request
-  ) throws Exception {
-
-    Integer compCd = Integer.valueOf(request.getParameter("compCd"));
-    Company companyShow = dao.showCompany(compCd);
-
-    return gson.toJson(companyShow);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/saveCompany", produces="application/json;charset=UTF-8")
-  public String saveCompany (
-    @RequestBody Company companyParam,
-    HttpServletRequest request,
-    HttpSession session
-  ) throws Exception {
-
-    String userID = (String) session.getAttribute("userID");
-    companyParam.setIssueID(userID);
-
-    String msg = "저장되었습니다.";
-    if (companyParam.getFlagYN().equals("N")) {
-      msg = "삭제되었습니다.";
-    }
     try {
-      dao.saveCompany(companyParam);
+      logs.info("page", "company");
+      return new ModelAndView("company");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("company", e.getMessage());
+      return null;
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
+  }
 
-    return gson.toJson(map);
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/listCompany", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> listCompany(
+    @RequestParam("findCompNm") String findCompNm
+  ) throws Exception {
+
+    try {
+      ArrayList<Company> list = dao.listCompany(findCompNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listCompany", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/showCompany", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> showCompany(
+    @RequestParam("compCd") Integer compCd
+  ) throws Exception {
+
+    try {
+      Company show = dao.showCompany(compCd);
+      return ResponseEntity.ok(show);
+    }
+    catch (Exception e) {
+      logs.error("showCompany", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/saveCompany", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> saveCompany (
+    @RequestBody Company param,
+    @SessionAttribute("userID") String userID
+  ) throws Exception {
+
+    Map<String, Object> map = new HashMap<String, Object>();
+
+    try {
+      param.setIssueID(userID);
+      dao.saveCompany(param);
+      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+    }
+    catch (Exception e) {
+      logs.error("saveCompany", e.getMessage());
+      map.put("result", "저장 실패");
+    }
+
+    return ResponseEntity.ok(map);
   }
 }

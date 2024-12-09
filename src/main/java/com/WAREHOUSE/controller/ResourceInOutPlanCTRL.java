@@ -3,95 +3,111 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutPlanDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ResourceInOutPlanCTRL {
 
-  @Autowired
-  private ResourceInOutPlanDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final ResourceInOutPlanDAO dao;
+  private final Logs logs;
 
   // 0. 자재 입고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/resourceInPlan", produces="text/html;charset=UTF-8")
-  public String resourceInPlan () throws Exception {
+  public ModelAndView resourceInPlan () throws Exception {
 
-    return "resourceInPlan";
+    try {
+      logs.info("page", "resourceInPlan");
+      return new ModelAndView("resourceInPlan");
+    }
+    catch (Exception e) {
+      logs.error("resourceInPlan", e.getMessage());
+      return null;
+    }
+
   }
 
   // 0. 자재 출고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/resourceOutPlan", produces="text/html;charset=UTF-8")
-  public String resourceOutPlan () throws Exception {
+  public ModelAndView resourceOutPlan () throws Exception {
 
-    return "resourceOutPlan";
+    try {
+      logs.info("page", "resourceOutPlan");
+      return new ModelAndView("resourceOutPlan");
+    }
+    catch (Exception e) {
+      logs.error("resourceOutPlan", e.getMessage());
+      return null;
+    }
+
   }
 
   // 1-1. 자재 입출고 예정 리스트 -----------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listResourceInOutPlan", produces="application/json;charset=UTF-8")
-  public String listResourceInOutPlan (
-    HttpServletRequest request
+  public ResponseEntity<?> listResourceInOutPlan (
+    @RequestParam("resrcCd") String resrcCd
   ) throws Exception {
 
-    String resrcCd = request.getParameter("resrcCd");
-    ArrayList<ResourceInOut> resourceInOutList = dao.listResourceInOutPlan(resrcCd);
+    try {
+      ArrayList<ResourceInOut> list = dao.listResourceInOutPlan(resrcCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listResourceInOutPlan", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(resourceInOutList);
   }
 
   // 1-2. 자재 입출고 예정 상세 -------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/showResourceInOutPlan", produces="application/json;charset=UTF-8")
-  public String showResourceInOutPlan (
-    HttpServletRequest request
+  public ResponseEntity<?> showResourceInOutPlan (
+    @RequestParam("inOutSeq") Integer inOutSeq
   ) throws Exception {
 
-    String inOutSeq = request.getParameter("inOutSeq");
-    ResourceInOut resourceInOutShow = dao.showResourceInOutPlan(Integer.parseInt(inOutSeq));
+    try {
+      ResourceInOut resourceInOutShow = dao.showResourceInOutPlan(inOutSeq);
+      return ResponseEntity.ok(resourceInOutShow);
+    }
+    catch (Exception e) {
+      logs.error("showResourceInOutPlan", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(resourceInOutShow);
   }
 
   // 1-3. 자재 입출고 예정 저장 --------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/saveResourceInOutPlan", produces="application/json;charset=UTF-8")
-  public String saveResourceInOutPlan (
-    @RequestBody ResourceInOut resourceInOutParam,
-    HttpServletRequest request,
-    HttpSession session
+  public ResponseEntity<?> saveResourceInOutPlan (
+    @RequestBody ResourceInOut param,
+    @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    String userID = (String) session.getAttribute("userID");
-    resourceInOutParam.setIssueID(userID);
-    String msg = "저장되었습니다.";
+    Map<String, Object> map = new HashMap<String, Object>();
 
-    if (resourceInOutParam.getFlagYN().equals("N")) {
-      msg = "삭제되었습니다.";
-    }
     try {
-      dao.saveResourceInOutPlan(resourceInOutParam);
+      param.setIssueID(userID);
+      dao.saveResourceInOutPlan(param);
+      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("saveResourceInOutPlan", e.getMessage());
+      map.put("result", "저장 실패");
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 }

@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ResourceDAO {
 
-	public abstract ArrayList<Resource> listResource (
+  public ArrayList<Resource> listResource (
     @Param("findResrcNm") String findResrcNm
   );
 
-	public abstract Resource showResource (
+	public Resource showResource (
     @Param("resrcCd") Integer resrcCd
   );
 
-	public abstract void saveResource (
+	public void saveResource (
     Resource resource
   );
 

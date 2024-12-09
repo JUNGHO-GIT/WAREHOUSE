@@ -4,103 +4,93 @@ package com.WAREHOUSE.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutXlsDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ResourceInOutXlsCTRL {
 
-  @Autowired
-  private ResourceInOutXlsDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final ResourceInOutXlsDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/resourceInOutXls", produces="text/html;charset=UTF-8")
-  public String resourceInOutXls () throws Exception {
+  public ModelAndView resourceInOutXls () throws Exception {
 
-    return "resourceInOutXls";
+    try {
+      logs.info("page", "resourceInOutXls");
+      return new ModelAndView("resourceInOutXls");
+    }
+    catch (Exception e) {
+      logs.error("resourceInOutXls", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/saveResourceInOutXls", produces="application/json;charset=UTF-8")
-  public String saveResourceInOutXls (
+  public ResponseEntity<?> saveResourceInOutXls (
     @RequestBody JSONObject obj,
-    HttpServletRequest request,
-    HttpSession session
+    @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    JSONArray dataList = (JSONArray) obj.get("datas");
-    String userID = (String) session.getAttribute("userID");
-    String msg = "저장 되었습니다.";
-    String objStr = "";
+    JSONArray dataList = (JSONArray) obj.get("dataList");
+    Map<String, Object> map = new HashMap<String, Object>();
 
     for (int i = 0; i < dataList.size(); i++) {
-      objStr = gson.toJson(dataList.get(i));
+      JSONObject jsonObj = (JSONObject) dataList.get(i);
 
-      if (!"null".equals(objStr)) {
-        try {
-          JSONParser parser = new JSONParser();
-          Object objNew = parser.parse(objStr);
-          JSONObject jsonObj = (JSONObject) objNew;
+      String userIDParam = (String) userID;
+      String inOutDtParam = (String) jsonObj.get("inOutDt");
+      String remarkParam = (String) jsonObj.get("remark");
+      String inOutParam = (String) jsonObj.get("inOut");
+      String planYNParam = (String) jsonObj.get("planYN");
+      Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
+      Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
+      Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
+      Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
+      Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
 
-          String inOutDtParam = (String) jsonObj.get("inOutDt");
-          Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
-          Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
-          Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
-          Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
-          Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
-          String remarkParam = (String) jsonObj.get("remark");
-          String inOutParam = (String) jsonObj.get("inOut");
+      if ("out".equals(inOutParam)) {
+        qtyParam = qtyParam * -1;
+      }
 
-          if ("out".equals(inOutParam)) {
-            qtyParam = qtyParam * -1;
-          }
+      try {
+        ResourceInOut param = new ResourceInOut();
+        param.setInOutDt(inOutDtParam);
+        param.setResrcCd(resrcCdParam);
+        param.setQty(qtyParam);
+        param.setHouseCd(houseCdParam);
+        param.setCompCd(compCdParam);
+        param.setUnitPrice(unitPriceParam);
+        param.setRemark(remarkParam);
+        param.setIssueID(userIDParam);
+        param.setPlanYN(planYNParam);
+        param.setFlagYN("Y");
 
-          ResourceInOut resourceInOutParam = new ResourceInOut();
-          resourceInOutParam.setInOutDt(inOutDtParam);
-          resourceInOutParam.setResrcCd(resrcCdParam);
-          resourceInOutParam.setQty(qtyParam);
-          resourceInOutParam.setHouseCd(houseCdParam);
-          resourceInOutParam.setCompCd(compCdParam);
-          resourceInOutParam.setUnitPrice(unitPriceParam);
-          resourceInOutParam.setRemark(remarkParam);
-          resourceInOutParam.setFlagYN("Y");
-          resourceInOutParam.setIssueID(userID);
-
-          try {
-            dao.saveResourceInOutXls(resourceInOutParam);
-          }
-          catch (Exception e) {
-            msg = "저장 실패";
-            e.printStackTrace();
-          }
-        }
-        catch (ParseException e) {
-          e.printStackTrace();
-        }
+        dao.saveResourceInOutXls(param);
+        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      }
+      catch (Exception e) {
+        logs.error("saveResourceInOutXls", e.getMessage());
+        map.put("result", "저장 실패");
       }
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductXlsDAO {
 
-	public abstract void saveProductXls (
+	public void saveProductXls (
     Product product
   );
 

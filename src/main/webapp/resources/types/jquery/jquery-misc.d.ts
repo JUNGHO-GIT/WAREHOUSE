@@ -1,5 +1,7 @@
 /// jquery/jquery-misc.d.ts
 
+/// <reference path="jquery.d.ts" />
+
 declare namespace JQuery {
   type TypeOrArray<T> = T | T[];
   type Node = Element | Text | Comment | Document | DocumentFragment;

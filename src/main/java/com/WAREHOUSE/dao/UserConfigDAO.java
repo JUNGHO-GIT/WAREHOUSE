@@ -9,25 +9,25 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserConfigDAO {
 
-	public abstract UserConfig showUserConfigTab (
+	public UserConfig showUserConfigTab (
     @Param("userConfigID") String userConfigID,
     @Param("pageNm") String pageNm,
     @Param("gridCd") String gridCd
   );
 
-  public abstract UserConfig showUserConfigInfo (
+  public UserConfig showUserConfigInfo (
     @Param("userConfigID") String userConfigID
   );
 
-  public abstract void saveUserConfigTab (
+  public void saveUserConfigTab (
     HashMap<String, Object> userConfigTab
   );
 
-  public abstract void saveUserConfigInfo (
+  public void saveUserConfigInfo (
     HashMap<String, Object> userConfigInfo
   );
 
-  public abstract void updateUserConfigPw (
+  public void updateUserConfigPw (
     @Param("userConfigID") String userConfigID,
     @Param("userConfigPw") String userConfigPw
   );

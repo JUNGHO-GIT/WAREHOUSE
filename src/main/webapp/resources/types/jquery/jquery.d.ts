@@ -12970,7 +12970,7 @@ showWidth( "paragraph", $( "p" ).width() );
 $( "#getd" ).click(function() {
 showWidth( "document", $( document ).width() );
 });
-$("#getw").click(function() {
+$(`#getw`).click(function() {
 showWidth( "window", $( window ).width() );
 });
 </script>

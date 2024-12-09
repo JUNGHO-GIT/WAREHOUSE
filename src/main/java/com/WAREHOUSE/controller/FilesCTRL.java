@@ -1,9 +1,6 @@
 package com.WAREHOUSE.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,59 +9,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import com.WAREHOUSE.container.Files;
 import com.WAREHOUSE.dao.FilesDAO;
 import com.WAREHOUSE.util.Logs;
 import com.WAREHOUSE.util.Utils;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class FilesCTRL {
 
-  @Autowired
-  private FilesDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
-  Utils utils = new Utils();
+  private final FilesDAO dao;
+  private final Logs logs;
+  private final Utils utils;
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/uploadFiles", produces="text/html;charset=UTF-8")
-  public String uploadFiles (
-    MultipartRequest multipartRequest,
-    HttpServletRequest request,
-    HttpSession session
+  public ResponseEntity<?> uploadFiles (
+    @RequestParam("userFile") MultipartFile file,
+    @RequestParam("tableNm") String tableNm,
+    @RequestParam("tableKey") String tableKey,
+    @RequestParam("keyColumn") String keyColumn,
+    @RequestParam("fileSeq") Integer fileSeq,
+    @SessionAttribute("userID") String issueID
   ) throws Exception {
 
-    MultipartFile file = multipartRequest.getFile("userFile");
+    Map<String, Object> map = new HashMap<String, Object>();
     String fileNm = file.getOriginalFilename();
-    String tableNm = request.getParameter("tableNm");
-    String tableKey = request.getParameter("tableKey");
-    String keyColumn = request.getParameter("keyColumn");
-    String issueID = session.getAttribute("userID").toString();
-    Integer fileSeq = Integer.parseInt(request.getParameter("fileSeq"));
-    String flagYN = "Y";
-
-    try {
-      fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
-    }
-    catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
+    fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
 
     String[] exForm = file.getOriginalFilename().split("\\.");
     String ex = exForm[(exForm.length - 1)];
@@ -77,165 +62,141 @@ public class FilesCTRL {
     String UUIDString = uuid.toString().substring(0, 8);
     String fileUrl = formData.format(time) + "-" + UUIDString + "." + ex;
 
-    Files filesParam = new Files();
-    filesParam.setFileSeq(fileSeq);
-    filesParam.setFileUrl(fileUrl);
-    filesParam.setFileNm(fileNm);
-    filesParam.setTableNm(tableNm);
-    filesParam.setTableKey(tableKey);
-    filesParam.setFlagYN(flagYN);
-    filesParam.setIssueID(issueID);
-
-    String msg = "업로드 되었습니다";
     try {
+      Files files = new Files();
+      files.setFileSeq(fileSeq);
+      files.setFileUrl(fileUrl);
+      files.setFileNm(fileNm);
+      files.setTableNm(tableNm);
+      files.setTableKey(tableKey);
+      files.setFlagYN("Y");
+      files.setIssueID(issueID);
+
       String path = "TODO";
       utils.fileUpload(file, path, fileUrl);
-      dao.saveFiles(filesParam);
+      dao.saveFiles(files);
       dao.updateIssueDate(tableNm, tableKey, keyColumn);
+      map.put("result", "업로드 되었습니다");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "업로드 실패";
+      logs.error("uploadFiles", e.getMessage());
+      map.put("result", "업로드 실패");
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/uploadWarFiles", produces="text/html;charset=UTF-8")
-  public String uploadWarFiles (
-    MultipartRequest multipartRequest,
-    HttpServletRequest request,
-    HttpSession session
+  public ResponseEntity<?> uploadWarFiles (
+    @RequestParam("userFile") MultipartFile file
   ) throws Exception {
 
-    MultipartFile file = multipartRequest.getFile("userFile");
+    Map<String, Object> map = new HashMap<String, Object>();
     String fileNm = file.getOriginalFilename();
-
-    try {
-      fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
-    }
-    catch (UnsupportedEncodingException e1) {
-      e1.printStackTrace();
-    }
+    fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
 
     String[] exForm = file.getOriginalFilename().split("\\.");
     String ex = exForm[(exForm.length - 1)];
 
-    // 확장자를 제외한 파일 이름 추출
-    String fileNameWithoutEx = fileNm.substring(0, fileNm.lastIndexOf('.'));
+    SimpleDateFormat formData = new SimpleDateFormat("yyyyMMddHHmmss");
+    Date time = new Date();
 
-    // 확장자가 중복되지 않도록 파일 URL 조합
-    String fileUrl = fileNameWithoutEx + "." + ex;
-    String msg = "업로드 되었습니다";
-    String path = "TODO";
+    // 1. 보안을 위해 UUID 사용
+    UUID uuid = UUID.randomUUID();
+    String UUIDString = uuid.toString().substring(0, 8);
+    String fileUrl = formData.format(time) + "-" + UUIDString + "." + ex;
 
     try {
+      String path = "TODO";
       utils.fileUpload(file, path, fileUrl);
+      map.put("result", "업로드 되었습니다");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "업로드 실패";
+      logs.error("uploadWarFiles", e.getMessage());
+      map.put("result", "업로드 실패");
     }
+
+    return ResponseEntity.ok(map);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> listFiles (
+    @RequestParam("tableNm") String tableNm,
+    @RequestParam("tableKey") String tableKey
+  ) throws Exception {
+
+    try {
+      ArrayList<Files> filesList = dao.listFiles(tableNm, tableKey);
+      return ResponseEntity.ok(filesList);
+    }
+    catch (Exception e) {
+      logs.error("listFiles", e.getMessage());
+      return ResponseEntity.status(500).body(null);
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/showFiles", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> showFiles (
+    @RequestParam("tableNm") String tableNm,
+    @RequestParam("tableKey") String tableKey
+  ) throws Exception {
+
+    try {
+      List<Map<String, Object>> showFiles = dao.showFiles(tableNm, tableKey);
+      return ResponseEntity.ok(showFiles);
+    }
+    catch (Exception e) {
+      logs.error("showFiles", e.getMessage());
+      return ResponseEntity.status(500).body(null);
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> saveFiles (
+    @RequestBody HashMap<String, Object> files,
+    @SessionAttribute("userID") String userID
+  ) throws Exception {
+
+    String tableNm = files.get("tableNm").toString();
+    String tableKey = files.get("tableKey").toString();
+    String keyColumn = files.get("keyColumn").toString();
+    /* String fileUrlParam = files.get("fileUrl").toString(); */
+    /* String paths = fileUrlParam.equals("") ? "TODO1" : "TODO2"; */
 
     Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
-  public String listFiles (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String tableNm = request.getParameter("tableNm");
-    String tableKey = request.getParameter("tableKey");
-    ArrayList<Files> filesList = dao.listFiles(tableNm, tableKey);
-
-    return gson.toJson(filesList);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/showFiles", produces="application/json;charset=UTF-8")
-  public String showFiles (
-    HttpServletRequest request,
-    HttpSession session
-  ) throws Exception {
-
-    String tableNm = request.getParameter("tableNm");
-    String tableKey = request.getParameter("tableKey");
-    List<Map<String, Object>> showFiles = dao.showFiles(tableNm, tableKey);
-
-    return gson.toJson(showFiles);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
-  public String saveFiles (
-    @RequestBody Map<String, Object> filesParam,
-    HttpServletRequest request,
-    HttpSession session
-  ) throws Exception {
-
-    String fileUrlParam = filesParam.get("fileUrl").toString();
-    String tableNm = filesParam.get("tableNm").toString();
-    String tableKey = filesParam.get("tableKey").toString();
-    String keyColumn = filesParam.get("keyColumn").toString();
-    String userIDParam = session.getAttribute("userID").toString();
-    filesParam.put("issueID", userIDParam);
-
-    logs.info("fileUrlParam", fileUrlParam);
-    logs.info("filesParam", gson.toJson(filesParam));
-
-    String msg = "저장 되었습니다";
-    if (filesParam.get("flagYN").equals("N")) {
-      msg = "삭제 되었습니다";
-    }
-
-    /* String path = "";
-    if (fileUrlParam.equals("")) {
-      path += "files/" + fileUrlParam;
-    }
-    else {
-      path += "files/";
-    } */
-
-    Files file = gson.fromJson(gson.toJson(filesParam), Files.class);
     try {
+      Files file = new Files();
+      file.setFileSeq(Integer.parseInt(files.get("fileSeq").toString()));
+      file.setTableNm(files.get("tableNm").toString());
+      file.setTableKey(files.get("tableKey").toString());
+      file.setFileUrl(files.get("fileUrl").toString());
+      file.setFileNm(files.get("fileNm").toString());
+      file.setFlagYN(files.get("flagYN").toString());
+      file.setIssueID(files.get("issueID").toString());
+
       dao.saveFiles(file);
       dao.updateIssueDate(tableNm, tableKey, keyColumn);
+
+      map.put("result", file.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("saveFiles", e.getMessage());
+      map.put("result", "저장 실패");
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 
   //-----------------------------------------------------------------------------------------------
   @GetMapping(value="/viewFiles")
-  public void viewFiles (
-    HttpServletRequest request,
-    HttpServletResponse response
+  public ResponseEntity<?> viewFiles(
+    @RequestParam("fileUrl") String fileUrl
   ) throws Exception {
 
-    FileInputStream fis = null;
-    BufferedOutputStream bos = null;
-
-    String fileUrl = request.getParameter("fileUrl");
     String path = "TODO" + fileUrl;
     String contentType = "";
     String fileExt = "";
@@ -257,19 +218,19 @@ public class FilesCTRL {
       fileExt = fileUrl.substring(lastIndex);
     }
 
-    if (fileExt.equals(".png")) {
+    if (fileExt.toLowerCase().equals(".png")) {
       contentType = "image/png";
     }
-    else if (fileExt.equals(".jpg")) {
+    else if (fileExt.toLowerCase().equals(".jpg")) {
       contentType = "image/jpeg";
     }
-    else if (fileExt.equals(".jpeg")) {
+    else if (fileExt.toLowerCase().equals(".jpeg")) {
       contentType = "image/jpeg";
     }
-    else if (fileExt.equals(".gif")) {
+    else if (fileExt.toLowerCase().equals(".gif")) {
       contentType = "image/gif";
     }
-    else if (fileExt.equals(".webp")) {
+    else if (fileExt.toLowerCase().equals(".webp")) {
       contentType = "image/webp";
     }
     else {
@@ -277,87 +238,79 @@ public class FilesCTRL {
     }
 
     try {
-      response.setContentType(contentType);
-      response.setHeader("Content-Description", "JSP Generated Data");
-      response.setHeader("Cache-Control", "max-age=2592000, public");
-
-      fis = new FileInputStream(file);
-      byte[] buf = new byte[(int) file.length()];
-      Integer readCount = fis.read(buf);
-
-      bos = new BufferedOutputStream(response.getOutputStream());
-      bos.write(buf, 0, readCount);
-      bos.flush();
-      response.flushBuffer();
+      byte[] fileContent = java.nio.file.Files.readAllBytes(file.toPath());
+      return ResponseEntity.ok()
+      .header("Content-Description", "JSP Generated Data")
+      .header("Cache-Control", "max-age=2592000, public")
+      .contentType(MediaType.parseMediaType(contentType))
+      .body(fileContent);
     }
     catch (Exception e) {
-      e.printStackTrace();
-    }
-    finally {
-      if (fis != null) {
-        fis.close();
-      }
-      if (bos != null) {
-        bos.close();
-      }
+      logs.error("viewFiles", e.getMessage());
+      String result = "파일 처리 중 오류가 발생했습니다.";
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/downloadFiles")
-  public void fileDownload (
-    HttpServletRequest request,
-    HttpServletResponse response
+  @GetMapping(value = "/downloadFiles")
+  public ResponseEntity<?> fileDownload(
+    @RequestParam("fileUrl") String fileUrl,
+    @RequestHeader("User-Agent") String userAgent
   ) throws Exception {
 
-    String header = request.getHeader("User-Agent");
-    String fileUrl = request.getParameter("fileUrl");
-    String path = "";
-    File downloadFile = null;
+    java.io.File downloadFile = null;
+    String path = "TODO";
 
-    if (header.contains("MSIE") || header.contains("Trident")) {
-    	fileUrl = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
-      response.setHeader("Content-Disposition", "attachment; filename=" + fileUrl + ";");
+    try {
+      // 1. 파일 이름 인코딩
+      String encodedFileName;
+      if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+        encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
+      }
+      else {
+        encodedFileName = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
+      }
+
+      // 2. 엑셀 파일 다운로드인 경우
+      if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
+        ClassPathResource resource = new ClassPathResource(fileUrl);
+        downloadFile = resource.getFile();
+      }
+
+      // 3. 이미지 파일 다운로드인 경우
+      else {
+        path = "TODO" + fileUrl;
+        downloadFile = new File(path);
+      }
+
+      // 4. 원래 파일이 없을 경우 기본 이미지로 대체
+      if (!downloadFile.exists()) {
+        ClassPathResource resource = new ClassPathResource("no-image.webp");
+        downloadFile = resource.getFile();
+      }
+
+      // 5. 파일 데이터 읽기
+      byte[] fileContent = java.nio.file.Files.readAllBytes(downloadFile.toPath());
+
+      // 6. Content-Type 설정
+      String contentType = java.nio.file.Files.probeContentType(downloadFile.toPath());
+      if (contentType == null) {
+        contentType = "application/octet-stream";
+      }
+
+      // 7. ResponseEntity로 응답 생성
+      return ResponseEntity.ok()
+      .header("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"")
+      .header("Content-Transfer-Encoding", "binary")
+      .contentType(MediaType.parseMediaType(contentType))
+      .contentLength(downloadFile.length())
+      .body(fileContent);
     }
-    else {
-    	fileUrl = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
-      response.setHeader("Content-Disposition", "attachment; filename=\"" + fileUrl + "\"");
+    catch (Exception e) {
+      logs.error("fileDownload", e.getMessage());
+      String result = "파일 다운로드 중 오류가 발생했습니다.";
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
-
-    // 1. 엑셀파일 다운로드인 경우
-    if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
-      response.setContentType("application/vnd.ms-excel");
-      ClassPathResource resource = new ClassPathResource(fileUrl.toString());
-      downloadFile = resource.getFile();
-    }
-
-    // 2. 이미지 파일 다운로드인 경우
-    else {
-      response.setContentType("application/octet-stream; charset=utf-8");
-      path = "TODO" + fileUrl;
-      downloadFile = new File(path);
-    }
-
-    // 3. 원래 파일이 없을 경우 기본 이미지로 대체 (resources/no-image)
-    if (!downloadFile.exists()) {
-      response.setContentType("application/octet-stream; charset=utf-8");
-      ClassPathResource resource = new ClassPathResource("no-image.webp");
-      downloadFile = resource.getFile();
-    }
-
-    response.setContentLength((int) downloadFile.length());
-    response.setHeader("Content-Transfer-Encoding", "binary");
-
-    FileInputStream fin = new FileInputStream(downloadFile);
-    ServletOutputStream sout = response.getOutputStream();
-
-    byte[] buf = new byte[1024];
-    Integer size = -1;
-
-    while ((size = fin.read(buf, 0, buf.length)) != -1) {
-      sout.write(buf, 0, size);
-    }
-    fin.close();
-    sout.close();
   }
 }

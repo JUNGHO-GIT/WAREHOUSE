@@ -2,25 +2,25 @@
 function fnUploadFiles(formParam) {
 
   var fileUploadForm = formParam;
-  var tableNm = $("#tableNm").val();
-  var tableKey = $("#tableKey").val();
+  var tableNm = $(`#tableNm`).val();
+  var tableKey = $(`#tableKey`).val();
 
   var formData = new FormData(fileUploadForm);
-  var userFileVal = $("#userFile").val();
+  var userFileVal = $(`#userFile`).val();
   var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
   var fileExt = divFile[(divFile.length - 1)];
 
-  if (!$("#userFile").val()) {
+  if (!$(`#userFile`).val()) {
     alert("파일을 먼저 선택해 주세요");
-    $("#userFile").on("focus", function () {});
+    $(`#userFile`).on("focus", function () {});
     return;
   }
   if (fileExt != "jpg" && fileExt != "JPG" && fileExt != "png" && fileExt != "PNG") {
-    alert("등록 불가능한 파일입니다. JPG, PNG 파일만 등록 가능합니다.");
-    $("#userFile").on("focus", function () {});
+    alert("등록 불가능한 파일입니다. JPG, PNG 파일만 등록 가능합니다");
+    $(`#userFile`).on("focus", function () {});
     return;
   }
-  $("#fileUpBtn").html("ing..");
+  $(`#fileUpBtn`).html("ing..");
 
   $.ajax({
     url: "act/uploadFiles",
@@ -35,8 +35,8 @@ function fnUploadFiles(formParam) {
       alert(data);
 
       // 2. 요소 초기화
-      $("#fileUpBtn").html("업로드");
-      $("#userFile").val("");
+      $(`#fileUpBtn`).html("업로드");
+      $(`#userFile`).val("");
 
       // 3. 그리드에 이미지 표시
       fnGetList01();
@@ -46,7 +46,7 @@ function fnUploadFiles(formParam) {
 
       // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
       if (tableKey !== "0") {
-        $("#grid01").pqGrid("setSelection", {rowIndxPage:0});
+        $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
     },
     error: ajaxErrorHandler
@@ -58,21 +58,21 @@ function fnUploadWarFiles(formParam) {
 
   var fileUploadForm = formParam;
   var formData = new FormData(fileUploadForm);
-  var userFileVal = $("#userFile").val();
+  var userFileVal = $(`#userFile`).val();
   var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
   var fileExt = divFile[(divFile.length - 1)];
 
-  if (!$("#userFile").val()) {
+  if (!$(`#userFile`).val()) {
     alert("파일을 먼저 선택해 주세요");
-    $("#userFile").on("focus", function () {});
+    $(`#userFile`).on("focus", function () {});
     return;
   }
   if (fileExt != "war" && fileExt != "WAR") {
-    alert("등록 불가능한 파일입니다. WAR 파일만 등록 가능합니다.");
-    $("#userFile").on("focus", function () {});
+    alert("등록 불가능한 파일입니다. WAR 파일만 등록 가능합니다");
+    $(`#userFile`).on("focus", function () {});
     return;
   }
-  $("#fileUpBtn").html("ing..");
+  $(`#fileUpBtn`).html("ing..");
 
   $.ajax({
     url: "act/uploadWarFiles",
@@ -84,8 +84,8 @@ function fnUploadWarFiles(formParam) {
     cache: false,
     success: (data) => {
       alert(data);
-      $("#fileUpBtn").html("업로드");
-      $("#userFile").val("");
+      $(`#fileUpBtn`).html("업로드");
+      $(`#userFile`).val("");
     },
     error: ajaxErrorHandler
   });
@@ -106,7 +106,7 @@ function fnShowFiles(tableNm, tableKey, target) {
 
       // 1. 값 초기화
       $("#" + target).empty();
-      $("#showImage").empty();
+      $(`#showImage`).empty();
 
       // 2. 최신순으로 정렬
       data.reverse();
@@ -157,7 +157,7 @@ function fnShowSelectedFiles(fileUrl, rowId) {
 
   var imgUrl = "viewFiles?fileUrl=" + fileUrl;
 
-  $("#showImage").html(`<img src="${imgUrl}" class="cards-image" loading="lazy" />`);
+  $(`#showImage`).html(`<img src="${imgUrl}" class="cards-image" loading="lazy" />`);
   $(`[id^="imageRow"]`).css("background-color", "");
   $("#imageRow" + rowId).css("background-color", "#ccc");
 
@@ -186,9 +186,9 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
     "fileSeq": fileSeq,
     "fileUrl": fileUrl,
     "fileNm": fileNm,
-    "tableNm": $("#tableNm").val(),
-    "tableKey": $("#tableKey").val(),
-    "keyColumn": $("#keyColumn").val(),
+    "tableNm": $(`#tableNm`).val(),
+    "tableKey": $(`#tableKey`).val(),
+    "keyColumn": $(`#keyColumn`).val(),
     "flagYN": "N"
   };
 
@@ -206,8 +206,8 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
       alert(data.result);
 
       // 2. 요소 초기화
-      $("#fileUpBtn").html("업로드");
-      $("#userFile").val("");
+      $(`#fileUpBtn`).html("업로드");
+      $(`#userFile`).val("");
 
       // 3. 그리드에 이미지 표시
       fnGetList01();
@@ -217,7 +217,7 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
 
       // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
       if (tableKey !== "0") {
-        $("#grid01").pqGrid("setSelection", {rowIndxPage:0});
+        $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
     },
     error: ajaxErrorHandler

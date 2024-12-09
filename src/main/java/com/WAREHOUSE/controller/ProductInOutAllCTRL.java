@@ -2,112 +2,100 @@ package com.WAREHOUSE.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ProductInOutAllCTRL {
 
-  @Autowired
-  private ProductInOutDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final ProductInOutDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productInOutAll", produces="text/html;charset=UTF-8")
-  public String productInOutAll () throws Exception {
+  public ModelAndView productInOutAll () throws Exception {
 
-    return "productInOutAll";
+    try {
+      logs.info("page", "productInOutAll");
+      return new ModelAndView("productInOutAll");
+    }
+    catch (Exception e) {
+      logs.error("productInOutAll", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/saveProductInOutAll", produces="application/json;charset=UTF-8")
-  public String saveProductInOutAll (
+  public ResponseEntity<?> saveProductInOutAll (
     @RequestBody JSONObject obj,
-    HttpServletRequest request,
-    HttpSession session
+    @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    JSONArray dataList = (JSONArray) obj.get("datas");
-    String msg = "저장되었습니다.";
-    String objStr = "";
+    JSONArray dataList = (JSONArray) obj.get("dataList");
+    Map<String, Object> map = new HashMap<String, Object>();
 
     for (int i = 0; i < dataList.size(); i++) {
-      objStr = gson.toJson(dataList.get(i));
+      JSONObject jsonObj = (JSONObject) dataList.get(i);
 
-      if (objStr != null && objStr.length() > 0) {
-        try {
-          JSONParser parser = new JSONParser();
-          Object objNew = parser.parse(objStr);
-          JSONObject jsonObj = (JSONObject) objNew;
-          String userIDParam = (String) session.getAttribute("userID");
-          String inOutParam = (String) jsonObj.get("inOut");
-          String inOutDtParam = (String) jsonObj.get("inOutDt");
-          String prodNmParam = (String) jsonObj.get("prodNm");
-          String compNmParam = (String) jsonObj.get("compNm");
-          String houseNmParam = (String) jsonObj.get("houseNm");
-          Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
-          Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
-          Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
-          Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
-          Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
+      String userIDParam = (String) userID;
+      String inOutParam = (String) jsonObj.get("inOut");
+      String inOutDtParam = (String) jsonObj.get("inOutDt");
+      String prodNmParam = (String) jsonObj.get("prodNm");
+      String compNmParam = (String) jsonObj.get("compNm");
+      String houseNmParam = (String) jsonObj.get("houseNm");
+      Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
+      Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
+      Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
+      Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
+      Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
 
-          if (inOutParam != null && inOutParam.equals("in") == true) {
-            qtyParam = qtyParam * 1;
-          }
-          else if (inOutParam != null && inOutParam.equals("out") == true) {
-            qtyParam = qtyParam * -1;
-          }
+      if (inOutParam != null && inOutParam.equals("in") == true) {
+        qtyParam = qtyParam * 1;
+      }
+      else if (inOutParam != null && inOutParam.equals("out") == true) {
+        qtyParam = qtyParam * -1;
+      }
 
-          ProductInOut productInOutParam = new ProductInOut();
-          productInOutParam.setInOutSeq(0);
-          productInOutParam.setProdCd(prodCdParam);
-          productInOutParam.setHouseCd(houseCdParam);
-          productInOutParam.setCompCd(compCdParam);
-          productInOutParam.setProdNm(prodNmParam);
-          productInOutParam.setHouseNm(houseNmParam);
-          productInOutParam.setCompNm(compNmParam);
-          productInOutParam.setQty(qtyParam);
-          productInOutParam.setUnitPrice(unitPriceParam);
-          productInOutParam.setInOutDt(inOutDtParam);
-          productInOutParam.setFlagYN("Y");
-          productInOutParam.setPlanYN("N");
-          productInOutParam.setRemark("");
-          productInOutParam.setIssueID(userIDParam);
+      try {
+        ProductInOut param = new ProductInOut();
+        param.setInOutSeq(0);
+        param.setProdCd(prodCdParam);
+        param.setHouseCd(houseCdParam);
+        param.setCompCd(compCdParam);
+        param.setProdNm(prodNmParam);
+        param.setHouseNm(houseNmParam);
+        param.setCompNm(compNmParam);
+        param.setQty(qtyParam);
+        param.setUnitPrice(unitPriceParam);
+        param.setInOutDt(inOutDtParam);
+        param.setIssueID(userIDParam);
+        param.setFlagYN("Y");
+        param.setPlanYN("N");
 
-          try {
-            dao.saveProductInOut(productInOutParam);
-          }
-          catch (Exception e) {
-            msg = "저장 실패";
-            e.printStackTrace();
-          }
-        }
-        catch (ParseException e) {
-          e.printStackTrace();
-        }
+        dao.saveProductInOut(param);
+        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      }
+      catch (Exception e) {
+        logs.error("saveProductInOutAll", e.getMessage());
+        map.put("result", "저장 실패");
       }
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 }

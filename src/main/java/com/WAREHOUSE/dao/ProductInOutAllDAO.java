@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductInOutAllDAO {
 
-	public abstract void saveProductInOut (
+	public void saveProductInOut (
     ProductInOut productInOut
   );
 

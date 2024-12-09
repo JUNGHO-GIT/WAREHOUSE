@@ -2,184 +2,228 @@ package com.WAREHOUSE.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.ReportDAO;
 import com.WAREHOUSE.util.Logs;
 import com.WAREHOUSE.util.Utils;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ReportCTRL {
 
-  @Autowired
-  private ReportDAO dao;
-  Logs logs = new Logs();
-  Utils utils = new Utils();
-  Gson gson = new Gson();
+  private final ReportDAO dao;
+  private final Logs logs;
+  private final Utils utils;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportIn", produces="text/html;charset=UTF-8")
-  public String reportIn () throws Exception {
+  public ModelAndView reportIn () throws Exception {
 
-    return "reportIn";
+    try {
+      logs.info("page", "reportIn");
+      return new ModelAndView("reportIn");
+    }
+    catch (Exception e) {
+      logs.error("reportIn", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportOut", produces="text/html;charset=UTF-8")
-  public String reportOut () throws Exception {
+  public ModelAndView reportOut () throws Exception {
 
-    return "reportOut";
+    try {
+      logs.info("page", "reportOut");
+      return new ModelAndView("reportOut");
+    }
+    catch (Exception e) {
+      logs.error("reportOut", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportStock", produces="text/html;charset=UTF-8")
-  public String reportStock () throws Exception {
+  public ModelAndView reportStock () throws Exception {
 
-    return "reportStock";
+    try {
+      logs.info("page", "reportStock");
+      return new ModelAndView("reportStock");
+    }
+    catch (Exception e) {
+      logs.error("reportStock", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportHouse", produces="text/html;charset=UTF-8")
-  public String reportHouse () throws Exception {
+  public ModelAndView reportHouse () throws Exception {
 
-    return "reportHouse";
+    try {
+      logs.info("page", "reportHouse");
+      return new ModelAndView("reportHouse");
+    }
+    catch (Exception e) {
+      logs.error("reportHouse", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportProdIn", produces="text/html;charset=UTF-8")
-  public String listReportProdIn (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportProdIn (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportProdInList = (
-      dao.listReportProdIn(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportProdIn(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportProdIn", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportProdInList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportResrcIn", produces="text/html;charset=UTF-8")
-  public String listReportResrcIn (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportResrcIn (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportResrcInList = (
-      dao.listReportResrcIn(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportResrcIn(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportResrcIn", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportResrcInList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportProdOut", produces="application/json;charset=UTF-8")
-  public String listReportProdOut (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportProdOut (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportProdOutList = (
-      dao.listReportProdOut(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportProdOut(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportProdOut", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportProdOutList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportResrcOut", produces="text/html;charset=UTF-8")
-  public String listReportResrcOut (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportResrcOut (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportResrcOutList = (
-      dao.listReportResrcOut(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportResrcOut(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportResrcOut", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportResrcOutList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportProdStock", produces="text/html;charset=UTF-8")
-  public String listReportProdStock (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportProdStock (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportStockList = (
-      dao.listReportProdStock(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportProdStock(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportProdStock", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportStockList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listReportResrcStock", produces="text/html;charset=UTF-8")
-  public String listReportResrcStock (
-    HttpServletRequest request
+  public ResponseEntity<?> listReportResrcStock (
+    @RequestParam("findYear") String findYearParam
   ) throws Exception {
 
-    String findYear = request.getParameter("findYear");
-
-    String curMonth = utils.curDt();
-    curMonth = curMonth.substring(0, 7);
-
+    String findYear = findYearParam;
+    String curMonth = utils.curDt().substring(0, 7);
     Integer nYear = Integer.valueOf(findYear) + 1;
     String nextYear = String.valueOf(nYear);
 
-    ArrayList<HashMap<String, Object>> reportStockList = (
-      dao.listReportResrcStock(findYear, curMonth, nextYear)
-    );
+    try {
+      ArrayList<HashMap<String, Object>> list = (
+        dao.listReportResrcStock(findYear, curMonth, nextYear)
+      );
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listReportResrcStock", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(reportStockList);
   }
 }

@@ -3,118 +3,125 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Common;
 import com.WAREHOUSE.container.CommonCd;
 import com.WAREHOUSE.dao.CommonCdDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class CommonCdCTRL {
 
-  @Autowired
-  private CommonCdDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final CommonCdDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/commonCd", produces="text/html;charset=UTF-8")
-  public String commonCd () throws Exception {
+  public ModelAndView commonCd () throws Exception {
 
-    return "commonCd";
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/listCommonCd", produces="application/json;charset=UTF-8")
-  public String listCommonCd (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String findGroupCd = request.getParameter("findGroupCd");
-    String findItemNm = request.getParameter("findItemNm");
-    ArrayList<CommonCd> commonCdList = dao.listCommonCd(findGroupCd, findItemNm);
-
-    return gson.toJson(commonCdList);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/showCommonCd", produces="application/json;charset=UTF-8")
-  public String showCommonCd (
-    HttpServletRequest request
-  ) throws Exception {
-
-    String groupCd = request.getParameter("groupCd");
-    String itemCd = request.getParameter("itemCd");
-    CommonCd commonCdShow = dao.showCommonCd(groupCd, itemCd);
-
-    return gson.toJson(commonCdShow);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
-  @PostMapping(value="/act/saveCommonCd", produces="application/json;charset=UTF-8")
-  public String saveCommonCd (
-    @RequestBody CommonCd commonCdParam,
-    HttpServletRequest request,
-    HttpSession session
-  ) throws Exception {
-
-    String userID = (String) session.getAttribute("userID");
-    commonCdParam.setIssueID(userID);
-    String msg = "저장되었습니다.";
-
-    if (commonCdParam.getFlagYN().equals("N")) {
-      msg = "삭제되었습니다.";
-    }
     try {
-      dao.saveCommonCd(commonCdParam);
+      logs.info("page", "commonCd");
+      return new ModelAndView("commonCd");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("commonCd", e.getMessage());
+      return null;
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/initCodeAll", produces="application/json;charset=UTF-8")
-  public String initCodeAll (
-    HttpServletRequest request
+  public ResponseEntity<?> initCodeAll (
+    @RequestParam("part") String part,
+    @RequestParam("groupCd") String groupCd,
+    @RequestParam("target") String target
   ) throws Exception {
 
-    String part[] = request.getParameter("part").split("/");
-    String groupCd[] = request.getParameter("groupCd").split("/");
-    String target[] = request.getParameter("target").split("/");
+    String partArr[] = part.split("/");
+    String groupCdArr[] = groupCd.split("/");
+    String targetArr[] = target.split("/");
 
-    ArrayList<Common> commonCdResult = new ArrayList<Common>();
-		ArrayList<Common> commonCdList = new ArrayList<Common>();
+    ArrayList<Common> result = new ArrayList<Common>();
 
-		for (int i = 0; i < part.length; i++) {
-			if (part[i].equals("comCode")) {
-        commonCdList = dao.listComCodeAll(groupCd[i], target[i]);
-	 		}
-	 		else if (part[i].equals("comCodeGroup")) {
-        commonCdList = dao.listComCodeGroupAll(target[i]);
-	 		}
-	 		commonCdResult.addAll(commonCdList);
-		}
+    for (Integer i = 0; i < partArr.length; i++) {
+      if (partArr[i].equals("comCode")) {
+        result = dao.listComCodeAll(groupCdArr[i], targetArr[i]);
+      }
+      else if (partArr[i].equals("comCodeGroup")) {
+        result = dao.listComCodeGroupAll(targetArr[i]);
+      }
+    }
 
-    return gson.toJson(commonCdResult);
+    return ResponseEntity.ok(result);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/listCommonCd", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> listCommonCd (
+    @RequestParam("findGroupCd") String findGroupCd,
+    @RequestParam("findItemNm") String findItemNm
+  ) throws Exception {
+
+    try {
+      ArrayList<CommonCd> list = dao.listCommonCd(findGroupCd, findItemNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listCommonCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/showCommonCd", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> showCommonCd (
+    @RequestParam("groupCd") String groupCd,
+    @RequestParam("itemCd") String itemCd
+  ) throws Exception {
+
+    try {
+      CommonCd show = dao.showCommonCd(groupCd, itemCd);
+      return ResponseEntity.ok(show);
+    }
+    catch (Exception e) {
+      logs.error("showCommonCd", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/saveCommonCd", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> saveCommonCd (
+    @RequestBody CommonCd param,
+    @SessionAttribute("userID") String userID
+  ) throws Exception {
+
+    Map<String, Object> map = new HashMap<String, Object>();
+
+    try {
+      param.setIssueID(userID);
+      dao.saveCommonCd(param);
+      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+    }
+    catch (Exception e) {
+      logs.error("saveCommonCd", e.getMessage());
+      map.put("result", "저장 실패");
+    }
+
+    return ResponseEntity.ok(map);
   }
 }

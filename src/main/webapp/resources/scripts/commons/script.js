@@ -220,14 +220,14 @@ function fnRemoveComma(obj) {
 // 0. 공급가 계산 ---------------------------------------------------------------------------------
 function fnSupplyPrice() {
   // 콤마를 제거한 후 단가와 수량을 계산
-  let unitPrice = fnRemoveComma($("#unitPrice").val());
-  let qty = fnRemoveComma($("#qty").val());
+  let unitPrice = fnRemoveComma($(`#unitPrice`).val());
+  let qty = fnRemoveComma($(`#qty`).val());
 
   // 공급가 계산
   var supplyPrice = unitPrice * qty;
 
   // 계산된 공급가에 콤마 추가
-  $("#supplyPrice").val(supplyPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  $(`#supplyPrice`).val(supplyPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 };
 
 // 0. 천단위 콤마 추가 (input 태그 내에서 호출) ----------------------------------------------------
@@ -246,7 +246,7 @@ var fnInputNum = (function() {
       if (!isNaN(numericInputVal) && inputVal !== '') {
         if (numericInputVal > MAX_INT_VALUE) {
           // 최대값을 초과하는 경우
-          alert("입력 가능한 최대값을 초과하였습니다.");
+          alert("입력 가능한 최대값을 초과하였습니다");
           obj.value = 0;
         }
         else {
@@ -257,7 +257,7 @@ var fnInputNum = (function() {
       }
       // 입력값이 숫자가 아닌 경우
       else {
-        alert("숫자만 입력 가능합니다.");
+        alert("숫자만 입력 가능합니다");
         obj.value = 0;
       }
     }, 100);
@@ -297,7 +297,7 @@ var fnInputRate = (function() {
 
       // 입력값에 소수점이 두 개 이상 포함된 경우 체크
       if ((inputVal.match(/\./g) || []).length > 1) {
-        alert("유효하지 않은 형식입니다.");
+        alert("유효하지 않은 형식입니다");
         obj.value = '0.000';
         return;
       }
@@ -317,12 +317,12 @@ var fnInputRate = (function() {
           }
         }
         else {
-          alert("입력 가능한 최대값을 초과하였습니다.");
+          alert("입력 가능한 최대값을 초과하였습니다");
           obj.value = '0.000';
         }
       }
       else {
-        alert("비율로 변환할 수 없는 값입니다.");
+        alert("비율로 변환할 수 없는 값입니다");
         obj.value = '0.000';
       }
     }, 100);
@@ -463,7 +463,7 @@ function fnGoPage (page) {
 // 0. 에러처리 -------------------------------------------------------------------------------------
 function ajaxErrorHandler (request, status, error) {
   if (request.status === 477) {
-    alert("세션이 종료 되었습니다.");
+    alert("세션이 종료 되었습니다");
     fnGoPage("reLogin");
   }
   else {

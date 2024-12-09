@@ -58,7 +58,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listCommonCd",
-    data: `findGroupCd=${$("#findGroupCd").val()}&findItemNm=${$("#findItemNm").val()}`,
+    data: `findGroupCd=${$(`#findGroupCd`).val()}&findItemNm=${$(`#findItemNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -87,14 +87,14 @@ function fnShow(groupCd, itemCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      $("#groupCd").val(data.groupCd);
-      $("#groupNm").val(data.groupNm);
-      $("#itemCd").val(data.itemCd);
-      $("#itemCd").prop("disabled", "disabled");
-      $("#itemNm").val(data.itemNm);
-      $("#itemMemo").val(data.itemMemo);
-      $("#itemSeq").val(data.itemSeq);
-      $("#regGroup").prop("disabled", "disabled");
+      $(`#groupCd`).val(data.groupCd);
+      $(`#groupNm`).val(data.groupNm);
+      $(`#itemCd`).val(data.itemCd);
+      $(`#itemCd`).prop("disabled", "disabled");
+      $(`#itemNm`).val(data.itemNm);
+      $(`#itemMemo`).val(data.itemMemo);
+      $(`#itemSeq`).val(data.itemSeq);
+      $(`#regGroup`).prop("disabled", "disabled");
     },
     error: ajaxErrorHandler
   });
@@ -104,20 +104,20 @@ function fnShow(groupCd, itemCd) {
 function fnSave(flagYN) {
 
   let flagParam = "";
-  let groupCd = $("#groupCd").val();
-  let regGroup = $("#regGroup").val();
+  let groupCd = $(`#groupCd`).val();
+  let regGroup = $(`#regGroup`).val();
   let groupNm = "";
 
   if (flagYN === "N") {
     flagParam = "N";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $("#groupCd").on("focus", function () {});
+      $(`#groupCd`).on("focus", function () {});
       return;
     }
-    if (!$("#itemCd").val()) {
+    if (!$(`#itemCd`).val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $("#itemCd").on("focus", function () {});
+      $(`#itemCd`).on("focus", function () {});
       return;
     }
     if (!confirm("삭제 하시겠습니까?")) {
@@ -128,17 +128,17 @@ function fnSave(flagYN) {
     flagParam = "Y";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $("#groupCd").on("focus", function () {});
+      $(`#groupCd`).on("focus", function () {});
       return;
     }
-    if (!$("#itemCd").val()) {
+    if (!$(`#itemCd`).val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $("#itemCd").on("focus", function () {});
+      $(`#itemCd`).on("focus", function () {});
       return;
     }
-    if (!$("#itemNm").val()) {
+    if (!$(`#itemNm`).val()) {
       alert("아이템을 바르게 입력해 주세요");
-      $("#itemNm").on("focus", function () {});
+      $(`#itemNm`).on("focus", function () {});
       return;
     }
     if (regGroup) {
@@ -146,7 +146,7 @@ function fnSave(flagYN) {
         let regSplit = (typeof regGroup === 'string' ? regGroup : '').split("@");
         if (regSplit.length != 2) {
           alert("그룹코드@그룹명 형태로 등록해주세요");
-          $("#regGroup").on("focus", function () {});
+          $(`#regGroup`).on("focus", function () {});
           return;
         }
         groupCd = regSplit[0];
@@ -161,10 +161,10 @@ function fnSave(flagYN) {
   const param = {
     "groupCd": groupCd,
     "groupNm": groupNm,
-    "itemCd": $("#itemCd").val() || "",
-    "itemNm": $("#itemNm").val() || "",
-    "itemMemo": $("#itemMemo").val() || "",
-    "itemSeq": $("#itemSeq").val() || 0,
+    "itemCd": $(`#itemCd`).val() || "",
+    "itemNm": $(`#itemNm`).val() || "",
+    "itemMemo": $(`#itemMemo`).val() || "",
+    "itemSeq": $(`#itemSeq`).val() || 0,
     "flagYN": flagParam
   };
 
@@ -195,18 +195,18 @@ function fnDel() {
 function fnReset() {
 
   // 공통코드 초기화
-  $("#groupCd").val("");
-  $("#itemCd").val("");
-  $("#itemNm").val("");
-  $("#itemSeq").val("");
-  $("#regGroup").val("");
-  $("#itemMemo").val("");
-  $("#itemCd").prop("disabled", "");
-  $("#regGroup").prop("disabled", "");
+  $(`#groupCd`).val("");
+  $(`#itemCd`).val("");
+  $(`#itemNm`).val("");
+  $(`#itemSeq`).val("");
+  $(`#regGroup`).val("");
+  $(`#itemMemo`).val("");
+  $(`#itemCd`).prop("disabled", "");
+  $(`#regGroup`).prop("disabled", "");
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -231,8 +231,8 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 

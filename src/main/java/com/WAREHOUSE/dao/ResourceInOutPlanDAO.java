@@ -10,17 +10,17 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ResourceInOutPlanDAO {
 
   // 1-1. 자재 입출고 예정 리스트
-  public abstract ArrayList<ResourceInOut> listResourceInOutPlan (
+  public ArrayList<ResourceInOut> listResourceInOutPlan (
     @Param("resrcCd") String resrcCd
   );
 
   // 1-2. 자재 입출고 예정 상세
-  public abstract ResourceInOut showResourceInOutPlan (
+  public ResourceInOut showResourceInOutPlan (
     @Param("inOutSeq") Integer inOutSeq
   );
 
   // 1-3. 자재 입출고 예정 등록
-  public abstract void saveResourceInOutPlan (
+  public void saveResourceInOutPlan (
     ResourceInOut resourceInOut
   );
 

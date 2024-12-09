@@ -10,19 +10,19 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface HouseDAO {
 
-  public abstract ArrayList<House> listHouse(
+  public ArrayList<House> listHouse(
     @Param("parentsHCd") Integer parentsHCd
   );
 
-  public abstract ArrayList<HashMap<String, Object>> showHousePerProduct(
+  public ArrayList<HashMap<String, Object>> showHousePerProduct(
     @Param("houseCd") Integer houseCd
   );
 
-  public abstract ArrayList<HashMap<String, Object>> showHousePerResource(
+  public ArrayList<HashMap<String, Object>> showHousePerResource(
     @Param("houseCd") Integer houseCd
   );
 
-  public abstract void saveHouse(
+  public void saveHouse(
     House House
   );
 }

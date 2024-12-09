@@ -11,16 +11,16 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BomDAO {
 
-  public abstract ArrayList<Product> listBom(
+  public ArrayList<Product> listBom(
     @Param("findProdNm") String findProdNm
   );
 
-  public abstract ArrayList<Resource> showBom(
+  public ArrayList<Resource> showBom(
     @Param("prodCd") Integer prodCd,
     @Param("bomType") String bomType
   );
 
-  public abstract void saveBom(
+  public void saveBom(
     Bom bom
   );
 }

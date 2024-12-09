@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductDAO {
 
-  public abstract ArrayList<Product> listProduct(
+  public ArrayList<Product> listProduct(
     @Param("findProdNm") String findProdNm
   );
 
-  public abstract Product showProduct(
+  public Product showProduct(
     @Param("prodCd") Integer prodCd
   );
 
-  public abstract void saveProduct(
+  public void saveProduct(
     Product product
   );
 }

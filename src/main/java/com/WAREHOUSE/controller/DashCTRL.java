@@ -10,27 +10,38 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.DashDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class DashCTRL {
 
-  @Autowired
-  private DashDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final DashDAO dao;
+  private final Logs logs;
+  private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  private final NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
 
   // -----------------------------------------------------------------------------------------------
-  private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-  private static final NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
+  @GetMapping(value="/dash", produces="text/plain;charset=UTF-8")
+  public ModelAndView dash () throws Exception {
+
+    try {
+      logs.info("page", "dash");
+      return new ModelAndView("dash");
+    }
+    catch (Exception e) {
+      logs.error("dash", e.getMessage());
+      return null;
+    }
+
+  }
 
   // -----------------------------------------------------------------------------------------------
   private HashMap<String, Object> getRelatedDate() throws ParseException {
@@ -143,14 +154,6 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/dash", produces="text/plain;charset=UTF-8")
-  public String dash () throws Exception {
-
-    return "dash";
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/dash", produces="application/json;charset=UTF-8")
   public HashMap<String, Object> dash (
     HttpServletRequest request
@@ -357,7 +360,6 @@ public class DashCTRL {
   }
 
   // 4-1. 안전 재고 현황 (제품) --------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/prodProtected", produces="application/json;charset=UTF-8")
   public HashMap<String, Object> prodProtected (
     HttpServletRequest request
@@ -388,7 +390,6 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/prodInChartWeek", produces="application/json;charset=UTF-8")
   public HashMap<String, Object> prodInChartWeek (
     HttpServletRequest request
@@ -471,7 +472,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      logs.error("prodInChartWeek", e.getMessage());
       todayQty = "0";
     }
 
@@ -484,7 +485,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      logs.error("prodInChartWeek", e.getMessage());
       yesterdayQty = "0";
     }
 
@@ -500,7 +501,6 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/prodOutChartWeek", produces="application/json;charset=UTF-8")
   public HashMap<String, Object> prodOutChartWeek (
     HttpServletRequest request
@@ -583,7 +583,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      logs.error("prodOutChartWeek", e.getMessage());
       todayQty = "0";
     }
 
@@ -596,7 +596,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      e.printStackTrace();
+      logs.error("prodOutChartWeek", e.getMessage());
       yesterdayQty = "0";
     }
 

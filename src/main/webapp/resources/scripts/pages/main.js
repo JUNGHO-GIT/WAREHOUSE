@@ -87,11 +87,12 @@ function fnTabInit(obj, tabArray) {
   };
 
   for (var i = 0; i < tabArray.length; i++) {
-    var tabSplit = tabArray[i].split("@");
-    var pageUrl = "";
+    let tabSplit = tabArray[i].split("@");
+    let pageUrl = "";
+    let pageNm = "";
     for (var key in obj) {
-      var pageNm = obj[key];
-      var pageUrl = key;
+      pageNm = obj[key];
+      pageUrl = key;
       if (pageUrl == tabSplit[1]) {
         fnAddTabAll(pageNm, pageUrl, tabSplit[0]);
         lastPage.url = pageUrl;
@@ -152,11 +153,11 @@ function fnAddTabAll(pageNm, pageUrl, pageNo) {
             >
               ${pageNm}
             </div>
-            <i
+            <div
               class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
               onclick="fnRmTab('${pageNo}', '${pageUrl}')"
             >
-            </i>
+            </div>
           </div>
         </li>
       `);
@@ -193,11 +194,11 @@ function fnAddTab(pageNm, pageUrl, pageNo) {
           >
             ${pageNm}
           </div>
-          <i
+          <div
             class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
             onclick="fnRmTab('${pageNo}', '${pageUrl}')"
           >
-          </i>
+          </div>
         </div>
       </li>
     `);
@@ -339,8 +340,8 @@ function fnTabSortAndDrag() {
 function fnSaveUserConfigTab() {
 
   const param = {
-    "configSeq": $("#configSeq").val() || "0",
-    "userID": $("#userConfigID").val(),
+    "configSeq": $(`#configSeq`).val() || "0",
+    "userID": $(`#userConfigID`).val(),
     "pageNm": "tabs",
     "gridCd": "",
     "config": fnTabOrder(),
@@ -370,11 +371,11 @@ function fnShowVersion() {
     url: "showVersion",
     dataType:"JSON",
     success: (data) => {
-      $("#showVersion").html(data);
-      $("#showVersion").css("color", "currentColor");
-      $("#showVersion").css("font-size", "17px");
-      $("#showVersion").css("font-weight", "700px");
-      $("#showVersion").css("text-align", "center");
+      $(`#showVersion`).html(data);
+      $(`#showVersion`).css("color", "currentColor");
+      $(`#showVersion`).css("font-size", "17px");
+      $(`#showVersion`).css("font-weight", "700px");
+      $(`#showVersion`).css("text-align", "center");
     },
     error: ajaxErrorHandler
   });
@@ -415,12 +416,12 @@ function fnConsoleTabInfo (tabNo) {
   .join(', ');
 
   console.log(`
-  =============================
-  닫기버튼을 누른 탭: ${tabNo}
-  현재 열려있는 탭 갯수: ${info.split(",").length}
-  현재 열려있는 탭: ${info}
-  TABS: ${TABS}
-  =============================
+    =============================
+    닫기버튼을 누른 탭: ${tabNo}
+    현재 열려있는 탭 갯수: ${info.split(",").length}
+    현재 열려있는 탭: ${info}
+    TABS: ${TABS}
+    =============================
   `);
 };
 

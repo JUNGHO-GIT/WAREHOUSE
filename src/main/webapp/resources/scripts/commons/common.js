@@ -74,8 +74,8 @@ function fnSetYear() {
 
   for (k = year; k >= 1994; k--) {
     var opt = "<option value='" + k + "'>" + k + "년</option>";
-    $("#findSYear").append(opt);
-    $("#findEYear").append(opt);
+    $(`#findSYear`).append(opt);
+    $(`#findEYear`).append(opt);
   }
   for (p = 1; p <= 12; p++) {
     var vM = p;
@@ -83,8 +83,8 @@ function fnSetYear() {
     var chk = "";
     if (month == p) chk = " SELECTED";
     var opt = "<option value='" + vM + "'" + chk + ">" + vM + "월</option>";
-    $("#findSMonth").append(opt);
-    $("#findEMonth").append(opt);
+    $(`#findSMonth`).append(opt);
+    $(`#findEMonth`).append(opt);
   }
 };
 
@@ -129,8 +129,8 @@ function fnSetMonth(mnth, dt) {
   if (mnth < 10) mnth = '0' + mnth;
   var startDt = divDt[0] + '-' + mnth + '-01';
 
-  $("#startDt").val(startDt);
-  $("#endDt").val(endDt);
+  $(`#startDt`).val(startDt);
+  $(`#endDt`).val(endDt);
   //return terms;
 };
 
@@ -188,9 +188,9 @@ function fnGetLeftMenus(cd) {
   for (c = 0; c < G_subMenu[cd].length; c++) {
     leftMenu += '<div onclick="fnExistDestPerms(\'' + G_subMenuLink[cd][c] + '\')"><img src="/img/folder.jpg"> ' + G_subMenu[cd][c] + '</div>';
   }
-  $("#_curSubMenu").html(leftMenu);
+  $(`#_curSubMenu`).html(leftMenu);
   var siteLinks = fnMkSiteLink(G_link);
-  $("#_siteLink").html(siteLinks);
+  $(`#_siteLink`).html(siteLinks);
 
 };
 
@@ -201,17 +201,17 @@ function fnShowSubMenu(cd) {
     if (c == 0) subPage = '<div style="float:left;margin-right:10px;margin-top:2px;margin-left:' + G_subMenuMargin[cd] + 'px;">| </div>';
     subPage += '<div onclick="fnExistDestPerms(\'' + G_subMenuLink[cd][c] + '\')" style="float:left;margin-right:5px;cursor:pointer;margin-top:2px;"> ' + G_subMenu[cd][c] + '</div><div onclick="fnMainOpen(\'' + G_subMenuLink[cd][c] + '\',\'' + G_subMenuLink[cd][c] + '\');" style="float:left;margin-right:10px;margin-top:2px;cursor:pointer;"> <img src="/img/newWin.png" style="vertical-align:middle"> </div><div style="float:left;margin-right:10px;margin-top:2px;"> | </div>';
   }
-  $("#_subMenu").html(subPage);
-  $("#_subMenu").show(100);
+  $(`#_subMenu`).html(subPage);
+  $(`#_subMenu`).show(100);
   //alert(subPage);
 };
 
 function fnStaySubMenu() {
-  $("#_subMenu").show();
+  $(`#_subMenu`).show();
 };
 
 function fnHideSubMenu() {
-  $("#_subMenu").hide();
+  $(`#_subMenu`).hide();
 };
 
 function fnSetCurMenu(cd) {
@@ -247,7 +247,7 @@ function fnGoPage2(target) {
 //## 권한 체크
 function fnCheckAuth(auth) {
   if (auth.STATUS == "SESSION_OFF") {
-    alert("Session이 종료 되었습니다.\n다시 로그인 하시기 바랍니다.");
+    alert("Session이 종료 되었습니다.\n다시 로그인 하시기 바랍니다");
     fnGoPage("logout.post.php");
     return;
     fnGoPage("logout.post.php");
@@ -515,50 +515,50 @@ function fnShowSerial(ITEMNM, I00INOSEQ, target) {
 
 
 function fnMoveMonth(f) {
-  var sYr = $("#findSYear").val();
-  var eYr = $("#findEYear").val();
-  var sMonth = $("#findSMonth").val();
-  var eMonth = $("#findEMonth").val();
+  var sYr = $(`#findSYear`).val();
+  var eYr = $(`#findEYear`).val();
+  var sMonth = $(`#findSMonth`).val();
+  var eMonth = $(`#findEMonth`).val();
 
   if (f == "back") {
     if (eMonth == "01") {
-      $("#findEMonth").val("12");
-      $("#findEYear").val(parseInt($("#findEYear").val(), 10) - 1);
+      $(`#findEMonth`).val("12");
+      $(`#findEYear`).val(parseInt($(`#findEYear`).val(), 10) - 1);
     }
     else {
-      var tMnth = parseInt($("#findEMonth").val(), 10) - 1;
+      var tMnth = parseInt($(`#findEMonth`).val(), 10) - 1;
       if (tMnth < 10) tMnth = "0" + tMnth;
-      $("#findEMonth").val(tMnth);
+      $(`#findEMonth`).val(tMnth);
     }
     if (sMonth == "01") {
-      $("#findSMonth").val("12");
-      $("#findSYear").val(parseInt($("#findSYear").val(), 10) - 1);
+      $(`#findSMonth`).val("12");
+      $(`#findSYear`).val(parseInt($(`#findSYear`).val(), 10) - 1);
     }
     else {
-      var tMnth = parseInt($("#findSMonth").val(), 10) - 1;
+      var tMnth = parseInt($(`#findSMonth`).val(), 10) - 1;
       if (tMnth < 10) tMnth = "0" + tMnth;
-      $("#findSMonth").val(tMnth);
+      $(`#findSMonth`).val(tMnth);
 
     }
   }
   else {
     if (eMonth == "12") {
-      $("#findEMonth").val("01");
-      $("#findEYear").val(parseInt($("#findEYear").val(), 10) + 1);
+      $(`#findEMonth`).val("01");
+      $(`#findEYear`).val(parseInt($(`#findEYear`).val(), 10) + 1);
     }
     else {
-      var tMnth = parseInt($("#findEMonth").val(), 10) + 1;
+      var tMnth = parseInt($(`#findEMonth`).val(), 10) + 1;
       if (tMnth < 10) tMnth = "0" + tMnth;
-      $("#findEMonth").val(tMnth);
+      $(`#findEMonth`).val(tMnth);
     }
     if (sMonth == "12") {
-      $("#findSMonth").val("01");
-      $("#findSYear").val(parseInt($("#findSYear").val(), 10) + 1);
+      $(`#findSMonth`).val("01");
+      $(`#findSYear`).val(parseInt($(`#findSYear`).val(), 10) + 1);
     }
     else {
-      var tMnth = parseInt($("#findSMonth").val(), 10) + 1;
+      var tMnth = parseInt($(`#findSMonth`).val(), 10) + 1;
       if (tMnth < 10) tMnth = "0" + tMnth;
-      $("#findSMonth").val(tMnth);
+      $(`#findSMonth`).val(tMnth);
 
     }
   }
@@ -584,7 +584,7 @@ function fnSetApi() {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -604,7 +604,7 @@ function fnSetDate(obj, m) {
   else {
     if (m == "check") {
       alert("생년월일을 입력해 주세요.\nEx) 1980-01-02");
-      $("#C00BRTHDY").focus();
+      $(`#C00BRTHDY`).focus();
       return;
     }
   }
@@ -736,7 +736,7 @@ function fnRowUpdate(valUrl, param, rowIndx, gridCd) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -776,7 +776,7 @@ function fnComboComCode(targets) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -863,7 +863,7 @@ function fnCommonCd(comGrpCd, curVal, target, format, fid) { //comGrpCd:그룹�
         },
         error: function(request,status,error){
             if(request.status == 477) {
-              alert("세션이 종료 되었습니다.");
+              alert("세션이 종료 되었습니다");
               fnGoPage("reLogin");
             }
             else alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -877,7 +877,7 @@ function fnMultiCombo(groupCds, targets, mode) { //groupCds:그룹 코드들, ta
   var divGroupCd = groupCds.split(",");
   var divTarget = targets.split(",");
   if (divGroupCd.length != divTarget.length) {
-    alert("그룹코드와 Target의 숫자는 반드시 일치해야 합니다.");
+    alert("그룹코드와 Target의 숫자는 반드시 일치해야 합니다");
     return;
   }
   var param = "groupCds=" + groupCds;
@@ -923,7 +923,7 @@ function fnMultiCombo(groupCds, targets, mode) { //groupCds:그룹 코드들, ta
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -963,7 +963,7 @@ function fnFindCombo(valUrl, findStr, curVal, target, showStr) { //valUrl:Master
       },
       error: function (request, status, error) {
         if (request.status == 477) {
-          alert("세션이 종료 되었습니다.");
+          alert("세션이 종료 되었습니다");
           fnGoPage("reLogin");
         }
         else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1001,7 +1001,7 @@ function fnFindComboWithParam(valUrl, param, curVal, target, showStr) { //valUrl
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1038,7 +1038,7 @@ function fnComCombo(valUrl, target, curVal, showStr) { //valUrl:Master Data URL,
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1096,7 +1096,7 @@ function fnShowThumb(I00SEQNCY, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1266,7 +1266,7 @@ function fnInitCombo(struct, callback) {
         },
         error: function(request,status,error){
             if(request.status == 477) {
-              alert("세션이 종료 되었습니다.");
+              alert("세션이 종료 되었습니다");
               fnGoPage("reLogin");
             }
             else alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -1324,11 +1324,11 @@ function fnPressGet01(e) {
 function fnExport(gridCd, xlsxNm) {
 
   if (gridCd == undefined) {
-    alert("그리드 코드가 지정되지 않았습니다.");
+    alert("그리드 코드가 지정되지 않았습니다");
     return;
   }
   if (xlsxNm == undefined) {
-    alert("Excel 파일명이 지정되지 않았습니다.");
+    alert("Excel 파일명이 지정되지 않았습니다");
     return;
   }
   var gridData = $("#" + gridCd).pqGrid("getData");
@@ -1524,7 +1524,7 @@ function fnGetCommonCd (groupCd, target, callback) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1566,7 +1566,7 @@ function fnGetRooms (target, callback) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1726,7 +1726,7 @@ function fnInitCombo(struct, callback, m) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1800,7 +1800,7 @@ function fnCommonCd(part, groupCd, cd, target, format, findStr) { //part: 구분
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1875,12 +1875,12 @@ function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보�
 
 
       }
-      $("#upGroup").val(upGroup);
+      $(`#upGroup`).val(upGroup);
       $("#" + target).append(showFiles);
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1916,13 +1916,13 @@ function fnDelFile(seq) {
          },
       success: function(data){
           if (data.result == "Success") {
-              alert("삭제되었습니다.");
+              alert("삭제되었습니다");
               fnGetFile('blueprint',data.cd,'showPrints');
           }
       },
      error: function(request,status,error){
             if(request.status == 477) {
-              alert("세션이 종료 되었습니다.");
+              alert("세션이 종료 되었습니다");
               fnGoPage("reLogin");
             }
             else alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -1937,38 +1937,38 @@ function fnDelFile(seq) {
 /*function fnFileUp() {
 
 
- if (!$("#userFile").val()) {
+ if (!$(`#userFile`).val()) {
      alert('파일을 먼저 선택해 주세요');
-     $("#userFile").focus();
+     $(`#userFile`).focus();
      return;
  }
 
 
- if (!$("#blueprintCd").val()) {
+ if (!$(`#blueprintCd`).val()) {
      alert('도면을 먼저 선택해 주세요');
-     $("#blueprintCd").focus();
+     $(`#blueprintCd`).focus();
      return;
  }
 
- var divFile = $("#userFile").val().split(".");
+ var divFile = $(`#userFile`).val().split(".");
  var fileExt = divFile[(divFile.length - 1)]; // 확장자
 
  if (G_enableFile.indexOf("/."+fileExt+"/") < 0) {
      alert('등록 불가능한 파일입니다.\n다음의 파일만 등록 가능합니다.\n'+G_enableFile);
-     $("#userFile").val("");
-     $("#userFile").focus();
+     $(`#userFile`).val("");
+     $(`#userFile`).focus();
      return;
  }
 
  const curDate = fnToday();
 
- var upGroup = $("#upGroup").val();
- var fileValue = $("#userFile").val().split("\\");
+ var upGroup = $(`#upGroup`).val();
+ var fileValue = $(`#userFile`).val().split("\\");
  var fileName = fileValue[fileValue.length-1]; // 파일명
  var fileUrl = formatDate(curDate ,"date").split("-").join("") + fnCurDateTime().split("_")[1];
 
  if(!upGroup) upGroup= fileUrl;
- $("#upGroup").val(upGroup); // 원래 show에서 해줘야됨.. 지금은 테스트;
+ $(`#upGroup`).val(upGroup); // 원래 show에서 해줘야됨.. 지금은 테스트;
 
  var fileSeq = 0;
  var fileFlag = '';
@@ -1977,7 +1977,7 @@ function fnDelFile(seq) {
 
  var param = {};
   param["bbsCd"] = "blueprint";	// tblNm
-  param["bbsSeq"] = $("#blueprintCd").val(); // tblSeq
+  param["bbsSeq"] = $(`#blueprintCd`).val(); // tblSeq
   param["fileSeq"] = fileSeq;
   param["fileUrl"] = fileName; // 파일 이름
   param["fileNm"] = fileUrl; // 연월일시분초
@@ -2000,12 +2000,12 @@ function fnDelFile(seq) {
          },
    success: function(data){
      alert(data.result);
-     $("#userFile").val("");
+     $(`#userFile`).val("");
      fnGetFiles('blueprint',data.cd,'files','Y');
    },
    error: function(request,status,error){
             if(request.status == 477) {
-              alert("세션이 종료 되었습니다.");
+              alert("세션이 종료 되었습니다");
               fnGoPage("reLogin");
             }
             else alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -2023,7 +2023,7 @@ function fnDelFile(bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, fileFlag) {
 
   var param = {};
   param["bbsCd"] = bbsCd;  // "blueprint";
-  param["bbsSeq"] = bbsSeq; // $("#blueprintCd").val();
+  param["bbsSeq"] = bbsSeq; // $(`#blueprintCd`).val();
   param["fileUrl"] = fileUrl;
   param["fileNm"] = fileNm;
   param["flag"] = 'N';
@@ -2045,15 +2045,15 @@ function fnDelFile(bbsCd, bbsSeq, fileUrl, fileNm, upGroup, fileSeq, fileFlag) {
     },
     success: (data) => {
       alert(data.result);
-      $("#userFile").val("");
-      if (data.result == "삭제 되었습니다.") {
+      $(`#userFile`).val("");
+      if (data.result == "삭제 되었습니다") {
         fnGetFiles('blueprint', data.cd, 'files', 'Y');
       }
 
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2075,7 +2075,7 @@ function fnDownFile(fileUrl, fileNm) {
 function fnSaveUserConfigTab() {
 
   var tabs = fnTabOrder();
-  var configSeq = $("#configSeq").val();
+  var configSeq = $(`#configSeq`).val();
   if (!configSeq) configSeq = 0;
   var param = {};
   param["pageNm"] = 'tabs';
@@ -2103,7 +2103,7 @@ function fnSaveUserConfigTab() {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2130,7 +2130,7 @@ function fnShowUserConfigTab() {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2175,7 +2175,7 @@ function fnFindCompany(findCompNm, compCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2213,7 +2213,7 @@ function fnFindHouse(findhouseNm, houseCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2255,7 +2255,7 @@ function fnFindResrcNm(findResrcNm, resrcCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2297,7 +2297,7 @@ function fnFindProdNm(findProdNm, prodCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2316,7 +2316,7 @@ var LogOutTime = function () {
     var curPage = fnCurPageNm();
     if (curPage == "main") {
       //        	opener.document.getElementById("time_No").value = 1;
-      $("#time_No").val(1);
+      $(`#time_No`).val(1);
     }
     else {
       $("#time_No", parent.document).val(1);
@@ -2396,7 +2396,7 @@ function fnFindHouseCd(findNm, houseCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2440,7 +2440,7 @@ function fnFindCompCd(findNm, findCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2485,7 +2485,7 @@ function fnFindProdCd(findNm, findCd, target) {
     },
     error: function (request, status, error) {
       if (request.status == 477) {
-        alert("세션이 종료 되었습니다.");
+        alert("세션이 종료 되었습니다");
         fnGoPage("reLogin");
       }
       else alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

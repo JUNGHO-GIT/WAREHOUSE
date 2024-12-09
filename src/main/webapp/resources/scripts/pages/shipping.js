@@ -22,7 +22,7 @@ function fnGetList01 () {
   // 행 클릭시 실행
   obj.rowClick = function (event, ui) {
     // 1. grid02에 추가
-    var getData = $("#grid02").pqGrid("getData");
+    var getData = $(`#grid02`).pqGrid("getData");
     var newRow = {
       inOutSeq: ui.rowData.inOutSeq,
       prodCd: ui.rowData.prodCd,
@@ -42,12 +42,12 @@ function fnGetList01 () {
       }
     }
     if (duplicateFlag) {
-      alert("이미 추가된 제품입니다.");
+      alert("이미 추가된 제품입니다");
       return;
     }
     getData.push(newRow);
-    $("#grid02").pqGrid("option", "dataModel", {data: getData});
-    $("#grid02").pqGrid("refreshDataAndView");
+    $(`#grid02`).pqGrid("option", "dataModel", {data: getData});
+    $(`#grid02`).pqGrid("refreshDataAndView");
   };
 
   const colModel = [
@@ -71,7 +71,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listShipping",
-    data:`inOutDt=${"P"}&findStartDt=${$("#findStartDt").val()}&findEndDt=${$("#findEndDt").val()}`,
+    data:`inOutDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -142,36 +142,36 @@ function fnGetList02() {
 // 3-1. 저장 ---------------------------------------------------------------------------------------
 function fnSaveItems() {
 
-  var getData = $("#grid02").pqGrid("getData");
+  var getData = $(`#grid02`).pqGrid("getData");
   var rowCnt = getData.length;
 
   if (rowCnt < 1) {
     alert("제품을 추가해 주세요");
     return;
   }
-  if ($("#comp").val() == "") {
+  if ($(`#comp`).val() == "") {
     alert("거래처를 입력해 주세요");
-    $("#compNm").on("focus", function () {});
+    $(`#compNm`).on("focus", function () {});
     return;
   }
-  if ($("#toMajor").val() == "") {
+  if ($(`#toMajor`).val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $("#toMajor").on("focus", function () {});
+    $(`#toMajor`).on("focus", function () {});
     return;
   }
-  if ($("#toPhone").val() == "") {
+  if ($(`#toPhone`).val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $("#toPhone").on("focus", function () {});
+    $(`#toPhone`).on("focus", function () {});
     return;
   }
-  if ($("#shipDt").val() == "") {
+  if ($(`#shipDt`).val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $("#shipDt").on("focus", function () {});
+    $(`#shipDt`).on("focus", function () {});
     return;
   }
-  if ($("#shipMajor").val() == "") {
+  if ($(`#shipMajor`).val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $("#shipMajor").on("focus", function () {});
+    $(`#shipMajor`).on("focus", function () {});
     return;
   }
   if (!confirm("출하 하시겠습니까?")) {
@@ -180,7 +180,7 @@ function fnSaveItems() {
 
   var inOutSeq = "";
   for (let i = 0; i < rowCnt; i++) {
-    var gData = $("#grid02").pqGrid("getRowData", {rowIndxPage: i});
+    var gData = $(`#grid02`).pqGrid("getRowData", {rowIndxPage: i});
     if (inOutSeq != "" && i < rowCnt) {
       inOutSeq += ",";
     }
@@ -188,11 +188,11 @@ function fnSaveItems() {
   };
 
   var shipCd = 0;
-  var compCd = parseInt($("#comp").val()) || 0;
-  var toMajor = $("#toMajor").val() || "";
-  var toPhone = $("#toPhone").val() || "";
-  var shipDt = $("#shipDt").val() || "";
-  var shipMajor = $("#shipMajor").val() || "";
+  var compCd = parseInt($(`#comp`).val()) || 0;
+  var toMajor = $(`#toMajor`).val() || "";
+  var toPhone = $(`#toPhone`).val() || "";
+  var shipDt = $(`#shipDt`).val() || "";
+  var shipMajor = $(`#shipMajor`).val() || "";
   var flagYN = "Y";
   var planYN = "N";
 
@@ -229,36 +229,36 @@ function fnSaveItems() {
 // 3-1. 계획 저장 ----------------------------------------------------------------------------------
 function fnSavePlan() {
 
-  var getData = $("#grid02").pqGrid("getData");
+  var getData = $(`#grid02`).pqGrid("getData");
   var rowCnt = getData.length;
 
   if (rowCnt < 1) {
     alert("제품을 추가해 주세요");
     return;
   }
-  if ($("#comp").val() == "") {
+  if ($(`#comp`).val() == "") {
     alert("거래처를 입력해 주세요");
-    $("#compNm").on("focus", function () {});
+    $(`#compNm`).on("focus", function () {});
     return;
   }
-  if ($("#toMajor").val() == "") {
+  if ($(`#toMajor`).val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $("#toMajor").on("focus", function () {});
+    $(`#toMajor`).on("focus", function () {});
     return;
   }
-  if ($("#toPhone").val() == "") {
+  if ($(`#toPhone`).val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $("#toPhone").on("focus", function () {});
+    $(`#toPhone`).on("focus", function () {});
     return;
   }
-  if ($("#shipDt").val() == "") {
+  if ($(`#shipDt`).val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $("#shipDt").on("focus", function () {});
+    $(`#shipDt`).on("focus", function () {});
     return;
   }
-  if ($("#shipMajor").val() == "") {
+  if ($(`#shipMajor`).val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $("#shipMajor").on("focus", function () {});
+    $(`#shipMajor`).on("focus", function () {});
     return;
   }
   if (!confirm("출하 계획을 등록 하시겠습니까?")) {
@@ -268,7 +268,7 @@ function fnSavePlan() {
   // ex. 125,126,127 ...
   var inOutSeq = "";
   for (let i = 0; i < rowCnt; i++) {
-    var gData = $("#grid02").pqGrid("getRowData", {rowIndxPage: i});
+    var gData = $(`#grid02`).pqGrid("getRowData", {rowIndxPage: i});
     if (inOutSeq != "" && i < rowCnt) {
       inOutSeq += ",";
     }
@@ -277,11 +277,11 @@ function fnSavePlan() {
 
   const param = {
     "shipCd": 0,
-    "shipDt": $("#shipDt").val() || "",
-    "shipMajor": $("#shipMajor").val() || "",
-    "toMajor": $("#toMajor").val() || "",
-    "toPhone": $("#toPhone").val() || "",
-    "compCd": parseInt($("#comp").val()) || 0,
+    "shipDt": $(`#shipDt`).val() || "",
+    "shipMajor": $(`#shipMajor`).val() || "",
+    "toMajor": $(`#toMajor`).val() || "",
+    "toPhone": $(`#toPhone`).val() || "",
+    "compCd": parseInt($(`#comp`).val()) || 0,
     "flagYN": "Y",
     "planYN": "Y",
     "inOutSeq": inOutSeq
@@ -307,7 +307,7 @@ function fnSavePlan() {
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDelProd(rowIdx) {
-  $("#grid02").pqGrid("deleteRow", {rowIndx: rowIdx});
+  $(`#grid02`).pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
@@ -316,28 +316,28 @@ function fnReset() {
   const curDate = fnToday();
 
   // 출하 초기화
-  $("#toMajor").val("");
-  $("#toPhone").val("");
-  $("#shipDt").val(curDate);
-  $("#shipMajor").val("");
+  $(`#toMajor`).val("");
+  $(`#toPhone`).val("");
+  $(`#shipDt`).val(curDate);
+  $(`#shipMajor`).val("");
 
   // 거래처 초기화
-  $("#compCd").val("");
-  $("#compNm").val("");
-  $("#comp").val("");
-  $("#comp").html(`<option value="">==거래처==</option>`);
+  $(`#compCd`).val("");
+  $(`#compNm`).val("");
+  $(`#comp`).val("");
+  $(`#comp`).html(`<option value="">==거래처==</option>`);
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("option", "dataModel.data", []);
-	$("#grid02").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+	$(`#grid02`).pqGrid("option", "dataModel.data", []);
+	$(`#grid02`).pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
 function fnResetWhenSearch() {
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("setSelection", null);
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -362,8 +362,8 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 
@@ -371,12 +371,12 @@ function fnChangeList() {
 jQuery(function($) {
   const curDate = fnToday();
   var pastDate = fnDateAdd(curDate, -30);
-  $("#shipDt").datepicker(G_calendar);
-  $("#shipDt").val(curDate);
-  $("#findStartDt").datepicker(G_calendar);
-  $("#findEndDt").datepicker(G_calendar);
-  $("#findStartDt").val(pastDate);
-  $("#findEndDt").val(curDate);
+  $(`#shipDt`).datepicker(G_calendar);
+  $(`#shipDt`).val(curDate);
+  $(`#findStartDt`).datepicker(G_calendar);
+  $(`#findEndDt`).datepicker(G_calendar);
+  $(`#findStartDt`).val(pastDate);
+  $(`#findEndDt`).val(curDate);
 
   fnGetList01();
   fnGetList02();

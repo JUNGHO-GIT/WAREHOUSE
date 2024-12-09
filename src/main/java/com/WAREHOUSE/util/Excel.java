@@ -1,7 +1,5 @@
 package com.WAREHOUSE.util;
 
-import com.WAREHOUSE.container.Company;
-import com.WAREHOUSE.container.Product;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,8 +17,12 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
+import com.WAREHOUSE.container.Company;
+import com.WAREHOUSE.container.Product;
 
 // -------------------------------------------------------------------------------------------------
+@Component
 public class Excel {
 
   // -----------------------------------------------------------------------------------------------

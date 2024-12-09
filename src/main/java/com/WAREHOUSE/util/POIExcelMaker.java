@@ -6,8 +6,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
 
 // -------------------------------------------------------------------------------------------------
+@Component
 public class POIExcelMaker {
 
   // -----------------------------------------------------------------------------------------------

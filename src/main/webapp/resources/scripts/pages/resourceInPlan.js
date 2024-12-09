@@ -76,7 +76,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listResource",
-    data: `findResrcNm=${$("#findResrcNm").val()}`,
+    data: `findResrcNm=${$(`#findResrcNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -153,10 +153,10 @@ function fnGetList02 (resrcCd) {
     },
   ];
 
-  $("#resrcCd").val(resrcCd || "0");
+  $(`#resrcCd`).val(resrcCd || "0");
   $.ajax({
     url: "act/listResourceInOutPlan",
-    data: `resrcCd=${$("#resrcCd").val()}`,
+    data: `resrcCd=${$(`#resrcCd`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -188,13 +188,13 @@ function fnShow(inOutSeq) {
     success: (data) => {
 
       // 1. 자재 관련 (입출고)
-      $("#remark").val(data.remark);
-      $("#inOutSeq").val(data.inOutSeq);
-      $("#inOutDt").val(data.inOutDt);
-      $("#unitPrice").val(fnGetNumWithComma(data.unitPrice));
-      $("#supplyPrice").val(fnGetNumWithComma(data.supplyPrice));
-      $("#qty").val(fnGetNumWithComma(Math.abs(data.qty)));
-      $("#inOut").val(data.inOut);
+      $(`#remark`).val(data.remark);
+      $(`#inOutSeq`).val(data.inOutSeq);
+      $(`#inOutDt`).val(data.inOutDt);
+      $(`#unitPrice`).val(fnGetNumWithComma(data.unitPrice));
+      $(`#supplyPrice`).val(fnGetNumWithComma(data.supplyPrice));
+      $(`#qty`).val(fnGetNumWithComma(Math.abs(data.qty)));
+      $(`#inOut`).val(data.inOut);
 
       // 2. 자재 관련 (일반)
       fnFindCd("", data.resrcCd, "resrc");
@@ -214,13 +214,13 @@ function fnSave(flagYN) {
 
   let flagParam = "";
   let planParam = "";
-  let resrcCd = $("#resrcCd").val();
+  let resrcCd = $(`#resrcCd`).val();
 
   if (flagYN === "N") {
     flagParam = "N";
     planParam = "Y";
-    if ($("#grid02").pqGrid("getData").length === 0) {
-      alert("자재 입출고 예정 내역이 없습니다.");
+    if ($(`#grid02`).pqGrid("getData").length === 0) {
+      alert("자재 입출고 예정 내역이 없습니다");
       return;
     }
     if (!confirm("선택하신 입출고 예정 내역을 삭제하시겠습니까?")) {
@@ -230,41 +230,41 @@ function fnSave(flagYN) {
   else {
     flagParam = "Y";
     planParam = "Y";
-    if ($("#resrc").val() == "") {
+    if ($(`#resrc`).val() == "") {
       alert("자재 이름을 입력해 주세요");
-      $("#resrc").on("focus", function () {});
+      $(`#resrc`).on("focus", function () {});
       return;
     }
-    if (!$("#inOutDt").val()) {
+    if (!$(`#inOutDt`).val()) {
       alert("날짜를 입력해 주세요");
-      $("#inOutDt").on("focus", function () {});
+      $(`#inOutDt`).on("focus", function () {});
       return;
     }
-    if ($("#comp").val() == "") {
+    if ($(`#comp`).val() == "") {
       alert("거래처를 입력해 주세요");
-      $("#comp").on("focus", function () {});
+      $(`#comp`).on("focus", function () {});
       return;
     }
-    if ($("#house").val() == "") {
+    if ($(`#house`).val() == "") {
       alert("창고를 입력해 주세요");
-      $("#house").on("focus", function () {});
+      $(`#house`).on("focus", function () {});
       return;
     }
-    if ($("#qty").val() == "" || $("#qty").val() == "0") {
+    if ($(`#qty`).val() == "" || $(`#qty`).val() == "0") {
       alert("수량을 입력해 주세요");
-      $("#qty").on("focus", function () {});
+      $(`#qty`).on("focus", function () {});
       return;
     }
-    if ($("#unitPrice").val() == "" || $("#unitPrice").val() == "0") {
+    if ($(`#unitPrice`).val() == "" || $(`#unitPrice`).val() == "0") {
       alert("표준단가를 입력해 주세요");
-      $("#unitPrice").on("focus", function () {});
+      $(`#unitPrice`).on("focus", function () {});
       return;
     }
   }
 
-  let inOut = $("#inOut").val();
-  let qty = fnGetNumRemoveComma($("#qty").val());
-  let unitPrice = fnGetNumRemoveComma($("#unitPrice").val());
+  let inOut = $(`#inOut`).val();
+  let qty = fnGetNumRemoveComma($(`#qty`).val());
+  let unitPrice = fnGetNumRemoveComma($(`#unitPrice`).val());
 	if (inOut === "out") {
     qty = qty * -1;
   }
@@ -273,16 +273,16 @@ function fnSave(flagYN) {
   }
 
   const param = {
-    "inOutSeq": $("#inOutSeq").val() || 0,
-    "inOutDt": $("#inOutDt").val() || "",
+    "inOutSeq": $(`#inOutSeq`).val() || 0,
+    "inOutDt": $(`#inOutDt`).val() || "",
     "inOut": inOut || "",
-    "resrcCd": $("#resrc").val() || 0,
-    "resrcNm": $("#resrcNm").val() || "",
-    "compCd": $("#comp").val() || 0,
-    "compNm": $("#compNm").val() || "",
-    "houseCd": $("#house").val() || 0,
-    "houseNm": $("#houseNm").val() || "",
-    "remark": $("#remark").val() || "",
+    "resrcCd": $(`#resrc`).val() || 0,
+    "resrcNm": $(`#resrcNm`).val() || "",
+    "compCd": $(`#comp`).val() || 0,
+    "compNm": $(`#compNm`).val() || "",
+    "houseCd": $(`#house`).val() || 0,
+    "houseNm": $(`#houseNm`).val() || "",
+    "remark": $(`#remark`).val() || "",
     "qty": qty || 0,
     "unitPrice": unitPrice || 0,
     "supplyPrice": unitPrice * qty,
@@ -320,42 +320,42 @@ function fnReset() {
   const curDate = fnToday();
 
   // 자재 초기화
-  $("#qty").val("0");
-  $("#unitPrice").val("0");
-  $("#supplyPrice").val("0");
-  $("#remark").val("");
-  $("#inOutSeq").val("");
-  $("#inOutDt").val(curDate);
-  $("#inOut").val("in");
+  $(`#qty`).val("0");
+  $(`#unitPrice`).val("0");
+  $(`#supplyPrice`).val("0");
+  $(`#remark`).val("");
+  $(`#inOutSeq`).val("");
+  $(`#inOutDt`).val(curDate);
+  $(`#inOut`).val("in");
 
   // 창고 초기화
-  $("#houseCd").val("");
-  $("#houseNm").val("");
-  $("#house").val("");
-  $("#house").html(`<option value="">==창고==</option>`);
+  $(`#houseCd`).val("");
+  $(`#houseNm`).val("");
+  $(`#house`).val("");
+  $(`#house`).html(`<option value="">==창고==</option>`);
 
   // 거래처 초기화
-  $("#compCd").val("");
-  $("#compNm").val("");
-  $("#comp").val("");
-  $("#comp").html(`<option value="">==거래처==</option>`);
+  $(`#compCd`).val("");
+  $(`#compNm`).val("");
+  $(`#comp`).val("");
+  $(`#comp`).html(`<option value="">==거래처==</option>`);
 
   // 그리드 초기화
-  $("#grid02").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("refreshDataAndView");
+  $(`#grid02`).pqGrid("setSelection", null);
+  $(`#grid02`).pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
 function fnResetWhenSearch() {
 
 	// 자재 초기화
-  $("#resrc").val("");
-  $("#resrc").html(`<option value="">==자재==</option>`);
+  $(`#resrc`).val("");
+  $(`#resrc`).html(`<option value="">==자재==</option>`);
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-	$("#grid02").pqGrid("option", "dataModel.data", []);
-	$("#grid02").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+	$(`#grid02`).pqGrid("option", "dataModel.data", []);
+	$(`#grid02`).pqGrid("refreshDataAndView");
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -380,19 +380,19 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $("#inOutDt").datepicker(G_calendar);
-  $("#inOutDt").val(curDate);
+  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).val(curDate);
 
   fnGetList01();
-  fnGetList02($("#resrcCd").val());
+  fnGetList02($(`#resrcCd`).val());
 
   /* const comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format:"combo"}];
   fnInitCombo (comboStr, function() {

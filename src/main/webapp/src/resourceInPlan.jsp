@@ -202,18 +202,6 @@
                       </div>
                     </div>
                   </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                      <div class="d-row-left mr-2vw">
-                        <select
-                          id="house"
-                          name="house"
-                          class="form-control"
-                        >
-                          <option value="">==창고==</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
                   <div class="d-row-center mb-1vh">
                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                       <div class="d-row-left">

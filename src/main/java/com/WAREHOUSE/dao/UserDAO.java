@@ -10,26 +10,26 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserDAO {
 
-  public abstract ArrayList<User> listUser(
+  public ArrayList<User> listUser(
     @Param("findUserNm") String findUserNm
   );
 
-  public abstract ArrayList<HashMap<String, Object>> listUserPerm(
+  public ArrayList<HashMap<String, Object>> listUserPerm(
   );
 
-  public abstract User showUser(
+  public User showUser(
     @Param("userID") String userID
   );
 
-  public abstract Integer checkUserID(
+  public Integer checkUserID(
     @Param("userID") String userID
   );
 
-  public abstract void saveUser(
+  public void saveUser(
     HashMap<String, Object> map
   );
 
-  public abstract void updatePw(
+  public void updatePw(
     @Param("userID") String userID,
     @Param("passwd") String passwd
   );

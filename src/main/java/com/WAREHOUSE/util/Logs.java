@@ -1,25 +1,25 @@
 package com.WAREHOUSE.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
+@Component
+@RequiredArgsConstructor
 public class Logs {
 
   // -----------------------------------------------------------------------------------------------
-  private final SimpleDateFormat dateFormat;
-  private final ObjectMapper objectMapper;
-
-  // -----------------------------------------------------------------------------------------------
-  public Logs() {
-    this.dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA);
-    this.objectMapper = new ObjectMapper();
-  }
+  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final SimpleDateFormat dateFormat = new SimpleDateFormat(
+    "yyyy-MM-dd HH:mm:ss", Locale.KOREA
+  );
 
   // -----------------------------------------------------------------------------------------------
   public enum LogLevel {
@@ -36,7 +36,6 @@ public class Logs {
       return gson.toJson(objectMapper.treeToValue(jsonNode, Object.class));
     }
     catch (Exception e) {
-      e.printStackTrace();
       return message;
     }
   }
@@ -49,15 +48,13 @@ public class Logs {
       if (object instanceof String) {
         return prettyPrintIfJson((String) object);
       }
-      // JSON으로 변환 가능한 경우 처리
       else {
         String jsonString = objectMapper.writeValueAsString(object);
         return prettyPrintIfJson(jsonString);
       }
     }
-    // JSON 변환 실패 시 기본 toString 사용
     catch (Exception e) {
-      return object.toString();
+      return object != null ? object.toString() : "null";
     }
   }
 
@@ -78,12 +75,11 @@ public class Logs {
       formattedMessage = formatObject(object);
     }
     catch(Exception e) {
-      e.printStackTrace();
-      formattedMessage = object.toString();
+      formattedMessage = object != null ? object.toString() : "null";
     }
 
     String message = String.format(
-      "%s\n%s%s\n%s%s\n",
+      "\n%s\n%s%s\n%s%s",
       divider,
       timeStr, levelStr,
       prefixStr, formattedMessage

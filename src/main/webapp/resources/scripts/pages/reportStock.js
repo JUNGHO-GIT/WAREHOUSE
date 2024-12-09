@@ -2,7 +2,7 @@
 function fnGetList01 () {
 
   const $grid01 = $(`#grid01`);
-  var showYear = $("#findYear").val();
+  var showYear = $(`#findYear`).val();
 
   const gridOption = {
     xlsNm: "reportStock.xlsx",
@@ -52,7 +52,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listReportProdStock",
-    data: `findYear=${$("#findYear").val()}`,
+    data: `findYear=${$(`#findYear`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -70,7 +70,7 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  var showYear = $("#findYear").val();
+  var showYear = $(`#findYear`).val();
 
   const gridOption = {
     xlsNm: "reportStock.xlsx",
@@ -119,7 +119,7 @@ function fnGetList02() {
   ];
   $.ajax({
     url: "act/listReportResrcStock",
-    data: `findYear=${$("#findYear").val()}`,
+    data: `findYear=${$(`#findYear`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {

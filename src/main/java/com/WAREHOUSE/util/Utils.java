@@ -28,17 +28,19 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import com.WAREHOUSE.container.Company;
 import com.google.gson.Gson;
 
 // -------------------------------------------------------------------------------------------------
+@Component
 public class Utils {
 
   // -----------------------------------------------------------------------------------------------
-  private static final Logger log = LoggerFactory.getLogger(Utils.class);
-  Gson gson = new Gson();
+  private final Logger log = LoggerFactory.getLogger(Utils.class);
+  private final Gson gson = new Gson();
 
   // -----------------------------------------------------------------------------------------------
   public Map<String, String> listString2Map(
@@ -127,13 +129,13 @@ public class Utils {
         log.info("fileUpload success", gson.toJson(fileMap));
       }
       else {
-      	new IOException("잘못된 파일을 업로드 하셨습니다.");
+      	new IOException("잘못된 파일을 업로드 하셨습니다");
       }
     }
     catch(IOException e) {
       e.printStackTrace();
       log.info("IOExcept : " + e.getMessage());
-      new IOException("파일 업로드에 실패하였습니다.");
+      new IOException("파일 업로드에 실패하였습니다");
     }
     finally{
       if (out != null) {
@@ -164,20 +166,20 @@ public class Utils {
     try {
       if (file.exists()) {
         if (file.delete()) {
-          msg = "삭제 되었습니다.";
+          msg = "삭제 되었습니다";
         }
         else {
-        	msg = "파일 삭제가 실패하였습니다.";
+        	msg = "파일 삭제가 실패하였습니다";
         }
       }
       else {
-      	msg = "파일이 존재하지 않습니다.";
+      	msg = "파일이 존재하지 않습니다";
       }
     }
 
     catch(Exception e) {
       e.printStackTrace();
-      msg = "파일 삭제가 실패하였습니다.";
+      msg = "파일 삭제가 실패하였습니다";
     }
 
     return msg;
@@ -187,10 +189,11 @@ public class Utils {
   public void shipExcel(
     Integer shipCd,
     HashMap<String, Object> shipDetail,
-    Company comp,
+    Company company,
     ArrayList<HashMap<String, Object>> shippingList,
     HttpServletResponse response,
-    Map<String, Object> map
+    String fileUrl,
+    String fileDir
   ) throws IOException, URISyntaxException {
 
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -198,17 +201,15 @@ public class Utils {
     URL urlExcel = getClass().getClassLoader().getResource("xls/ship_Excel.xls");
 
     if (urlExcel == null) {
-      throw new RuntimeException("ship_Excel.xls 리소스를 찾을 수 없습니다.");
+      throw new RuntimeException("ship_Excel.xls 리소스를 찾을 수 없습니다");
     }
 
     String excelUrl = Paths.get(urlExcel.toURI()).toFile().getAbsolutePath();
-    String fileUrl = map.get("fileUrl").toString();
-    String gFileDir = map.get("fileDir").toString();
     URL urlNoLogo = getClass().getClassLoader().getResource("images/no-logo.png");
 
     Map<String, Object> fileData = new HashMap<>();
     fileData.put("fileUrl", fileUrl);
-    fileData.put("gFileDir", gFileDir);
+    fileData.put("fileDir", fileDir);
     fileData.put("excelUrl", excelUrl);
     log.info("fileData : " + gson.toJson(fileData));
 
@@ -220,7 +221,7 @@ public class Utils {
       }
     }
     else {
-    	try (FileInputStream fis = new FileInputStream(new File(gFileDir + fileUrl))) {
+    	try (FileInputStream fis = new FileInputStream(new File(fileDir + fileUrl))) {
         imageBytes = new byte[(int) fis.available()];
         fis.read(imageBytes);
     }
@@ -263,13 +264,13 @@ public class Utils {
     POIExcelMaker exPOI = new POIExcelMaker();
 
     try {
-      String compNm = Objects.toString(comp.getCompNm(), "");
-      String compType = Objects.toString(comp.getCompType(), "");
-      String address = Objects.toString(comp.getAddress(), "");
-      String compPart = Objects.toString(comp.getCompPart(), "");
-      String compNo = Objects.toString(comp.getCompNo(), "");
-      String phone = Objects.toString(comp.getPhone(), "");
-      String owner = Objects.toString(comp.getOwner(), "");
+      String compNm = Objects.toString(company.getCompNm(), "");
+      String compType = Objects.toString(company.getCompType(), "");
+      String address = Objects.toString(company.getAddress(), "");
+      String compPart = Objects.toString(company.getCompPart(), "");
+      String compNo = Objects.toString(company.getCompNo(), "");
+      String phone = Objects.toString(company.getPhone(), "");
+      String owner = Objects.toString(company.getOwner(), "");
       String shipMajor = Objects.toString(shipDetail.get("shipMajor"), "");
       String account = Objects.toString(shipDetail.get("compNm"), "");
       String count = Objects.toString(shipDetail.get("cnt"), "");

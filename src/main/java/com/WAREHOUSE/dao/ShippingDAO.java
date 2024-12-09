@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ShippingDAO {
 
-  public abstract ArrayList<HashMap<String, Object>> listShipping(
+  public ArrayList<HashMap<String, Object>> listShipping(
     @Param("inOutDt") String inOutDt,
     @Param("findStartDt") String findStartDt,
     @Param("findEndDt") String findEndDt
   );
 
-  public abstract void saveShipping(
+  public void saveShipping(
     Shipping shipping
   );
 }

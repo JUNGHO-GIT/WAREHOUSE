@@ -84,11 +84,11 @@ function fnShowExcel(body) {
     {dataIndx:"option2", title:"규격", dataType:"string", align:"center",
     },
     {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"right", editable:true,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
       required:true,
     },
     {dataIndx:"unitPrice", title:"표준단가", dataType:"string", align:"right", editable:true,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
       required:true,
     },
     {dataIndx:"remark", title:"비고", dataType:"string", align:"center",
@@ -103,7 +103,7 @@ function fnShowExcel(body) {
 // 1-2. 전부 선택 ----------------------------------------------------------------------------------
 function fnSelectAll() {
 
-  var getData = $("#grid01").pqGrid("getData");
+  var getData = $(`#grid01`).pqGrid("getData");
 
   if ($("input:checkbox[id='allCheck']").is(":checked")) {
     // check : true
@@ -135,7 +135,7 @@ function fnSelectAll() {
 function fnSave() {
 
   // 데이터 불러오기
-  var getData = $("#grid01").pqGrid("getData");
+  var getData = $(`#grid01`).pqGrid("getData");
   var colData = getData.filter(function (row) {
     return row.checkStatus === true;
   });
@@ -179,9 +179,9 @@ function fnSave() {
       !validateField(row, "houseNm", "창고 이름을 입력해 주세요") ||
       !validateField(row, "compNm", "거래처 이름을 입력해 주세요") ||
       !validateField(row, "protectedQty", "안전재고를 입력해 주세요") ||
-      !validateNumber(row, "protectedQty", "안전재고는 숫자만 입력 가능합니다.") ||
+      !validateNumber(row, "protectedQty", "안전재고는 숫자만 입력 가능합니다") ||
       !validateField(row, "unitPrice", "표준단가를 입력해 주세요") ||
-      !validateNumber(row, "unitPrice", "단가는 숫자만 입력 가능합니다.")
+      !validateNumber(row, "unitPrice", "단가는 숫자만 입력 가능합니다")
     ) {
       validationPassed = false;
       break;
@@ -198,7 +198,7 @@ function fnSave() {
 
   $.ajax({
     url: "act/saveResourceXls",
-    data: JSON.stringify({datas: colData}),
+    data: JSON.stringify({dataList: colData}),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -216,10 +216,10 @@ function fnSave() {
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
   // 파일 초기화
-  $("#resourceXls").val("");
+  $(`#resourceXls`).val("");
   // 그리드 초기화
-  $("#grid01").pqGrid("option", "dataModel.data", []);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("option", "dataModel.data", []);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 업로드 ----------------------------------------------------------------------------------
@@ -230,8 +230,8 @@ function fnFilePicked(oEvent) {
   var divFile = sFilename.split(".");
 
   if (divFile[1] != "xls") {
-    alert("xls 파일만 사용가능 합니다.");
-    $("#resourceXls").val("");
+    alert("xls 파일만 사용가능 합니다");
+    $(`#resourceXls`).val("");
     return;
   }
 

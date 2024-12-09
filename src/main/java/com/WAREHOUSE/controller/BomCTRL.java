@@ -3,127 +3,122 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Bom;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.BomDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class BomCTRL {
 
-  @Autowired
-  private BomDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final BomDAO dao;
+  private final Logs logs;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/bom", produces="text/html;charset=UTF-8")
-  public String bom () throws Exception {
+  public ModelAndView bom () throws Exception {
 
-    return "bom";
+    try {
+      logs.info("page", "bom");
+      return new ModelAndView("bom");
+    }
+    catch (Exception e) {
+      logs.error("bom", e.getMessage());
+      return null;
+    }
+
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listBom", produces="application/json;charset=UTF-8")
-  public String listBom (
-    HttpServletRequest request
+  public ResponseEntity<?> listBom(
+    @RequestParam("findProdNm") String findProdNm
   ) throws Exception {
 
-    String findProdNm = request.getParameter("findProdNm");
-    ArrayList<Product> bomList = dao.listBom(findProdNm);
+    try {
+      ArrayList<Product> list = dao.listBom(findProdNm);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listBom", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(bomList);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/showBom", produces="application/json;charset=UTF-8")
-  public String showBom (
-    HttpServletRequest request
+  public ResponseEntity<?> showBom (
+    @RequestParam("prodCd") Integer prodCd,
+    @RequestParam("bomType") String bomType
   ) throws Exception {
 
-    Integer prodCd = Integer.valueOf((String) request.getParameter("prodCd"));
-    String bomType = (String) request.getParameter("bomType");
-    ArrayList<Resource> showBom = dao.showBom(prodCd, bomType);
+    try {
+      ArrayList<Resource> show = dao.showBom(prodCd, bomType);
+      return ResponseEntity.ok(show);
+    }
+    catch (Exception e) {
+      logs.error("showBom", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(showBom);
   }
 
   // -----------------------------------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/saveBom", produces="application/json;charset=UTF-8")
-  public String saveBom (
+  public ResponseEntity<?> saveBom (
     @RequestBody JSONObject obj,
-    HttpServletRequest request,
-    HttpSession session
+    @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    ArrayList<HashMap<Object, Object>> dataList = gson.fromJson(obj.get("datas").toString(), new com.google.gson.reflect.TypeToken<ArrayList<HashMap<Object, Object>>>(){}.getType());
-    String msg = "저장되었습니다.";
-    String objStr = "";
+    JSONArray dataList = (JSONArray) obj.get("dataList");
+    Map<String, Object> map = new HashMap<String, Object>();
 
     for (int i = 0; i < dataList.size(); i++) {
-      objStr = gson.toJson(dataList.get(i));
+      JSONObject jsonObj = (JSONObject) dataList.get(i);
 
-      if (!"null".equals(objStr)) {
-        try {
-          JSONParser parser = new JSONParser();
-          Object objNew = parser.parse(objStr);
-          JSONObject jsonObj = (JSONObject) objNew;
+      String userIDParam = (String) userID;
+      String bomTypeParam = (String) jsonObj.get("bomType");
+      String flagYNParam = (String) jsonObj.get("flagYN");
+      Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
+      Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
+      Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
+      Double unitQtyParam = Double.parseDouble((String) jsonObj.get("unitQty"));
 
-          String userIDParam = (String) session.getAttribute("userID");
-          String bomTypeParam = (String) jsonObj.get("bomType");
-          String flagYNParam = (String) jsonObj.get("flagYN");
+      try {
+        Bom param = new Bom();
+        param.setProdCd(prodCdParam);
+        param.setResrcCd(resrcCdParam);
+        param.setQty(qtyParam);
+        param.setUnitQty(unitQtyParam);
+        param.setBomType(bomTypeParam);
+        param.setFlagYN(flagYNParam);
+        param.setIssueID(userIDParam);
 
-          Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
-          Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
-          Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
-          Double unitQtyParam = Double.parseDouble((String) jsonObj.get("unitQty"));
-
-          Bom bomParam = new Bom();
-          bomParam.setProdCd(prodCdParam);
-          bomParam.setResrcCd(resrcCdParam);
-          bomParam.setQty(qtyParam);
-          bomParam.setUnitQty(unitQtyParam);
-          bomParam.setBomType(bomTypeParam);
-          bomParam.setFlagYN(flagYNParam);
-          bomParam.setIssueID(userIDParam);
-
-          if (flagYNParam.equals("N")) {
-            msg = "삭제되었습니다.";
-          }
-          try {
-            dao.saveBom(bomParam);
-          }
-          catch (Exception e) {
-            msg = "저장 실패";
-            e.printStackTrace();
-          }
-        }
-        catch (ParseException e) {
-          e.printStackTrace();
-        }
+        dao.saveBom(param);
+        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      }
+      catch (Exception e) {
+        logs.error("saveBom", e.getMessage());
+        map.put("result", "저장 실패");
       }
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 }

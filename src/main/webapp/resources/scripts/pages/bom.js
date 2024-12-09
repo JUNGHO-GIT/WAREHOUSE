@@ -43,7 +43,7 @@ function fnGetList01 () {
     },
   ];
 
-  var param = "findProdNm=" + $("#findProdNm").val();
+  var param = "findProdNm=" + $(`#findProdNm`).val();
 
   $.ajax({
     url: "act/listBom",
@@ -86,7 +86,7 @@ function fnGetList02() {
   obj.cellClick = function (event, ui) {
     if (ui.colIndx == 1) {
       // 1. 자재 추가
-      var getData = $("#grid03").pqGrid("getData");
+      var getData = $(`#grid03`).pqGrid("getData");
       var newRow = {
         resrcCd: ui.rowData.resrcCd,
         resrcNm: ui.rowData.resrcNm,
@@ -106,12 +106,12 @@ function fnGetList02() {
         }
       }
       if (duplicateFlag) {
-        alert("이미 추가된 제품입니다.");
+        alert("이미 추가된 제품입니다");
         return;
       }
       getData.push(newRow);
-      $("#grid03").pqGrid("option", "dataModel", {data: getData});
-      $("#grid03").pqGrid("refreshDataAndView");
+      $(`#grid03`).pqGrid("option", "dataModel", {data: getData});
+      $(`#grid03`).pqGrid("refreshDataAndView");
     }
   };
 
@@ -133,7 +133,7 @@ function fnGetList02() {
       editable:false,
     },
     {dataIndx:"qty", title:"재고", align:"right", dataType:"string",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
       editable:false,
     },
     {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
@@ -143,7 +143,7 @@ function fnGetList02() {
 
   $.ajax({
     url: "act/listResource",
-    data: `findResrcNm=${$("#findResrcNm").val()}`,
+    data: `findResrcNm=${$(`#findResrcNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -203,10 +203,10 @@ function fnGetList03 () {
       editable:false,
     },
     {dataIndx:"qty", title:"재고", align:"right", dataType:"string", editable:false,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}]
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}]
     },
     {dataIndx:"unitQty", title:"소요수량", align:"right", dataType:"string",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
       editable:true, cls:"lightYellow",
     },
     {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
@@ -262,10 +262,10 @@ function fnShow(prodCd, bomType) {
       editable:false,
     },
     {dataIndx:"qty", title:"재고", align:"right", dataType:"string", editable:false,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}]
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}]
     },
     {dataIndx:"unitQty", title:"소요수량", align:"right", dataType:"string",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
       editable:true,  cls:"lightYellow",
     },
     {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
@@ -292,8 +292,8 @@ function fnShow(prodCd, bomType) {
 // 3. 저장 -----------------------------------------------------------------------------------------
 function fnSave() {
 
-  var getData = $("#grid03").pqGrid("getData");
-  var prodCd = $("#prod").val();
+  var getData = $(`#grid03`).pqGrid("getData");
+  var prodCd = $(`#prod`).val();
   var bomType = "prod";
   var flagYN = "Y";
 
@@ -318,11 +318,11 @@ function fnSave() {
       return;
     }
     if (qty !== 0 && unitQty === 0) {
-      alert("소요수량은 0으로 설정할 수 없습니다.");
+      alert("소요수량은 0으로 설정할 수 없습니다");
       return;
     }
     if (qty < unitQty) {
-      alert("소요수량이 재고를 초과합니다.");
+      alert("소요수량이 재고를 초과합니다");
       return;
     }
   }
@@ -342,7 +342,7 @@ function fnSave() {
 
   $.ajax({
     url: "act/saveBom",
-    data: JSON.stringify({datas: getData}),
+    data: JSON.stringify({dataList: getData}),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -359,14 +359,14 @@ function fnSave() {
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDel(rowIdx) {
-  $("#grid03").pqGrid("deleteRow", {rowIndx: rowIdx});
+  $(`#grid03`).pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDelResrc(rowIdx) {
 
-  var getData = $("#grid03").pqGrid("getRowData", {rowIndx: rowIdx});
-  var prodCd = $("#prod").val();
+  var getData = $(`#grid03`).pqGrid("getRowData", {rowIndx: rowIdx});
+  var prodCd = $(`#prod`).val();
   var bomType = "prod";
   var flagYN = "N";
 
@@ -389,7 +389,7 @@ function fnDelResrc(rowIdx) {
 
   $.ajax({
     url: "act/saveBom",
-    data: JSON.stringify({datas: [bomData]}),
+    data: JSON.stringify({dataList: [bomData]}),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -410,42 +410,42 @@ function fnNew() {
   fnReset();
 
   // 그리드 비우기
-  $("#grid03").pqGrid("option", "dataModel.data", []);
+  $(`#grid03`).pqGrid("option", "dataModel.data", []);
 
   // 그리드 포커스 제거
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("setSelection", null);
-  $("#grid03").pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid02`).pqGrid("setSelection", null);
+  $(`#grid03`).pqGrid("setSelection", null);
 
   // 그리드 갱신
-  $("#grid03").pqGrid("refreshDataAndView");
+  $(`#grid03`).pqGrid("refreshDataAndView");
 };
 
 // 5-2. 그리드 초기화 ------------------------------------------------------------------------------
 function fnReset() {
 
   // 제품 초기화
-  $("#prodNm").val("");
-  $("#prodCd").val("");
-  $("#prod").val("");
-  $("#prod").html(`<option value="">==제품==</option>`);
+  $(`#prodNm`).val("");
+  $(`#prodCd`).val("");
+  $(`#prod`).val("");
+  $(`#prod`).html(`<option value="">==제품==</option>`);
 
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
-  $("#grid01").pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("refreshDataAndView");
 };
 
 // 5-3. 그리드 초기화(검색시) ----------------------------------------------------------------------
 function fnResetWhenSearch() {
 
 	// 제품 초기화
-  $("#prod").val("");
-  $("#prod").html(`<option value="">==제품==</option>`);
+  $(`#prod`).val("");
+  $(`#prod`).html(`<option value="">==제품==</option>`);
 
   // 그리드 초기화
-  $("#grid03").pqGrid("setSelection", null);
-	$("#grid03").pqGrid("option", "dataModel.data", []);
-	$("#grid03").pqGrid("refreshDataAndView");
+  $(`#grid03`).pqGrid("setSelection", null);
+	$(`#grid03`).pqGrid("option", "dataModel.data", []);
+	$(`#grid03`).pqGrid("refreshDataAndView");
 };
 
 // 0. BOM input ------------------------------------------------------------------------------------
@@ -455,18 +455,18 @@ function fnBomInput() {
   $(".bomInput").keydown(function(e) {
     if (e.keyCode === 13) {
       fnReset();
-      $("#grid03").pqGrid("setSelection", null);
-      $("#grid03").pqGrid("option", "dataModel.data", []);
-      $("#grid03").pqGrid("refreshDataAndView");
+      $(`#grid03`).pqGrid("setSelection", null);
+      $(`#grid03`).pqGrid("option", "dataModel.data", []);
+      $(`#grid03`).pqGrid("refreshDataAndView");
     }
   });
 
   // `prod`셀렉트에 값이 선택되면 이벤트
-  $("#prod").on("change", function() {
-    if ($("#prod").val() !== "") {
-      fnShow($("#prod").val(), "prod");
+  $(`#prod`).on("change", function() {
+    if ($(`#prod`).val() !== "") {
+      fnShow($(`#prod`).val(), "prod");
     }
-    $("#grid03").pqGrid("refreshDataAndView");
+    $(`#grid03`).pqGrid("refreshDataAndView");
   });
 }
 
@@ -503,8 +503,8 @@ function fnPressGet02(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
   fnGetList02();
 };
@@ -512,8 +512,8 @@ function fnChangeList() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $("#inOutDt").datepicker(G_calendar);
-  $("#inOutDt").val(curDate);
+  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).val(curDate);
 
   fnBomInput();
   fnGetList01();

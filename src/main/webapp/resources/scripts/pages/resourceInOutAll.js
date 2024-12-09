@@ -38,7 +38,7 @@ function fnGetList01 () {
       });
 
       if (duplicateFlag) {
-        alert("이미 추가된 자재입니다.");
+        alert("이미 추가된 자재입니다");
         return;
       }
       getData02.push(newRow);
@@ -112,7 +112,7 @@ function fnGetList01 () {
 
   $.ajax({
     url: "act/listResource",
-    data: `findResrcNm=${$("#findResrcNm").val()}`,
+    data: `findResrcNm=${$(`#findResrcNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -218,12 +218,12 @@ function fnGetList02() {
     {
       title:"수량", dataIndx:"qty", dataType:"string", align:"right",
       minWidth: 100, editable:true, cls:"lightYellow",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
     },
     {
       title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"right",
       minWidth: 100, editable:true, cls:"lightYellow",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg:"숫자만 입력 가능합니다."}],
+      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg:"숫자만 입력 가능합니다"}],
     },
   ];
 
@@ -288,7 +288,7 @@ function fnCheck() {
     }
     else if (inOut === "out" && parseInt(row.qty, 10) > parseInt(row.curQty, 10)) {
       isVerified = false;
-      validationErrors.push("재고보다 많은 수량이 입력되었습니다.");
+      validationErrors.push("재고보다 많은 수량이 입력되었습니다");
       break;
     }
   }
@@ -305,7 +305,7 @@ function fnCheck() {
 
   // 검증이 완료된 row에 isVerified 플래그를 설정
   if (isVerified) {
-    alert("검증이 완료되었습니다.");
+    alert("검증이 완료되었습니다");
     getData.forEach((row) => {
       row["isVerified"] = true;
       row["chkBtn"] = chkBtn;
@@ -349,7 +349,7 @@ function fnSave() {
 
   $.ajax({
     url: "act/saveResourceInOut",
-    data: JSON.stringify({datas : getData}),
+    data: JSON.stringify({dataList : getData}),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -369,7 +369,7 @@ function fnSave() {
 // 3-2. 저장 (전체) --------------------------------------------------------------------------------
 function fnSaveAll() {
 
-  const $grid02 = $("#grid02");
+  const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
 
   // 모든 행에 일괄적으로 적용할 값을 설정
@@ -413,7 +413,7 @@ function fnSaveAll() {
 
 // 4-1. 삭제 (선택) --------------------------------------------------------------------------------
 function fnDel(rowIdx) {
-  $("#grid02").pqGrid("deleteRow", {rowIndx: rowIdx});
+  $(`#grid02`).pqGrid("deleteRow", {rowIndx: rowIdx});
 };
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
@@ -429,29 +429,29 @@ function fnReset() {
   const curDate = fnToday();
 
   // 자재 초기화
-  $("#qty").val("0");
-  $("#unitPrice").val("0");
-  $("#supplyPrice").val("0");
-  $("#remark").val("");
-  $("#inOutSeq").val("");
-  $("#inOutDt").val(curDate);
-  $("#flagYN").val("Y");
+  $(`#qty`).val("0");
+  $(`#unitPrice`).val("0");
+  $(`#supplyPrice`).val("0");
+  $(`#remark`).val("");
+  $(`#inOutSeq`).val("");
+  $(`#inOutDt`).val(curDate);
+  $(`#flagYN`).val("Y");
 
   // 창고 초기화
-  $("#houseCd").val("");
-  $("#houseNm").val("");
-  $("#house").val("");
-  $("#house").html(`<option value="">==창고==</option>`);
+  $(`#houseCd`).val("");
+  $(`#houseNm`).val("");
+  $(`#house`).val("");
+  $(`#house`).html(`<option value="">==창고==</option>`);
 
   // 거래처 초기화
-  $("#compCd").val("");
-  $("#compNm").val("");
-  $("#comp").val("");
-  $("#comp").html(`<option value="">==거래처==</option>`);
+  $(`#compCd`).val("");
+  $(`#compNm`).val("");
+  $(`#comp`).val("");
+  $(`#comp`).html(`<option value="">==거래처==</option>`);
 
   // 그리드 초기화
-  $("#grid02").pqGrid("setSelection", null);
-  $("#grid02").pqGrid("refreshDataAndView");
+  $(`#grid02`).pqGrid("setSelection", null);
+  $(`#grid02`).pqGrid("refreshDataAndView");
 
   // 추가 항목도 초기화
   fnDelAll();
@@ -460,7 +460,7 @@ function fnReset() {
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------
 function fnResetWhenSearch() {
   // 그리드 초기화
-  $("#grid01").pqGrid("setSelection", null);
+  $(`#grid01`).pqGrid("setSelection", null);
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
@@ -485,16 +485,16 @@ function fnPressGet01(event) {
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
-  const findGroupCd = $("#findGroupCd").val();
-  $("#groupCd").val(findGroupCd);
+  const findGroupCd = $(`#findGroupCd`).val();
+  $(`#groupCd`).val(findGroupCd);
   fnGetList01();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $("#inOutDt").datepicker(G_calendar);
-  $("#inOutDt").val(curDate);
+  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).val(curDate);
 
   const comboStr = [{part:"comCode", target:"resrcType", groupCd:"0003", format: "combo"}];
   fnInitCombo(comboStr, function() {
@@ -502,6 +502,6 @@ jQuery(function($) {
     fnGetList02();
   });
 
-  $("#popupInOutAll").draggable({ handle: "#popTop" });
-  $("#popTop").css("cursor", "move");
+  $(`#popupInOutAll`).draggable({ handle: "#popTop" });
+  $(`#popTop`).css("cursor", "move");
 });

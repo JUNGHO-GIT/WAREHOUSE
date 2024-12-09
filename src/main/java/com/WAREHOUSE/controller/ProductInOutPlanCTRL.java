@@ -3,96 +3,112 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutPlanDAO;
 import com.WAREHOUSE.util.Logs;
-import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
+@RequiredArgsConstructor
 public class ProductInOutPlanCTRL {
 
-  @Autowired
-  private ProductInOutPlanDAO dao;
-  private Logs logs = new Logs();
-  private Gson gson = new Gson();
+  private final ProductInOutPlanDAO dao;
+  private final Logs logs;
 
   // 0. 제품 입고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/productInPlan", produces="text/html;charset=UTF-8")
-  public String productInPlan () throws Exception {
+  public ModelAndView productInPlan () throws Exception {
 
-    return "productInPlan";
+    try {
+      logs.info("page", "productInPlan");
+      return new ModelAndView("productInPlan");
+    }
+    catch (Exception e) {
+      logs.error("productInPlan", e.getMessage());
+      return null;
+    }
+
   }
 
   // 0. 제품 출고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/productOutPlan", produces="text/html;charset=UTF-8")
-  public String productOutPlan () throws Exception {
+  public ModelAndView productOutPlan () throws Exception {
 
-    return "productOutPlan";
+    try {
+      logs.info("page", "productOutPlan");
+      return new ModelAndView("productOutPlan");
+    }
+    catch (Exception e) {
+      logs.error("productOutPlan", e.getMessage());
+      return null;
+    }
+
   }
 
   // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/listProductInOutPlan", produces="application/json;charset=UTF-8")
-  public String listProductInOutPlan (
-    HttpServletRequest request
+  public ResponseEntity<?> listProductInOutPlan (
+    @RequestParam("prodCd") String prodCd
   ) throws Exception {
 
-    String prodCd = request.getParameter("prodCd");
-    ArrayList<ProductInOut> productInOutList = dao.listProductInOutPlan(prodCd);
+    try {
+      ArrayList<ProductInOut> list = dao.listProductInOutPlan(prodCd);
+      return ResponseEntity.ok(list);
+    }
+    catch (Exception e) {
+      logs.error("listProductInOutPlan", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(productInOutList);
   }
 
   // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/showProductInOutPlan", produces="application/json;charset=UTF-8")
-  public String showProductInOutPlan (
-    HttpServletRequest request
+  public ResponseEntity<?> showProductInOutPlan (
+    @RequestParam("inOutSeq") Integer inOutSeq
   ) throws Exception {
 
-    String inOutSeq = request.getParameter("inOutSeq");
-    ProductInOut productInOutShow = dao.showProductInOutPlan(Integer.parseInt(inOutSeq));
+    try {
+      ProductInOut show = dao.showProductInOutPlan(inOutSeq);
+      return ResponseEntity.ok(show);
+    }
+    catch (Exception e) {
+      logs.error("showProductInOutPlan", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
 
-    return gson.toJson(productInOutShow);
   }
 
   // 1-3. 제품 입출고 예정 저장 -------------------------------------------------------------------
-  @ResponseBody
   @PostMapping(value="/act/saveProductInOutPlan", produces="application/json;charset=UTF-8")
-  public String saveProductInOutPlan (
-    @RequestBody ProductInOut productInOutParam,
-    HttpServletRequest request,
-    HttpSession session
+  public ResponseEntity<?> saveProductInOutPlan (
+    @RequestBody ProductInOut param,
+    @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    String userID = (String) session.getAttribute("userID");
-    productInOutParam.setIssueID(userID);
-    String msg = "저장되었습니다.";
+    Map<String, Object> map = new HashMap<String, Object>();
 
-    if (productInOutParam.getFlagYN().equals("N")) {
-      msg = "삭제되었습니다.";
-    }
     try {
-      dao.saveProductInOutPlan(productInOutParam);
+      param.setIssueID(userID);
+      dao.saveProductInOutPlan(param);
+      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      e.printStackTrace();
-      msg = "저장 실패";
+      logs.error("saveProductInOutPlan", e.getMessage());
+      map.put("result", "저장 실패");
     }
 
-    Map<String, Object> map = new HashMap<String, Object>();
-    map.put("result", msg);
-
-    return gson.toJson(map);
+    return ResponseEntity.ok(map);
   }
 
 }
