@@ -484,16 +484,16 @@ function fnPressGet01(event) {
   // 1. event가 `onKeyDown`일때 = enter 조건 O
   if (event.keyCode === 13 && event.key === "Enter") {
     event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
+    typeof fnReset === 'function' && fnReset();
+    typeof fnResetWhenSearch === 'function' && fnResetWhenSearch();
     fnGetList01();
   }
 
   // 2. event가 `onClick`일때 = enter 조건 X
   if (event.type === "click") {
     event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
+    typeof fnReset === 'function' && fnReset();
+    typeof fnResetWhenSearch === 'function' && fnResetWhenSearch();
     fnGetList01();
   }
 };
@@ -508,3 +508,52 @@ function fnPressGet02(event) {
     fnGetList02();
   }
 };
+
+// -------------------------------------------------------------------------------------------------
+function dynamicDisplay () {
+
+  const xsToMd = window.matchMedia("(min-width: 0px) and (max-width: 768px)");
+  const mdToXl = window.matchMedia("(min-width: 769px) and (max-width: 10000px)");
+
+  const dividerMd = document.querySelectorAll(".divider-md");
+  const dividerAll = document.querySelectorAll(".divider-all");
+  const alignMd = document.querySelectorAll(".align-md");
+
+  dividerMd.forEach((el) => {
+    if (xsToMd.matches && !el.classList.contains("my-2vh")) {
+      el.classList.remove("d-none");
+      el.classList.add("my-2vh");
+      el.setAttribute("style", "flex: 0 0 100%;");
+    }
+    else if (mdToXl.matches && !el.classList.contains("d-none")) {
+      el.classList.add("d-none");
+      el.classList.remove("my-2vh");
+      el.setAttribute("style", "flex: 0 0 0;");
+    }
+  });
+
+  dividerAll.forEach((el) => {
+    el.classList.remove("d-none");
+    el.classList.add("my-2vh");
+    el.setAttribute("style", "flex: 0 0 100%;");
+  });
+
+  alignMd.forEach((el) => {
+    if (xsToMd.matches && !el.classList.contains("d-center")) {
+      el.classList.remove("d-right");
+      el.classList.remove("d-left");
+      el.classList.add("d-center");
+    }
+    else if (mdToXl.matches && !el.classList.contains("d-right")) {
+      el.classList.remove("d-center");
+      el.classList.add("d-right");
+    }
+    else if (mdToXl.matches && !el.classList.contains("d-left")) {
+      el.classList.remove("d-center");
+      el.classList.add("d-left");
+    }
+  });
+}
+// 이벤트 리스터 등록
+dynamicDisplay();
+window.addEventListener("resize", dynamicDisplay);

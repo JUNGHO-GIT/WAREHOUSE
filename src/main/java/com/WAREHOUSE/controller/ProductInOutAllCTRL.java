@@ -28,7 +28,6 @@ public class ProductInOutAllCTRL {
   public ModelAndView productInOutAll () throws Exception {
 
     try {
-      logs.info("page", "productInOutAll");
       return new ModelAndView("productInOutAll");
     }
     catch (Exception e) {

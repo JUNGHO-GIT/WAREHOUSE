@@ -1,14 +1,15 @@
+let USER_PERM_CNT = 0;
+
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList01 () {
 
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    numberCell: {width: 30, minWidth: 30, align: "center"},
     xlsNm: "user.xlsx",
     title: "   사용자 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -18,30 +19,35 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    summaryData:  [],
+    rowClick: (_, ui) => {
+      fnShow (ui.rowData.userID);
+    }
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow(ui.rowData.userID);
-  };
-
   const colModel = [
-    {dataIndx:"userNm", title:"사용자 이름", dataType:"string", align:"center",
-      filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
+    {
+      title:"사용자 이름", dataIndx:"userNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"userID", title:"사용자 아이디", dataType:"string", align:"center",
-      filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
+    {
+      title:"사용자 아이디", dataIndx:"userID", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"phone", title:"연락처", dataType:"string", align:"center",
-    filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
+    {
+      title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"email", title:"E-mail", dataType:"string", align:"center",
-      filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
+    {
+      title:"E-mail", dataIndx:"email", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"uLevel", title:"회원등급", dataType:"string", align:"center",
-      filter: {type: "textbox", condition: "contain", listeners: ["keyup"]}
+    {
+      title:"회원등급", dataIndx:"uLevel", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"flagYN", title:"유효여부", dataType:"string", align:"center",,
+    {
+      title:"유효여부", dataIndx:"flagYN", dataType:"string", align:"center",
+      minWidth: 50,
     },
   ];
 
@@ -54,8 +60,12 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -65,7 +75,6 @@ function fnGetList01 () {
 function fnGetPartsUser() {
 
   $(`#userPerms`).empty();
-
   $.ajax({
     url: "act/listUserPerm",
     data: "",
@@ -75,51 +84,48 @@ function fnGetPartsUser() {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      if(data.length == 0) {
+
+      if (!data || data.length === 0) {
         return;
       }
-      var oldMenu = "";
-      G_permCnt = data.length;
 
-      for (let i = 0; i < data.length; i++) {
-        var detail = data[i];
-        if (i > 0 && oldMenu != detail.page) {
+      let prevPremBox = "";
+      USER_PERM_CNT = data.length;
 
-          var space = `<hr class="hr mt-5px mb-5px"/>`;
-
-          $(`#userPerms`).append(space);
+      for (let i = 0; i < USER_PERM_CNT; i++) {
+        const detail = data[i];
+        if (i > 0 && prevPremBox != detail.page) {
+          $(`#userPerms`).append(`<hr class="hr mt-5 mb-5"/>`);
         }
-        var userText = `
-          <div class="row mt-10px" style="white-space:nowrap;">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-              ▷ ${detail.pageNm}
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-10px">
-              <input
-                type="radio"
-                class="user${i}"
-                name="${detail.page}${detail.subPage}"
-                value="${detail.page}${detail.subPage}"
-                onBlur="fnGetPerm();"
-              />
-              <span>있음</span>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-10px">
-              <input
-                type="radio"
-                class="user${i}"
-                name="${detail.page}${detail.subPage}"
-                value=""
-                onBlur="fnGetPerm();"
-                checked
-              />
-              <span>없음</span>
-            </div>
+        const uPermHtml = (/* javascript */`
+        <div class="row mt-10" style="white-space:nowrap;">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            ▷ ${detail.pageNm}
           </div>
-        `;
-        $(`#userPerms`).append(userText);
-
-        oldMenu = detail.page;
+          <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
+            <input
+              type="radio"
+              class="user${i}"
+              name="${detail.page}${detail.subPage}"
+              value="${detail.page}${detail.subPage}"
+              onblur="fnGetPerm();"
+            />
+            <span>있음</span>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
+            <input
+              type="radio"
+              class="user${i}"
+              name="${detail.page}${detail.subPage}"
+              onblur="fnGetPerm();"
+              checked
+            />
+            <span>없음</span>
+          </div>
+        </div>
+        `);
+        $(`#userPerms`).append(uPermHtml);
+        prevPremBox = detail.page;
       }
     },
     error: ajaxErrorHandler
@@ -128,19 +134,18 @@ function fnGetPartsUser() {
 
 // 1-3. 권한 체크 ----------------------------------------------------------------------------------
 function fnGetPerm() {
-
-  G_uPerm = "";
-
-  for (let k = 0; k < G_permCnt;k++) {
-    var obj = "user" + k;
-    var val = $("input:radio[class=" + obj + "]:checked").val();
-    if(val) {
-      if(G_uPerm) {
-        G_uPerm += ",";
+  let uPerm = "";
+  for (let k = 0; k < USER_PERM_CNT; k++) {
+    const obj = `user${k}`;
+    const val = $(`input:radio[class=${obj}]:checked`).val();
+    if (val) {
+      if (uPerm) {
+        uPerm += ",";
       }
-      G_uPerm += val;
+      uPerm += val;
     }
   }
+  $(`#uPerm`).val(uPerm);
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
@@ -172,19 +177,18 @@ function fnShow(userID) {
       $(`#passwd`).val("BCryptPassword");
 
       // 권한 설정
-      var perms = data.uPerm;
-      if (perms.indexOf("/") == 0) {
+      const perms = data.uPerm;
+      if (!perms) {
         return;
       }
-      var divPerms = perms.split(",");
 
-      for (let c = 0; c < G_permCnt; c++) {
-        var val = divPerms[c];
-
-        if (val != undefined && perms != "") {
-          var objNm = val.substr(0, 3);
+      const divPerms = perms.split(",");
+      for (let c = 0; c < USER_PERM_CNT; c++) {
+        const val = divPerms[c];
+        if (val && perms) {
+          const objNm = val.substr(0, 3);
           if (objNm != undefined) {
-            $("input:radio[name=" + objNm + "]:radio[value='" + val + "']").prop("checked", true);
+            $(`input:radio[name=${objNm}]:radio[value='${val}']`).prop("checked", true);
           }
         }
       }
@@ -242,12 +246,13 @@ function fnSave(flagYN) {
     }
   }
 
-  var uPerm = "";
-  for (let k = 0; k < G_permCnt; k++) {
-    var obj = "user" + k;
-    var val = $("input:radio[class=" + obj + "]:checked").val();
-    if(val) {
-      if(uPerm) {
+  // 권한 설정
+  let uPerm = "";
+  for (let k = 0; k < USER_PERM_CNT; k++) {
+    const obj = `user${k}`;
+    const val = $(`input:radio[class=${obj}]:checked`).val();
+    if (val) {
+      if (uPerm) {
         uPerm += ",";
       }
       uPerm += val;
@@ -255,7 +260,7 @@ function fnSave(flagYN) {
   }
 
   // 신규등록인지 여부 체크
-  var signUpCheck = $(`#signUpCheck`).val();
+  const signUpCheck = $(`#signUpCheck`).val();
 
   // 비밀번호 변경여부 체크
   $(`#changeFlag`).val() === "Y"
@@ -327,7 +332,7 @@ function fnCheckUserID() {
 // 3-3. 비밀번호 변경 ------------------------------------------------------------------------------
 function fnUpdatePw() {
 
-  var changeFlag = $(`#changeFlag`).val();
+  const changeFlag = $(`#changeFlag`).val();
 
   // 비번 입력안한 경우
   if ($(`#passwd`).val() == "") {
@@ -345,39 +350,40 @@ function fnUpdatePw() {
     return;
   }
 
-  if (changeFlag == "Y") {
+  if (changeFlag !== "Y") {
+    return
+  }
 
-    var param = {
-      "userID": $(`#userID`).val(),
-      "passwd": $(`#passwd`).val(),
-    };
+  const param = {
+    "userID": $(`#userID`).val(),
+    "passwd": $(`#passwd`).val(),
+  };
 
-    $.ajax({
-      url: "act/updatePw",
-      data: JSON.stringify(param),
-      type: "POST",
-      dataType:"JSON",
-      contentType: "application/json; charset=UTF-8",
-      beforeSend: (xmlHttpRequest) => {
-        xmlHttpRequest.setRequestHeader("AJAX", "true");
-      },
-      success: (data) => {
-        if (data) {
-          alert(data.result);
-          $(`#passwd`).prop("type", "password");
-          $(`#passwd`).val("BCryptPassword");
-          $(`#passwd`).prop("readonly", true);
-          $(`#changePw`).html("비번변경");
-          $(`#changeFlag`).val("N");
-        }
-        else {
-          $(`#passwd`).prop("readonly", true);
-          $(`#changeFlag`).val("N");
-        }
-      },
-      error: ajaxErrorHandler
-  	});
-	};
+  $.ajax({
+    url: "act/updatePw",
+    data: JSON.stringify(param),
+    type: "POST",
+    dataType:"JSON",
+    contentType: "application/json; charset=UTF-8",
+    beforeSend: (xmlHttpRequest) => {
+      xmlHttpRequest.setRequestHeader("AJAX", "true");
+    },
+    success: (data) => {
+      if (data) {
+        alert(data.result);
+        $(`#passwd`).prop("type", "password");
+        $(`#passwd`).val("BCryptPassword");
+        $(`#passwd`).prop("readonly", true);
+        $(`#changePw`).html("비번변경");
+        $(`#changeFlag`).val("N");
+      }
+      else {
+        $(`#passwd`).prop("readonly", true);
+        $(`#changeFlag`).val("N");
+      }
+    },
+    error: ajaxErrorHandler
+  });
 };
 
 // 4. 삭제 -----------------------------------------------------------------------------------------
@@ -389,9 +395,9 @@ function fnDel() {
 function fnReset() {
 
   // 권한 초기화
-  for (let k = 0; k < G_permCnt;k++) {
-    var obj = "user" + k;
-    $("input:radio[class=" + obj + "]:radio[value='']").prop("checked", true);
+  for (let k = 0; k < USER_PERM_CNT; k++) {
+    const obj = `user${k}`;
+    $(`input:radio[class=${obj}]:radio[value='']`).prop("checked", true);
   }
 
   // 회원 초기화
@@ -420,7 +426,6 @@ function fnReset() {
 
 // 5-2. 초기화 (비밀번호) --------------------------------------------------------------------------
 function fnResetPw() {
-  // row 클릭했을때 `비번변경`버튼 상태 초기화
   $(`#passwd`).prop("readonly", true);
   $(`#passwd`).val("BCryptPassword");
   $(`#changePw`).html("비번변경");

@@ -36,7 +36,6 @@ public class ShipItemsCTRL {
   public ModelAndView shipItems () throws Exception {
 
     try {
-      logs.info("page", "shipItems");
       return new ModelAndView("shipItems");
     }
     catch (Exception e) {

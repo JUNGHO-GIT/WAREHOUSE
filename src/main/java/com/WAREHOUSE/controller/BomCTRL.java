@@ -32,7 +32,6 @@ public class BomCTRL {
   public ModelAndView bom () throws Exception {
 
     try {
-      logs.info("page", "bom");
       return new ModelAndView("bom");
     }
     catch (Exception e) {

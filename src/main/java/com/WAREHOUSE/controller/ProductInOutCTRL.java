@@ -30,7 +30,6 @@ public class ProductInOutCTRL {
   public ModelAndView productIn () throws Exception {
 
     try {
-      logs.info("page", "productIn");
       return new ModelAndView("productIn");
     }
     catch (Exception e) {
@@ -45,7 +44,6 @@ public class ProductInOutCTRL {
   public ModelAndView productOut () throws Exception {
 
     try {
-      logs.info("page", "productOut");
       return new ModelAndView("productOut");
     }
     catch (Exception e) {

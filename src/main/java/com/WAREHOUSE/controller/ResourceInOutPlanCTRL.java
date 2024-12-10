@@ -30,7 +30,6 @@ public class ResourceInOutPlanCTRL {
   public ModelAndView resourceInPlan () throws Exception {
 
     try {
-      logs.info("page", "resourceInPlan");
       return new ModelAndView("resourceInPlan");
     }
     catch (Exception e) {
@@ -45,7 +44,6 @@ public class ResourceInOutPlanCTRL {
   public ModelAndView resourceOutPlan () throws Exception {
 
     try {
-      logs.info("page", "resourceOutPlan");
       return new ModelAndView("resourceOutPlan");
     }
     catch (Exception e) {
@@ -79,8 +77,8 @@ public class ResourceInOutPlanCTRL {
   ) throws Exception {
 
     try {
-      ResourceInOut resourceInOutShow = dao.showResourceInOutPlan(inOutSeq);
-      return ResponseEntity.ok(resourceInOutShow);
+      ResourceInOut show = dao.showResourceInOutPlan(inOutSeq);
+      return ResponseEntity.ok(show);
     }
     catch (Exception e) {
       logs.error("showResourceInOutPlan", e.getMessage());

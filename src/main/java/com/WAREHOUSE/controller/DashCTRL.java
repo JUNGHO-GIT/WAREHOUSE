@@ -33,7 +33,6 @@ public class DashCTRL {
   public ModelAndView dash () throws Exception {
 
     try {
-      logs.info("page", "dash");
       return new ModelAndView("dash");
     }
     catch (Exception e) {

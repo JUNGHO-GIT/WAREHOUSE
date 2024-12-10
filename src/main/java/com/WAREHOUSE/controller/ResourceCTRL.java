@@ -32,7 +32,6 @@ public class ResourceCTRL {
   public ModelAndView resource () throws Exception {
 
     try {
-      logs.info("page", "resource");
       return new ModelAndView("resource");
     }
     catch (Exception e) {

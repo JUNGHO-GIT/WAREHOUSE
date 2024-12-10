@@ -79,10 +79,10 @@ public class MainCTRL {
       }
       pageNm = "'" + pageNm + "'";
 
-      ArrayList<HashMap<String, Object>> listSysMenuList = dao.listSysMenu(pageNm);
-      logs.info("listSysMenu", json.toJson(listSysMenuList));
+      ArrayList<HashMap<String, Object>> list = dao.listSysMenu(pageNm);
+      logs.info("listSysMenu", json.toJson(list));
 
-      return ResponseEntity.ok(listSysMenuList);
+      return ResponseEntity.ok(list);
     }
     catch (Exception e) {
       logs.error("listSysMenu", e.getMessage());

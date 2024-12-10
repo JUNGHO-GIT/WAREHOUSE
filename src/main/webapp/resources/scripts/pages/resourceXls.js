@@ -8,7 +8,7 @@ function fnShowExcel(body) {
     xlsNm: "resourceXls.xlsx",
     title: "   자재 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable: true,

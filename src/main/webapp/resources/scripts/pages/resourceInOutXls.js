@@ -8,7 +8,7 @@ function fnShowExcel(body) {
     xlsNm: "resourceInOutXls.xlsx",
     title: "   자재 입출고 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable: true,

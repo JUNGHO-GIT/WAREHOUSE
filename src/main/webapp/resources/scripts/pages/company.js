@@ -7,7 +7,7 @@ function fnGetList01 () {
     xlsNm: "company.xlsx",
     title: "   거래처 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -32,7 +32,7 @@ function fnGetList01 () {
       minWidth: 150
     },
     {
-      title:"사업자등록번호", dataIndx:"compNo", dataType:"string", align:"center",
+      title:"사업자번호", dataIndx:"compNo", dataType:"string", align:"center",
       minWidth: 150
     },
     {
@@ -74,7 +74,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      gridOption.title = updateTitle("거래처 관리", myJsonData.length);
+      gridOption.title = updateTitle("company", "거래처 관리", myJsonData.length);
       // compCd가 1인 항목을 찾아 맨위로 이동
       const index = myJsonData.findIndex((item) => item.compCd === 1);
       if (index > -1) {
@@ -152,7 +152,7 @@ function fnSave(flagYN) {
       return;
     }
     if ($(`#compNo`).val() == "") {
-      alert("사업자 등록번호를 입력해 주세요");
+      alert("사업자번호를 입력해 주세요");
       $(`#compNo`).on("focus", function () {});
       return;
     }

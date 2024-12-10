@@ -28,7 +28,6 @@ public class ResourceInOutAllCTRL {
   public ModelAndView resourceInOutAll () throws Exception {
 
     try {
-      logs.info("page", "resourceInOutAll");
       return new ModelAndView("resourceInOutAll");
     }
     catch (Exception e) {

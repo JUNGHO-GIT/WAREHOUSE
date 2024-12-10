@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
@@ -29,7 +31,8 @@
         A.userID LIKE CONCAT('%', #{findUserNm}, '%')
       )
     </if>
-    ORDER BY A.userNm ASC
+    ORDER BY
+      A.userNm ASC
   </select>
 
   <!-- User.showUser -->
@@ -38,12 +41,14 @@
   	parameterType="hashmap"
   	resultType="User"
   >
+    <![CDATA[
     SELECT
-      userID, passwd, userNm, phone, email, uLevel, compCd, uPerm, flagYN
+      A.userID, A.passwd, A.userNm, A.phone, A.email, A.uLevel, A.compCd, A.uPerm, A.flagYN
     FROM
-      tblUser
+      tblUser A
     WHERE
-      userID = #{userID}
+      A.userID = #{userID}
+    ]]>
   </select>
 
   <!-- User.checkUserID -->
@@ -77,8 +82,9 @@
   <select
   	id="listUserPerm"
   	parameterType="hashmap"
-  	resultType="hashmap"
+    resultType="hashmap"
   >
+    <![CDATA[
     SELECT
       page, subPage, pageUrl, pageNm, pageOrder, pageNo
     FROM
@@ -87,6 +93,7 @@
       flagYN = 'Y' AND subPage!='00'
     ORDER BY
       pageOrder
+    ]]>
   </select>
 
   <!-- User.saveUser -->

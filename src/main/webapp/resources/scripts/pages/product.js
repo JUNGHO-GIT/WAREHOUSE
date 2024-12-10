@@ -7,7 +7,7 @@ function fnGetList01 () {
     xlsNm: "product.xlsx",
     title: "   제품 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -83,7 +83,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      gridOption.title = updateTitle("제품 관리", myJsonData);
+      gridOption.title = updateTitle("product", "제품 관리", myJsonData);
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },

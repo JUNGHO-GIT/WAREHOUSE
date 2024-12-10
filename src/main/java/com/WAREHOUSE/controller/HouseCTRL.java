@@ -30,7 +30,6 @@ public class HouseCTRL {
   public ModelAndView house () throws Exception {
 
     try {
-      logs.info("page", "house");
       return new ModelAndView("house");
     }
     catch (Exception e) {

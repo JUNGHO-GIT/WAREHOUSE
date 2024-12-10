@@ -7,7 +7,7 @@ function fnGetList01 () {
     xlsNm: "shipping.xlsx",
     title: "   제품 출고 현황",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -89,13 +89,13 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  var delBtn = `<button class="btn btn-danger btn-xs delBtn">x</button>`;
+  var delBtn = `<button class="btn btn-danger btn-sm delBtn">x</button>`;
 
   const gridOption = {
     xlsNm: "shipDetail.xlsx",
     title: "   제품 출하 대기 목록",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,

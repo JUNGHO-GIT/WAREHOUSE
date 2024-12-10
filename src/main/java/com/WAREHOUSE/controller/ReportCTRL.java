@@ -28,7 +28,6 @@ public class ReportCTRL {
   public ModelAndView reportIn () throws Exception {
 
     try {
-      logs.info("page", "reportIn");
       return new ModelAndView("reportIn");
     }
     catch (Exception e) {
@@ -43,7 +42,6 @@ public class ReportCTRL {
   public ModelAndView reportOut () throws Exception {
 
     try {
-      logs.info("page", "reportOut");
       return new ModelAndView("reportOut");
     }
     catch (Exception e) {
@@ -58,7 +56,6 @@ public class ReportCTRL {
   public ModelAndView reportStock () throws Exception {
 
     try {
-      logs.info("page", "reportStock");
       return new ModelAndView("reportStock");
     }
     catch (Exception e) {
@@ -73,7 +70,6 @@ public class ReportCTRL {
   public ModelAndView reportHouse () throws Exception {
 
     try {
-      logs.info("page", "reportHouse");
       return new ModelAndView("reportHouse");
     }
     catch (Exception e) {

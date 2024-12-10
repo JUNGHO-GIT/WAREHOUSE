@@ -30,7 +30,6 @@ public class ResourceInOutXlsCTRL {
   public ModelAndView resourceInOutXls () throws Exception {
 
     try {
-      logs.info("page", "resourceInOutXls");
       return new ModelAndView("resourceInOutXls");
     }
     catch (Exception e) {

@@ -8,12 +8,12 @@
   style="position: fixed; top: 40vh; left: 30vw"
 >
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <!-- form -->
       <form id="formData1" name="formData1" class="formData1">
         <!-- top -->
         <div class="row bg-primary border-bottom-dark-1 p-15px drag" id="popTop">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
             <div class="fs-1-2rem fw-600 white ml-auto">
               창고 및 거래처 일괄적용
             </div>
@@ -26,10 +26,10 @@
         </div>
         <!-- body -->
         <div class="row bg-white p-25px" id="popBody">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="row">
               <div class="d-row-center mb-3vh">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                   <div class="d-row-right mr-2vw">
                     <div class="fs-0-7rem fw-500 red mr-3px">
                       ≫
@@ -39,28 +39,28 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
                   <div class="d-row-right mr-2vw">
                     <input
                       type="text"
                       id="houseNm"
                       name="houseNm"
-                      class="form-control"
+                      class="form-control form-control-sm"
                       placeholder="검색"
                       onKeyDown="fnFindCd(this.value,'','house',event)"
                     />
                   </div>
                 </div>
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
                   <div class="d-row-right mr-2vw">
-                    <select id="house" class="form-control">
+                    <select id="house" class="form-control form-control-sm">
                       <option value="">==창고==</option>
                     </select>
                   </div>
                 </div>
               </div>
               <div class="d-row-center mb-3vh">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
                   <div class="d-row-right mr-2vw">
                     <div class="fs-0-7rem fw-500 red mr-3px">
                       ≫
@@ -70,28 +70,28 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
                   <div class="d-row-right mr-2vw">
                     <input
                       type="text"
                       id="compNm"
                       name="compNm"
-                      class="form-control"
+                      class="form-control form-control-sm"
                       placeholder="검색"
                       onKeyDown="fnFindCd(this.value,'','comp',event)"
                     />
                   </div>
                 </div>
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
                   <div class="d-row-right mr-2vw">
-                    <select id="comp" class="form-control">
+                    <select id="comp" class="form-control form-control-sm">
                       <option value="">==거래처==</option>
                     </select>
                   </div>
                 </div>
               </div>
               <div class="d-row-center mt-2vh">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
                   <button
                     type="button"
                     class="btn btn-primary btn-sm mr-10px"

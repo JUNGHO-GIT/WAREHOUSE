@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+  </Appenders>
+  <Loggers>
+
+    <!-- root -->
+    <Root level="info">
+      <AppenderRef ref="Console" />
+    </Root>
+
+    <!-- spring -->
+    <Logger
+      name="org.springframework"
+      level="warn"
+      additivity="false"
+    >
+      <AppenderRef ref="Console" />
+    </Logger>
+
+    <!-- hikari -->
+    <Logger
+      name="com.zaxxer.hikari"
+      level="warn"
+      additivity="false"
+    >
+      <AppenderRef ref="Console" />
+    </Logger>
+
+    <!-- mybatis -->
+    <Logger
+      name="org.apache.ibatis"
+      level="warn"
+      additivity="false"
+    >
+      <AppenderRef ref="Console" />
+    </Logger>
+
+  </Loggers>
+</Configuration>

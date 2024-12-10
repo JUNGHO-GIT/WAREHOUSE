@@ -9,7 +9,7 @@ function fnGetList01 () {
     xlsNm: "productInOutAll.xlsx",
     title: "   제품 입출고 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -118,7 +118,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      gridOption.title = updateTitle("제품 입출고 관리", myJsonData.length);
+      gridOption.title = updateTitle("productInOut", "제품 입출고 관리", myJsonData.length);
       gridOption.summaryData = updateSummary("prod", myJsonData);
 
       $grid01.pqGrid({
@@ -136,14 +136,14 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
-  const delBtn = `<button type="button" class="btn btn-danger btn-xs delBtn">x</button>`;
+  const chkBtn = `<button type="button" class="btn btn-primary btn-sm chkBtn">v</button>`;
+  const delBtn = `<button type="button" class="btn btn-danger btn-sm delBtn">x</button>`;
 
   const gridOption = {
     xlsNm: "productInOutAll.xlsx",
     title: "   일괄 입고",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     swipeModel: {on:false},
@@ -238,7 +238,7 @@ function fnCheck() {
   const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
   const inOut = $("input[name=inOut]:checked").val();
-  const chkBtn = `<button type="button" class="btn btn-primary btn-xs chkBtn">v</button>`;
+  const chkBtn = `<button type="button" class="btn btn-primary btn-sm chkBtn">v</button>`;
 
   let validationErrors = [];
   let isVerified = true;

@@ -1,14 +1,14 @@
 // 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
 function fnUploadFiles(formParam) {
 
-  var fileUploadForm = formParam;
-  var tableNm = $(`#tableNm`).val();
-  var tableKey = $(`#tableKey`).val();
+  const fileUploadForm = formParam;
+  const tableNm = $(`#tableNm`).val();
+  const tableKey = $(`#tableKey`).val();
 
-  var formData = new FormData(fileUploadForm);
-  var userFileVal = $(`#userFile`).val();
-  var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
-  var fileExt = divFile[(divFile.length - 1)];
+  const formData = new FormData(fileUploadForm);
+  const userFileVal = $(`#userFile`).val();
+  const divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
+  const fileExt = divFile[(divFile.length - 1)];
 
   if (!$(`#userFile`).val()) {
     alert("파일을 먼저 선택해 주세요");
@@ -16,7 +16,7 @@ function fnUploadFiles(formParam) {
     return;
   }
   if (fileExt != "jpg" && fileExt != "JPG" && fileExt != "png" && fileExt != "PNG") {
-    alert("등록 불가능한 파일입니다. JPG, PNG 파일만 등록 가능합니다");
+    alert("등록 불가능한 파일입니다");
     $(`#userFile`).on("focus", function () {});
     return;
   }
@@ -48,44 +48,6 @@ function fnUploadFiles(formParam) {
       if (tableKey !== "0") {
         $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
-    },
-    error: ajaxErrorHandler
-  });
-};
-
-// 1-2. 파일 업로드 (WAR) --------------------------------------------------------------------------
-function fnUploadWarFiles(formParam) {
-
-  var fileUploadForm = formParam;
-  var formData = new FormData(fileUploadForm);
-  var userFileVal = $(`#userFile`).val();
-  var divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
-  var fileExt = divFile[(divFile.length - 1)];
-
-  if (!$(`#userFile`).val()) {
-    alert("파일을 먼저 선택해 주세요");
-    $(`#userFile`).on("focus", function () {});
-    return;
-  }
-  if (fileExt != "war" && fileExt != "WAR") {
-    alert("등록 불가능한 파일입니다. WAR 파일만 등록 가능합니다");
-    $(`#userFile`).on("focus", function () {});
-    return;
-  }
-  $(`#fileUpBtn`).html("ing..");
-
-  $.ajax({
-    url: "act/uploadWarFiles",
-    data: formData,
-    type: "POST",
-    enctype: "multipart/form-data",
-    processData: false,
-    contentType: false,
-    cache: false,
-    success: (data) => {
-      alert(data);
-      $(`#fileUpBtn`).html("업로드");
-      $(`#userFile`).val("");
     },
     error: ajaxErrorHandler
   });
@@ -213,10 +175,10 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
       fnGetList01();
 
       // 4. 상세정보에 이미지 표시
-      fnShowFiles(tableNm, tableKey, "files");
+      fnShowFiles(param.tableNm, param.tableKey, "files");
 
       // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
-      if (tableKey !== "0") {
+      if (param.tableKey !== "0") {
         $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
     },

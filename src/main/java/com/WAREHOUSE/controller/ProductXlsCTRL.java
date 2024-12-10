@@ -28,7 +28,6 @@ public class ProductXlsCTRL {
   public ModelAndView productXls () throws Exception {
 
     try {
-      logs.info("page", "productXls");
       return new ModelAndView("productXls");
     }
     catch (Exception e) {

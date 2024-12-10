@@ -12,7 +12,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-2 mt-2px">
 							<input
-								class="form-control"
+								class="form-control form-control-sm"
 								id="findStartDt"
 								type="text"
 								onkeydown="fnPressGet01 (event)"
@@ -20,7 +20,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 						</div>
 						<div class="col-lg-2 col-md-2 col-sm-2 col-2 mt-2px">
 							<input
-								class="form-control"
+								class="form-control form-control-sm"
 								id="findEndDt"
 								type="text"
 								onkeydown="fnPressGet01(event)"
@@ -66,14 +66,14 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 									</label>
 									<div class="col-xs-3 col-lg-3 col-md-3 col-sm-3">
 										<input
-											class="form-control"
+											class="form-control form-control-sm"
 											id="compNm"
 											type="text"
 											onkeydown="fnFindCd(this.value,'','comp',event)"
 										/>
 									</div>
 									<div class="col-lg-5 col-md-5 col-5 col-sm-5">
-										<select class="form-control" id="comp">
+										<select class="form-control form-control-sm" id="comp">
 											<option value="">==거래처==</option>
 										</select>
 									</div>
@@ -86,7 +86,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 										<span>거래처 담당자</span>
 									</label>
 									<div class="col-xs-8 col-lg-8 col-md-8 col-sm-8">
-										<input class="form-control" id="toMajor" type="text" />
+										<input class="form-control form-control-sm" id="toMajor" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -97,7 +97,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 										<span>담당자 번호</span>
 									</label>
 									<div class="col-xs-8 col-lg-8 col-md-8 col-sm-8">
-										<input class="form-control" id="toPhone" type="text" />
+										<input class="form-control form-control-sm" id="toPhone" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -108,7 +108,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 										<span>출하일</span>
 									</label>
 									<div class="col-xs-8 col-lg-8 col-md-8 col-sm-8">
-										<input class="form-control" id="shipDt" type="text" />
+										<input class="form-control form-control-sm" id="shipDt" type="text" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -119,7 +119,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 										<span>출하담당자</span>
 									</label>
 									<div class="col-xs-8 col-lg-8 col-md-8 col-sm-8">
-										<input class="form-control" id="shipMajor" type="text" />
+										<input class="form-control form-control-sm" id="shipMajor" type="text" />
 									</div>
 								</div>
 								<hr />

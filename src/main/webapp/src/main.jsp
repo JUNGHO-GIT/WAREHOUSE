@@ -9,7 +9,7 @@
   <div class="container body">
 
     <!--------------------------------------------------------------------------------------------->
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 left_col">
+    <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 left_col">
       <div class="scroll-view">
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
           <div class="menu_section">
@@ -63,9 +63,9 @@
     </div>
 
     <!--------------------------------------------------------------------------------------------->
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 right_col w-webkit-fill">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 right_col w-webkit-fill">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div class="gnb_wrap border-bottom-1 shadow-bottom-3">
             <div class="gnb_toggle">
               <div id="menu_toggle" class="fa fa-bars fs-25px light-black pointer-navy"></div>
@@ -105,7 +105,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <div id="tabContents"></div>
         </div>
       </div>

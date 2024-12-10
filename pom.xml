@@ -17,7 +17,6 @@
     <org.springframework-version>4.3.14.RELEASE</org.springframework-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <org.slf4j-version>1.7.30</org.slf4j-version>
     <java-version>17</java-version>
   </properties>
   <!-- dependencies -->
@@ -97,9 +96,14 @@
       <version>2.12.4</version>
     </dependency>
     <dependency>
-      <groupId>org.bgee.log4jdbc-log4j2</groupId>
-      <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
-      <version>1.16</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-web</artifactId>
+      <version>2.12.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.30</version>
     </dependency>
     <!-- javax -->
     <dependency>
@@ -189,6 +193,12 @@
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jdk8</artifactId>
       <version>2.18.2</version>
+    </dependency>
+    <!-- google cloud -->
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-storage</artifactId>
+      <version>2.44.1</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>

@@ -7,7 +7,7 @@ function fnGetList01 () {
     xlsNm: "resourceIn.xlsx",
     title: "   자재 입고 관리",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -83,7 +83,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      gridOption.title = updateTitle("자재 입고 관리", myJsonData);
+      gridOption.title = updateTitle("resourceIn", "자재 입고 관리", myJsonData);
       gridOption.summaryData = updateSummary("resrc", myJsonData);
 
       $grid01.pqGrid({
@@ -106,7 +106,7 @@ function fnGetList02 (resrcCd) {
     xlsNm: "resourceInOut.xlsx",
     title: "   자재 입출고 내역",
     width: "auto",
-    height: "auto",
+    height: "100%",
     wrap: false,
     hwrap: false,
     editable:false,
@@ -165,7 +165,7 @@ function fnGetList02 (resrcCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      gridOption.title = updateTitle("제품 입출고 내역", myJsonData);
+      gridOption.title = updateTitle("resourceInOut", "제품 입출고 내역", myJsonData);
       $grid02.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },

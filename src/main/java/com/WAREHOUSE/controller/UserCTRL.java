@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.User;
 import com.WAREHOUSE.dao.UserDAO;
+import com.WAREHOUSE.util.Json;
 import com.WAREHOUSE.util.Logs;
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,13 @@ public class UserCTRL {
 
   private final UserDAO dao;
   private final Logs logs;
+  private final Json json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/", "/login"}, produces="text/html;charset=UTF-8")
   public ModelAndView login () throws Exception {
 
     try {
-      logs.info("page", "login");
       return new ModelAndView("userLogin");
     }
     catch (Exception e) {
@@ -47,7 +48,6 @@ public class UserCTRL {
   public ModelAndView reLogin () throws Exception {
 
     try {
-      logs.info("page", "reLogin");
       return new ModelAndView("reLogin");
     }
     catch (Exception e) {
@@ -62,7 +62,6 @@ public class UserCTRL {
   public ModelAndView user () throws Exception {
 
     try {
-      logs.info("page", "user");
       return new ModelAndView("user");
     }
     catch (Exception e) {
@@ -133,8 +132,8 @@ public class UserCTRL {
   ) throws Exception {
 
     try {
-      ArrayList<User> userList = dao.listUser(findUserNm);
-      return ResponseEntity.ok(userList);
+      ArrayList<User> list = dao.listUser(findUserNm);
+      return ResponseEntity.ok(list);
     }
     catch (Exception e) {
       logs.error("listUser", e.getMessage());
@@ -148,8 +147,8 @@ public class UserCTRL {
   public ResponseEntity<?> listUserPerm () throws Exception {
 
     try {
-      ArrayList<HashMap<String, Object>> userList = dao.listUserPerm();
-      return ResponseEntity.ok(userList);
+      ArrayList<HashMap<String, Object>> list = dao.listUserPerm();
+      return ResponseEntity.ok(list);
     }
     catch (Exception e) {
       logs.error("listUserPerm", e.getMessage());
@@ -165,8 +164,8 @@ public class UserCTRL {
   ) throws Exception {
 
     try {
-      User showUser = dao.showUser(userID);
-      return ResponseEntity.ok(showUser);
+      User show = dao.showUser(userID);
+      return ResponseEntity.ok(show);
     }
     catch (Exception e) {
       logs.error("showUser", e.getMessage());

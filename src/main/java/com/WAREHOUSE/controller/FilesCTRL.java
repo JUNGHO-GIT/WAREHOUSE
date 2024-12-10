@@ -2,9 +2,9 @@ package com.WAREHOUSE.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import com.WAREHOUSE.container.Files;
 import com.WAREHOUSE.dao.FilesDAO;
+import com.WAREHOUSE.util.FilesUtil;
 import com.WAREHOUSE.util.Logs;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
@@ -35,90 +36,7 @@ public class FilesCTRL {
   private final FilesDAO dao;
   private final Logs logs;
   private final Utils utils;
-
-  // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/uploadFiles", produces="text/html;charset=UTF-8")
-  public ResponseEntity<?> uploadFiles (
-    @RequestParam(value="userFile", required=false) MultipartFile file,
-    @RequestParam(value="tableNm", required=false) String tableNm,
-    @RequestParam(value="tableKey", required=false) String tableKey,
-    @RequestParam(value="keyColumn", required=false) String keyColumn,
-    @RequestParam(value="fileSeq", required=false) Integer fileSeq,
-    @SessionAttribute("userID") String issueID
-  ) throws Exception {
-
-    Map<String, Object> map = new HashMap<String, Object>();
-    String fileNm = file.getOriginalFilename();
-    fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
-
-    String[] exForm = file.getOriginalFilename().split("\\.");
-    String ex = exForm[(exForm.length - 1)];
-
-    SimpleDateFormat formData = new SimpleDateFormat("yyyyMMddHHmmss");
-    Date time = new Date();
-
-    // 1. 보안을 위해 UUID 사용
-    UUID uuid = UUID.randomUUID();
-    String UUIDString = uuid.toString().substring(0, 8);
-    String fileUrl = formData.format(time) + "-" + UUIDString + "." + ex;
-
-    try {
-      Files files = new Files();
-      files.setFileSeq(fileSeq);
-      files.setFileUrl(fileUrl);
-      files.setFileNm(fileNm);
-      files.setTableNm(tableNm);
-      files.setTableKey(tableKey);
-      files.setFlagYN("Y");
-      files.setIssueID(issueID);
-
-      String path = "TODO";
-      utils.fileUpload(file, path, fileUrl);
-      dao.saveFiles(files);
-      dao.updateIssueDate(tableNm, tableKey, keyColumn);
-      map.put("result", "업로드 되었습니다");
-    }
-    catch (Exception e) {
-      logs.error("uploadFiles", e.getMessage());
-      map.put("result", "업로드 실패");
-    }
-
-    return ResponseEntity.ok(map);
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/uploadWarFiles", produces="text/html;charset=UTF-8")
-  public ResponseEntity<?> uploadWarFiles (
-    @RequestParam(value="userFile", required=false) MultipartFile file
-  ) throws Exception {
-
-    Map<String, Object> map = new HashMap<String, Object>();
-    String fileNm = file.getOriginalFilename();
-    fileNm = new String(fileNm.getBytes("8859_1"), "UTF-8");
-
-    String[] exForm = file.getOriginalFilename().split("\\.");
-    String ex = exForm[(exForm.length - 1)];
-
-    SimpleDateFormat formData = new SimpleDateFormat("yyyyMMddHHmmss");
-    Date time = new Date();
-
-    // 1. 보안을 위해 UUID 사용
-    UUID uuid = UUID.randomUUID();
-    String UUIDString = uuid.toString().substring(0, 8);
-    String fileUrl = formData.format(time) + "-" + UUIDString + "." + ex;
-
-    try {
-      String path = "TODO";
-      utils.fileUpload(file, path, fileUrl);
-      map.put("result", "업로드 되었습니다");
-    }
-    catch (Exception e) {
-      logs.error("uploadWarFiles", e.getMessage());
-      map.put("result", "업로드 실패");
-    }
-
-    return ResponseEntity.ok(map);
-  }
+  private final FilesUtil filesUtil;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
@@ -128,8 +46,8 @@ public class FilesCTRL {
   ) throws Exception {
 
     try {
-      ArrayList<Files> filesList = dao.listFiles(tableNm, tableKey);
-      return ResponseEntity.ok(filesList);
+      ArrayList<Files> list = dao.listFiles(tableNm, tableKey);
+      return ResponseEntity.ok(list);
     }
     catch (Exception e) {
       logs.error("listFiles", e.getMessage());
@@ -152,43 +70,6 @@ public class FilesCTRL {
       logs.error("showFiles", e.getMessage());
       return ResponseEntity.status(500).body(null);
     }
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> saveFiles (
-    @RequestBody HashMap<String, Object> files,
-    @SessionAttribute("userID") String userID
-  ) throws Exception {
-
-    String tableNm = files.get("tableNm").toString();
-    String tableKey = files.get("tableKey").toString();
-    String keyColumn = files.get("keyColumn").toString();
-    /* String fileUrlParam = files.get("fileUrl").toString(); */
-    /* String paths = fileUrlParam.equals("") ? "TODO1" : "TODO2"; */
-
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      Files file = new Files();
-      file.setFileSeq(Integer.parseInt(files.get("fileSeq").toString()));
-      file.setTableNm(files.get("tableNm").toString());
-      file.setTableKey(files.get("tableKey").toString());
-      file.setFileUrl(files.get("fileUrl").toString());
-      file.setFileNm(files.get("fileNm").toString());
-      file.setFlagYN(files.get("flagYN").toString());
-      file.setIssueID(files.get("issueID").toString());
-
-      dao.saveFiles(file);
-      dao.updateIssueDate(tableNm, tableKey, keyColumn);
-
-      map.put("result", file.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
-    }
-    catch (Exception e) {
-      logs.error("saveFiles", e.getMessage());
-      map.put("result", "저장 실패");
-    }
-
-    return ResponseEntity.ok(map);
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -250,6 +131,87 @@ public class FilesCTRL {
       String result = "파일 처리 중 오류가 발생했습니다.";
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/uploadFiles", produces="text/html;charset=UTF-8")
+  public ResponseEntity<?> uploadFiles (
+    @RequestParam(value="userFile", required=false) MultipartFile multipartFile,
+    @RequestParam(value="tableNm", required=false) String tableNm,
+    @RequestParam(value="tableKey", required=false) String tableKey,
+    @RequestParam(value="keyColumn", required=false) String keyColumn,
+    @RequestParam(value="fileSeq", required=false) Integer fileSeq,
+    @SessionAttribute("userID") String issueID
+  ) throws Exception {
+
+    // 1. 보안을 위해 UUID 사용
+    UUID uuid = UUID.randomUUID();
+    String uuidStr = uuid.toString().substring(0, 8);
+
+    String fileNm = multipartFile.getOriginalFilename();
+    String fileUrl = String.format(
+      "%s_%s.webp",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
+      uuidStr
+    );
+
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      Files files = new Files();
+      files.setFileSeq(fileSeq);
+      files.setFileUrl(fileUrl);
+      files.setFileNm(fileNm);
+      files.setTableNm(tableNm);
+      files.setTableKey(tableKey);
+      files.setFlagYN("Y");
+      files.setIssueID(issueID);
+
+      filesUtil.uploadFiles(multipartFile, tableNm, files);
+      dao.saveFiles(files);
+      dao.updateIssueDate(tableNm, tableKey, keyColumn);
+      map.put("result", "업로드 되었습니다");
+    }
+    catch (Exception e) {
+      logs.error("uploadFiles", e.getMessage());
+      map.put("result", "업로드 실패");
+    }
+
+    return ResponseEntity.ok(map);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> saveFiles (
+    @RequestBody HashMap<String, Object> param,
+    @SessionAttribute("userID") String userID
+  ) throws Exception {
+
+    String tableNm = param.get("tableNm").toString();
+    String tableKey = param.get("tableKey").toString();
+    String keyColumn = param.get("keyColumn").toString();
+
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      Files file = new Files();
+      file.setFileSeq(Integer.parseInt(param.get("fileSeq").toString()));
+      file.setTableNm(param.get("tableNm").toString());
+      file.setTableKey(param.get("tableKey").toString());
+      file.setFileUrl(param.get("fileUrl").toString());
+      file.setFileNm(param.get("fileNm").toString());
+      file.setFlagYN(param.get("flagYN").toString());
+      file.setIssueID(param.get("issueID").toString());
+
+      dao.saveFiles(file);
+      dao.updateIssueDate(tableNm, tableKey, keyColumn);
+
+      map.put("result", file.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+    }
+    catch (Exception e) {
+      logs.error("saveFiles", e.getMessage());
+      map.put("result", "저장 실패");
+    }
+
+    return ResponseEntity.ok(map);
   }
 
   // -----------------------------------------------------------------------------------------------

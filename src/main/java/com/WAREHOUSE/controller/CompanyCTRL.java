@@ -30,7 +30,6 @@ public class CompanyCTRL {
   public ModelAndView company () throws Exception {
 
     try {
-      logs.info("page", "company");
       return new ModelAndView("company");
     }
     catch (Exception e) {

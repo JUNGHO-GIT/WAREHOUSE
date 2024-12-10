@@ -30,7 +30,6 @@ public class ProductCTRL {
   public ModelAndView product () throws Exception {
 
     try {
-      logs.info("page", "product");
       return new ModelAndView("product");
     }
     catch (Exception e) {
@@ -64,8 +63,8 @@ public class ProductCTRL {
   ) throws Exception {
 
     try {
-      Product productShow = dao.showProduct(prodCd);
-      return ResponseEntity.ok(productShow);
+      Product show = dao.showProduct(prodCd);
+      return ResponseEntity.ok(show);
     }
     catch (Exception e) {
       logs.error("showProduct", e.getMessage());

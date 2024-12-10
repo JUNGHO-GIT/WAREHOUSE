@@ -31,7 +31,6 @@ public class CommonCdCTRL {
   public ModelAndView commonCd () throws Exception {
 
     try {
-      logs.info("page", "commonCd");
       return new ModelAndView("commonCd");
     }
     catch (Exception e) {

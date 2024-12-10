@@ -30,7 +30,6 @@ public class ResourceInOutCTRL {
   public ModelAndView resourceIn () throws Exception {
 
     try {
-      logs.info("page", "resourceIn");
       return new ModelAndView("resourceIn");
     }
     catch (Exception e) {
@@ -44,7 +43,6 @@ public class ResourceInOutCTRL {
   public ModelAndView resourceOut () throws Exception {
 
     try {
-      logs.info("page", "resourceOut");
       return new ModelAndView("resourceOut");
     }
     catch (Exception e) {

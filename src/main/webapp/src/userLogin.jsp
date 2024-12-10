@@ -6,12 +6,12 @@
 
 <body class="container-fluid d-center">
   <div class="row border-1 shadow-1 radius-2 p-20px">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <!-- form -->
       <form id="formData1" name="formData1" class="formData1">
         <!-- logo -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <img
               src="${rsPath}/images/cores-logo.png"
               alt="logo"
@@ -22,7 +22,7 @@
         </div>
         <!-- title -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="fs-1-8rem fw-800 light-black">
               로그인
             </div>
@@ -30,10 +30,10 @@
         </div>
         <!-- id -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-sm"
               id="uid"
               name="uid"
               placeholder="아이디"
@@ -42,10 +42,10 @@
         </div>
         <!-- password -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <input
               type="password"
-              class="form-control"
+              class="form-control form-control-sm"
               id="pass"
               name="pass"
               placeholder="비밀번호"
@@ -55,14 +55,14 @@
         </div>
         <!-- save id -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <input type="checkbox" id="setId" />
             <label>아이디 저장</label>
           </div>
         </div>
         <!-- login -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <button
               type="button"
               class="btn btn-primary btn-lg"
@@ -74,7 +74,7 @@
         </div>
         <!-- copy right -->
         <div class="row d-row-center mb-1vh">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="fs-0-9rem fw-500 light-black">
               ©2021 All Rights Reserved. WAREHOUSE
             </div>

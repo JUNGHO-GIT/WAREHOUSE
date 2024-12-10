@@ -56,13 +56,22 @@ function checkBoxRender (data) {
 }
 
 // -------------------------------------------------------------------------------------------------
-function updateTitle (title="", data={}) {
+function updateTitle (titleNm, titleKo, data) {
+  if (!titleNm.includes("prod") || !titleNm.includes("res")) {
+    return (/* javascript */`
+      <div class="row">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
+          <span class="fs-0-8rem">${titleKo}</span>
+        </div>
+      </div>
+    `);
+  }
   return (/* javascript */`
     <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-left">
-        <span class="fs-0-8rem">${title}</span>
+      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
+        <span class="fs-0-8rem">${titleKo}</span>
       </div>
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 d-right ml-n50px">
+      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-right ml-n50px">
         <span class="fs-0-9rem red">●</span>
         <span class="ml-5px mr-5px">안전재고 이하 : </span>
         <span class="red">${calcLowStock(data)}</span>
@@ -83,30 +92,3 @@ function updateSummary (target="", data={}) {
     qty: calcSum(data, "qty")
   }];
 };
-
-// -------------------------------------------------------------------------------------------------
-function insertSpaceWhenMdViewPort() {
-  const dividerMd = document.querySelectorAll(".divider-md");
-  const dividerAll = document.querySelectorAll(".divider-all");
-  const xsToSm = window.matchMedia("(min-width: 0px) and (max-width: 1189px)");
-  const mdToLg = window.matchMedia("(min-width: 1190px) and (max-width: 10000px)");
-
-  dividerMd.forEach((el) => {
-    if (xsToSm.matches && !el.classList.contains("my-3vh")) {
-      el.classList.remove("d-none");
-      el.classList.add("my-3vh");
-    }
-    else if (mdToLg.matches && !el.classList.contains("d-none")) {
-      el.classList.add("d-none");
-      el.classList.remove("my-3vh");
-    }
-  });
-
-  dividerAll.forEach((el) => {
-    el.classList.remove("d-none");
-    el.classList.add("my-3vh");
-  });
-}
-// 이벤트 리스터 등록
-insertSpaceWhenMdViewPort();
-window.addEventListener("resize", insertSpaceWhenMdViewPort);
