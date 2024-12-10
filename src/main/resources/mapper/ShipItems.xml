@@ -16,7 +16,7 @@
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
-      C.compNm, C.compCd, (D.qty * -1) qty,
+      B.inOutSeq, C.compNm, C.compCd, (D.qty * -1) qty,
       IFNULL(B.cnt, 0) cnt
     FROM (
       SELECT *
@@ -39,10 +39,11 @@
       FROM tblProductInOut
       WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
-    ]]>
     ORDER BY
       A.shipCd DESC
+    ]]>
   </select>
+
 
   <!-- ShipItems.listShipItemsDetail -->
   <select
@@ -82,9 +83,9 @@
       FROM tblProduct
       WHERE flagYN = 'Y'
     ) F ON F.prodCd = C.prodCd
-    ]]>
     ORDER BY
       A.shipCd DESC;
+    ]]>
   </select>
 
   <!-- ShipItems.showShipItems -->
@@ -119,16 +120,17 @@
       FROM tblProductInOut
       WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
-    ]]>
     ORDER BY
       A.shipDt DESC
+    ]]>
   </select>
 
+  <!-- ShipItems.saveShipItems -->
   <select
   	id="saveShipItems"
   	parameterType="Shipping"
+    resultType="Integer"
   >
-    /* ShipItems.saveShipItems */
     CALL sp_Shipping (
       #{shipCd},
       #{compCd},

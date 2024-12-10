@@ -212,6 +212,22 @@ function fnSwitchTab(newTab) {
   }
 }
 
+// -------------------------------------------------------------------------------------------------
+function fnSwitchPage(page) {
+  if (page === "detail") {
+    $("#detailTab").addClass("active");
+    $("#permTab").removeClass("active");
+    $(".grid-detail").removeClass("d-none");
+    $(".grid-perm").addClass("d-none");
+  }
+  else {
+    $("#detailTab").removeClass("active");
+    $("#permTab").addClass("active");
+    $(".grid-detail").addClass("d-none");
+    $(".grid-perm").removeClass("d-none");
+  }
+}
+
 // 0. 콤마 제거 -----------------------------------------------------------------------------------
 function fnRemoveComma(obj) {
   return parseInt(obj.replace(/,/g, ''), 10);

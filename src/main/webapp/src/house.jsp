@@ -71,16 +71,16 @@
                 <hr/>
                 <div class="cards-button">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <button type="button" class="btn btn-success btn-sm" onclick="fnReset()">
+                    <button type="button" class="btn btn-success btn-xs" onclick="fnReset()">
                       신규
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="fnSave()">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="fnSave()">
                       저장
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="fnDel()">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="fnDel()">
                       삭제
                     </button>
-                    <button type="button" class="btn btn-warning btn-sm" onclick="fnAddCat()">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="fnAddCat()">
                       하위 카테고리
                     </button>
                   </div>

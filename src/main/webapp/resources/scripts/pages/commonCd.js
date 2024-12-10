@@ -29,31 +29,31 @@ function fnGetList01 () {
     },
     {
       title:"그룹코드", dataIndx:"groupCd", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"그룹명", dataIndx:"groupNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"아이템코드", dataIndx:"itemCd", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"아이템", dataIndx:"itemNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"순위", dataIndx:"itemSeq", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"메모", dataIndx:"itemMemo", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
   ];
 

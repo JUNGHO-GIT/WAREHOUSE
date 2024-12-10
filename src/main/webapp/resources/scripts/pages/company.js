@@ -29,39 +29,39 @@ function fnGetList01 () {
     },
     {
       title:"거래처 이름", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 150
+      minWidth:150
     },
     {
       title:"사업자번호", dataIndx:"compNo", dataType:"string", align:"center",
-      minWidth: 150
+      minWidth:150
     },
     {
       title:"대표자", dataIndx:"owner", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"담당자", dataIndx:"major", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"주소", dataIndx:"address", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"업태", dataIndx:"compType", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"종목", dataIndx:"compPart", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
   ];
 

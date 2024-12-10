@@ -34,7 +34,7 @@
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
               <button
                 type="button"
-                class="btn btn-primary btn-sm"
+                class="btn btn-primary btn-xs"
                 onclick="fnPressGet01(event)"
               >
                 조회
@@ -54,7 +54,7 @@
           <div class="row">
             <!-- grid 1 -->
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 px-10px">
-              <div class="grid-main h-100vh">
+              <div class="grid-main h-min-100vh">
                 <div id="grid01"></div>
               </div>
             </div>
@@ -78,7 +78,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         거래처 이름
                       </div>
                     </div>
@@ -100,7 +100,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         사업자번호
                       </div>
                     </div>
@@ -119,7 +119,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         대표자
                       </div>
                     </div>
@@ -138,7 +138,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         담당자
                       </div>
                     </div>
@@ -157,7 +157,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         전화번호
                       </div>
                     </div>
@@ -176,7 +176,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         세금계산서 Email
                       </div>
                     </div>
@@ -195,7 +195,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         주소
                       </div>
                     </div>
@@ -214,7 +214,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         업태
                       </div>
                     </div>
@@ -233,7 +233,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         종목
                       </div>
                     </div>
@@ -252,7 +252,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         메모
                       </div>
                     </div>
@@ -271,7 +271,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         이미지
                       </div>
                     </div>
@@ -285,7 +285,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right bg-light p-5px mr-10px" id="fileShow">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         파일
                       </div>
                     </div>
@@ -299,7 +299,7 @@
                         class="w-100p"
                       />
                       <button
-                        class="btn btn-success btn-sm"
+                        class="btn btn-success btn-xs"
                         type="button"
                         id="fileUpBtn"
                         onclick="fnUploadFiles(this.form)"
@@ -312,7 +312,7 @@
                 <div class="row mb-1vh">
                   <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                     <div class="d-row-right detail-label">
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         파일목록
                       </div>
                     </div>
@@ -323,25 +323,25 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-2vh">
+                <div class="row mt-5vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
                     <button
                       type="button"
-                      class="btn btn-success btn-sm mr-10px"
+                      class="btn btn-success btn-xs mr-10px"
                       onclick="fnReset()"
                     >
                       신규
                     </button>
                     <button
                       type="button"
-                      class="btn btn-primary btn-sm mr-10px"
+                      class="btn btn-primary btn-xs mr-10px"
                       onclick="fnSave()"
                     >
                       저장
                     </button>
                     <button
                       type="button"
-                      class="btn btn-danger btn-sm"
+                      class="btn btn-danger btn-xs"
                       onclick="fnDel()"
                     >
                       삭제

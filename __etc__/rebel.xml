@@ -10,17 +10,16 @@
   http://update.zeroturnaround.com/jrebel/rebel-2_2.xsd"
 >
   <classpath>
-    <dirset dir="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/target/classes/">
+    <dirset dir="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/target/classes/com/WAREHOUSE">
       <include name="**/*"/>
     </dirset>
-    <dirset dir="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/src/main/resources/mapper/">
-      <include name="**/*.xml"/>
+    <dirset dir="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/src/main/resources/mapper">
+      <include name="*.xml"/>
     </dirset>
   </classpath>
   <web>
     <link target="/">
-      <dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/src/main/webapp">
-      </dir>
+      <dir name="C:/JUNGHO/2.IDE/2.Vscode/Workspace/1.Project/WAREHOUSE/src/main/webapp"/>
     </link>
   </web>
 </application>

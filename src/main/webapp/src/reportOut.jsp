@@ -22,7 +22,7 @@
               <select class="form-control form-control-sm" id="findYear" onchange="fnPressGet01(event)"></select>
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
+              <button class="btn btn-primary btn-xs" type="button" onclick="fnPressGet01(event)">
                 조회
               </button>
             </div>

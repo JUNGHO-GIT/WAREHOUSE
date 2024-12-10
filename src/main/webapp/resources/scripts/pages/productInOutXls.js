@@ -64,53 +64,53 @@ function fnShowExcel(body) {
     },
     {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
-      minWidth: 100, required:true,
+      minWidth:100, required:true,
     },
     {
       title:"제품분류", dataIndx:"prodType", dataType:"string", align:"center",
-      minWidth: 100, required:true,
+      minWidth:100, required:true,
     },
     {
       title:"창고이름", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"거래처이름", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"제조사", dataIndx:"maker", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"단위", dataIndx:"unit", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"재질", dataIndx:"quality", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"사양", dataIndx:"option1", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"규격", dataIndx:"option2", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"right",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      minWidth: 100, required:true,
+      minWidth:100, required:true,
     },
     {
       title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"right",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      minWidth: 100, required:true,
+      minWidth:100, required:true,
     },
     {
       title:"비고", dataIndx:"remark", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
   ];
   $grid01.pqGrid({
@@ -184,9 +184,9 @@ function fnSave() {
     const row = colData[i];
     row["inOut"] = inOut;
 
-    row.prodCd = row.prodCd ? row.prodCd.toString().trim() : "";
-    row.houseCd = row.houseCd ? row.houseCd.toString().trim() : "";
-    row.compCd = row.compCd ? row.compCd.toString().trim() : "";
+    row.prodCd = row.prodCd ? row.prodCd.toString().trim() : "0";
+    row.houseCd = row.houseCd ? row.houseCd.toString().trim() : "0";
+    row.compCd = row.compCd ? row.compCd.toString().trim() : "0";
 
     if (
       !validateField(row, "prodNm", "제품명을 입력해 주세요") ||

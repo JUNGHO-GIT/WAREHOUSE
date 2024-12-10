@@ -35,7 +35,7 @@
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
               <button
                 type="button"
-                class="btn btn-primary btn-sm"
+                class="btn btn-primary btn-xs"
                 onclick="fnPressGet01(event)"
               >
                 조회
@@ -104,28 +104,28 @@
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
                     <button
                       type="button"
-                      class="btn btn-warning btn-sm mr-10px"
+                      class="btn btn-warning btn-xs mr-10px"
                       onclick="fnCheck()"
                     >
                       검증
                     </button>
                     <button
                       type="button"
-                      class="btn btn-success btn-sm mr-10px"
+                      class="btn btn-success btn-xs mr-10px"
                       onclick="fnDelAll()"
                     >
                       초기화
                     </button>
                     <button
                       type="button"
-                      class="btn btn-primary btn-sm mr-10px"
+                      class="btn btn-primary btn-xs mr-10px"
                       onclick="fnSave()"
                     >
                       저장
                     </button>
                     <button
                       type="button"
-                      class="btn btn-danger btn-sm"
+                      class="btn btn-danger btn-xs"
                       onclick="fnGridPopup('popupInOutAll','on')"
                     >
                       일괄 적용

@@ -29,48 +29,48 @@ function fnGetList01 () {
   const colModel = [
     {
       title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
-      minWidth: 70, maxWidth: 70,
+      minWidth:70, maxWidth: 70,
       render: renderImage,
     },
     {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
-      minWidth: 150
+      minWidth:150
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"입고", dataIndx:"inQty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
     {
       title:"출고", dataIndx:"outQty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
     {
       title:"재고", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: displayLowStock,
     },
     {
       title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
   ];
 
@@ -124,33 +124,33 @@ function fnGetList02 (prodCd) {
   const colModel = [
     {
       title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
-      minWidth: 120
+      minWidth:120
     },
     {
       title:"분류", dataIndx:"inOut", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"수량", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
     {
       title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
     {
       title:"공급가", dataIndx:"supplyPrice", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero,
     },
   ];

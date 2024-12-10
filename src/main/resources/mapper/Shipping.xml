@@ -34,11 +34,12 @@
       A.inOutDt DESC
   </select>
 
+  <!-- Shipping.saveShipping -->
   <select
   	id="saveShipping"
   	parameterType="Shipping"
+    resultType="Integer"
   >
-    /* Shipping.saveShipping */
     CALL sp_Shipping (
       #{shipCd},
       #{compCd},

@@ -56,7 +56,6 @@ public class ProductInOutXlsCTRL {
       String inOutDtParam = (String) jsonObj.get("inOutDt");
       String remarkParam = (String) jsonObj.get("remark");
       String inOutParam = (String) jsonObj.get("inOut");
-      String planYNParam = (String) jsonObj.get("planYN");
       Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
       Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
       Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
@@ -77,13 +76,14 @@ public class ProductInOutXlsCTRL {
         param.setUnitPrice(unitPriceParam);
         param.setRemark(remarkParam);
         param.setIssueID(userIDParam);
-        param.setPlanYN(planYNParam);
+        param.setPlanYN("N");
         param.setFlagYN("Y");
 
         dao.saveProductInOutXls(param);
         map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
+        e.printStackTrace();
         logs.error("saveProductInOutXls", e.getMessage());
         map.put("result", "저장 실패");
       }

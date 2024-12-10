@@ -160,7 +160,7 @@ function fnUpdateConfigPw() {
   if (changeConfigFlag === "N") {
     $(`#userConfigPw`).prop("readonly", false);
     $(`#userConfigPw`).val("");
-    $(`#changeConfigPw`).text("비번저장");
+    $(`#changeConfigPw`).text("변경하기");
     $(`#changeConfigFlag`).val("Y");
     return;
   }
@@ -187,7 +187,7 @@ function fnUpdateConfigPw() {
           $(`#userConfigPw`).prop("type", "password");
           $(`#userConfigPw`).val("BCryptPassword");
           $(`#userConfigPw`).prop("readonly", true);
-          $(`#changeConfigPw`).html("비번변경");
+          $(`#changeConfigPw`).html("변경하기");
           $(`#changeConfigFlag`).val("N");
         }
         else {
@@ -217,7 +217,7 @@ function fnResetPw() {
   // row 클릭했을때 `비번변경`버튼 상태 초기화
   $(`#userConfigPw`).prop("readonly", true);
   $(`#userConfigPw`).val("BCryptPassword");
-  $(`#changeConfigPw`).html("비번변경");
+  $(`#changeConfigPw`).html("변경하기");
   $(`#changeConfigFlag`).val("N");
 };
 

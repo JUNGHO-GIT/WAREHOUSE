@@ -19,7 +19,7 @@
               <input class="form-control form-control-sm" type="text" id="findEndDt" onkeydown="fnPressGet01(event)">
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
+              <button class="btn btn-primary btn-xs" type="button" onclick="fnPressGet01(event)">
                 조회
               </button>
             </div>
@@ -30,7 +30,7 @@
     <br>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-        <div class="grid-main h-100vh">
+        <div class="grid-main h-min-100vh">
           <div id="grid01"></div>
         </div>
       </div>
@@ -109,13 +109,13 @@
                 <hr>
                 <div class="cards-button">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <button type="button" class="btn btn-success btn-sm" onclick="fnReset()">
+                    <button type="button" class="btn btn-success btn-xs" onclick="fnReset()">
                       신규
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="fnExcelDown()">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="fnExcelDown()">
                       Excel Download
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="fnDel()">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="fnDel()">
                       삭제
                     </button>
                   </div>

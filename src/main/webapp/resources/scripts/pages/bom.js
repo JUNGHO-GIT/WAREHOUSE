@@ -65,7 +65,7 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  var insertBtn=`<button type="button" class="btn btn-primary btn-sm insertBtn">&#x25bc;</button>`;
+  var insertBtn=`<button type="button" class="btn btn-primary btn-xs insertBtn">&#x25bc;</button>`;
 
   const gridOption = {
     xlsNm: "resource.xlsx",
@@ -161,7 +161,7 @@ function fnGetList02() {
 function fnGetList03 () {
 
   const gridCd = "grid03";
-  var delBtn = `<button type="button" class="btn btn-danger btn-sm delBtn">x</button>`;
+  var delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "bomList.xlsx",
@@ -220,7 +220,7 @@ function fnGetList03 () {
 function fnShow(prodCd, bomType) {
 
   const gridCd = "grid03";
-  var delBtn = `<button type="button" class="btn btn-danger btn-sm delBtn">x</button>`;
+  var delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "resource.xlsx",

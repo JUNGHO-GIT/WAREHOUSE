@@ -22,6 +22,7 @@
       #{unitPrice},
       #{remark},
       #{flagYN},
+      #{planYN},
       #{issueID}
     );
   </select>

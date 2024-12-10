@@ -20,7 +20,7 @@
               <input class="form-control form-control-sm" type="text" id="findProdNm" onKeyDown="fnPressGet01(event)" placeholder="제품명을 입력해주세요" />
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
+              <button class="btn btn-primary btn-xs" type="button" onclick="fnPressGet01(event)">
                 조회
               </button>
             </div>
@@ -36,7 +36,7 @@
               <input class="form-control form-control-sm" type="text" id="findResrcNm" onKeyDown="fnPressGet02(event)" placeholder="자재명을 입력해주세요" />
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet02(event)">
+              <button class="btn btn-primary btn-xs" type="button" onclick="fnPressGet02(event)">
                 조회
               </button>
             </div>
@@ -49,7 +49,7 @@
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-        <div class="grid-main h-100vh">
+        <div class="grid-main h-min-100vh">
           <div id="grid01"></div>
         </div>
       </div>
@@ -94,10 +94,10 @@
           <hr/>
           <div class="cards-button">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <button type="button" class="btn btn-success btn-sm" onclick="fnNew()">
+              <button type="button" class="btn btn-success btn-xs" onclick="fnNew()">
                 신규
               </button>
-              <button type="button" class="btn btn-primary btn-sm" onclick="fnSave()">
+              <button type="button" class="btn btn-primary btn-xs" onclick="fnSave()">
                 저장
               </button>
             </div>

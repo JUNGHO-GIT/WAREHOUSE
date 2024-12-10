@@ -35,7 +35,7 @@
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
               <button
                 type="button"
-                class="btn btn-primary btn-sm"
+                class="btn btn-primary btn-xs"
                 onclick="fnPressGet01(event)"
               >
                 조회
@@ -55,14 +55,14 @@
           <div class="row">
             <!-- grid 1 -->
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 px-10px">
-              <div class="grid-main h-100vh">
+              <div class="grid-main h-min-100vh">
                 <div id="grid01"></div>
               </div>
             </div>
             <div class="divider-md d-none"></div>
             <!-- grid 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 px-10px">
-              <div class="grid-main h-40vh">
+              <div class="grid-main h-min-40vh">
                 <div id="grid02"></div>
               </div>
               <div class="divider-all d-none"></div>
@@ -83,7 +83,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         날짜
                       </div>
                     </div>
@@ -105,7 +105,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         자재
                       </div>
                     </div>
@@ -141,7 +141,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         창고
                       </div>
                     </div>
@@ -176,7 +176,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         거래처
                       </div>
                     </div>
@@ -211,7 +211,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         수량
                       </div>
                     </div>
@@ -235,7 +235,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         단가
                       </div>
                     </div>
@@ -259,7 +259,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         공급가
                       </div>
                     </div>
@@ -283,7 +283,7 @@
                       <div class="fs-0-8rem fw-500 red mr-3px">
                         ≫
                       </div>
-                      <div class="fs-0-8rem fw-600 light-black">
+                      <div class="fs-0-7rem fw-600 light-black">
                         메모
                       </div>
                     </div>
@@ -299,25 +299,25 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-2vh">
+                <div class="row mt-5vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
                     <button
                       type="button"
-                      class="btn btn-success btn-sm mr-10px"
+                      class="btn btn-success btn-xs mr-10px"
                       onclick="fnReset()"
                     >
                       신규
                     </button>
                     <button
                       type="button"
-                      class="btn btn-primary btn-sm mr-10px"
+                      class="btn btn-primary btn-xs mr-10px"
                       onclick="fnSave()"
                     >
                       저장
                     </button>
                     <button
                       type="button"
-                      class="btn btn-danger btn-sm"
+                      class="btn btn-danger btn-xs"
                       onclick="fnDel()"
                     >
                       삭제

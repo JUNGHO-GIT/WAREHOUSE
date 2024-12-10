@@ -52,7 +52,7 @@ function fnGetList01 () {
   const colModel = [
     {
       title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
-      minWidth: 70, maxWidth: 70,
+      minWidth:70, maxWidth: 70,
       render: renderImage,
     },
     {
@@ -69,43 +69,43 @@ function fnGetList01 () {
     },
     {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
-      minWidth: 150,
+      minWidth:150,
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"입고", dataIndx:"inQty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero
     },
     {
       title:"출고", dataIndx:"outQty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero
     },
     {
       title:"재고", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: renderZero
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
       render: displayLowStock
     },
     {
       title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
   ];
 
@@ -136,8 +136,8 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  const chkBtn = `<button type="button" class="btn btn-primary btn-sm chkBtn">v</button>`;
-  const delBtn = `<button type="button" class="btn btn-danger btn-sm delBtn">x</button>`;
+  const chkBtn = `<div class="btn btn-primary btn-xs chkBtn">v</div>`;
+  const delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "productInOutAll.xlsx",
@@ -186,41 +186,41 @@ function fnGetList02() {
     },
     {
       title:delBtn, dataIndx:"delBtn", dataType:"string", align:"center",
-      minWidth: 30, maxWidth: 30,
+      minWidth:30, maxWidth: 30,
       render: () => delBtn,
     },
     {
       title:chkBtn, dataIndx:"chkBtn", dataType:"string", align:"center",
-      minWidth: 30, maxWidth: 30,
+      minWidth:30, maxWidth: 30,
     },
     {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
-      minWidth: 150
+      minWidth:150
     },
     {
       title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"재고", dataIndx:"curQty", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth:100
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100, editable:true,
+      minWidth:100, editable:true,
     },
     {
       title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 100, editable:true,
+      minWidth:100, editable:true,
     },
     {
       title:"수량", dataIndx:"qty", dataType:"string", align:"right",
-      minWidth: 100, editable:true, cls:"lightYellow",
+      minWidth:100, editable:true, cls:"lightYellow",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
     },
     {
       title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"right",
-      minWidth: 100, editable:true, cls:"lightYellow",
+      minWidth:100, editable:true, cls:"lightYellow",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg:"숫자만 입력 가능합니다"}],
     },
   ];
@@ -238,7 +238,7 @@ function fnCheck() {
   const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
   const inOut = $("input[name=inOut]:checked").val();
-  const chkBtn = `<button type="button" class="btn btn-primary btn-sm chkBtn">v</button>`;
+  const chkBtn = `<div class="btn btn-primary btn-xs chkBtn">v</div>`;
 
   let validationErrors = [];
   let isVerified = true;
@@ -252,10 +252,10 @@ function fnCheck() {
     const row = getData[key];
 
     // 데이터 초기화 및 유효성 검사
-    row.prodCd = row.prodCd ? row.prodCd.toString().trim() : "";
-    row.houseCd = row.houseCd ? row.houseCd.toString().trim() : "";
-    row.compCd = row.compCd ? row.compCd.toString().trim() : "";
-    row.curQty = row.curQty ? row.curQty.toString().trim() : "";
+    row.prodCd = row.prodCd ? row.prodCd.toString().trim() : "0";
+    row.houseCd = row.houseCd ? row.houseCd.toString().trim() : "0";
+    row.compCd = row.compCd ? row.compCd.toString().trim() : "0";
+    row.curQty = row.curQty ? row.curQty.toString().trim() :  "0";
     row.qty = row.qty ? row.qty.replace(/,/g, "").trim() : "";
     row.unitPrice = row.unitPrice ? row.unitPrice.replace(/,/g, "").trim() : "";
 

@@ -16,7 +16,7 @@
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
-      C.compNm, C.compCd, (D.qty * -1) qty,
+      B.inOutSeq, C.compNm, C.compCd, (D.qty * -1) qty,
       IFNULL(B.cnt, 0) cnt
     FROM (
       SELECT *
@@ -39,9 +39,9 @@
       FROM tblProductInOut
       WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
-    ]]>
     ORDER BY
       A.shipCd DESC
+    ]]>
   </select>
 
   <!-- ShipPlan.listShipPlanDetail -->
@@ -124,11 +124,12 @@
       A.shipDt DESC
   </select>
 
+  <!-- ShipPlan.saveShipPlan -->
   <select
   	id="saveShipPlan"
   	parameterType="Shipping"
+    resultType="Integer"
   >
-    /* ShipPlan.saveShipPlan */
     CALL sp_Shipping (
       #{shipCd},
       #{compCd},

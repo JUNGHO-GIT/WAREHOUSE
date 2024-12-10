@@ -27,27 +27,27 @@ function fnGetList01 () {
   const colModel = [
     {
       title:"사용자 이름", dataIndx:"userNm", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"사용자 아이디", dataIndx:"userID", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"E-mail", dataIndx:"email", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"회원등급", dataIndx:"uLevel", dataType:"string", align:"center",
-      minWidth: 100,
+      minWidth:100,
     },
     {
       title:"유효여부", dataIndx:"flagYN", dataType:"string", align:"center",
-      minWidth: 50,
+      minWidth:50,
     },
   ];
 
@@ -71,10 +71,27 @@ function fnGetList01 () {
   });
 };
 
+function toggleOnOff(element) {
+  // 클릭된 요소의 부모 컨테이너 안의 모든 항목 찾기
+  const parent = element.closest(".row");
+  const allToggles = parent.querySelectorAll(`[data-value]`);
+
+  // 모든 항목 초기화
+  allToggles.forEach((el) => {
+    el.classList.remove("primary");
+    el.classList.add("light");
+  });
+
+  // 현재 클릭된 항목 활성화
+  element.classList.remove("light");
+  element.classList.add("primary");
+}
+
 // 1-2. 회원등급 -----------------------------------------------------------------------------------
 function fnGetPartsUser() {
 
   $(`#userPerms`).empty();
+
   $.ajax({
     url: "act/listUserPerm",
     data: "",
@@ -88,69 +105,54 @@ function fnGetPartsUser() {
       if (!data || data.length === 0) {
         return;
       }
-
-      let prevPremBox = "";
       USER_PERM_CNT = data.length;
 
-      for (let i = 0; i < USER_PERM_CNT; i++) {
+      for (let i = 0; i < data.length; i++) {
         const detail = data[i];
-        if (i > 0 && prevPremBox != detail.page) {
-          $(`#userPerms`).append(`<hr class="hr mt-5 mb-5"/>`);
-        }
         const uPermHtml = (/* javascript */`
-        <div class="row mt-10" style="white-space:nowrap;">
-          <div class="col-lg-6 col-md-6 col-sm-6">
-            ▷ ${detail.pageNm}
+        <div class="row mt-10px">
+          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
+            <div class="fs-0-7rem fw-600 light-black">
+              ${detail.pageNm}
+            </div>
           </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
-            <input
-              type="radio"
-              class="user${i}"
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
+            <div
               name="${detail.page}${detail.subPage}"
-              value="${detail.page}${detail.subPage}"
-              onblur="fnGetPerm();"
-            />
-            <span>있음</span>
+              data-value="${detail.page}${detail.subPage}"
+              class="fs-0-7rem fw-500 light on pointer"
+              onclick="toggleOnOff(this)"
+            >
+              ●
+            </div>
+            <div class="fs-0-7rem fw-400 light-black">
+              있음
+            </div>
           </div>
-          <div class="col-lg-2 col-md-2 col-sm-2 ms-10">
-            <input
-              type="radio"
-              class="user${i}"
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
+            <div
               name="${detail.page}${detail.subPage}"
-              onblur="fnGetPerm();"
-              checked
-            />
-            <span>없음</span>
+              data-value=""
+              class="fs-0-7rem fw-500 light off pointer"
+              onclick="toggleOnOff(this)"
+            >
+              ●
+            </div>
+            <div class="fs-0-7rem fw-400 light-black">
+              없음
+            </div>
           </div>
         </div>
         `);
         $(`#userPerms`).append(uPermHtml);
-        prevPremBox = detail.page;
       }
     },
     error: ajaxErrorHandler
   });
 };
 
-// 1-3. 권한 체크 ----------------------------------------------------------------------------------
-function fnGetPerm() {
-  let uPerm = "";
-  for (let k = 0; k < USER_PERM_CNT; k++) {
-    const obj = `user${k}`;
-    const val = $(`input:radio[class=${obj}]:checked`).val();
-    if (val) {
-      if (uPerm) {
-        uPerm += ",";
-      }
-      uPerm += val;
-    }
-  }
-  $(`#uPerm`).val(uPerm);
-};
-
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-function fnShow(userID) {
-
+function fnShow (userID) {
   $.ajax({
     url: "act/showUser",
     data: `userID=${userID}`,
@@ -161,10 +163,8 @@ function fnShow(userID) {
     },
     success: (data) => {
 
-      // 비밀번호 초기화
       fnResetPw();
 
-      // 회원정보 설정
       $(`#userIDCheck`).val("Y");
       $(`#userID`).val(data.userID);
       $(`#userNm`).val(data.userNm);
@@ -172,28 +172,41 @@ function fnShow(userID) {
       $(`#email`).val(data.email);
       $(`#uLevel`).val(data.uLevel);
       $(`#flagYN`).val("Y");
-
-      // 암호화된 비밀번호
       $(`#passwd`).val("BCryptPassword");
 
-      // 권한 설정
-      const perms = data.uPerm;
-      if (!perms) {
+      // 권한 데이터 처리
+      const userPerms = data?.uPerm?.split(",");
+      if (!userPerms || userPerms.length === 0) {
         return;
       }
 
-      const divPerms = perms.split(",");
-      for (let c = 0; c < USER_PERM_CNT; c++) {
-        const val = divPerms[c];
-        if (val && perms) {
-          const objNm = val.substr(0, 3);
-          if (objNm != undefined) {
-            $(`input:radio[name=${objNm}]:radio[value='${val}']`).prop("checked", true);
+      // 기존 모든 권한 초기화
+      document.querySelectorAll(`[data-value]`).forEach((el) => {
+        el.classList.remove("primary");
+        el.classList.add("light");
+      });
+
+      // 사용자 권한 활성화
+      document.querySelectorAll(`[data-value]`).forEach((el) => {
+        const permValue = el.getAttribute("data-value");
+        const permName = el.getAttribute("name");
+
+        // 권한이 있을 경우 '있음' 활성화
+        if (userPerms.includes(permName.trim())) {
+          if (permValue === permName.trim()) {
+            el.classList.remove("light");
+            el.classList.add("primary");
           }
         }
-      }
+        // 권한이 없을 경우 '없음' 활성화
+        else {
+          if (permValue === "") {
+            el.classList.remove("light");
+            el.classList.add("primary");
+          }
+        }
+      });
 
-      // file upload 관련 파라미터 설정
       $(`#tableNm`).val("tblUser");
       $(`#tableKey`).val(data.userID);
       fnShowFiles("tblUser", data.userID, "files");
@@ -201,6 +214,7 @@ function fnShow(userID) {
     error: ajaxErrorHandler
   });
 };
+
 
 // 3-1. 저장 ---------------------------------------------------------------------------------------
 function fnSave(flagYN) {
@@ -247,17 +261,15 @@ function fnSave(flagYN) {
   }
 
   // 권한 설정
+  // 'on' 클래스가 있는 요소만 선택
   let uPerm = "";
-  for (let k = 0; k < USER_PERM_CNT; k++) {
-    const obj = `user${k}`;
-    const val = $(`input:radio[class=${obj}]:checked`).val();
-    if (val) {
-      if (uPerm) {
-        uPerm += ",";
-      }
-      uPerm += val;
+  document.querySelectorAll(`[data-value]`).forEach((el) => {
+    if (el.classList.contains("primary") && el.classList.contains("on")) {
+      uPerm += `${el.getAttribute("name")},`;
     }
-  }
+  });
+  // 마지막 ',' 제거
+  uPerm = uPerm.slice(0, -1);
 
   // 신규등록인지 여부 체크
   const signUpCheck = $(`#signUpCheck`).val();
@@ -277,8 +289,6 @@ function fnSave(flagYN) {
     "flagYN": flagParam,
     "signUpCheck": signUpCheck
   };
-
-  console.log("userParam: "+ JSON.stringify(param))
 
   $.ajax({
     url: "act/saveUser",
@@ -395,10 +405,10 @@ function fnDel() {
 function fnReset() {
 
   // 권한 초기화
-  for (let k = 0; k < USER_PERM_CNT; k++) {
-    const obj = `user${k}`;
-    $(`input:radio[class=${obj}]:radio[value='']`).prop("checked", true);
-  }
+  document.querySelectorAll(`[data-value]`).forEach((el) => {
+    el.classList.remove("primary");
+    el.classList.add("light");
+  });
 
   // 회원 초기화
   $(`#userID`).val("");

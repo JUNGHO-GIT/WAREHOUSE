@@ -31,7 +31,7 @@
                 />
                 <button
                   type="button"
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-primary btn-xs"
                   onclick="$('#productXls').click()"
                 >
                   파일선택
@@ -42,21 +42,21 @@
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 align-md">
               <button
                 type="button"
-                class="btn btn-success btn-sm ml-10px"
+                class="btn btn-success btn-xs ml-10px"
                 onclick="fnReset()"
               >
                 초기화
               </button>
               <button
                 type="button"
-                class="btn btn-primary btn-sm ml-10px"
+                class="btn btn-primary btn-xs ml-10px"
                 onclick="fnSave()"
               >
                 저장
               </button>
               <button
                 type="button"
-                class="btn btn-danger btn-sm ml-10px"
+                class="btn btn-danger btn-xs ml-10px"
                 onclick="fnExDownload()"
               >
                 Sample Download
@@ -71,7 +71,7 @@
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="grid-main h-100vh">
+        <div class="grid-main h-min-100vh">
           <div id="grid01"></div>
         </div>
       </div>
