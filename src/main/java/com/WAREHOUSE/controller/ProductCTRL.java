@@ -43,7 +43,7 @@ public class ProductCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listProduct", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listProduct(
-    @RequestParam("findProdNm") String findProdNm
+    @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
 
     try {
@@ -60,7 +60,7 @@ public class ProductCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showProduct", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showProduct (
-    @RequestParam("prodCd") Integer prodCd
+    @RequestParam(value="prodCd", required=false) Integer prodCd
   ) throws Exception {
 
     try {

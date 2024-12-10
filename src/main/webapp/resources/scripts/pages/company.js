@@ -17,35 +17,51 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    summaryData:  [],
+    rowClick: (_, ui) => {
+      fnShow (ui.rowData.compCd);
+    },
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow (ui.rowData.compCd);
-  };
-
   const colModel = [
-    {dataIndx:"compCd", title:"거래처 코드", dataType:"string", align:"center", hidden: true,
+    {
+      title:"거래처 코드", dataIndx:"compCd", dataType:"string", align:"center",
+      hidden: true,
     },
-    {dataIndx:"compNm", title:"거래처 이름", dataType:"string", align:"center",,
-      minWidth:150, maxWidth:150,
+    {
+      title:"거래처 이름", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 150
     },
-    {dataIndx:"compNo", title:"사업자등록번호", dataType:"string", align:"center",,
-      minWidth:150, maxWidth:150,
+    {
+      title:"사업자등록번호", dataIndx:"compNo", dataType:"string", align:"center",
+      minWidth: 150
     },
-    {dataIndx:"owner", title:"대표자", dataType:"string", align:"center",
+    {
+      title:"대표자", dataIndx:"owner", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"major", title:"담당자", dataType:"string", align:"center",
+    {
+      title:"담당자", dataIndx:"major", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"phone", title:"연락처", dataType:"string", align:"center",
+    {
+      title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"address", title:"주소", dataType:"string", align:"center",
+    {
+      title:"주소", dataIndx:"address", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"compType", title:"업태", dataType:"string", align:"center",
+    {
+      title:"업태", dataIndx:"compType", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"compPart", title:"종목", dataType:"string", align:"center",
+    {
+      title:"종목", dataIndx:"compPart", dataType:"string", align:"center",
+      minWidth: 100
     },
-    {dataIndx:"flagYN", title:"유효", dataType:"string", align:"center",
+    {
+      title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
+      minWidth: 100
     },
   ];
 
@@ -58,17 +74,20 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-
+      gridOption.title = updateTitle("거래처 관리", myJsonData.length);
       // compCd가 1인 항목을 찾아 맨위로 이동
-      var index = myJsonData.findIndex(function(item) {
-        return item.compCd === 1;
-      });
+      const index = myJsonData.findIndex((item) => item.compCd === 1);
       if (index > -1) {
-        var selectedItem = myJsonData.splice(index, 1)[0];
+        const selectedItem = myJsonData.splice(index, 1)[0];
         myJsonData.unshift(selectedItem);
       }
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      gridOption.dataModel = {data:myJsonData};
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -205,26 +224,6 @@ function fnReset() {
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("compCd");
   fnShowFiles("tblCompany", "0", "files");
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

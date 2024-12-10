@@ -39,11 +39,11 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/uploadFiles", produces="text/html;charset=UTF-8")
   public ResponseEntity<?> uploadFiles (
-    @RequestParam("userFile") MultipartFile file,
-    @RequestParam("tableNm") String tableNm,
-    @RequestParam("tableKey") String tableKey,
-    @RequestParam("keyColumn") String keyColumn,
-    @RequestParam("fileSeq") Integer fileSeq,
+    @RequestParam(value="userFile", required=false) MultipartFile file,
+    @RequestParam(value="tableNm", required=false) String tableNm,
+    @RequestParam(value="tableKey", required=false) String tableKey,
+    @RequestParam(value="keyColumn", required=false) String keyColumn,
+    @RequestParam(value="fileSeq", required=false) Integer fileSeq,
     @SessionAttribute("userID") String issueID
   ) throws Exception {
 
@@ -89,7 +89,7 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/uploadWarFiles", produces="text/html;charset=UTF-8")
   public ResponseEntity<?> uploadWarFiles (
-    @RequestParam("userFile") MultipartFile file
+    @RequestParam(value="userFile", required=false) MultipartFile file
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
@@ -123,8 +123,8 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listFiles (
-    @RequestParam("tableNm") String tableNm,
-    @RequestParam("tableKey") String tableKey
+    @RequestParam(value="tableNm", required=false) String tableNm,
+    @RequestParam(value="tableKey", required=false) String tableKey
   ) throws Exception {
 
     try {
@@ -140,8 +140,8 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showFiles", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showFiles (
-    @RequestParam("tableNm") String tableNm,
-    @RequestParam("tableKey") String tableKey
+    @RequestParam(value="tableNm", required=false) String tableNm,
+    @RequestParam(value="tableKey", required=false) String tableKey
   ) throws Exception {
 
     try {
@@ -194,7 +194,7 @@ public class FilesCTRL {
   //-----------------------------------------------------------------------------------------------
   @GetMapping(value="/viewFiles")
   public ResponseEntity<?> viewFiles(
-    @RequestParam("fileUrl") String fileUrl
+    @RequestParam(value="fileUrl", required=false) String fileUrl
   ) throws Exception {
 
     String path = "TODO" + fileUrl;
@@ -253,9 +253,9 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value = "/downloadFiles")
+  @GetMapping(value="/downloadFiles")
   public ResponseEntity<?> fileDownload(
-    @RequestParam("fileUrl") String fileUrl,
+    @RequestParam(value="fileUrl", required=false) String fileUrl,
     @RequestHeader("User-Agent") String userAgent
   ) throws Exception {
 
@@ -274,7 +274,7 @@ public class FilesCTRL {
 
       // 2. 엑셀 파일 다운로드인 경우
       if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
-        ClassPathResource resource = new ClassPathResource(fileUrl);
+        ClassPathResource resource = new ClassPathResource("xls/" + fileUrl);
         downloadFile = resource.getFile();
       }
 

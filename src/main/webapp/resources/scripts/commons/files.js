@@ -172,7 +172,7 @@ function fnPopupImage(fileUrl) {
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
 function fnDownloadFiles(fileUrl) {
-  location.href = `/downloadFiles?fileUrl=${fileUrl}`;
+  location.href = `downloadFiles?fileUrl=${fileUrl}`;
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------

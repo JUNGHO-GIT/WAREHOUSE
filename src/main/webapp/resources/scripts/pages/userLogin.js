@@ -30,7 +30,7 @@ function fnAuth() {
       if (data.result == "로그인에 성공하였습니다") {
         var encryptedItem = {"loginSession": "true"};
         var encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
-        localStorage.setItem("loginSession", encryptedValue);
+        localStorage.setItem("loginSession", encryptedValue.toString());
         alert(data.result);
         fnGoPage("main");
       }

@@ -46,36 +46,92 @@
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="cards" id="gridView">
-          <div id="grid01" class="cards-grid h-52p"></div>
-          <hr/>
-          <button type="button" class="btn btn-secondary cards-tab active" id="inTab"
-          onclick="fnSwitchTab('in')">
-            <input type="radio" class="prodInOutAll d-none" name="inOut" value="in" checked/>입고
-          </button>
-          <button type="button" class="btn btn-secondary cards-tab" id="outTab"
-          onclick="fnSwitchTab('out')">
-            <input type="radio" class="prodInOutAll d-none" name="inOut" value="out" />출고
-          </button>
-          <div id="grid02" class="cards-grid h-25p"></div>
-          <hr/>
-          <div class="cards-button">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
-              <button type="button" class="btn btn-warning btn-sm mr-10px" onclick="fnCheck()">
-                검증
-              </button>
-              <button type="button" class="btn btn-success btn-sm mr-10px" onclick="fnDelAll()">
-                초기화
-              </button>
-              <button type="button" class="btn btn-primary btn-sm mr-10px" onclick="fnSave()">
-                저장
-              </button>
-              <button type="button" class="btn btn-danger btn-sm mr-10px" onclick="fnGridPopup('popupInOutAll', 'on')">
-                일괄 적용
-              </button>
+        <!-- form -->
+        <form id="formData2" name="formData2" class="formData2">
+          <div class="row">
+            <!-- grid 1 -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+              <div class="grid-main">
+                <div class="h-50p" id="grid01"></div>
+              </div>
+              <div class="divider-all d-none"></div>
+            </div>
+            <!-- grid 2 -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+              <div class="grid-switch">
+                <div class="d-row-left">
+                  <button
+                    type="button"
+                    id="inTab"
+                    class="btn btn-primary radius-bottom-0 mr-5px active"
+                    onclick="fnSwitchTab('in')"
+                  >
+                    <input
+                      type="radio"
+                      class="prodInOutAll d-none"
+                      name="inOut"
+                      value="in"
+                      checked
+                    />
+                    입고
+                  </button>
+                  <button
+                    type="button"
+                    id="outTab"
+                    class="btn btn-primary radius-bottom-0"
+                    onclick="fnSwitchTab('out')"
+                  >
+                    <input
+                      type="radio"
+                      class="prodInOutAll d-none"
+                      name="inOut"
+                      value="out"
+                    />
+                    출고
+                  </button>
+                </div>
+              </div>
+              <div class="grid-main">
+                <div class="h-30p" id="grid02"></div>
+              </div>
+              <hr class="my-1vh bg-dark" />
+              <div class="grid-detail">
+                <div class="d-row-center mt-2vh">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                    <button
+                      type="button"
+                      class="btn btn-warning mr-10px"
+                      onclick="fnCheck()"
+                    >
+                      검증
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-success mr-10px"
+                      onclick="fnDelAll()"
+                    >
+                      초기화
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary mr-10px"
+                      onclick="fnSave()"
+                    >
+                      저장
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      onclick="fnGridPopup('popupInOutAll','on')"
+                    >
+                      일괄 적용
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <!-- /.row 2 -->

@@ -2772,8 +2772,6 @@ a.hiddenanchor {
 }
 .login_content h1:after,
 .login_content h1:before {
-	content: "";
-	content: "";
 	height: 1px;
 	position: absolute;
 	top: 10px;
@@ -3518,7 +3516,6 @@ ul.notifications {
 	margin: 0 0 10px;
 	min-width: 130px;
 	height: 50px;
-	box-shadow: none;
 	text-align: center;
 	vertical-align: middle;
 	color: #fff;
@@ -3590,20 +3587,6 @@ ul.notifications {
 	padding: 0 !important;
 	z-index: 2;
 }
-.popup > .x_title {
-	padding: 10px 20px;
-	color: #fff;
-}
-.popup > .x_title > ul > li > a {
-	color: #fff;
-	background: 0 0;
-}
-.popup > .x_title > ul > li > a:hover {
-	background: 0 0;
-}
-.popup > .x_content {
-	padding: 10px 20px;
-}
 .panel_toolbox > li {
 	cursor: pointer;
 }
@@ -3614,19 +3597,4 @@ ul.notifications {
 }
 .panel_toolbox > li > a:hover {
 	background: #f5f7fa;
-}
-.xBtn {
-	margin: 0;
-	width: 18px;
-	height: 18px;
-	padding: 0;
-}
-.whiteGray {
-	background-color: #f2f2f2 !important;
-}
-.lightYellow {
-	background-color: #fdf5e6;
-}
-.gray {
-	background-color: #dae6f0 !important;
 }

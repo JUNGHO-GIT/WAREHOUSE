@@ -58,7 +58,7 @@ public class ProductInOutCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listProductInOut", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listProductInOut(
-    @RequestParam("prodCd") String prodCd
+    @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
 
     try {
@@ -75,7 +75,7 @@ public class ProductInOutCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showProductInOut", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showProductInOut (
-    @RequestParam("inOutSeq") Integer inOutSeq
+    @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
 
     try {

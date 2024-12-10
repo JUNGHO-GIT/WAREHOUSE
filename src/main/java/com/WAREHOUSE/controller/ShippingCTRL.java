@@ -43,9 +43,9 @@ public class ShippingCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listShipping", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listShipping(
-    @RequestParam("inOutDt") String inOutDt,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="inOutDt", required=false) String inOutDt,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {

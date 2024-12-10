@@ -49,9 +49,9 @@ public class ShipItemsCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listShipItems", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listShipItems (
-    @RequestParam("shipDt") String shipDt,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipDt", required=false) String shipDt,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -68,9 +68,9 @@ public class ShipItemsCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listShipItemsDetail", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listShipItemsDetail (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -87,9 +87,9 @@ public class ShipItemsCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showShipItems", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showShipItems (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -128,9 +128,9 @@ public class ShipItemsCTRL {
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/shipItemsExcelDown", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> shipItemsExcelDown (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt,
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt,
     @SessionAttribute("fileUrl") String fileUrl,
     HttpServletResponse response
   ) throws Exception {

@@ -63,7 +63,7 @@ function fnGetList01 () {
     },
     {dataIndx:"option1", title:"재질", dataType:"string", align:"center",
     },
-    {dataIndx:"option2", title:"규격(사이즈)", dataType:"string", align:"center",
+    {dataIndx:"option2", title:"규격", dataType:"string", align:"center",
     },
     {dataIndx:"qty", title:"출고수량", dataType:"string", align:"center",
     },
@@ -131,7 +131,7 @@ function fnGetList02() {
     },
     {dataIndx:"option1", title:"재질", dataType:"string", align:"center"
     },
-    {dataIndx:"option2", title:"규격(사이즈)", dataType:"string", align:"center"
+    {dataIndx:"option2", title:"규격", dataType:"string", align:"center"
     },
     {dataIndx:"qty", title:"출하수량", dataType:"string", align:"center"
     },
@@ -338,26 +338,6 @@ function fnResetWhenSearch() {
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

@@ -58,7 +58,7 @@ public class ResourceInOutPlanCTRL {
   // 1-1. 자재 입출고 예정 리스트 -----------------------------------------------------------------
   @PostMapping(value="/act/listResourceInOutPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listResourceInOutPlan (
-    @RequestParam("resrcCd") String resrcCd
+    @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
 
     try {
@@ -75,7 +75,7 @@ public class ResourceInOutPlanCTRL {
   // 1-2. 자재 입출고 예정 상세 -------------------------------------------------------------------
   @PostMapping(value="/act/showResourceInOutPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showResourceInOutPlan (
-    @RequestParam("inOutSeq") Integer inOutSeq
+    @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
 
     try {

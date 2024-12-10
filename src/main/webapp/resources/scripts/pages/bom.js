@@ -469,38 +469,6 @@ function fnBomInput() {
     $(`#grid03`).pqGrid("refreshDataAndView");
   });
 }
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet02(event) {
-  if (
-    (event.keyCode === 13 && event.key === "Enter") ||
-    (event.type === "click")
-  ) {
-    event.preventDefault();
-    fnGetList02();
-  }
-};
-
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
   const findGroupCd = $(`#findGroupCd`).val();

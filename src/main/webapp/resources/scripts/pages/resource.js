@@ -17,7 +17,8 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    rowClick: (event, ui) => {
+    summaryData:  [],
+    rowClick: (_, ui) => {
       fnShow (ui.rowData.resrcCd);
     },
   };
@@ -45,7 +46,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: displayLowStock,
     },
     {
@@ -88,7 +89,8 @@ function fnGetList01 () {
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -124,10 +126,10 @@ function fnShow(resrcCd) {
     $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
     // 3. 창고 관련
-    fnFindCd("", data.houseCd, "house");
+    fnFindCd("", data.houseCd, "house", null);
 
     // 4. 거래처 관련
-    fnFindCd("", data.compCd, "comp");
+    fnFindCd("", data.compCd, "comp", null);
 
     // 5. file 관련
     $(`#tableNm`).val("tblResource");
@@ -139,7 +141,7 @@ function fnShow(resrcCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave (flagYN) {
 
   let flagParam = "";
 
@@ -269,26 +271,6 @@ function fnReset() {
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("resrcCd");
   fnShowFiles("tblResource", "0", "files");
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

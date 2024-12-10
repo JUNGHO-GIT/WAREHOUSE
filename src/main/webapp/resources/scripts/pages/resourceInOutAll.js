@@ -20,7 +20,7 @@ function fnGetList01 () {
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
     summaryData:  [],
-    rowClick: (event, ui) => {
+    rowClick: (_, ui) => {
       const today = fnToday();
       const getData02 = $grid02.pqGrid("getData");
       let duplicateFlag = false;
@@ -45,9 +45,8 @@ function fnGetList01 () {
 
       $grid02.pqGrid({
         dataModel: { data: getData02 },
-      });
-
-      $grid02.pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     }
   };
   const colModel = [
@@ -77,8 +76,13 @@ function fnGetList01 () {
       minWidth: 100
     },
     {
-      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
       minWidth: 100
+    },
+    {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth: 100,
+      render: displayLowStock,
     },
     {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
@@ -101,7 +105,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: displayLowStock
     },
     {
@@ -120,15 +124,14 @@ function fnGetList01 () {
     },
     success: (myJsonData) => {
       gridOption.title = updateTitle("자재 입출고 관리", myJsonData.length);
-      gridOption.summaryData = updateSummary(myJsonData);
+      gridOption.summaryData = updateSummary("resrc", myJsonData);
 
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      });
-
-      $grid01.pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -154,12 +157,12 @@ function fnGetList02() {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    cellClick: (event, ui) => {
+    cellClick: (_, ui) => {
       if (ui.colIndx == 3) {
         fnDel(ui.rowIndx);
       }
     },
-    cellBeforeSave: (event, ui) => {
+    cellBeforeSave: (_, ui) => {
       if (ui.dataIndx === "houseNm" || ui.dataIndx === "compNm") {
         fnGetCdWithNm(ui.dataIndx, ui.newVal, ui.rowIndx, "grid02");
       }
@@ -320,9 +323,9 @@ function fnCheck() {
 // 3-1. 저장 (선택) --------------------------------------------------------------------------------
 function fnSave() {
   const $grid02 = $(`#grid02`);
-  const getData = $grid02.pqGrid("getData");
-  const inOut = $("input[name=inOut]:checked").val();
 
+  let getData = $grid02.pqGrid("getData");
+  let inOut = $("input[name=inOut]:checked").val();
   let validationError = "";
 
   if (getData.length === 0) {
@@ -332,23 +335,22 @@ function fnSave() {
 
   for (let c = 0; c < getData.length; c++) {
     const row = getData[c];
+    getData[c].inOut = inOut;
     if (!row.chkBtn) {
       validationError = "검증되지 않은 데이터가 있습니다. 검증 후 저장해 주세요";
       break;
     }
   }
-
   if (validationError) {
     alert(validationError);
     return;
   }
-
   if (!confirm("입출고 내역을 저장 하시겠습니까?")) {
     return;
   }
 
   $.ajax({
-    url: "act/saveResourceInOut",
+    url: "act/saveResourceInOutAll",
     data: JSON.stringify({dataList : getData}),
     type: "POST",
     dataType:"JSON",
@@ -418,10 +420,10 @@ function fnDel(rowIdx) {
 
 // 4-2. 삭제 (전체) --------------------------------------------------------------------------------
 function fnDelAll() {
-
   $('#grid02').pqGrid({
     dataModel: { data: [] },
-  }).pqGrid("refreshDataAndView");
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
@@ -463,26 +465,6 @@ function fnResetWhenSearch() {
   $(`#grid01`).pqGrid("setSelection", null);
 };
 
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-};
-
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
 function fnChangeList() {
   const findGroupCd = $(`#findGroupCd`).val();
@@ -502,6 +484,9 @@ jQuery(function($) {
     fnGetList02();
   });
 
-  $(`#popupInOutAll`).draggable({ handle: "#popTop" });
-  $(`#popTop`).css("cursor", "move");
+  $(`#popupInOutAll`).draggable({
+    handle: `#popTop`,
+    cursor: "move",
+    containment: "document"
+  });
 });

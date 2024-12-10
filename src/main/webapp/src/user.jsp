@@ -187,39 +187,34 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ include file="./layout
 										<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"> </div>
 									</div>
 								</c:if>
-								<hr />
-								<c:if test="${sessionScope.userConfigID == 'jade'}">
-									<div id="fileShow">
-										<div class="form-group">
-											<label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
-												<span>WAR 파일</span>
-											</label>
-											<form id="fileUpload" name="fileUpload">
-												<div class="col-xs-5 col-lg-5 col-md-5 col-sm-5">
-													<input id="tableNm" type="hidden" name="tableNm" />
-													<input id="tableKey" type="hidden" name="tableKey" />
-													<input id="fileSeq" type="hidden" name="fileSeq" value="0" />
-													<input id="fileNm" type="hidden" name="fileNm" />
-													<input id="fileUrl" type="hidden" name="fileUrl" />
-													<input id="userFile" type="file" class="w-100p mt-3px" name="userFile" />
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-3 col-3 d-right">
-													<button
-														class="btn btn-xs pt-2px btn-success"
-														onclick="fnUploadWarFiles(this.form)"
-														type="button"
-														id="fileUpBtn"
-													>
-														업로드
-													</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</c:if>
-								<c:if test="${sessionScope.userConfigID != 'jade'}">
-									<div id="fileNotShow"></div>
-								</c:if>
+              <hr />
+                <div id="fileShow">
+                  <div class="form-group">
+                    <label class="col-xs-4 col-lg-4 col-md-4 col-sm-4 control-label">
+                      <span>WAR 파일</span>
+                    </label>
+                    <form id="fileUpload" name="fileUpload">
+                      <div class="col-xs-5 col-lg-5 col-md-5 col-sm-5">
+                        <input id="tableNm" type="hidden" name="tableNm" />
+                        <input id="tableKey" type="hidden" name="tableKey" />
+                        <input id="fileSeq" type="hidden" name="fileSeq" value="0" />
+                        <input id="fileNm" type="hidden" name="fileNm" />
+                        <input id="fileUrl" type="hidden" name="fileUrl" />
+                        <input id="userFile" type="file" class="w-100p mt-3px" name="userFile" />
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-3 d-right">
+                        <button
+                          class="btn btn-xs pt-2px btn-success"
+                          onclick="fnUploadWarFiles(this.form)"
+                          type="button"
+                          id="fileUpBtn"
+                        >
+                          업로드
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
 							</form>
 						</div>
 					</div>

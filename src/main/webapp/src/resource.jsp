@@ -70,8 +70,8 @@
                 </div>
                 <div class="row">
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -80,7 +80,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -92,8 +92,8 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -102,7 +102,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <select
                           id="resrcType"
@@ -115,8 +115,8 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -137,7 +137,7 @@
                         />
                       </div>
                     </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                       <div class="d-row-left mr-2vw">
                         <select
                           id="house"
@@ -150,8 +150,8 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -172,7 +172,7 @@
                         />
                       </div>
                     </div>
-                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                       <div class="d-row-left mr-2vw">
                         <select
                           id="comp"
@@ -185,14 +185,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           제조사
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -204,14 +204,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           단위
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -223,14 +223,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           사양
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -242,14 +242,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
-                          재질(색상)
+                          재질
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -261,14 +261,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
-                          규격(사이즈)
+                          규격
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -280,8 +280,8 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -290,7 +290,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -304,8 +304,8 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-500 red mr-3px">
                           ≫
                         </div>
@@ -314,7 +314,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -328,14 +328,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           바코드
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="text"
@@ -348,14 +348,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           메모
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <textarea
                           id="remark"
@@ -367,14 +367,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           이미지
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <div class="form-control cards-imageWrapper d-flex" id="showImage"></div>
                       </div>
@@ -382,13 +382,13 @@
                   </div>
                   <div class="d-row-center mb-1vh" id="fileShow">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <div class="d-row-left">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           파일
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <input
                           type="file"
@@ -408,14 +408,14 @@
                     </div>
                   </div>
                   <div class="d-row-center mb-1vh">
-                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                      <div class="d-row-left">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
                         <div class="fs-0-8rem fw-600 light-black">
                           파일목록
                         </div>
                       </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                       <div class="d-row-left mr-2vw">
                         <div class="form-control cards-imageWrapper" id="files"></div>
                       </div>
@@ -447,6 +447,7 @@
                     </div>
                     <!-- hidden -->
                     <div class="hidden-wrapper">
+                      <input type="hidden" name="resrcCd" id="resrcCd" />
                       <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
                       <input type="hidden" name="tableKey" id="tableKey" value="0" />
                       <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />

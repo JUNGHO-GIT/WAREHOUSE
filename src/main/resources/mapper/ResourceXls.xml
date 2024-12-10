@@ -12,9 +12,11 @@
   	resultType="Resource"
   >
     CALL sp_ResourceXls (
+      #{resrcCd},
       #{resrcNm},
       #{resrcType},
       #{houseCd},
+      #{compCd},
       #{protectedQty},
       #{quality},
       #{unit},
@@ -22,7 +24,6 @@
       #{option2},
       #{maker},
       #{unitPrice},
-      #{compCd},
       #{remark},
       #{flagYN},
       #{issueID}

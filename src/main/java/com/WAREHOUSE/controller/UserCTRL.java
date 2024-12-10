@@ -75,8 +75,8 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/auth", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> auth (
-    @RequestParam("userID") String userID,
-    @RequestParam("passwd") String pwClient,
+    @RequestParam(value="userID", required=false) String userID,
+    @RequestParam(value="passwd", required=false) String pwClient,
     HttpSession session
   ) throws Exception {
 
@@ -129,7 +129,7 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listUser", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listUser (
-    @RequestParam("findUserNm") String findUserNm
+    @RequestParam(value="findUserNm", required=false) String findUserNm
   ) throws Exception {
 
     try {
@@ -161,7 +161,7 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showUser", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showUser (
-    @RequestParam("userID") String userID
+    @RequestParam(value="userID", required=false) String userID
   ) throws Exception {
 
     try {
@@ -178,7 +178,7 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/checkUserID", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> checkUserID (
-    @RequestParam("userID") String userID
+    @RequestParam(value="userID", required=false) String userID
   ) throws Exception {
 
     try {

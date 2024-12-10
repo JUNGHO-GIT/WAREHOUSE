@@ -12,6 +12,7 @@
   	resultType="Product"
   >
     CALL sp_ProductXls (
+      #{prodCd},
       #{prodNm},
       #{prodType},
       #{houseCd},

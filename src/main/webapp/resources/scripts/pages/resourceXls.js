@@ -2,7 +2,7 @@
 function fnShowExcel(body) {
 
   const $grid01 = $(`#grid01`);
-  var inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
+  const inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
   const gridOption = {
     xlsNm: "resourceXls.xlsx",
@@ -18,114 +18,126 @@ function fnShowExcel(body) {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
-
-  // 유효성검사 (자재 x, 창고 o, 거래처 o)
-  obj.cellBeforeSave = function(event, ui) {
-    if (ui.dataIndx === "houseNm" || ui.dataIndx === "compNm") {
-      fnGetCdWithNm(ui.dataIndx, ui.value, ui.rowIndx, gridCd);
-    }
-  };
-
-  // 체크박스 on/off 및 fnGetCdWithNm 실행
-  obj.cellClick = function (event, ui) {
-    if (ui.dataIndx === "checkStatus") {
-      var isChecked = !ui.rowData.checkStatus;
-      ui.rowData.checkStatus = isChecked;
-      if (isChecked) {
-        // 체크된 경우 fnGetCdWithNm 함수 실행
-        ["houseNm", "compNm"].forEach(function(field) {
+    summaryData:  [],
+    cellClick: (_, ui) => {
+      if (ui.dataIndx === "checkStatus") {
+        const isChecked = !ui.rowData.checkStatus;
+        ui.rowData.checkStatus = isChecked;
+        if (!isChecked) {
+          return;
+        }
+        ["houseNm", "compNm"].forEach((field) => {
           if (ui.rowData[field]) {
-            fnGetCdWithNm(field, ui.rowData[field], ui.rowIndx, gridCd);
+            fnGetCdWithNm(field, ui.rowData[field], ui.rowIndx, "grid01");
           }
         });
       }
-    }
+    },
+    cellBeforeSave: (_, ui) => {
+      if (ui.dataIndx === "houseNm" || ui.dataIndx === "compNm") {
+        fnGetCdWithNm(ui.dataIndx, ui.value, ui.rowIndx, "grid01");
+      }
+    },
   };
-
-  // 체크박스 렌더링
-  obj.checkBoxRender = function (ui) {
-    var row = ui.rowData;
-    return `<input type="checkbox" class="chkBox" ${row.checkStatus ? "checked" : ""}>`;
-  };
-
   const colModel = [
-    {dataIndx:"checkStatus", title:inputBox, dataType:"bool", align:"center", type: "checkBox",
-      editable:false, sortable:false, cb: {all:true, header:true, select:true, deselect:true},
-      minWidth:30, maxWidth:30, render: obj.checkBoxRender
+    {
+      title:inputBox, dataIndx:"checkStatus", dataType:"bool", align:"center", type: "checkBox",
+      cb: {all:true, header:true, select:true, deselect:true},
+      minWidth:30, maxWidth:30, editable:false, sortable:false,
+      render: checkBoxRender
     },
-    {dataIndx:"resrcCd", title:"자재코드", dataType:"string", align:"center",
-      editable:true, hidden:true
+    {
+      title:"자재코드", dataIndx:"resrcCd", dataType:"string", align:"center",
+      hidden:true
     },
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",
-      required:true,
+    {
+      title:"창고코드", dataIndx:"houseCd", dataType:"string", align:"center",
+      hidden:true
     },
-    {dataIndx:"resrcType", title:"자재분류", dataType:"string", align:"center",
-      required:true,
+    {
+      title:"거래처코드", dataIndx:"compCd", dataType:"string", align:"center",
+      hidden:true
     },
-    {dataIndx:"houseCd", title:"창고코드", dataType:"string", align:"center",
-      editable:true, hidden:true
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth: 100, required:true,
     },
-    {dataIndx:"houseNm", title:"창고이름", dataType:"string", align:"center",
+    {
+      title:"자재분류", dataIndx:"resrcType", dataType:"string", align:"center",
+      minWidth: 100, required:true,
     },
-    {dataIndx:"compCd", title:"거래처코드", dataType:"string", align:"center",
-      editable:true, hidden:true
+    {
+      title:"창고이름", dataIndx:"houseNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"compNm", title:"거래처이름", dataType:"string", align:"center",
+    {
+      title:"거래처이름", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"maker", title:"제조사", dataType:"string", align:"center",
+    {
+      title:"제조사", dataIndx:"maker", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"unit", title:"단위", dataType:"string", align:"center",
+    {
+      title:"단위", dataIndx:"unit", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"quality", title:"재질", dataType:"string", align:"center",
+    {
+      title:"재질", dataIndx:"quality", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"option1", title:"사양", dataType:"string", align:"center",
+    {
+      title:"사양", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"option2", title:"규격", dataType:"string", align:"center",
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth: 100,
     },
-    {dataIndx:"protectedQty", title:"안전재고", dataType:"string", align:"right", editable:true,
+    {
+      title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"right",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      required:true,
+      minWidth: 100, required:true,
     },
-    {dataIndx:"unitPrice", title:"표준단가", dataType:"string", align:"right", editable:true,
+    {
+      title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"right",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      required:true,
+      minWidth: 100, required:true,
     },
-    {dataIndx:"remark", title:"비고", dataType:"string", align:"center",
+    {
+      title:"비고", dataIndx:"remark", dataType:"string", align:"center",
+      minWidth: 100,
     },
   ];
-  if (body != undefined) {
-    obj.dataModel = {data:body};
-  }
-  $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+  $grid01.pqGrid({
+    ...gridOption,
+    colModel: colModel,
+    dataModel: {data: body || []},
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 1-2. 전부 선택 ----------------------------------------------------------------------------------
 function fnSelectAll() {
 
-  var getData = $(`#grid01`).pqGrid("getData");
+  const getData = $(`#grid01`).pqGrid("getData");
 
   if ($("input:checkbox[id='allCheck']").is(":checked")) {
-    // check : true
     $("input:checkbox[class='chkBox']").prop("checked", true);
-    // value : true
     for (let i = 0; i < getData.length; i++) {
-      var row = getData[i];
+      const row = getData[i];
       row.checkStatus = true;
-      // 체크된 경우 fnGetCdWithNm 함수 실행 (자재 x, 창고 o, 거래처 o)
-      ["houseNm", "compNm"].forEach(function(field) {
+      ["houseNm", "compNm"].forEach((field) => {
         if (row[field]) {
           fnGetCdWithNm(field, row[field], i, "grid01");
         }
       });
     }
   }
-  if (!$("input:checkbox[id='allCheck']").is(":checked")) {
-    // check : false
+  else {
     $("input:checkbox[class='chkBox']").prop("checked", false);
-    // value : false
     for (let i = 0; i < getData.length; i++) {
-      var row = getData[i];
+      const row = getData[i];
       row.checkStatus = false;
     }
   }
@@ -135,10 +147,8 @@ function fnSelectAll() {
 function fnSave() {
 
   // 데이터 불러오기
-  var getData = $(`#grid01`).pqGrid("getData");
-  var colData = getData.filter(function (row) {
-    return row.checkStatus === true;
-  });
+  const getData = $(`#grid01`).pqGrid("getData");
+  const colData = getData.filter((row) => row.checkStatus === true);
 
   if (colData.length === 0) {
     alert("제품을 선택해 주세요");
@@ -146,29 +156,28 @@ function fnSave() {
   }
 
   // 유효성 검사 함수 (행, 필드명, 메세지)
-  var validateField = function (row, fieldName, message) {
+  const validateField = (row, fieldName, message) => {
     if (!row[fieldName]) {
       alert(message);
       return false;
     }
     return true;
-  }
+  };
 
   // 유효성 검사 함수 (숫자 관련)
-  var validateNumber = function (row, fieldName, message) {
+  const validateNumber = (row, fieldName, message) => {
     if (row[fieldName] && isNaN(row[fieldName])) {
       alert(message);
       return false;
     }
     return true;
-  }
-
-  var validationPassed = true;
+  };
 
   // 선택된 행만 검증
+  let validationPassed = true;
   for (let i = 0; i < colData.length; i++) {
+    const row = colData[i];
 
-    var row = colData[i];
     row.resrcCd = row.resrcCd ? row.resrcCd.toString().trim() : "";
     row.houseCd = row.houseCd ? row.houseCd.toString().trim() : "";
     row.compCd = row.compCd ? row.compCd.toString().trim() : "";
@@ -191,7 +200,6 @@ function fnSave() {
   if (!validationPassed) {
     return;
   }
-
   if (!confirm("저장 하시겠습니까?")) {
     return;
   }
@@ -215,45 +223,48 @@ function fnSave() {
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
+
   // 파일 초기화
   $(`#resourceXls`).val("");
+
   // 그리드 초기화
-  $(`#grid01`).pqGrid("option", "dataModel.data", []);
-  $(`#grid01`).pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid({
+    dataModel: {data: []},
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 업로드 ----------------------------------------------------------------------------------
 function fnFilePicked(oEvent) {
 
-  var oFile = oEvent.target.files[0];
-  var sFilename = oFile.name;
-  var divFile = sFilename.split(".");
+  const oFile = oEvent.target.files[0];
+  const sFilename = oFile.name;
+  const divFile = sFilename.split(".");
+  const fileReader = new FileReader();
 
-  if (divFile[1] != "xls") {
+  if (divFile[1] !== "xls") {
     alert("xls 파일만 사용가능 합니다");
     $(`#resourceXls`).val("");
     return;
   }
 
-  var reader = new FileReader();
+  fileReader.onload = (e) => {
+    const data = e.target.result;
+    const cfb = XLS.CFB.read(data, {type: "binary"});
+    const wb = XLS.parse_xlscfb(cfb);
 
-  reader.onload = function (e) {
-    var data = e.target.result;
-    var cfb = XLS.CFB.read(data, {type: "binary"});
-    var wb = XLS.parse_xlscfb(cfb);
-
-    wb.SheetNames.forEach(function(sheetName) {
-      var data = XLS.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 });
-      var datas = [];
-      var limit = data.length;
+    wb.SheetNames.forEach((sheetName) => {
+      const data = XLS.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 });
+      const datas = [];
+      const limit = data.length;
 
       // 동적할당을 위해 houseCd, compCd는 비워둔다.
-      var keyMap = [
+      const keyMap = [
         "resrcNm", "resrcType", "houseNm", "compNm", "maker", "unit", "quality", "option1", "option2", "protectedQty", "unitPrice", "remark"
       ];
 
       for (let k = 1; k < limit; k++) {
-        var vals = {};
+        const vals = {};
         for (let r = 0; r < data[k].length; r++) {
           if (keyMap[r]) {
             Object.assign(vals, { [keyMap[r]]: data[k][r] });
@@ -264,19 +275,19 @@ function fnFilePicked(oEvent) {
       fnShowExcel(datas);
     });
   };
-  reader.readAsBinaryString(oFile);
+  fileReader.readAsBinaryString(oFile);
 };
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
 function fnExDownload() {
-  var fileUrl = "resource_Xls_sample.xls";
-  window.location = "/downloadFiles?fileUrl="+fileUrl;
+  const fileUrl = "resource_Xls_sample.xls";
+  location.href = `downloadFiles?fileUrl=${fileUrl}`;
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   fnShowExcel();
-  var oFileIn = document.getElementById("resourceXls");
+  const oFileIn = document.getElementById("resourceXls");
   if (oFileIn.addEventListener) {
     oFileIn.addEventListener("change", fnFilePicked, false);
   }

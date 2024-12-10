@@ -21,14 +21,7 @@ function fnShowUserConfig() {
 // 2. 팝업 화면 유저정보 ---------------------------------------------------------------------------
 function fnShowUserConfigInfo() {
 
-  if ($(`#popup2`).hasClass("d-none")) {
-    $(`#popup2`).removeClass("d-none");
-    $(`#popup2`).addClass("d-block");
-  }
-  else {
-    $(`#popup2`).removeClass("d-block");
-    $(`#popup2`).addClass("d-none");
-  }
+  fnGridPopup('popupUserConfig', 'on');
 
   $.ajax({
     url: "act/showUserConfigInfo",
@@ -120,18 +113,20 @@ function fnSaveUserConfigInfo() {
   });
 };
 
-// 3-2. 탭 순서 저장 -------------------------------------------------------------------------------
+// 0. 탭 순서 저장 ---------------------------------------------------------------------------------
 function fnSaveUserConfigTab() {
 
-  var tabs = fnTabOrder();
   const param = {
-    "configSeq": $(`#configSeq`).val() || 0,
-    "userConfigID": $(`#userConfigID`).val(),
+    "configSeq": $(`#configSeq`).val() || "0",
+    "userID": $(`#userConfigID`).val(),
     "pageNm": "tabs",
     "gridCd": "",
+    "config": fnTabOrder(),
     "flagYN": "Y",
-    "config": tabs
   };
+
+  console.log($(`#userConfigID`));
+  console.log(param);
 
   $.ajax({
     url: "act/saveUserConfigTab",
@@ -229,6 +224,10 @@ function fnResetPw() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   fnShowUserConfig();
-  $(`#popup2`).draggable({ handle: "#popTop" });
-  $(`#popTop`).css("cursor", "move");
+
+  $(`#popupUserConfig`).draggable({
+    handle: `#popTop`,
+    cursor: "move",
+    containment: "document"
+  });
 });

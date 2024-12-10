@@ -49,9 +49,9 @@ public class ShipPlanCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listShipPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listShipPlan (
-    @RequestParam("shipDt") String shipDt,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipDt", required=false) String shipDt,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -68,9 +68,9 @@ public class ShipPlanCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listShipPlanDetail", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listShipPlanDetail (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -87,9 +87,9 @@ public class ShipPlanCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showShipPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showShipPlan (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
 
     try {
@@ -128,9 +128,9 @@ public class ShipPlanCTRL {
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/shipPlanExcelDown", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> shipPlanExcelDown (
-    @RequestParam("shipCd") String shipCd,
-    @RequestParam("findStartDt") String findStartDt,
-    @RequestParam("findEndDt") String findEndDt,
+    @RequestParam(value="shipCd", required=false) String shipCd,
+    @RequestParam(value="findStartDt", required=false) String findStartDt,
+    @RequestParam(value="findEndDt", required=false) String findEndDt,
     @SessionAttribute("fileUrl") String fileUrl,
     HttpServletResponse response
   ) throws Exception {

@@ -8,31 +8,58 @@
   <div class="container px-20px">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
-    <div class="row">
-      <form class="form-horizontal m-0px">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="row">
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">
-              <p class="control-label">엑셀 파일</p>
+    <div class="row my-20px">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+        <!-- form -->
+        <form id="formData1" name="formData1" class="formData1">
+          <div class="row d-row-left">
+            <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 p-5px bg-dark-white mr-10px">
+              <div class="fs-0-8rem fw-600 dark d-right">
+                엑셀 파일
+              </div>
             </div>
-            <div class="col-xs-8 col-sm-2 col-md-2 col-lg-2 mt-5px d-center">
-              <input type="file" name="productXls" id="productXls" accept=".xls, .xlsx" />
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+              <input
+                type="file"
+                name="productXls"
+                id="productXls"
+                accept=".xls, .xlsx"
+                class="d-none"
+              />
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                onclick="$('#productXls').click()"
+              >
+                파일선택
+              </button>
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-6 mt-5px">&nbsp;</div>
-            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 d-center">
-              <button class="btn btn-success btn-sm ml-10px" type="button" onclick="fnReset()">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-row-right">
+              <button
+                type="button"
+                class="btn btn-success btn-sm ml-10px"
+                onclick="fnReset()"
+              >
                 초기화
               </button>
-              <button class="btn btn-primary btn-sm ml-10px" type="button" onclick="fnSave()">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm ml-10px"
+                onclick="fnSave()"
+              >
                 저장
               </button>
-              <button class="btn btn-danger btn-sm ml-10px" type="button" onclick="fnExDownload()">
+              <button
+                type="button"
+                class="btn btn-danger btn-sm ml-10px"
+                onclick="fnExDownload()"
+              >
                 Sample Download
               </button>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
     <!-- /.row 1 -->
 
@@ -48,7 +75,6 @@
 
     <!-- js -->
     <div class="h-5vh"></div>
-    <script defer src="${rsPath}/scripts/libs/json2Xls.js"></script>
     <script defer src="${rsPath}/scripts/pages/productXls.js"></script>
 
   </div>

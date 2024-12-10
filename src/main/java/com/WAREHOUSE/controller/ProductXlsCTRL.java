@@ -1,9 +1,8 @@
 package com.WAREHOUSE.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,15 +41,17 @@ public class ProductXlsCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/saveProductXls", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveProductXls (
-    @RequestBody JSONObject obj,
+    @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    JSONArray dataList = (JSONArray) obj.get("dataList");
+    @SuppressWarnings("unchecked")
+    ArrayList<HashMap<Object, Object>> dataList
+    = (ArrayList<HashMap<Object, Object>>)obj.get("dataList");
     Map<String, Object> map = new HashMap<String, Object>();
 
     for (int i = 0; i < dataList.size(); i++) {
-      JSONObject jsonObj = (JSONObject) dataList.get(i);
+      HashMap<Object, Object> jsonObj = dataList.get(i);
 
       String userIDParam = (String) userID;
       String prodNmParam = (String) jsonObj.get("prodNm");

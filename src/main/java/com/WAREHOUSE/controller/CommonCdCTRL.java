@@ -44,9 +44,9 @@ public class CommonCdCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/initCodeAll", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> initCodeAll (
-    @RequestParam("part") String part,
-    @RequestParam("groupCd") String groupCd,
-    @RequestParam("target") String target
+    @RequestParam(value="part", required=false) String part,
+    @RequestParam(value="groupCd", required=false) String groupCd,
+    @RequestParam(value="target", required=false) String target
   ) throws Exception {
 
     String partArr[] = part.split("/");
@@ -70,8 +70,8 @@ public class CommonCdCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listCommonCd", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listCommonCd (
-    @RequestParam("findGroupCd") String findGroupCd,
-    @RequestParam("findItemNm") String findItemNm
+    @RequestParam(value="findGroupCd", required=false) String findGroupCd,
+    @RequestParam(value="findItemNm", required=false) String findItemNm
   ) throws Exception {
 
     try {
@@ -88,8 +88,8 @@ public class CommonCdCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showCommonCd", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showCommonCd (
-    @RequestParam("groupCd") String groupCd,
-    @RequestParam("itemCd") String itemCd
+    @RequestParam(value="groupCd", required=false) String groupCd,
+    @RequestParam(value="itemCd", required=false) String itemCd
   ) throws Exception {
 
     try {

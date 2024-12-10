@@ -15,11 +15,11 @@
           <div class="menu_section">
             <ul class="nav side-menu">
               <c:forEach var="page" items="${mainList}" varStatus="status">
-                <c:set var="findPage" value=",${mainList[status.index].findPage},"/>
-                <c:set var="allPage" value=",${sessionScope.uPerm},"/>
+                <c:set var="findPage" value="${page.findPage}"/>
+                <c:set var="allPage" value="${sessionScope.uPerm}"/>
                 <c:choose>
                   <c:when test="${page.subPage == '00'}">
-                    <c:if test="${status.index != 0 && sumPage == '1'}">
+                    <c:if test="${sumPage == '1'}">
                       </ul>
                       </li>
                     </c:if>
@@ -36,16 +36,14 @@
                       </c:when>
                     </c:choose>
                     <c:if test="${allPage.indexOf(findPage) > -1 }">
-                      <!-- 1. 대시보드 페이지일 경우 -->
-                      <c:if test="${fn:contains(page.pageUrl,'/dash')}">
+                      <c:if test="${fn:contains(page.pageUrl, '/dash')}">
                         <li>
                           <a class="pointer" onclick="location.href='${page.pageUrl}'">
                             <span>${page.pageNm}</span>
                           </a>
                         </li>
                       </c:if>
-                      <!-- 2. 대시보드 페이지가 아닐 경우 -->
-                      <c:if test="${not fn:contains(page.pageUrl,'/dash')}">
+                      <c:if test="${not fn:contains(page.pageUrl, '/dash')}">
                         <li>
                           <a class="pointer" onclick="fnAddTab('${page.pageNm}','${page.pageUrl}','${page.pageOrder}')">
                             <span>${page.pageNm}</span>

@@ -336,34 +336,6 @@ function fnTabSortAndDrag() {
   }).disableSelection();
 };
 
-// 0. 탭 순서 저장 ---------------------------------------------------------------------------------
-function fnSaveUserConfigTab() {
-
-  const param = {
-    "configSeq": $(`#configSeq`).val() || "0",
-    "userID": $(`#userConfigID`).val(),
-    "pageNm": "tabs",
-    "gridCd": "",
-    "config": fnTabOrder(),
-    "flagYN": "Y",
-  };
-
-  $.ajax({
-    url: "act/saveUserConfigTab",
-    data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
-    contentType: "application/json; charset=UTF-8",
-    beforeSend: (xmlHttpRequest) => {
-      xmlHttpRequest.setRequestHeader("AJAX", "true");
-    },
-    success: (data) => {
-      alert(data.result);
-    },
-    error: ajaxErrorHandler
-  });
-};
-
 // 0. 버전정보 표시 --------------------------------------------------------------------------------
 function fnShowVersion() {
   $.ajax({

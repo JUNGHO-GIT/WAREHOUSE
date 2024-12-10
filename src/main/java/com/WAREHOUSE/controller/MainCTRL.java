@@ -62,7 +62,7 @@ public class MainCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listSysMenu", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listSysMenu (
-    @RequestParam("config") String config
+    @RequestParam(value="config", required=false) String config
   ) throws Exception {
 
     String[] data = config.split(",");

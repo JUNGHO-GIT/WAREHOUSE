@@ -26,8 +26,8 @@ public class UserConfigCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showUserConfigTab", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showUserConfigTab (
-    @RequestParam("pageNm") String pageNm,
-    @RequestParam("gridCd") String gridCd,
+    @RequestParam(value="pageNm", required=false) String pageNm,
+    @RequestParam(value="gridCd", required=false) String gridCd,
     @SessionAttribute("userConfigID") String userConfigID
   ) throws Exception {
 

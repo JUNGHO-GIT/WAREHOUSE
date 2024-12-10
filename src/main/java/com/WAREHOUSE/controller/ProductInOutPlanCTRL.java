@@ -58,7 +58,7 @@ public class ProductInOutPlanCTRL {
   // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
   @PostMapping(value="/act/listProductInOutPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listProductInOutPlan (
-    @RequestParam("prodCd") String prodCd
+    @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
 
     try {
@@ -75,7 +75,7 @@ public class ProductInOutPlanCTRL {
   // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
   @PostMapping(value="/act/showProductInOutPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showProductInOutPlan (
-    @RequestParam("inOutSeq") Integer inOutSeq
+    @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
 
     try {

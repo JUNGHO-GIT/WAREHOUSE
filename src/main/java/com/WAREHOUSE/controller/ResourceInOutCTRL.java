@@ -56,7 +56,7 @@ public class ResourceInOutCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listResourceInOut", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listResourceInOut (
-    @RequestParam("resrcCd") String resrcCd
+    @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
 
     try {
@@ -73,7 +73,7 @@ public class ResourceInOutCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showResourceInOut", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showResourceInOut (
-    @RequestParam("inOutSeq") Integer inOutSeq
+    @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
 
     try {

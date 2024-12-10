@@ -17,7 +17,8 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    rowClick: (event, ui) => {
+    summaryData:  [],
+    rowClick: (_, ui) => {
       fnShow (ui.rowData.groupCd, ui.rowData.itemCd);
     },
   };
@@ -28,7 +29,7 @@ function fnGetList01 () {
     },
     {
       title:"그룹코드", dataIndx:"groupCd", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
     },
     {
       title:"그룹명", dataIndx:"groupNm", dataType:"string", align:"center",
@@ -36,7 +37,7 @@ function fnGetList01 () {
     },
     {
       title:"아이템코드", dataIndx:"itemCd", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
     },
     {
       title:"아이템", dataIndx:"itemNm", dataType:"string", align:"center",
@@ -44,11 +45,11 @@ function fnGetList01 () {
     },
     {
       title:"순위", dataIndx:"itemSeq", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
     },
     {
       title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
     },
     {
       title:"메모", dataIndx:"itemMemo", dataType:"string", align:"center",
@@ -69,7 +70,8 @@ function fnGetList01 () {
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -207,26 +209,6 @@ function fnReset() {
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
   $(`#grid01`).pqGrid("refreshDataAndView");
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

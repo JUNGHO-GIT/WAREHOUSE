@@ -3,174 +3,327 @@
 <%@ include file="./layouts/header.jsp" %>
 <c:set var="rsPath" value="${pageContext.request.contextPath}/resources" />
 
-<body class="nav-md">
+<!-------------------------------------------------------------------------------------------------><body class="nav-md">
   <div class="container px-20px">
 
-    <div class="row">
-      <form class="form-horizontal m-0px">
-        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-          <div class="row">
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
-              <p class="control-label">거래처 검색</p>
+    <!-- row 1 ------------------------------------------------------------------------------------>
+    <div class="row my-20px">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-10px">
+        <!-- form -->
+        <form id="formData1" name="formData1" class="formData1">
+          <div class="row d-row-left">
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 p-5px bg-dark-white mr-10px">
+              <div class="fs-0-8rem fw-600 dark d-right">
+                거래처 검색
+              </div>
             </div>
-            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 mt-2px">
-              <input class="form-control" type="text" id="findCompNm" onKeyDown="fnPressGet01(event)" placeholder="거래처를 입력해주세요" />
+            <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 mr-10px">
+              <input
+                type="text"
+                id="findCompNm"
+                name="findCompNm"
+                class="form-control"
+                placeholder="거래처를 입력해주세요"
+                onKeyDown="fnPressGet01(event)"
+              />
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <button class="btn btn-primary btn-sm" type="button" onclick="fnPressGet01(event)">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                onclick="fnPressGet01(event)"
+              >
                 조회
               </button>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-        <div class="cards" id="gridView">
-          <div id="grid01" class="cards-grid h-98p"></div>
-        </div>
+        </form>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-        <div class="cards" id="contentView">
-          <div class="cards-title">
-            <i class="fa fa-list-alt mr-1vw"></i>
-            <span>거래처 상세</span>
-          </div>
-          <div class="cards-content">
-            <div class="row p-10px pl-10px pr-10px">
-              <form class="form-horizontal">
-                <!-- hidden -->
-                <input type="hidden" id="compCd" />
-                <!-- /.hidden -->
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-3px">
-                ≫
+    </div>
+    <!-- /.row 1 -->
+
+    <!-- row 2 ------------------------------------------------------------------------------------>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- form -->
+        <form id="formData2" name="formData2" class="formData2">
+          <div class="row">
+            <!-- grid 1 -->
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 px-10px">
+              <div class="grid-main">
+                <div class="h-100p" id="grid01"></div>
               </div>
-                    <span>거래처 이름</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="compNm" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <div class="fs-0-8rem fw-500 red mr-3px">
-                ≫
-              </div>
-                    <span>사업자 등록번호</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="compNo" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>대표자</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="owner" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>담당자</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="major" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>전화번호</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="phone" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>세금계산서 Email</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="taxEmail" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>주소</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="address" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>업태</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="compType" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>종목</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <input class="form-control" type="text" id="compPart" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>메모</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <textarea class="form-control resize-none" rows="1" id="remarks"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <span>로고 이미지</span>
-                  </label>
-                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <div class="form-control cards-imageWrapper d-flex" id="showImage"></div>
-                  </div>
-                </div>
-                <div id="fileShow">
-                  <div class="form-group">
-                    <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                      <span>로고 파일</span>
-                    </label>
-                    <form id="fileUpload" name="fileUpload">
-                      <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                        <input type="hidden" name="tableNm" id="tableNm" value="tblCompany" />
-                        <input type="hidden" name="tableKey" id="tableKey" value="0" />
-                        <input type="hidden" name="keyColumn" id="keyColumn" value="compCd" />
-                        <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                        <input type="hidden" name="fileNm" id="fileNm" />
-                        <input type="hidden" name="fileUrl" id="fileUrl" />
-                        <input type="file" name="userFile" id="userFile" class="w-100p mt-3px" />
+              <div class="divider-md d-none"></div>
+            </div>
+            <!-- grid 2 -->
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 px-10px">
+              <div class="grid-detail">
+                <div class="row mb-3vh">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="d-row-left">
+                      <i class="fa fa-list-alt mr-1vw"></i>
+                      <div class="fs-0-9rem fw-700 light-black">
+                        거래처 상세
                       </div>
-                      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <button class="btn btn-success btn-xs pt-2px" type="button" id="fileUpBtn"
-                        onclick="fnUploadFiles(this.form)">업로드</button>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="form-group mt-3px">
-                    <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></label>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                      <div class="form-control cards-imageWrapper" id="files"></div>
                     </div>
                   </div>
                 </div>
-                <hr/>
-                    <div class="d-row-center mt-2vh">
-                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                <div class="row">
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
+                          ≫
+                        </div>
+                        <div class="fs-0-8rem fw-600 light-black">
+                          거래처 이름
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="compNm"
+                          name="compNm"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-500 red mr-3px">
+                          ≫
+                        </div>
+                        <div class="fs-0-8rem fw-600 light-black">
+                          사업자 등록번호
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="compNo"
+                          name="compNo"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          대표자
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="owner"
+                          name="owner"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          담당자
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="major"
+                          name="major"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          전화번호
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="phone"
+                          name="phone"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          세금계산서 Email
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="taxEmail"
+                          name="taxEmail"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          주소
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="address"
+                          name="address"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          업태
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="compType"
+                          name="compType"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          종목
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="text"
+                          id="compPart"
+                          name="compPart"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          메모
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <textarea
+                          id="remarks"
+                          name="remarks"
+                          class="form-control resize-none"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          이미지
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <div class="form-control cards-imageWrapper d-flex" id="showImage"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh" id="fileShow">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          파일
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <input
+                          type="file"
+                          name="userFile"
+                          id="userFile"
+                          class="w-100p"
+                        />
                         <button
+                          class="btn btn-success btn-xs mt-3px"
                           type="button"
+                          id="fileUpBtn"
+                          onclick="fnUploadFiles(this.form)"
+                        >
+                          업로드
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mb-1vh">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                      <div class="d-row-right mr-2vw">
+                        <div class="fs-0-8rem fw-600 light-black">
+                          파일목록
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                      <div class="d-row-left mr-2vw">
+                        <div class="form-control cards-imageWrapper" id="files"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-row-center mt-2vh">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
+                      <button
+                        type="button"
                         class="btn btn-success mr-10px"
                         onclick="fnReset()"
                       >
@@ -191,11 +344,22 @@
                         삭제
                       </button>
                     </div>
+                    <!-- hidden -->
+                    <div class="hidden-wrapper">
+                      <input type="hidden" name="compCd" id="compCd" />
+                      <input type="hidden" name="tableNm" id="tableNm" value="tblCompany" />
+                      <input type="hidden" name="tableKey" id="tableKey" value="0" />
+                      <input type="hidden" name="keyColumn" id="keyColumn" value="compCd" />
+                      <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
+                      <input type="hidden" name="fileNm" id="fileNm" />
+                      <input type="hidden" name="fileUrl" id="fileUrl" />
+                    </div>
                   </div>
-              </form>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <!-- /.row 2 -->

@@ -62,8 +62,9 @@
                 <div class="d-row-left">
                   <button
                     type="button"
-                    class="btn btn-secondary cards-tab active"
-                    onclick="fnCheck()"
+                    id="inTab"
+                    class="btn btn-primary radius-bottom-0 mr-5px active"
+                    onclick="fnSwitchTab('in')"
                   >
                     <input
                       type="radio"
@@ -76,8 +77,9 @@
                   </button>
                   <button
                     type="button"
-                    class="btn btn-secondary cards-tab"
-                    onclick="fnCheck()"
+                    id="outTab"
+                    class="btn btn-primary radius-bottom-0"
+                    onclick="fnSwitchTab('out')"
                   >
                     <input
                       type="radio"
@@ -94,7 +96,7 @@
               </div>
               <hr class="my-1vh bg-dark" />
               <div class="grid-detail">
-                <div class="d-row-center mt-2vh">
+                <div class="d-row-center">
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-center">
                     <button
                       type="button"

@@ -16,6 +16,7 @@ import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.ResourceDAO;
 import com.WAREHOUSE.util.Logs;
 import lombok.RequiredArgsConstructor;
+import com.WAREHOUSE.util.Json;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
@@ -24,6 +25,7 @@ public class ResourceCTRL {
 
   private final ResourceDAO dao;
   private final Logs logs;
+  private final Json json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/resource", produces="text/html;charset=UTF-8")
@@ -42,7 +44,7 @@ public class ResourceCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listResource", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listResource (
-    @RequestParam("findResrcNm") String findResrcNm
+    @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
 
     try {
@@ -58,7 +60,7 @@ public class ResourceCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showResource", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showResource (
-    @RequestParam("resrcCd") String resrcCd
+    @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
 
     try {
@@ -77,6 +79,8 @@ public class ResourceCTRL {
     @RequestBody Resource param,
     @SessionAttribute("userID") String userID
   ) throws Exception {
+
+    logs.info("saveResource", json.toJson(param));
 
     Map<String, Object> map = new HashMap<String, Object>();
 

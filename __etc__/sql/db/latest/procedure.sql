@@ -188,13 +188,13 @@ CREATE PROCEDURE `sp_Company`(
 	IN `@compCd` INT(10),
 	IN `@compNm` VARCHAR(100),
 	IN `@compNo` VARCHAR(20),
+	IN `@compType` VARCHAR(1000),
+	IN `@compPart` VARCHAR(1000),
 	IN `@owner` VARCHAR(20),
 	IN `@major` VARCHAR(20),
 	IN `@phone` VARCHAR(100),
 	IN `@taxEmail` VARCHAR(100),
 	IN `@address` VARCHAR(100),
-	IN `@compType` VARCHAR(1000),
-	IN `@compPart` VARCHAR(1000),
 	IN `@remarks` VARCHAR(4000),
 	IN `@flagYN` VARCHAR(1),
 	IN `@issueID` VARCHAR(20)
@@ -210,13 +210,13 @@ BEGIN
     INSERT INTO tblCompany (
       compNm,
       compNo,
+      compType,
+      compPart,
       owner,
       major,
       phone,
       taxEmail,
       address,
-      compType,
-      compPart,
       remarks,
       flagYN,
       regDate,
@@ -226,13 +226,13 @@ BEGIN
     VALUES (
       `@compNm`,
       `@compNo`,
+      `@compType`,
+      `@compPart`,
       `@owner`,
       `@major`,
       `@phone`,
       `@taxEmail`,
       `@address`,
-      `@compType`,
-      `@compPart`,
       `@remarks`,
       `@flagYN`,
       NOW(),
@@ -245,13 +245,13 @@ BEGIN
     SET
       compNm=`@compNm`,
       compNo=`@compNo`,
+      compType=`@compType`,
+      compPart=`@compPart`,
       owner=`@owner`,
       major=`@major`,
       phone=`@phone`,
       taxEmail=`@taxEmail`,
       address=`@address`,
-      compType=`@compType`,
-      compPart=`@compPart`,
       remarks=`@remarks`,
       flagYN=`@flagYN`,
       issueDate=NOW(),
@@ -259,6 +259,15 @@ BEGIN
     WHERE
       compCd=`@compCd`;
 	END IF;
+
+  IF `@compCd`=0 THEN
+    SET `@compCd`=LAST_INSERT_ID();
+    -- 신규등록시 파일 저장
+    UPDATE tblFiles
+    SET tableKey=`@compCd`
+    WHERE tableNm='tblCompany' AND tableKey=0;
+  END IF;
+
 END $$
 DELIMITER ;
 
@@ -471,6 +480,10 @@ BEGIN
 
 	IF `@prodCd`=0 THEN
     SET `@prodCd`=LAST_INSERT_ID();
+    -- 신규등록시 파일 저장
+    UPDATE tblFiles
+    SET  tableKey=`@prodCd`
+    WHERE tableNm='tblProduct' AND tableKey=0;
   END IF;
 
 	SET `@barcode`=LPAD(`@prodCd`, 6, '0');
@@ -559,6 +572,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_ProductXls`(
   IN `@prodCd` INT(10),
+  IN `@prodNm` VARCHAR(300),
   IN `@prodType` VARCHAR(5),
   IN `@houseCd` INT(10),
   IN `@compCd` INT(10),
@@ -577,7 +591,8 @@ BEGIN
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
 
 	INSERT INTO tblProduct (
-		prodCd,
+    prodCd,
+    prodNm,
     prodType,
     houseCd,
     compCd,
@@ -595,7 +610,8 @@ BEGIN
     issueID
   )
   	VALUES (
-		`@prodCd`,
+    `@prodCd`,
+    `@prodNm`,
     `@prodType`,
     `@houseCd`,
     `@compCd`,
@@ -759,6 +775,10 @@ BEGIN
 
 	IF `@resrcCd`=0 THEN
 		SET `@resrcCd`=LAST_INSERT_ID();
+    -- 신규등록시 파일 저장
+    UPDATE tblFiles
+    SET tableKey=`@resrcCd`
+    WHERE tableNm='tblResource' AND tableKey=0;
 	END IF;
 
 	SET `@barcode`=LPAD(`@resrcCd`, 6, '0');
@@ -893,6 +913,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_ResourceXls`(
   IN `@resrcCd` INT(10),
+  IN `@resrcNm` VARCHAR(300),
   IN `@resrcType` VARCHAR(5),
   IN `@houseCd` INT(10),
   IN `@compCd` INT(10),
@@ -911,7 +932,8 @@ BEGIN
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
 
 	INSERT INTO tblResource (
-		resrcCd,
+    resrcCd,
+		resrcNm,
     resrcType,
     houseCd,
     compCd,
@@ -929,7 +951,8 @@ BEGIN
     issueID
   )
   	VALUES (
-		`@resrcCd`,
+    `@resrcCd`,
+    `@resrcNm`,
     `@resrcType`,
     `@houseCd`,
     `@compCd`,
@@ -956,6 +979,7 @@ BEGIN
   WHERE resrcCd=`@resrcCd` AND barcode='';
 
 END $$
+DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$

@@ -43,7 +43,7 @@ public class CompanyCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listCompany", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listCompany(
-    @RequestParam("findCompNm") String findCompNm
+    @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
 
     try {
@@ -60,7 +60,7 @@ public class CompanyCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showCompany", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showCompany(
-    @RequestParam("compCd") Integer compCd
+    @RequestParam(value="compCd", required=false) Integer compCd
   ) throws Exception {
 
     try {

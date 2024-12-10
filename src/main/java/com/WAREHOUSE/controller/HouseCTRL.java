@@ -43,7 +43,7 @@ public class HouseCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listHouse", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listHouse (
-    @RequestParam("id") Integer id
+    @RequestParam(value="id", required=false) Integer id
   ) throws Exception {
 
     try {
@@ -60,7 +60,7 @@ public class HouseCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showHouse", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showHouse (
-    @RequestParam("houseCd") Integer houseCd
+    @RequestParam(value="houseCd", required=false) Integer houseCd
   ) throws Exception {
 
     try {

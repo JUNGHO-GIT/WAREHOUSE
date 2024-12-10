@@ -3,8 +3,6 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -47,7 +45,7 @@ public class BomCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listBom", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listBom(
-    @RequestParam("findProdNm") String findProdNm
+    @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
 
     try {
@@ -64,8 +62,8 @@ public class BomCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showBom", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showBom (
-    @RequestParam("prodCd") Integer prodCd,
-    @RequestParam("bomType") String bomType
+    @RequestParam(value="prodCd", required=false) Integer prodCd,
+    @RequestParam(value="bomType", required=false) String bomType
   ) throws Exception {
 
     try {
@@ -82,15 +80,18 @@ public class BomCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/saveBom", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveBom (
-    @RequestBody JSONObject obj,
+    @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userID") String userID
   ) throws Exception {
 
-    JSONArray dataList = (JSONArray) obj.get("dataList");
+    @SuppressWarnings("unchecked")
+    ArrayList<HashMap<Object, Object>> dataList
+    = (ArrayList<HashMap<Object, Object>>)obj.get("dataList");
+
     Map<String, Object> map = new HashMap<String, Object>();
 
     for (int i = 0; i < dataList.size(); i++) {
-      JSONObject jsonObj = (JSONObject) dataList.get(i);
+      HashMap<Object, Object> jsonObj = dataList.get(i);
 
       String userIDParam = (String) userID;
       String bomTypeParam = (String) jsonObj.get("bomType");

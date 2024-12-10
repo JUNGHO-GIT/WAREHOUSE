@@ -18,12 +18,12 @@ function fnGetList01 () {
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
     summaryData:  [],
-    rowClick: (event, ui) => {
+    rowClick: (_, ui) => {
       fnGetList02(ui.rowData.prodCd);
       fnReset();
-      fnFindCd("", ui.rowData.prodCd, "prod");
-      fnFindCd("", ui.rowData.houseCd, "house");
-      fnFindCd("", ui.rowData.compCd, "comp");
+      fnFindCd("", ui.rowData.prodCd, "prod", null);
+      fnFindCd("", ui.rowData.houseCd, "house", null);
+      fnFindCd("", ui.rowData.compCd, "comp", null);
     },
   };
   const colModel = [
@@ -38,11 +38,11 @@ function fnGetList01 () {
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 100
+      minWidth: 100,
     },
     {
-      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
-      minWidth: 100
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
     {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
@@ -65,7 +65,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: displayLowStock,
     },
     {
@@ -84,13 +84,14 @@ function fnGetList01 () {
     },
     success: (myJsonData) => {
       gridOption.title = updateTitle("제품 출고 관리", myJsonData);
-      gridOption.summaryData = updateSummary(myJsonData);
+      gridOption.summaryData = updateSummary("prod", myJsonData);
 
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -115,40 +116,41 @@ function fnGetList02 (prodCd) {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    rowClick: (event, ui) => {
+    summaryData:  [],
+    rowClick: (_, ui) => {
       fnShow(ui.rowData.inOutSeq);
     },
   };
   const colModel = [
     {
       title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
-      minWidth: 70
+      minWidth: 120
     },
     {
       title:"분류", dataIndx:"inOut", dataType:"string", align:"center",
-      minWidth: 70
-    },
-    {
-      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
-      minWidth: 70
+      minWidth: 100,
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
-      minWidth: 70
+      minWidth: 100,
+    },
+    {
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth: 100,
     },
     {
       title:"수량", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: renderZero,
     },
     {
       title:"표준단가", dataIndx:"unitPrice", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: renderZero,
     },
     {
       title:"공급가", dataIndx:"supplyPrice", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: renderZero,
     },
   ];
@@ -168,7 +170,8 @@ function fnGetList02 (prodCd) {
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -197,13 +200,13 @@ function fnShow(inOutSeq) {
       $(`#inOut`).val(data.inOut);
 
       // 2. 제품 관련 (일반)
-      fnFindCd("", data.prodCd, "prod");
+      fnFindCd("", data.prodCd, "prod", null);
 
       // 3. 창고 관련
-      fnFindCd("", data.houseCd, "house");
+      fnFindCd("", data.houseCd, "house", null);
 
       // 4. 거래처 관련
-      fnFindCd("", data.compCd, "comp");
+      fnFindCd("", data.compCd, "comp", null);
     },
     error: ajaxErrorHandler
   });
@@ -356,26 +359,6 @@ function fnResetWhenSearch() {
   $(`#grid01`).pqGrid("setSelection", null);
 	$(`#grid02`).pqGrid("option", "dataModel.data", []);
 	$(`#grid02`).pqGrid("refreshDataAndView");
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

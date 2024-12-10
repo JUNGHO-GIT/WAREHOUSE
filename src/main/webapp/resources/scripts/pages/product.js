@@ -17,7 +17,8 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    rowClick: (event, ui) => {
+    summaryData:  [],
+    rowClick: (_, ui) => {
       fnShow (ui.rowData.prodCd);
     },
   };
@@ -45,7 +46,7 @@ function fnGetList01 () {
     },
     {
       title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth: 70,
+      minWidth: 100,
       render: displayLowStock,
     },
     {
@@ -74,7 +75,7 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listResource",
+    url: "act/listProduct",
     data: `findProdNm=${$(`#findProdNm`).val()}`,
     type: "POST",
     dataType:"JSON",
@@ -87,7 +88,8 @@ function fnGetList01 () {
         ...gridOption,
         dataModel: { data: myJsonData },
         colModel: colModel,
-      }).pqGrid("refreshDataAndView");
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -97,7 +99,7 @@ function fnGetList01 () {
 function fnShow(prodCd) {
 
   $.ajax({
-    url: "act/showResource",
+    url: "act/showProduct",
     data: `prodCd=${prodCd}`,
     type: "POST",
     dataType:"JSON",
@@ -123,16 +125,16 @@ function fnShow(prodCd) {
       $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
       // 3. 창고 관련
-      fnFindCd("", data.houseCd, "house");
+      fnFindCd("", data.houseCd, "house", null);
 
       // 4. 거래처 관련
-      fnFindCd("", data.compCd, "comp");
+      fnFindCd("", data.compCd, "comp", null);
 
       // 5. file 관련
-      $(`#tableNm`).val("tblResource");
+      $(`#tableNm`).val("tblProduct");
       $(`#keyColumn`).val("prodCd");
       $(`#tableKey`).val(data.prodCd);
-      fnShowFiles("tblResource", data.prodCd, "files");
+      fnShowFiles("tblProduct", data.prodCd, "files");
     },
     error: ajaxErrorHandler
   });
@@ -205,7 +207,7 @@ function fnSave(flagYN) {
   };
 
   $.ajax({
-    url: "act/saveResource",
+    url: "act/saveProduct",
     data: JSON.stringify(param),
     type: "POST",
     dataType:"JSON",
@@ -265,30 +267,10 @@ function fnReset() {
 
   // 파일 초기화
   $(`#userFile`).val("");
-  $(`#tableNm`).val("tblResource");
+  $(`#tableNm`).val("tblProduct");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("prodCd");
-  fnShowFiles("tblResource", "0", "files");
-};
-
-// 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function fnPressGet01(event) {
-
-  // 1. event가 `onKeyDown`일때 = enter 조건 O
-  if (event.keyCode === 13 && event.key === "Enter") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
-
-  // 2. event가 `onClick`일때 = enter 조건 X
-  if (event.type === "click") {
-    event.preventDefault();
-    fnReset();
-    fnResetWhenSearch();
-    fnGetList01();
-  }
+  fnShowFiles("tblProduct", "0", "files");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
