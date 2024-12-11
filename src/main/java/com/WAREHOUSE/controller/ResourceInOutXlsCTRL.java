@@ -43,7 +43,7 @@ public class ResourceInOutXlsCTRL {
   @PostMapping(value="/act/saveResourceInOutXls", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveResourceInOutXls (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
@@ -54,9 +54,9 @@ public class ResourceInOutXlsCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIDParam = (String) userID;
+      String userIdParam = (String) userId;
       String inOutDtParam = (String) jsonObj.get("inOutDt");
-      String remarkParam = (String) jsonObj.get("remark");
+      String remarksParam = (String) jsonObj.get("remarks");
       String inOutParam = (String) jsonObj.get("inOut");
       Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
       Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
@@ -76,13 +76,13 @@ public class ResourceInOutXlsCTRL {
         param.setHouseCd(houseCdParam);
         param.setCompCd(compCdParam);
         param.setUnitPrice(unitPriceParam);
-        param.setRemark(remarkParam);
-        param.setIssueID(userIDParam);
-        param.setPlanYN("N");
-        param.setFlagYN("Y");
+        param.setRemarks(remarksParam);
+        param.setIssueId(userIdParam);
+        param.setPlanYn("N");
+        param.setFlagYn("Y");
 
         dao.saveResourceInOutXls(param);
-        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+        map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
         e.printStackTrace();

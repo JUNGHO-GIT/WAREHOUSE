@@ -22,28 +22,28 @@
     FROM (
       SELECT *
       FROM tblResource
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) B ON B.houseCd = A.houseCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
-      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd, MAX(issueDate) issueDate
+      SELECT IFNULL(SUM(qty), 0) inQty, resrcCd, MAX(issueDt) issueDt
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY resrcCd
     ) D ON D.resrcCd = A.resrcCd
     LEFT JOIN (
-      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd, MAX(issueDate) issueDate
+      SELECT IFNULL(SUM(qty), 0) outQty, resrcCd, MAX(issueDt) issueDt
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY resrcCd
     ) E ON E.resrcCd = A.resrcCd
     LEFT JOIN (
@@ -52,7 +52,7 @@
       INNER JOIN (
         SELECT MAX(fileSeq) maxFileSeq
         FROM tblFiles
-        WHERE flagYN = 'Y' AND tableNm = "tblResource"
+        WHERE flagYn = 'Y' AND tableNm = "tblResource"
         GROUP BY tableNm, tableKey
       ) F2 ON F1.fileSeq = F2.maxFileSeq
     ) F ON F.tableKey = A.resrcCd
@@ -61,9 +61,9 @@
 			WHERE A.resrcNm LIKE CONCAT('%', #{findResrcNm}, '%')
 		</if>
 		ORDER BY GREATEST (
-      IFNULL(E.issueDate, "1000-10-10"),
-      IFNULL(D.issueDate, "1000-10-10"),
-      IFNULL(A.issueDate, "1000-10-10")
+      IFNULL(E.issueDt, "1000-10-10"),
+      IFNULL(D.issueDt, "1000-10-10"),
+      IFNULL(A.issueDt, "1000-10-10")
     ) DESC
   </select>
 
@@ -76,34 +76,34 @@
     <![CDATA[
     SELECT
       A.resrcCd, A.resrcNm, A.resrcType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
-      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remark, A.flagYN,
-      A.regDate, A.issueDate, B.houseNm, C.compNm, D.inQty, E.outQty,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remarks, A.flagYn,
+      A.regDt, A.issueDt, B.houseNm, C.compNm, D.inQty, E.outQty,
       (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
     FROM (
       SELECT *
       FROM tblResource
-      WHERE flagYN = 'Y' AND resrcCd = #{resrcCd}
+      WHERE flagYn = 'Y' AND resrcCd = #{resrcCd}
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) B ON B.houseCd = A.houseCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY resrcCd
     ) D ON D.resrcCd = A.resrcCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY resrcCd
     ) E ON E.resrcCd = A.resrcCd
     ]]>
@@ -113,7 +113,7 @@
   <select
   	id="saveResource"
   	parameterType="Resource"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
     CALL sp_Resource (
       #{resrcCd},
@@ -128,9 +128,9 @@
       #{option2},
       #{maker},
       #{unitPrice},
-      #{remark},
-      #{flagYN},
-      #{issueID}
+      #{remarks},
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

@@ -19,7 +19,7 @@
 		FROM (
       SELECT prodCd, COUNT(*) cnt
       FROM tblBom
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
       GROUP BY prodCd
     ) A
     INNER JOIN (
@@ -29,12 +29,12 @@
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON A.prodCd = C.prodCd AND B.bomType = "prod"
     LEFT JOIN (
       SELECT *
       FROM tblResource
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON A.prodCd = D.resrcCd AND B.bomType = "resrc"
     ]]>
     <if test='findBom!="" and findBom!=null'>
@@ -54,18 +54,18 @@
     FROM (
       SELECT prodCd, prodNm
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON A.prodCd = D.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON A.prodCd = E.prodCd
     ]]>
@@ -87,18 +87,18 @@
     FROM (
       SELECT prodCd, prodNm
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON A.prodCd = D.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON A.prodCd = E.prodCd
     ]]>
@@ -127,18 +127,18 @@
     FROM (
       SELECT resrcCd, resrcNm
       FROM tblResource
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY resrcCd
     ) D ON A.resrcCd = D.resrcCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY resrcCd
     ) E ON A.resrcCd = E.resrcCd
     ]]>
@@ -160,18 +160,18 @@
     FROM (
       SELECT resrcCd, resrcNm
       FROM tblResource
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY resrcCd
     ) D ON A.resrcCd = D.resrcCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, resrcCd
       FROM tblResourceInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY resrcCd
     ) E ON A.resrcCd = E.resrcCd
     ]]>
@@ -200,7 +200,7 @@
     FROM (
       SELECT houseCd, houseNm
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     ]]>
     <if test='findHouseNm != "" and findHouseNm != null'>
@@ -221,7 +221,7 @@
     FROM (
       SELECT houseCd, houseNm
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     ]]>
     <choose>
@@ -249,7 +249,7 @@
     FROM (
       SELECT compCd, compNm
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     ]]>
     <if test='findCompNm!="" and findCompNm!=null'>
@@ -270,7 +270,7 @@
     FROM (
       SELECT compCd, compNm
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     ]]>
     <choose>

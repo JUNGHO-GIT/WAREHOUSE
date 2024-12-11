@@ -48,7 +48,7 @@ function fnGetList01 () {
       minWidth:100,
     },
     {
-      title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
+      title:"유효", dataIndx:"flagYn", dataType:"string", align:"center",
       minWidth:100,
     },
     {
@@ -103,14 +103,14 @@ function fnShow(groupCd, itemCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave(flagYn) {
 
   let flagParam = "";
   let groupCd = $(`#groupCd`).val();
   let regGroup = $(`#regGroup`).val();
   let groupNm = "";
 
-  if (flagYN === "N") {
+  if (flagYn === "N") {
     flagParam = "N";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
@@ -167,7 +167,7 @@ function fnSave(flagYN) {
     "itemNm": $(`#itemNm`).val() || "",
     "itemMemo": $(`#itemMemo`).val() || "",
     "itemSeq": $(`#itemSeq`).val() || 0,
-    "flagYN": flagParam
+    "flagYn": flagParam
   };
 
   $.ajax({

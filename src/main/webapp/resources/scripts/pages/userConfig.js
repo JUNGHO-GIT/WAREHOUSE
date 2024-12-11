@@ -44,7 +44,7 @@ function fnShowUserConfigInfo() {
       $(`#userConfigEmail`).val(data.userConfigEmail);
       $(`#userConfigLevel`).val(data.userConfigLevel);
       $(`#userConfigCompCd`).val(data.userConfigCompCd) || 0;
-      $(`#flagYN`).val("Y");
+      $(`#flagYn`).val("Y");
 
       // 암호화된 비밀번호
       $(`#userConfigPw`).val("BCryptPassword");
@@ -63,12 +63,12 @@ function fnSaveUserConfigInfo() {
   }
   if ($(`#userConfigID`).val() == "") {
     alert("사용자 아이디를 입력해 주세요");
-    $(`#userID`).on("focus", function () {});
+    $(`#userId`).on("focus", function () {});
     return;
   }
-  if ($(`#userIDCheck`).val() == "N") {
+  if ($(`#userIdCheck`).val() == "N") {
     alert("사용자 아이디 중복 체크를 해주세요");
-    $(`#userID`).on("focus", function () {});
+    $(`#userId`).on("focus", function () {});
     return;
   }
   if ($(`#userConfigPw`).val() == "") {
@@ -94,7 +94,7 @@ function fnSaveUserConfigInfo() {
     "userConfigLevel": $(`#userConfigLevel`).val(),
     "userConfigCompCd": $(`#userConfigCompCd`).val() || 0,
     "userConfigPerm": $(`#userConfigPerm`).val(),
-    "flagYN": "Y",
+    "flagYn": "Y",
   };
 
   $.ajax({
@@ -118,11 +118,11 @@ function fnSaveUserConfigTab() {
 
   const param = {
     "configSeq": $(`#configSeq`).val() || "0",
-    "userID": $(`#userConfigID`).val(),
+    "userId": $(`#userConfigID`).val(),
     "pageNm": "tabs",
     "gridCd": "",
     "config": fnTabOrder(),
-    "flagYN": "Y",
+    "flagYn": "Y",
   };
 
   console.log($(`#userConfigID`));

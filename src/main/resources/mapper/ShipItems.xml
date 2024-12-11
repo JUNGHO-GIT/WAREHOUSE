@@ -15,29 +15,29 @@
   >
     <![CDATA[
     SELECT
-      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
-      B.inOutSeq, C.compNm, C.compCd, (D.qty * -1) qty,
-      IFNULL(B.cnt, 0) cnt
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
+      B.inOutSeq, IFNULL(B.cnt, 0) cnt,
+      C.compNm, C.compCd,
+      (D.qty * -1) qty
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'N' AND shipDt BETWEEN #{findStartDt} AND #{findEndDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND shipDt BETWEEN #{findStartDt} AND #{findEndDt}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipItems
-      WHERE flagYN = 'Y'
-      GROUP BY shipCd
+      WHERE flagYn = 'Y'
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     ORDER BY
       A.shipCd DESC
@@ -55,33 +55,35 @@
     SELECT
       A.shipDt, A.shipCd,
       B.inOutSeq, IFNULL(B.cnt, 0) cnt,
-      C.inOutDt, (D.qty * -1) qty,
+      C.inOutDt,
+      (D.qty * -1) qty,
       F.prodCd, F.prodNm, F.option1, F.option2
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'N' AND shipCd = #{shipCd}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND shipCd = #{shipCd}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipItems
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
+      -- GROUP BY 필수 !!
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
     ORDER BY
       A.shipCd DESC;
@@ -96,29 +98,29 @@
   >
     <![CDATA[
     SELECT
-      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
-      C.compNm, C.compCd, (D.qty * -1) qty,
-      IFNULL(B.cnt, 0) cnt
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
+      B.inOutSeq, IFNULL(B.cnt, 0) cnt,
+      C.compNm, C.compCd,
+      (D.qty * -1) qty
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'N' AND shipCd = #{shipCd}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND shipCd = #{shipCd}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipItems
-      WHERE flagYN = 'Y'
-      GROUP BY shipCd
+      WHERE flagYn = 'Y'
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     ORDER BY
       A.shipDt DESC
@@ -129,19 +131,19 @@
   <select
   	id="saveShipItems"
   	parameterType="Shipping"
-    resultType="Integer"
+    resultType="hashmap"
   >
     CALL sp_Shipping (
       #{shipCd},
-      #{compCd},
-      #{toMajor},
-      #{toPhone},
       #{shipDt},
       #{shipMajor},
+      #{toMajor},
+      #{toPhone},
+      #{compCd},
       #{inOutSeq},
-      #{flagYN},
-      #{planYN},
-      #{issueID}
+      #{flagYn},
+      #{planYn},
+      #{issueId}
     );
   </select>
 

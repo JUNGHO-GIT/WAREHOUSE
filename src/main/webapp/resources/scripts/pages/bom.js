@@ -24,7 +24,6 @@ function fnGetList01 () {
     fnFindCd ("", ui.rowData.prodCd, "prod", null);
     fnShow (ui.rowData.prodCd, ui.rowData.bomType);
   };
-
   const colModel = [
     {dataIndx:"bomType", title:"bomType", align:"center", dataType:"string",
       hidden: true
@@ -114,7 +113,6 @@ function fnGetList02() {
       $(`#grid03`).pqGrid("refreshDataAndView");
     }
   };
-
   const colModel = [
     {dataIndx:"resrcCd", title:"자재 코드", align:"center", dataType:"string",
       editable:false, hidden: true
@@ -184,7 +182,6 @@ function fnGetList03 () {
       fnDel(ui.rowIndx);
     }
   };
-
   const colModel = [
     {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
       editable:false, hidden: true
@@ -243,7 +240,6 @@ function fnShow(prodCd, bomType) {
       fnDelResrc(ui.rowIndx);
     }
   };
-
   const colModel = [
     {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
       editable:false, hidden: true
@@ -295,7 +291,7 @@ function fnSave() {
   var getData = $(`#grid03`).pqGrid("getData");
   var prodCd = $(`#prod`).val();
   var bomType = "prod";
-  var flagYN = "Y";
+  var flagYn = "Y";
 
   if (!prodCd) {
     alert("제품을 선택해주세요");
@@ -336,7 +332,7 @@ function fnSave() {
     getData[c]["resrcCd"] = String (getData[c]["resrcCd"]) || "0";
     getData[c]["qty"] = String (getData[c]["qty"]) || "0";
     getData[c]["bomType"] = String (bomType) || "";
-    getData[c]["flagYN"] = String (flagYN) || "";
+    getData[c]["flagYn"] = String (flagYn) || "";
     getData[c]["unitQty"] = String (getData[c]["unitQty"]).replace(/,/g, "") || "0";
   }
 
@@ -368,7 +364,7 @@ function fnDelResrc(rowIdx) {
   var getData = $(`#grid03`).pqGrid("getRowData", {rowIndx: rowIdx});
   var prodCd = $(`#prod`).val();
   var bomType = "prod";
-  var flagYN = "N";
+  var flagYn = "N";
 
   // 선택한 행이 없을 경우 리턴
   if (rowIdx === null) {
@@ -383,7 +379,7 @@ function fnDelResrc(rowIdx) {
     "resrcCd": String(getData.resrcCd) || "0",
     "qty": String(getData.qty) || "0",
     "bomType": String(bomType) || "",
-    "flagYN": String(flagYN) || "",
+    "flagYn": String(flagYn) || "",
     "unitQty": String(getData.unitQty).replace(/,/g, "") || "0"
   };
 

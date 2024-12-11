@@ -23,7 +23,7 @@
   <resources location="/src/" mapping="/src/**" />
 
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <beans:property name="prefix" value="/src/" />
+    <beans:property name="prefix" value="/src/pages/" />
     <beans:property name="suffix" value=".jsp" />
   </beans:bean>
 

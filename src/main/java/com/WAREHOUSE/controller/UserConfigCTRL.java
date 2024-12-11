@@ -67,7 +67,7 @@ public class UserConfigCTRL {
 
     BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
     String userConfigID = param.getUserConfigID();
-    String passwdOld = param.getUserConfigPw();
+    String userPwOld = param.getUserConfigPw();
 
     Map<String, Object> map = new HashMap<String, Object>();
 
@@ -76,8 +76,8 @@ public class UserConfigCTRL {
         map.put("result", "존재하지 않는 아이디입니다");
       }
       else {
-        String passwdNew = (String) passEncoder.encode(passwdOld);
-        dao.updateUserConfigPw(userConfigID, passwdNew);
+        String userPwNew = (String) passEncoder.encode(userPwOld);
+        dao.updateUserConfigPw(userConfigID, userPwNew);
         map.put("result", "비밀번호를 변경했습니다");
       }
     }
@@ -100,12 +100,12 @@ public class UserConfigCTRL {
 
     try {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-      String userID = (String) idParam;
-      String issueID = (String) idParam;
+      String userId = (String) idParam;
+      String issueId = (String) idParam;
       String userConfigID = (String) param.get("userConfigID");
-      String passwdOld = (String) param.get("userConfigPw");
-      String flagYN = (String) param.get("flagYN");
-      String passwdNew = "";
+      String userPwOld = (String) param.get("userConfigPw");
+      String flagYn = (String) param.get("flagYn");
+      String userPwNew = "";
 
       Object configSeqObj = param.get("configSeq");
       Object compCdObj = param.get("userConfigCompCd");
@@ -136,19 +136,19 @@ public class UserConfigCTRL {
       else {
         // 2-1. 비밀번호를 변경한 직후 저장하는 경우 기존의 암호화된 비밀번호를 그대로 사용
         String storedPasswd = storedUser.getUserConfigPw();
-        if (passwdOld.equals("BCryptPassword")) {
-          passwdNew = storedPasswd;
+        if (userPwOld.equals("BCryptPassword")) {
+          userPwNew = storedPasswd;
         }
         // 2-2. 그렇지 않을경우 새로운 비밀번호를 암호화
         else {
-          passwdNew = passEncoder.encode(passwdOld);
+          userPwNew = passEncoder.encode(userPwOld);
         }
 
-        param.put("userID", userID);
+        param.put("userId", userId);
         param.put("userConfigID", userConfigID);
-        param.put("userConfigPw", passwdNew);
-        param.put("issueID", issueID);
-        param.put("flagYN", flagYN);
+        param.put("userConfigPw", userPwNew);
+        param.put("issueId", issueId);
+        param.put("flagYn", flagYn);
 
         dao.saveUserConfigInfo(param);
         map.put("result", "저장되었습니다");
@@ -172,10 +172,10 @@ public class UserConfigCTRL {
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      String userID = (String) idParam;
+      String userId = (String) idParam;
       String userConfigID = (String) param.get("userConfigID");
-      String issueID = (String) idParam;
-      String flagYN = (String) param.get("flagYN");
+      String issueId = (String) idParam;
+      String flagYn = (String) param.get("flagYn");
 
       Object configSeqObj = param.get("configSeq");
       Object compCdObj = param.get("userConfigCompCd");
@@ -196,10 +196,10 @@ public class UserConfigCTRL {
         param.put("compCd", compCdInt);
       }
 
-      param.put("userID", userID);
+      param.put("userId", userId);
       param.put("userConfigID", userConfigID);
-      param.put("issueID", issueID);
-      param.put("flagYN", flagYN);
+      param.put("issueId", issueId);
+      param.put("flagYn", flagYn);
 
       dao.saveUserConfigTab(param);
       map.put("result", "저장되었습니다");

@@ -12,6 +12,6 @@ public class Bom {
   private String bomType;
   private Integer qty;
   private Double unitQty;
-  private String flagYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, issueId;
+  private Date regDt, issueDt;
 }

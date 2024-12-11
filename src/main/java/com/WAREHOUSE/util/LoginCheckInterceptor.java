@@ -18,7 +18,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
     HttpSession session = request.getSession(false);
     String ajaxCall = "";
-    String userID = "";
+    String userId = "";
     String userConfigID = "";
 
     try {
@@ -42,10 +42,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
       return false;
     }
 
-    userID = (String) session.getAttribute("userID");
+    userId = (String) session.getAttribute("userId");
     userConfigID = (String) session.getAttribute("userConfigID");
 
-    if (userID == null && userConfigID == null) {
+    if (userId == null && userConfigID == null) {
       if (ajaxCall.equals("true") == false) {
         response.sendRedirect(request.getContextPath() + "/reLogin");
       }

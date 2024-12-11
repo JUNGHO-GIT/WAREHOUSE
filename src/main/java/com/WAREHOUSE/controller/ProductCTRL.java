@@ -77,15 +77,15 @@ public class ProductCTRL {
   @PostMapping(value="/act/saveProduct", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveProduct (
     @RequestBody Product param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      param.setIssueID(userID);
+      param.setIssueId(userId);
       dao.saveProduct(param);
-      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
       logs.error("saveProduct", e.getMessage());

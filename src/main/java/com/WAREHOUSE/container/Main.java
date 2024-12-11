@@ -11,6 +11,6 @@ public class Main {
   private String page, subPage, parentsPage;
   private String pageUrl, pageNm, pageIcon;
   private Integer pageOrder, pageNo;
-  private String flagYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, issueId;
+  private Date regDt, issueDt;
 }

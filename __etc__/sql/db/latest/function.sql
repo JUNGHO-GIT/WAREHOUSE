@@ -1,4 +1,5 @@
-DELIMITER ;;
+/**************************************************************************************************/
+DELIMITER $$
 CREATE FUNCTION `splitToRow`(
  `inStr` TEXT,
  `split` VARCHAR(1),
@@ -9,5 +10,5 @@ BEGIN
     SUBSTRING_INDEX(inStr, split, pos),
     split, -1
   )
-END
-DELIMITER ;;
+END $$
+DELIMITER ;

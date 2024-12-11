@@ -223,8 +223,8 @@ function fnSaveItems() {
     "toMajor": $(`#toMajor`).val() || "",
     "toPhone": $(`#toPhone`).val() || "",
     "compCd": $(`#comp`).val() || 0,
-    "flagYN": "Y",
-    "planYN": "N"
+    "flagYn": "Y",
+    "planYn": "N"
   };
 
   $.ajax({
@@ -302,8 +302,8 @@ function fnSavePlan() {
     "toMajor": $(`#toMajor`).val() || "",
     "toPhone": $(`#toPhone`).val() || "",
     "compCd": $(`#comp`).val() || 0,
-    "flagYN": "Y",
-    "planYN": "Y",
+    "flagYn": "Y",
+    "planYn": "Y",
   };
 
   $.ajax({
@@ -370,8 +370,11 @@ function fnChangeList() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
 
+  // 오늘
   const curDate = fnToday();
-  const pastDate = fnDateAdd(curDate, -30);
+
+  // 2년 전
+  const pastDate = fnDateAdd(curDate, -730);
 
   $(`#shipDt`).datepicker(G_calendar);
   $(`#shipDt`).val(curDate);

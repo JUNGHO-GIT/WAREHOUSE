@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class UserConfig {
   private Integer configSeq;
-  private String config, userID, pageNm, gridCd;
+  private String config, userId, pageNm, gridCd;
   private String userConfigID, userConfigPw;
   private String userConfigNm, userConfigPhone, userConfigEmail;
   private String userConfigLevel, userConfigPerm;
   private Integer userConfigCompCd;
-  private String flagYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, issueId;
+  private Date regDt, issueDt;
 }

@@ -28,10 +28,10 @@ CREATE TABLE `tblBom` (
   `bomType` varchar(5) NOT NULL COMMENT '제품/자재구분',
   `qty` int(11) DEFAULT '0' COMMENT '재고',
   `unitQty` decimal(5,2) DEFAULT '0.00' COMMENT '단위 수량',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   UNIQUE KEY `UNIQUE` (`bomType`,`resrcCd`,`prodCd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='BOM관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -60,10 +60,10 @@ CREATE TABLE `tblCommonCd` (
   `itemNm` varchar(50) DEFAULT '' COMMENT '공통코드 이름',
   `itemSeq` int(11) DEFAULT '1' COMMENT '공통코드 순서',
   `itemMemo` varchar(400) DEFAULT '' COMMENT '공통코드 Memo',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`groupCd`,`itemCd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='공통코드';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -89,18 +89,18 @@ CREATE TABLE `tblCompany` (
   `compCd` int(10) NOT NULL AUTO_INCREMENT COMMENT '거래처 코드',
   `compNm` varchar(100) DEFAULT '' COMMENT '거래처 이름',
   `compNo` varchar(20) DEFAULT '' COMMENT '사업자 번호',
-  `owner` varchar(20) DEFAULT '' COMMENT '대표자',
-  `major` varchar(20) DEFAULT '' COMMENT '담당자',
-  `phone` varchar(100) DEFAULT '' COMMENT '연락처',
-  `taxEmail` varchar(100) DEFAULT '' COMMENT '세금계산서 Email',
-  `address` varchar(100) DEFAULT '' COMMENT '주소',
+  `compOwner` varchar(20) DEFAULT '' COMMENT '대표자',
+  `compMajor` varchar(20) DEFAULT '' COMMENT '담당자',
+  `userPhone` varchar(100) DEFAULT '' COMMENT '연락처',
+  `compEmail` varchar(100) DEFAULT '' COMMENT '세금계산서 Email',
+  `compAddr` varchar(100) DEFAULT '' COMMENT '주소',
   `compType` varchar(1000) DEFAULT '' COMMENT '업태',
   `compPart` varchar(1000) DEFAULT '' COMMENT '종목',
   `remarks` varchar(4000) DEFAULT '' COMMENT '메모',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`compCd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='거래처';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -124,10 +124,10 @@ CREATE TABLE `tblFiles` (
   `tableKey` varchar(50) DEFAULT '' COMMENT '테이블 PRI 값',
   `fileUrl` varchar(1000) DEFAULT '' COMMENT '파일위치',
   `fileNm` varchar(200) DEFAULT '' COMMENT '파일이름',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`fileSeq`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8 COMMENT='파일관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -155,10 +155,10 @@ CREATE TABLE `tblHouse` (
   `parentsHCd` int(11) DEFAULT '0' COMMENT '부모 창고',
   `houseOrder` int(11) DEFAULT '1' COMMENT '순서',
   `step` int(11) DEFAULT '0' COMMENT '단계',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`houseCd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COMMENT='창고관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -193,12 +193,12 @@ CREATE TABLE `tblProduct` (
   `protectedQty` int(11) DEFAULT '0' COMMENT '안전재고',
   `unitPrice` decimal(18,0) DEFAULT '0' COMMENT '표준단가',
   `compCd` int(11) DEFAULT '0' COMMENT '기본거래처',
-  `remark` varchar(3000) DEFAULT '' COMMENT '비고',
+  `remarks` varchar(3000) DEFAULT '' COMMENT '비고',
   `barcode` varchar(8) DEFAULT '' COMMENT '바코드(W+prodCd, 빈자리 0으로채움)',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`prodCd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='제품관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -227,13 +227,13 @@ CREATE TABLE `tblProductInOut` (
   `qty` int(11) DEFAULT '0' COMMENT '수량',
   `houseCd` int(11) DEFAULT '0' COMMENT '창고',
   `unitPrice` decimal(15,0) DEFAULT '0' COMMENT '단가',
-  `remark` varchar(1000) DEFAULT '' COMMENT '용처',
+  `remarks` varchar(1000) DEFAULT '' COMMENT '용처',
   `compCd` int(11) DEFAULT '0' COMMENT '거래처 코드',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `planYN` varchar(1) DEFAULT 'N' COMMENT '입출고예정여부',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `planYn` varchar(1) DEFAULT 'N' COMMENT '입출고예정여부',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`inOutSeq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8 COMMENT='제품입출고관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -268,12 +268,12 @@ CREATE TABLE `tblResource` (
   `option2` varchar(50) DEFAULT '' COMMENT '사양',
   `unitPrice` decimal(18,0) DEFAULT '0' COMMENT '표준단가',
   `compCd` int(11) DEFAULT '0' COMMENT '기본거래처',
-  `remark` varchar(3000) DEFAULT '' COMMENT '비고',
+  `remarks` varchar(3000) DEFAULT '' COMMENT '비고',
   `barcode` varchar(8) DEFAULT '' COMMENT '바코드(R+prodCd, 빈자리 0으로채움)',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`resrcCd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='자재관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -302,13 +302,13 @@ CREATE TABLE `tblResourceInOut` (
   `qty` int(11) DEFAULT '0' COMMENT '수량',
   `houseCd` int(11) DEFAULT '0' COMMENT '창고',
   `unitPrice` decimal(15,0) DEFAULT '0' COMMENT '단가',
-  `remark` varchar(1000) DEFAULT '' COMMENT '용처',
+  `remarks` varchar(1000) DEFAULT '' COMMENT '용처',
   `compCd` int(11) DEFAULT '0' COMMENT '거래처 코드',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `planYN` varchar(1) DEFAULT 'N' COMMENT '입출고예정여부',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `planYn` varchar(1) DEFAULT 'N' COMMENT '입출고예정여부',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`inOutSeq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='제품입출고관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -333,10 +333,10 @@ DROP TABLE IF EXISTS `tblShipItems`;
 CREATE TABLE `tblShipItems` (
   `shipCd` int(11) unsigned NOT NULL COMMENT '출하코드',
   `inOutSeq` int(11) DEFAULT '0' COMMENT '입출고 시퀀스',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   UNIQUE KEY `UNIQUE` (`shipCd`,`inOutSeq`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='출하 목록 관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -361,10 +361,10 @@ DROP TABLE IF EXISTS `tblShipPlan`;
 CREATE TABLE `tblShipPlan` (
   `shipCd` int(11) unsigned NOT NULL COMMENT '출하코드',
   `inOutSeq` int(11) unsigned DEFAULT '0' COMMENT '입출고 시퀀스',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   UNIQUE KEY `UNIQUE` (`inOutSeq`,`shipCd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='출하 계획 관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -393,11 +393,11 @@ CREATE TABLE `tblShipping` (
   `toMajor` varchar(50) DEFAULT '' COMMENT '거래처 담당자',
   `toPhone` varchar(20) DEFAULT '' COMMENT '거래처 담당자 연락처',
   `compCd` int(11) DEFAULT '0' COMMENT '거래처 코드',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `planYN` varchar(1) DEFAULT 'N' COMMENT '출하계획여부',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `planYn` varchar(1) DEFAULT 'N' COMMENT '출하계획여부',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`shipCd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='출고 현황 및 출하';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -428,10 +428,10 @@ CREATE TABLE `tblSysMenu` (
   `pageIcon` varchar(50) DEFAULT '',
   `pageOrder` int(11) DEFAULT NULL,
   `pageNo` int(11) DEFAULT NULL,
-  `flagYN` varchar(1) DEFAULT 'Y',
-  `issueID` varchar(20) DEFAULT NULL,
-  `regDate` datetime DEFAULT NULL,
-  `issueDate` datetime DEFAULT NULL
+  `flagYn` varchar(1) DEFAULT 'Y',
+  `issueId` varchar(20) DEFAULT NULL,
+  `regDt` datetime DEFAULT NULL,
+  `issueDt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='메뉴구성';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -453,20 +453,20 @@ DROP TABLE IF EXISTS `tblUser`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tblUser` (
-  `userID` varchar(20) NOT NULL COMMENT '아이디',
-  `passwd` varchar(1000) DEFAULT '' COMMENT '비밀번호',
+  `userId` varchar(20) NOT NULL COMMENT '아이디',
+  `userPw` varchar(1000) DEFAULT '' COMMENT '비밀번호',
   `userNm` varchar(20) DEFAULT '' COMMENT '이름',
-  `phone` varchar(100) DEFAULT '' COMMENT '연락처',
-  `email` varchar(100) DEFAULT '' COMMENT 'E-mail',
-  `uLevel` varchar(5) DEFAULT '' COMMENT '회원등급',
-  `uPerm` varchar(1000) DEFAULT '' COMMENT '권한',
+  `userPhone` varchar(100) DEFAULT '' COMMENT '연락처',
+  `userEmail` varchar(100) DEFAULT '' COMMENT 'E-mail',
+  `userLevel` varchar(5) DEFAULT '' COMMENT '회원등급',
+  `userPerm` varchar(1000) DEFAULT '' COMMENT '권한',
   `offCnt` int(11) DEFAULT '15' COMMENT '연간휴무일',
   `compCd` int(11) DEFAULT '0' COMMENT '거래처 코드',
-  `flagYN` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
-  PRIMARY KEY (`userID`)
+  `flagYn` varchar(1) DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
+  PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='회원정보';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -490,13 +490,13 @@ DROP TABLE IF EXISTS `tblUserConfig`;
 CREATE TABLE `tblUserConfig` (
   `configSeq` int(11) NOT NULL AUTO_INCREMENT COMMENT '설정 시퀀스',
   `config` varchar(8000) DEFAULT '' COMMENT '환경설정',
-  `userID` varchar(20) DEFAULT '' COMMENT '유저 아이디',
+  `userId` varchar(20) DEFAULT '' COMMENT '유저 아이디',
   `pageNm` varchar(50) DEFAULT '' COMMENT '페이지 이름',
   `gridCd` varchar(10) DEFAULT '' COMMENT '그리드 코드',
-  `flagYN` varchar(1) DEFAULT '' COMMENT '삭제여부(Y:유효/N:삭제)',
-  `issueID` varchar(20) DEFAULT '' COMMENT '최종저장자',
-  `regDate` datetime DEFAULT NULL COMMENT '최초저장일',
-  `issueDate` datetime DEFAULT NULL COMMENT '최종저장일',
+  `flagYn` varchar(1) DEFAULT '' COMMENT '삭제여부(Y:유효/N:삭제)',
+  `issueId` varchar(20) DEFAULT '' COMMENT '최종저장자',
+  `regDt` datetime DEFAULT NULL COMMENT '최초저장일',
+  `issueDt` datetime DEFAULT NULL COMMENT '최종저장일',
   PRIMARY KEY (`configSeq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='그리드 환경 설정관리';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -575,8 +575,8 @@ CREATE  PROCEDURE `sp_Bom`(
 	IN `@bomType` VARCHAR(5),
 	IN `@qty` INT(10),
 	IN `@unitQty` DECIMAL(5,2),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -592,10 +592,10 @@ BEGIN
       qty,
       unitQty,
       bomType,
-      flagYN,
-      issueID,
-      regDate,
-      issueDate
+      flagYn,
+      issueId,
+      regDt,
+      issueDt
     )
     VALUES (
       `@prodCd`,
@@ -603,10 +603,10 @@ BEGIN
       `@qty`,
       `@unitQty`,
       `@bomType`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -615,9 +615,9 @@ BEGIN
       qty=`@qty`,
       unitQty=`@unitQty`,
       bomType=`@bomType`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       prodCd=`@prodCd` AND resrcCd=`@resrcCd` AND bomType=`@bomType`;
 	END IF;
@@ -642,8 +642,8 @@ CREATE  PROCEDURE `sp_Category`(
 	IN `@catNm` VARCHAR(100),
 	IN `@parentsCatSeq` INT(10),
 	IN `@catOrder` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -667,20 +667,20 @@ BEGIN
       parentsCatSeq,
       catOrder,
       step,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@catNm`,
       `@parentsCatSeq`,
       `@catOrder`,
       `@step`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -690,9 +690,9 @@ BEGIN
       step=`@step`,
       parentsCatSeq=`@parentsCatSeq`,
       catOrder=`@catOrder`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       catSeq=`@catSeq`;
 	END IF;
@@ -719,8 +719,8 @@ CREATE  PROCEDURE `sp_CommonCd`(
 	IN `@itemNm` VARCHAR(50),
 	IN `@itemMemo` VARCHAR(400),
 	IN `@itemSeq` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -743,10 +743,10 @@ BEGIN
       itemNm,
       itemMemo,
       itemSeq,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@groupCd`,
@@ -755,10 +755,10 @@ BEGIN
       `@itemNm`,
       `@itemMemo`,
       `@itemSeq`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -768,9 +768,9 @@ BEGIN
       itemNm=`@itemNm`,
       itemMemo=`@itemMemo`,
       itemSeq=`@itemSeq`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       groupCd=`@groupCd` AND itemCd=`@itemCd`;
 	END IF;
@@ -794,16 +794,16 @@ CREATE  PROCEDURE `sp_Company`(
 	IN `@compCd` INT(10),
 	IN `@compNm` VARCHAR(100),
 	IN `@compNo` VARCHAR(20),
-	IN `@owner` VARCHAR(20),
-	IN `@major` VARCHAR(20),
-	IN `@phone` VARCHAR(100),
-	IN `@taxEmail` VARCHAR(100),
-	IN `@address` VARCHAR(100),
+	IN `@compOwner` VARCHAR(20),
+	IN `@compMajor` VARCHAR(20),
+	IN `@userPhone` VARCHAR(100),
+	IN `@compEmail` VARCHAR(100),
+	IN `@compAddr` VARCHAR(100),
 	IN `@compType` VARCHAR(1000),
 	IN `@compPart` VARCHAR(1000),
 	IN `@remarks` VARCHAR(4000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -816,34 +816,34 @@ BEGIN
     INSERT INTO tblCompany (
       compNm,
       compNo,
-      owner,
-      major,
-      phone,
-      taxEmail,
-      address,
+      compOwner,
+      compMajor,
+      userPhone,
+      compEmail,
+      compAddr,
       compType,
       compPart,
       remarks,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@compNm`,
       `@compNo`,
-      `@owner`,
-      `@major`,
-      `@phone`,
-      `@taxEmail`,
-      `@address`,
+      `@compOwner`,
+      `@compMajor`,
+      `@userPhone`,
+      `@compEmail`,
+      `@compAddr`,
       `@compType`,
       `@compPart`,
       `@remarks`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -851,17 +851,17 @@ BEGIN
     SET
       compNm=`@compNm`,
       compNo=`@compNo`,
-      owner=`@owner`,
-      major=`@major`,
-      phone=`@phone`,
-      taxEmail=`@taxEmail`,
-      address=`@address`,
+      compOwner=`@compOwner`,
+      compMajor=`@compMajor`,
+      userPhone=`@userPhone`,
+      compEmail=`@compEmail`,
+      compAddr=`@compAddr`,
       compType=`@compType`,
       compPart=`@compPart`,
       remarks=`@remarks`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       compCd=`@compCd`;
 	END IF;
@@ -896,8 +896,8 @@ CREATE  PROCEDURE `sp_Files`(
   IN `@tableKey` VARCHAR(50),
   IN `@fileUrl` VARCHAR(1000),
   IN `@fileNm` VARCHAR(50),
-  IN `@flagYN` VARCHAR(1),
-  IN `@issueID` VARCHAR(20)
+  IN `@flagYn` VARCHAR(1),
+  IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -912,20 +912,20 @@ BEGIN
       tableKey,
       fileUrl,
       fileNm,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@tableNm`,
       `@tableKey`,
       `@fileUrl`,
       `@fileNm`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -935,9 +935,9 @@ BEGIN
       tableKey=`@tableKey`,
       fileUrl=`@fileUrl`,
       fileNm=`@fileNm`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       fileSeq=`@fileSeq`;
   END IF;
@@ -962,8 +962,8 @@ CREATE  PROCEDURE `sp_House`(
 	IN `@houseNm` VARCHAR(100),
 	IN `@parentsHCd` INT(10),
 	IN `@houseOrder` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -987,20 +987,20 @@ BEGIN
       parentsHCd,
       houseOrder,
       step,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@houseNm`,
       `@parentsHCd`,
       `@houseOrder`,
       `@step`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1010,9 +1010,9 @@ BEGIN
       step=`@step`,
       parentsHCd=`@parentsHCd`,
       houseOrder=`@houseOrder`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       houseCd=`@houseCd`;
   END IF;
@@ -1047,9 +1047,9 @@ CREATE  PROCEDURE `sp_Product`(
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
 	IN `@compCd` INT(10),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1072,11 +1072,11 @@ BEGIN
       maker,
       unitPrice,
       compCd,
-      remark,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@prodNm`,
@@ -1090,11 +1090,11 @@ BEGIN
       `@maker`,
       `@unitPrice`,
       `@compCd`,
-      `@remark`,
-      `@flagYN`,
+      `@remarks`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1111,10 +1111,10 @@ BEGIN
       maker=`@maker`,
       unitPrice=`@unitPrice`,
       compCd=`@compCd`,
-      remark=`@remark`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      remarks=`@remarks`,
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       prodCd=`@prodCd`;
   END IF;
@@ -1157,11 +1157,11 @@ CREATE  PROCEDURE `sp_ProductInOut`(
 	IN `@qty` INT(10),
 	IN `@houseCd` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
+	IN `@remarks` VARCHAR(1000),
 	IN `@compCd` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@planYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@planYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1177,13 +1177,13 @@ BEGIN
       qty,
       houseCd,
       unitPrice,
-      remark,
+      remarks,
       compCd,
-      flagYN,
-      planYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@inOutDt`,
@@ -1191,13 +1191,13 @@ BEGIN
       `@qty`,
       `@houseCd`,
       `@unitPrice`,
-      `@remark`,
+      `@remarks`,
       `@compCd`,
-      `@flagYN`,
-      `@planYN`,
+      `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1208,12 +1208,12 @@ BEGIN
       qty=`@qty`,
       houseCd=`@houseCd`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
+      remarks=`@remarks`,
       compCd=`@compCd`,
-      flagYN=`@flagYN`,
-      planYN=`@planYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      planYn=`@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       inOutSeq=`@inOutSeq`;
   END IF;
@@ -1240,9 +1240,9 @@ CREATE  PROCEDURE `sp_ProductInOutXls`(
 	IN `@houseNm` VARCHAR(1000),
 	IN `@compNm` VARCHAR(1000),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(1000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@prodCd` INTEGER DEFAULT 0;
@@ -1270,12 +1270,12 @@ BEGIN
     qty,
     houseCd,
     unitPrice,
-    remark,
+    remarks,
     compCd,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
   )
 	VALUES (
 		`@inOutDt`,
@@ -1283,12 +1283,12 @@ BEGIN
     `@qty`,
     `@houseCd`,
     `@unitPrice`,
-    `@remark`,
+    `@remarks`,
     `@compCd`,
-    `@flagYN`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 END ;;
 DELIMITER ;
@@ -1318,9 +1318,9 @@ CREATE  PROCEDURE `sp_ProductXls`(
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
 	IN `@compNm` VARCHAR(50),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1353,11 +1353,11 @@ BEGIN
     maker,
     unitPrice,
     compCd,
-    remark,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
 	)
 	VALUES (
 	  `@prodNm`,
@@ -1371,11 +1371,11 @@ BEGIN
     `@maker`,
     `@unitPrice`,
     `@compCd`,
-    `@remark`,
-    `@flagYN`,
+    `@remarks`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 
 	SET `@prodCd`=LAST_INSERT_ID();
@@ -1415,9 +1415,9 @@ CREATE  PROCEDURE `sp_Resource`(
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
 	IN `@compCd` INT(10),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1440,11 +1440,11 @@ BEGIN
       maker,
       unitPrice,
       compCd,
-      remark,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@resrcNm`,
@@ -1458,11 +1458,11 @@ BEGIN
       `@maker`,
       `@unitPrice`,
       `@compCd`,
-      `@remark`,
-      `@flagYN`,
+      `@remarks`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1479,10 +1479,10 @@ BEGIN
       maker=`@maker`,
       unitPrice=`@unitPrice`,
       compCd=`@compCd`,
-      remark=`@remark`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      remarks=`@remarks`,
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       resrcCd=`@resrcCd`;
   END IF;
@@ -1525,11 +1525,11 @@ CREATE  PROCEDURE `sp_ResourceInOut`(
 	IN `@qty` INT(10),
 	IN `@houseCd` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
+	IN `@remarks` VARCHAR(1000),
 	IN `@compCd` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@planYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@planYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1545,13 +1545,13 @@ BEGIN
       qty,
       houseCd,
       unitPrice,
-      remark,
+      remarks,
       compCd,
-      flagYN,
-      planYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@inOutDt`,
@@ -1559,13 +1559,13 @@ BEGIN
       `@qty`,
       `@houseCd`,
       `@unitPrice`,
-      `@remark`,
+      `@remarks`,
       `@compCd`,
-      `@flagYN`,
-      `@planYN`,
+      `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1576,12 +1576,12 @@ BEGIN
       qty=`@qty`,
       houseCd=`@houseCd`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
+      remarks=`@remarks`,
       compCd=`@compCd`,
-      flagYN=`@flagYN`,
-      planYN=`@planYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      planYn=`@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       inOutSeq=`@inOutSeq`;
   END IF;
@@ -1608,9 +1608,9 @@ CREATE  PROCEDURE `sp_ResourceInOutXls`(
 	IN `@houseNm` VARCHAR(1000),
 	IN `@compNm` VARCHAR(1000),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(1000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@resrcCd` INTEGER DEFAULT 0;
@@ -1638,12 +1638,12 @@ BEGIN
     qty,
     houseCd,
     unitPrice,
-    remark,
+    remarks,
     compCd,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
   )
 	VALUES (
 		`@inOutDt`,
@@ -1651,12 +1651,12 @@ BEGIN
     `@qty`,
     `@houseCd`,
     `@unitPrice`,
-    `@remark`,
+    `@remarks`,
     `@compCd`,
-    `@flagYN`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 END ;;
 DELIMITER ;
@@ -1686,9 +1686,9 @@ CREATE  PROCEDURE `sp_ResourceXls`(
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
 	IN `@compNm` VARCHAR(50),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
  	DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1721,11 +1721,11 @@ BEGIN
     maker,
     unitPrice,
     compCd,
-    remark,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
 	)
 	VALUES (
 	  `@resrcNm`,
@@ -1739,11 +1739,11 @@ BEGIN
     `@maker`,
     `@unitPrice`,
     `@compCd`,
-    `@remark`,
-    `@flagYN`,
+    `@remarks`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 
 	SET `@resrcCd`=LAST_INSERT_ID();
@@ -1773,20 +1773,20 @@ DELIMITER ;;
 CREATE  PROCEDURE `sp_ShipItems`(
 	IN `@shipCd` INT(10),
 	IN `@inOutSeqs` VARCHAR(4000),
-	IN `@issueID` VARCHAR(20)
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@pos` INT(10) DEFAULT 1;
 	DECLARE `@inOutSeq` VARCHAR(10) DEFAULT '';
 	DECLARE `@seq` INT(10) DEFAULT 0;
-	DECLARE `@flagYN` VARCHAR(1) DEFAULT 'Y';
+	DECLARE `@flagYn` VARCHAR(1) DEFAULT 'Y';
 	DECLARE `@now` DATETIME;
 	DECLARE `@seqs` VARCHAR(4000) DEFAULT '';
 
 	SET `@now`=NOW();
 
 	UPDATE tblShipItems
-  SET flagYN = 'N'
+  SET flagYn = 'N'
   WHERE shipCd = `@shipCd`;
 
 	WHILE `@pos`!=0 DO
@@ -1796,23 +1796,23 @@ BEGIN
       INSERT INTO tblShipItems (
         shipCd,
         inOutSeq,
-        flagYN,
-        regDate,
-        issueDate,
-        issueID
+        flagYn,
+        regDt,
+        issueDt,
+        issueId
       )
       VALUES (
         `@shipCd`,
         `@seq`,
-        `@flagYN`,
+        `@flagYn`,
         `@now`,
         `@now`,
-        `@issueID`
+        `@issueId`
       )
       ON DUPLICATE KEY UPDATE
-        flagYN=VALUES (`flagYN`),
-        issueDate=VALUES (`regDate`),
-        issueID=VALUES (`issueID`)
+        flagYn=VALUES (`flagYn`),
+        issueDt=VALUES (`regDt`),
+        issueId=VALUES (`issueId`)
       ;
 
       SET `@pos`=`@pos` + 1;
@@ -1851,9 +1851,9 @@ CREATE  PROCEDURE `sp_Shipping`(
   IN `@shipDt` VARCHAR(10),
 	IN `@shipMajor` VARCHAR(50),
   IN `@inOutSeqs` VARCHAR(4000),
-  IN `@flagYN` VARCHAR(1),
-  IN `@planYN` VARCHAR(1),
-  IN `@issueID` VARCHAR(20)
+  IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+  IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1869,11 +1869,11 @@ BEGIN
       toPhone,
       shipDt,
       shipMajor,
-      flagYN,
-      planYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@compCd`,
@@ -1881,11 +1881,11 @@ BEGIN
       `@toPhone`,
       `@shipDt`,
       `@shipMajor`,
-      `@flagYN`,
-      `@planYN`,
+      `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -1896,10 +1896,10 @@ BEGIN
       toPhone=`@toPhone`,
       shipDt=`@shipDt`,
       shipMajor=`@shipMajor`,
-      flagYN=`@flagYN`,
-      planYN = `@planYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      planYn = `@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       shipCd = `@shipCd`;
   END IF;
@@ -1908,10 +1908,10 @@ BEGIN
     SET `@shipCd` = LAST_INSERT_ID();
   END IF;
 
-  IF `@planYN` = 'Y' THEN
-    CALL sp_ShipPlan (`@shipCd`, `@inOutSeqs`, `@issueID`);
+  IF `@planYn` = 'Y' THEN
+    CALL sp_ShipPlan (`@shipCd`, `@inOutSeqs`, `@issueId`);
   ELSE
-    CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueID`);
+    CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueId`);
   END IF;
 
 END ;;
@@ -1933,20 +1933,20 @@ DELIMITER ;;
 CREATE  PROCEDURE `sp_ShipPlan`(
 	IN `@shipCd` INT(10),
 	IN `@inOutSeqs` VARCHAR(4000),
-	IN `@issueID` VARCHAR(20)
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@pos` INT(10) DEFAULT 1;
 	DECLARE `@inOutSeq` VARCHAR(10) DEFAULT '';
 	DECLARE `@seq` INT(10) DEFAULT 0;
-	DECLARE `@flagYN` VARCHAR(1) DEFAULT 'Y';
+	DECLARE `@flagYn` VARCHAR(1) DEFAULT 'Y';
 	DECLARE `@now` DATETIME;
 	DECLARE `@seqs` VARCHAR(4000) DEFAULT '';
 
 	SET `@now`=NOW();
 
 	UPDATE tblShipPlan
-  SET flagYN = 'N'
+  SET flagYn = 'N'
   WHERE shipCd = `@shipCd`;
 
 	WHILE `@pos`!=0 DO
@@ -1956,23 +1956,23 @@ BEGIN
       INSERT INTO tblShipPlan (
         shipCd,
         inOutSeq,
-        flagYN,
-        regDate,
-        issueDate,
-        issueID
+        flagYn,
+        regDt,
+        issueDt,
+        issueId
       )
       VALUES (
         `@shipCd`,
         `@seq`,
-        `@flagYN`,
+        `@flagYn`,
         `@now`,
         `@now`,
-        `@issueID`
+        `@issueId`
       )
       ON DUPLICATE KEY UPDATE
-        flagYN=VALUES (`flagYN`),
-        issueDate=VALUES (`regDate`),
-        issueID=VALUES (`issueID`)
+        flagYn=VALUES (`flagYn`),
+        issueDt=VALUES (`regDt`),
+        issueId=VALUES (`issueId`)
       ;
 
       SET `@pos`=`@pos` + 1;
@@ -2053,73 +2053,73 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_User`(
-	IN `@userID` VARCHAR(20),
-	IN `@passwd` VARCHAR(1000),
+	IN `@userId` VARCHAR(20),
+	IN `@userPw` VARCHAR(1000),
 	IN `@userNm` VARCHAR(20),
-	IN `@phone` VARCHAR(100),
-	IN `@email` VARCHAR(100),
-	IN `@uLevel` VARCHAR(5),
+	IN `@userPhone` VARCHAR(100),
+	IN `@userEmail` VARCHAR(100),
+	IN `@userLevel` VARCHAR(5),
 	IN `@compCd` INT(10),
-	IN `@uPerm` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@userPerm` VARCHAR(1000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
 
-	IF `@uLevel`='' THEN
-    SELECT '00100' INTO `@uLevel`;
+	IF `@userLevel`='' THEN
+    SELECT '00100' INTO `@userLevel`;
   END IF;
 
 	SELECT COUNT(*) INTO `@isCd`
   FROM tblUser
-  WHERE userID=`@userID`;
+  WHERE userId=`@userId`;
 
 	IF `@isCd`=0 THEN
     INSERT INTO tblUser (
-      userID,
-      passwd,
+      userId,
+      userPw,
       userNm,
-      phone,
-      email,
-      uLevel,
+      userPhone,
+      userEmail,
+      userLevel,
       compCd,
-      uPerm,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      userPerm,
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
-      `@userID`,
-      `@passwd`,
+      `@userId`,
+      `@userPw`,
       `@userNm`,
-      `@phone`,
-      `@email`,
-      `@uLevel`,
+      `@userPhone`,
+      `@userEmail`,
+      `@userLevel`,
       `@compCd`,
-      `@uPerm`,
-      `@flagYN`,
+      `@userPerm`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
       tblUser
     SET
-      passwd=`@passwd`,
+      userPw=`@userPw`,
       userNm=`@userNm`,
-      phone=`@phone`,
-      email=`@email`,
-      uLevel=`@uLevel`,
+      userPhone=`@userPhone`,
+      userEmail=`@userEmail`,
+      userLevel=`@userLevel`,
       compCd=`@compCd`,
-      uPerm=`@uPerm`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      userPerm=`@userPerm`,
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
-      userID=`@userID`;
+      userId=`@userId`;
   END IF;
 END ;;
 DELIMITER ;
@@ -2139,49 +2139,49 @@ DELIMITER ;
 DELIMITER ;;
 CREATE  PROCEDURE `sp_UserConfig`(
 	IN `@configSeq` INT(10),
-	IN `@userID` VARCHAR(20),
+	IN `@userId` VARCHAR(20),
 	IN `@pageNm` VARCHAR(50),
 	IN `@gridCd` VARCHAR(10),
 	IN `@config` VARCHAR(8000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
 
 	SELECT COUNT(*) INTO `@isCd`
   FROM tblUserConfig
-  WHERE userID=`@userID` AND pageNm=`@pageNm` AND gridCd=`@gridCd`;
+  WHERE userId=`@userId` AND pageNm=`@pageNm` AND gridCd=`@gridCd`;
 
 	IF `@isCd`=0 THEN
     INSERT INTO tblUserConfig (
-      userID,
+      userId,
       pageNm,
       gridCd,
       config,
-      flagYN,
-      regDate,
-      issueID
+      flagYn,
+      regDt,
+      issueId
     )
     VALUES (
-      `@userID`,
+      `@userId`,
       `@pageNm`,
       `@gridCd`,
       `@config`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
       tblUserConfig
     SET
       config=`@config`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
-      userID=`@userID`;
+      userId=`@userId`;
   END IF;
 END ;;
 DELIMITER ;
@@ -2204,7 +2204,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013  SQL SECURITY DEFINER */
-/*!50001 VIEW `viewprodall` AS select `tblproduct`.`prodCd` AS `prodCd`,`tblproduct`.`prodNm` AS `prodNm`,'prod' AS `bomType` from `tblproduct` where (`tblproduct`.`flagYN` = 'Y') union all select `tblresource`.`resrcCd` AS `prodCd`,`tblresource`.`resrcNm` AS `prodNm`,'resrc' AS `bomType` from `tblresource` where (`tblresource`.`flagYN` = 'Y') */;
+/*!50001 VIEW `viewprodall` AS select `tblproduct`.`prodCd` AS `prodCd`,`tblproduct`.`prodNm` AS `prodNm`,'prod' AS `bomType` from `tblproduct` where (`tblproduct`.`flagYn` = 'Y') union all select `tblresource`.`resrcCd` AS `prodCd`,`tblresource`.`resrcNm` AS `prodNm`,'resrc' AS `bomType` from `tblresource` where (`tblresource`.`flagYn` = 'Y') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

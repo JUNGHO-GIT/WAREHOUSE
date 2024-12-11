@@ -15,20 +15,20 @@
   >
     <![CDATA[
     SELECT
-      A.userID, A.userNm, A.phone, A.email, A.uLevel, B.itemNm,
-      CASE WHEN A.flagYN = 'Y' THEN "유효" ELSE "무효" END flagYN
+      A.userId, A.userNm, A.userPhone, A.userEmail, A.userLevel, B.itemNm,
+      CASE WHEN A.flagYn = 'Y' THEN "유효" ELSE "무효" END flagYn
     FROM
       tblUser A
     LEFT JOIN (
       SELECT itemCd, itemNm
       FROM tblCommonCd
       WHERE groupCd = '0001'
-    ) B ON A.uLevel = B.itemCd
+    ) B ON A.userLevel = B.itemCd
     ]]>
     <if test='findUserNm!="" and findUserNm!=null'>
       WHERE (
         A.userNm LIKE CONCAT('%', #{findUserNm}, '%') OR
-        A.userID LIKE CONCAT('%', #{findUserNm}, '%')
+        A.userId LIKE CONCAT('%', #{findUserNm}, '%')
       )
     </if>
     ORDER BY
@@ -43,39 +43,44 @@
   >
     <![CDATA[
     SELECT
-      A.userID, A.passwd, A.userNm, A.phone, A.email, A.uLevel, A.compCd, A.uPerm, A.flagYN
+      A.userId, A.userPw, A.userNm, A.userPhone, A.userEmail, A.userLevel, A.userPerm,
+      A.compCd, A.flagYn
     FROM
       tblUser A
     WHERE
-      A.userID = #{userID}
+      A.userId = #{userId}
     ]]>
   </select>
 
-  <!-- User.checkUserID -->
+  <!-- User.checkUserId -->
   <select
-  	id="checkUserID"
+  	id="checkUserId"
   	parameterType="hashmap"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
+    <![CDATA[
     SELECT
       COUNT(*) cnt
     FROM
       tblUser
     WHERE
-      userID = #{userID}
+      userId = #{userId}
+    ]]>
   </select>
 
+  <!-- User.updateUser -->
   <update
     id="updatePw"
     parameterType="hashmap"
   >
-    /* User.updatePw */
+    <![CDATA[
     UPDATE
       tblUser
     SET
-      passwd = #{passwd}
+      userPw = #{userPw}
     WHERE
-      userID = #{userID}
+      userId = #{userId}
+    ]]>
   </update>
 
   <!-- User.listUserPerm -->
@@ -90,7 +95,7 @@
     FROM
       tblSysMenu
     WHERE
-      flagYN = 'Y' AND subPage!='00'
+      flagYn = 'Y' AND subPage!='00'
     ORDER BY
       pageOrder
     ]]>
@@ -100,19 +105,19 @@
   <select
   	id="saveUser"
   	parameterType="User"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
     CALL sp_User (
-      #{userID},
-      #{passwd},
+      #{userId},
+      #{userPw},
       #{userNm},
-      #{phone},
-      #{email},
-      #{uLevel},
+      #{userPhone},
+      #{userEmail},
+      #{userLevel},
+      #{userPerm},
       #{compCd},
-      #{uPerm},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 </mapper>

@@ -1251,7 +1251,7 @@ const XLS = {};
           case 0x100C /*VT_VECTOR|VT_VARIANT*/: if (blob.l <= Props[i][1]) {blob.l = Props[i][1]; fail = false;} break;
         }
         if (!PIDSI && blob.l <= Props[i][1]) {fail = false; blob.l = Props[i][1];}
-        if (fail) throw new Error("Read Error: Expected address " + Props[i][1] + ' at ' + blob.l + ' :' + i);
+        if (fail) throw new Error("Read Error: Expected compAddr " + Props[i][1] + ' at ' + blob.l + ' :' + i);
       }
       if (PIDSI) {
         var piddsi = PIDSI[Props[i][0]];
@@ -5819,7 +5819,7 @@ const XLS = {};
       enc: false, // encrypted
       sbcch: 0, // cch in the preceding SupBook
       snames: [], // sheetnames
-      sharedf: shared_formulae, // shared formulae by address
+      sharedf: shared_formulae, // shared formulae by compAddr
       arrayf: array_formulae, // array formulae array
       rrtabid: [], // RRTabId
       lastuser: "", // Last User from WriteAccess

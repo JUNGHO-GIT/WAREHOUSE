@@ -18,11 +18,11 @@ public interface UserDAO {
   );
 
   public User showUser(
-    @Param("userID") String userID
+    @Param("userId") String userId
   );
 
-  public Integer checkUserID(
-    @Param("userID") String userID
+  public Integer checkUserId(
+    @Param("userId") String userId
   );
 
   public void saveUser(
@@ -30,7 +30,7 @@ public interface UserDAO {
   );
 
   public void updatePw(
-    @Param("userID") String userID,
-    @Param("passwd") String passwd
+    @Param("userId") String userId,
+    @Param("userPw") String userPw
   );
 }

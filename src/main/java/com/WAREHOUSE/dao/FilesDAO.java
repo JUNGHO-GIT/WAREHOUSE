@@ -25,7 +25,7 @@ public interface FilesDAO {
     Files files
   );
 
-  public void updateIssueDate (
+  public void updateIssueDt (
     @Param("tableNm") String tableNm,
     @Param("tableKey") String tableKey,
     @Param("keyColumn") String keyColumn

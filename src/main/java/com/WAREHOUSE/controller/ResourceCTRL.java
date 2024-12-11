@@ -76,7 +76,7 @@ public class ResourceCTRL {
   @PostMapping(value="/act/saveResource", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveResource (
     @RequestBody Resource param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     logs.info("saveResource", json.toJson(param));
@@ -84,9 +84,9 @@ public class ResourceCTRL {
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      param.setIssueID(userID);
+      param.setIssueId(userId);
       dao.saveResource(param);
-      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
       logs.error("saveResource", e.getMessage());

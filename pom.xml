@@ -282,6 +282,7 @@
         <version>1.2.1</version>
         <executions>
           <execution>
+            <?m2e ignore?>
             <id>generate-rebel-xml</id>
             <phase>process-resources</phase>
             <goals>

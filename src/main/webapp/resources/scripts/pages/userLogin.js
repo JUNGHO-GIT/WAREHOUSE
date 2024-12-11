@@ -1,27 +1,27 @@
 // 1. 로그인 ---------------------------------------------------------------------------------------
 function fnAuth() {
 
-  if ($(`#uid`).val() == "") {
+  if ($(`#userId`).val() == "") {
     alert("아이디를 입력해 주세요");
-    $(`#uid`).on("focus", function () {});
+    $(`#userId`).on("focus", function () {});
     return;
   }
-  if ($(`#pass`).val() == "") {
+  if ($(`#userPw`).val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $(`#pass`).on("focus", function () {});
+    $(`#userPw`).on("focus", function () {});
     return;
   }
   if ($(`#setId`).is(":checked")) {
-    $.cookie("uid", $(`#uid`).val(), {expires: 365});
+    $.cookie("userId", $(`#userId`).val(), {expires: 365});
   }
   else {
-    $.cookie("uid", "");
+    $.cookie("userId", "");
   }
 
   $.ajax({
     url: `auth`,
     type: "POST",
-    data: `userID=${$(`#uid`).val()}&passwd=${$(`#pass`).val()}`,
+    data: `userId=${$(`#userId`).val()}&userPw=${$(`#userPw`).val()}`,
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -44,12 +44,12 @@ function fnAuth() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  if ($.cookie("uid")) {
-    $(`#uid`).val($.cookie("uid"));
+  if ($.cookie("userId")) {
+    $(`#userId`).val($.cookie("userId"));
     $(`#setId`).prop("checked", "checked");
-    $(`#pass`).on("focus", function () {});
+    $(`#userPw`).on("focus", function () {});
   }
   else {
-    $(`#uid`).on("focus", function () {});
+    $(`#userId`).on("focus", function () {});
   }
 });

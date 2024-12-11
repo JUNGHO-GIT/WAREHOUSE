@@ -17,37 +17,48 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    summaryData:  [],
+    rowClick: (_, ui) => {
+      fnShow(ui.rowData.shipCd);
+      fnGetList02(ui.rowData.shipCd);
+    },
   };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnShow(ui.rowData.shipCd);
-    fnGetList02(ui.rowData.shipCd);
-  };
-
   const colModel = [
-    {dataIndx:"shipCd", title:"출하코드", dataType:"string", align:"center",,
+    {
+      title:"출하코드", dataIndx:"shipCd", dataType:"string", align:"center",
       hidden:true,
     },
-    {dataIndx:"shipDt", title:"출하예정일", dataType:"string", align:"center",
-    },
-    {dataIndx:"compCd", title:"거래처코드", dataType:"string", align:"center",,
+    {
+      title:"거래처코드", dataIndx:"compCd", dataType:"string", align:"center",
       hidden:true,
     },
-    {dataIndx:"compNm", title:"거래처", dataType:"string", align:"center",
+    {
+      title:"출하일", dataIndx:"shipDt", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"toMajor", title:"거래처담당자", dataType:"string", align:"center",
+    {
+      title:"거래처", dataIndx:"compNm", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"toPhone", title:"담당자번호", dataType:"string", align:"center",
+    {
+      title:"거래처담당자", dataIndx:"toMajor", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"shipMajor", title:"출하담당자", dataType:"string", align:"center",
+    {
+      title:"담당자번호", dataIndx:"toPhone", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"cnt", title:"출하항목수", dataType:"string", align:"center",
+    {
+      title:"출하담당자", dataIndx:"shipMajor", dataType:"string", align:"center",
+      minWidth:100,
+    },
+    {
+      title:"항목수", dataIndx:"cnt", dataType:"string", align:"center",
+      minWidth:50,
     },
   ];
-
   $.ajax({
-    url: "act/listShipPlan",
+    url: "act/listShipItems",
     data:`shipDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
@@ -55,8 +66,14 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      gridOption.title = updateTitle("shipPlan", "출하 계획 관리", myJsonData);
+
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -66,7 +83,6 @@ function fnGetList01 () {
 function fnGetList02 (shipCd) {
 
   const $grid02 = $(`#grid02`);
-  $(`#shipCd`).val(shipCd);
 
   const gridOption = {
     xlsNm: "shippingList.xlsx",
@@ -82,21 +98,32 @@ function fnGetList02 (shipCd) {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    summaryData: [],
   };
-
   const colModel = [
-    {dataIndx:"shipDt", title:"출하예정일", dataType:"string", align:"center"
+    {
+      title:"출하예정일", dataIndx:"shipDt", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center"
+    {
+      title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"option1", title:"재질", dataType:"string", align:"center"
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"option2", title:"규격", dataType:"string", align:"center"
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth:100,
     },
-    {dataIndx:"qty", title:"출하수량", dataType:"string", align:"center"
+    {
+      title:"출하수량", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth:50,
     },
   ];
 
+  $(`#shipCd`).val(shipCd);
   $.ajax({
     url: "act/listShipPlanDetail",
     data: `shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
@@ -106,13 +133,12 @@ function fnGetList02 (shipCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      // 제품이 있는 경우만 그리드 표시
-      obj.dataModel = {
-        data: myJsonData
-        ? myJsonData.filter(function (item) {return item.prodNm ? item.prodNm.trim() : ""})
-        : []
-      };
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      $grid02.pqGrid({
+        ...gridOption,
+        dataModel: { data: myJsonData },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -123,7 +149,7 @@ function fnShow(shipCd) {
 
   $.ajax({
     url: "act/showShipPlan",
-    data: `shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
+    data:`shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -148,44 +174,26 @@ function fnShow(shipCd) {
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDel() {
 
-  var getData = $(`#grid01`).pqGrid("getData");
-  var shipCd = "";
-  var shipDt = "";
-  var shipMajor = "";
-  var toMajor = "";
-  var toPhone = "";
-  var compCd = "";
-  var flagYN = "N";
-  var planYN = "Y";
+  const $grid01 = $(`#grid01`);
+  const getData = $grid01.pqGrid("getData");
 
-  for (let i = 0; i < getData.length; i++) {
-    if (getData[i].pq_rowselect == true) {
-      shipCd = parseInt(getData[i].shipCd);
-      shipDt = getData[i].shipDt;
-      shipMajor = getData[i].shipMajor;
-      toMajor = getData[i].toMajor;
-      toPhone = getData[i].toPhone;
-      compCd = parseInt(getData[i].compCd);
-    }
-  }
-
-  if (!shipCd) {
-    alert("삭제할 출하 계획 항목을 선택해주세요");
+  if (getData.length === 0) {
+    alert("삭제할 출하 예정 항목이 없습니다");
     return;
   }
-  if (!confirm("해당 출하 계획 항목을 삭제하시겠습니까?")) {
+  if (!confirm("해당 출하 예정 항목을 삭제하시겠습니까?")) {
     return;
   }
 
   const param = {
-    "shipCd": shipCd || "0",
-    "shipDt": shipDt || "",
-    "shipMajor": shipMajor || "",
-    "toMajor": toMajor || "",
-    "toPhone": toPhone || "",
-    "compCd": compCd || "0",
-    "flagYN": flagYN,
-    "planYN": planYN
+    shipCd: $(`#shipCd`).val() || "0",
+    shipDt: $(`#shipDt`).val() || "",
+    shipMajor: $(`#shipMajor`).val() || "",
+    toMajor: $(`#toMajor`).val() || "",
+    toPhone: $(`#toPhone`).val() || "",
+    compCd: $(`#compCd`).val() || "",
+    flagYn: "N",
+    planYn: "Y",
   };
 
   $.ajax({
@@ -232,20 +240,26 @@ function fnReset() {
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
 function fnExcelDown() {
-  var shipCd = $(`#shipCd`).val();
+  const shipCd = $(`#shipCd`).val();
 
   if (!shipCd) {
     alert("다운받을 출하 계획 항목을 선택해주세요");
     return;
   }
-  var valUrl = "/shipPlanExcelDown?shipCd="+shipCd;
+
+  const valUrl = `/shipPlanDetailExcelDown?shipCd=${shipCd}`;
   window.open(valUrl);
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
+
+  // 오늘
   const curDate = fnToday();
-  var pastDate = fnDateAdd(curDate, -30);
+
+  // 2년 전
+  const pastDate = fnDateAdd(curDate, -730);
+
   $(`#inOutDt`).datepicker(G_calendar);
   $(`#inOutDt`).val(curDate);
   $(`#findStartDt`).datepicker(G_calendar);

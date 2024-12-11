@@ -50,10 +50,10 @@ function fnGetList01 () {
     },
     {
       title:"출하담당자", dataIndx:"shipMajor", dataType:"string", align:"center",
-      minWidth:50,
+      minWidth:100,
     },
     {
-      title:"출하항목수", dataIndx:"cnt", dataType:"string", align:"center",
+      title:"항목수", dataIndx:"cnt", dataType:"string", align:"center",
       minWidth:50,
     },
   ];
@@ -100,7 +100,6 @@ function fnGetList02 (shipCd) {
     numberCell: {show: true, resizable: false, width: 30},
     summaryData: [],
   };
-
   const colModel = [
     {
       title:"출하일", dataIndx:"shipDt", dataType:"string", align:"center",
@@ -134,7 +133,6 @@ function fnGetList02 (shipCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (myJsonData) => {
-      // 제품이 있는 경우만 그리드 표시
       $grid02.pqGrid({
         ...gridOption,
         dataModel: { data: myJsonData },
@@ -183,25 +181,24 @@ function fnDel() {
     alert("삭제할 출하 항목이 없습니다");
     return;
   }
-
   if (!confirm("해당 출하 항목을 삭제하시겠습니까?")) {
     return;
-  }/*
+  }
 
   const param = {
-    "shipCd": shipCd,
-    "shipDt": shipDt,
-    "shipMajor": shipMajor,
-    "toMajor": toMajor,
-    "toPhone": toPhone,
-    "compCd": compCd,
-    "flagYN": flagYN,
-    "planYN": planYN,
-  }; */
+    shipCd: $(`#shipCd`).val() || "0",
+    shipDt: $(`#shipDt`).val() || "",
+    shipMajor: $(`#shipMajor`).val() || "",
+    toMajor: $(`#toMajor`).val() || "",
+    toPhone: $(`#toPhone`).val() || "",
+    compCd: $(`#compCd`).val() || "",
+    flagYn: "N",
+    planYn: "N",
+  };
 
   $.ajax({
     url: "act/saveShipItems",
-    data: JSON.stringify({dataList : getData}),
+    data: JSON.stringify(param),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -257,8 +254,11 @@ function fnExcelDown() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
 
+  // 오늘
   const curDate = fnToday();
-  const pastDate = fnDateAdd(curDate, -30);
+
+  // 2년 전
+  const pastDate = fnDateAdd(curDate, -730);
 
   $(`#inOutDt`).datepicker(G_calendar);
   $(`#inOutDt`).val(curDate);

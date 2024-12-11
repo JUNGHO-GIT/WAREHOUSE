@@ -14,10 +14,10 @@ public class ProductInOut {
   private String prodNm;
   private Integer qty;
   private Double unitPrice, supplyPrice;
-  private String remark;
+  private String remarks;
   private Integer houseCd, compCd;
   private String houseNm, compNm;
   private String fileUrl;
-  private String flagYN, planYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, planYn, issueId;
+  private Date regDt, issueDt;
 }

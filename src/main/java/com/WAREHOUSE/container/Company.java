@@ -10,8 +10,10 @@ import lombok.Setter;
 public class Company {
   private Integer compCd;
   private String compNm, compNo;
-  private String owner, major, phone, taxEmail, address, compType, compPart, remarks;
-  private String flagYN, issueID;
+  private String compType, compPart;
+  private String compOwner, compMajor;
+  private String compAddr, compEmail, compPhone;
+  private String remarks, flagYn, issueId;
   private String fileUrl;
-  private Date regDate, issueDate;
+  private Date regDt, issueDt;
 }

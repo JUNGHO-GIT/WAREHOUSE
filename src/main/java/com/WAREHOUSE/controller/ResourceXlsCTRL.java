@@ -43,7 +43,7 @@ public class ResourceXlsCTRL {
   @PostMapping(value="/act/saveResourceXls", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveResourceXls (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
@@ -54,13 +54,13 @@ public class ResourceXlsCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIDParam = (String) userID;
+      String userIdParam = (String) userId;
       String resrcNmParam = (String) jsonObj.get("resrcNm");
       String resrcTypeParam = (String) jsonObj.get("resrcType");
       String qualityParam = (String) jsonObj.get("quality");
       String option1Param = (String) jsonObj.get("option1");
       String option2Param = (String) jsonObj.get("option2");
-      String remarkParam = (String) jsonObj.get("remark");
+      String remarksParam = (String) jsonObj.get("remarks");
       String makerParam = (String) jsonObj.get("maker");
       String unitParam = (String) jsonObj.get("unit");
       Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
@@ -81,12 +81,12 @@ public class ResourceXlsCTRL {
         param.setOption2(option2Param);
         param.setProtectedQty(protectedQtyParam);
         param.setUnitPrice(unitPriceParam);
-        param.setRemark(remarkParam);
-        param.setIssueID(userIDParam);
-        param.setFlagYN("Y");
+        param.setRemarks(remarksParam);
+        param.setIssueId(userIdParam);
+        param.setFlagYn("Y");
 
         dao.saveResourceXls(param);
-        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+        map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
         logs.error("saveResourceXls", e.getMessage());

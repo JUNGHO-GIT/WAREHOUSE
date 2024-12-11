@@ -18,9 +18,9 @@
     FROM
       tblUserConfig
 	  WHERE
-      userID = #{userConfigID} AND pageNm = #{pageNm} AND gridCd = #{gridCd}
+      userId = #{userConfigID} AND pageNm = #{pageNm} AND gridCd = #{gridCd}
 	  ORDER BY
-      issueDate DESC limit 1
+      issueDt DESC limit 1
   </select>
 
   <!-- UserConfig.showUserConfigInfo -->
@@ -29,49 +29,53 @@
   	parameterType="hashmap"
   	resultType="UserConfig"
   >
+    <![CDATA[
   	SELECT
-      userID userConfigID,
-      passwd userConfigPw,
+      userId userConfigID,
+      userPw userConfigPw,
       userNm userConfigNm,
-      uLevel userConfigLevel,
-      uPerm userConfigPerm,
-      phone userConfigPhone,
-      email userConfigEmail,
+      userLevel userConfigLevel,
+      userPerm userConfigPerm,
+      userPhone userConfigPhone,
+      userEmail userConfigEmail,
       compCd userConfigCompCd,
-      flagYN flagYN
+      flagYn flagYn
     FROM
       tblUser
     WHERE
-      userID = #{userConfigID}
+      userId = #{userConfigID}
+    ]]>
   </select>
 
+  <!-- UserConfig.updateUserConfigInfo -->
   <update
     id="updateUserConfigPw"
     parameterType="hashmap"
   >
-    /* UserConfig.updateUserConfigPw */
+    <![CDATA[
     UPDATE
       tblUser
     SET
-      passwd = #{userConfigPw}
+      userPw = #{userConfigPw}
     WHERE
-      userID = #{userConfigID}
+      userId = #{userConfigID}
+    ]]>
   </update>
 
   <!-- UserConfig.saveUserConfigTab -->
   <select
   	id="saveUserConfigTab"
   	parameterType="hashmap"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
   	CALL sp_UserConfig (
       #{configSeq},
-      #{userID},
+      #{userId},
       #{pageNm},
       #{gridCd},
       #{config},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 
@@ -79,16 +83,16 @@
   <select
   	id="saveUserConfigInfo"
   	parameterType="hashmap"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
   	CALL sp_UserConfig (
       #{configSeq},
-      #{userID},
+      #{userId},
       #{pageNm},
       #{gridCd},
       #{config},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

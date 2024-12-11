@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.User;
 import com.WAREHOUSE.dao.UserDAO;
-import com.WAREHOUSE.util.Json;
 import com.WAREHOUSE.util.Logs;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +26,6 @@ public class UserCTRL {
 
   private final UserDAO dao;
   private final Logs logs;
-  private final Json json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/", "/login"}, produces="text/html;charset=UTF-8")
@@ -74,8 +72,8 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/auth", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> auth (
-    @RequestParam(value="userID", required=false) String userID,
-    @RequestParam(value="passwd", required=false) String pwClient,
+    @RequestParam(value="userId", required=false) String userId,
+    @RequestParam(value="userPw", required=false) String pwClient,
     HttpSession session
   ) throws Exception {
 
@@ -86,12 +84,12 @@ public class UserCTRL {
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      User userInfo = dao.showUser(userID);
-      if (userInfo == null || userInfo.getUserID() == null) {
+      User userInfo = dao.showUser(userId);
+      if (userInfo == null || userInfo.getUserId() == null) {
         map.put("result", "존재하지 않는 아이디입니다");
       }
       else {
-        pwServer = userInfo.getPasswd();
+        pwServer = userInfo.getUserPw();
         if (pwClient.equals(pwServer)) {
           matchPasswd = true;
         }
@@ -100,15 +98,15 @@ public class UserCTRL {
         }
 
         if (matchPasswd) {
-          session.setAttribute("userID", userInfo.getUserID());
+          session.setAttribute("userId", userInfo.getUserId());
           session.setAttribute("userNm", userInfo.getUserNm());
-          session.setAttribute("uLevel", userInfo.getULevel());
-          session.setAttribute("uPerm", userInfo.getUPerm());
+          session.setAttribute("userLevel", userInfo.getUserLevel());
+          session.setAttribute("userPerm", userInfo.getUserPerm());
 
-          session.setAttribute("userConfigID", userInfo.getUserID());
+          session.setAttribute("userConfigID", userInfo.getUserId());
           session.setAttribute("userConfigNm", userInfo.getUserNm());
-          session.setAttribute("userConfigLevel", userInfo.getULevel());
-          session.setAttribute("userConfigPerm", userInfo.getUPerm());
+          session.setAttribute("userConfigLevel", userInfo.getUserLevel());
+          session.setAttribute("userConfigPerm", userInfo.getUserPerm());
 
           map.put("result", "로그인에 성공하였습니다");
         }
@@ -160,11 +158,11 @@ public class UserCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showUser", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showUser (
-    @RequestParam(value="userID", required=false) String userID
+    @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
 
     try {
-      User show = dao.showUser(userID);
+      User show = dao.showUser(userId);
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
@@ -175,17 +173,17 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/checkUserID", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> checkUserID (
-    @RequestParam(value="userID", required=false) String userID
+  @PostMapping(value="/act/checkUserId", produces="application/json;charset=UTF-8")
+  public ResponseEntity<?> checkUserId (
+    @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
 
     try {
-      Integer checkID = dao.checkUserID(userID);
+      Integer checkID = dao.checkUserId(userId);
       return ResponseEntity.ok(checkID);
     }
     catch (Exception e) {
-      logs.error("checkUserID", e.getMessage());
+      logs.error("checkUserId", e.getMessage());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -195,7 +193,7 @@ public class UserCTRL {
   @PostMapping(value="/act/saveUser", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveUser (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userID") String idParam
+    @SessionAttribute("userId") String idParam
   ) throws Exception {
 
 
@@ -203,12 +201,12 @@ public class UserCTRL {
 
     try {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-      String passwdOld = param.get("passwd").toString();
-      String passwdNew = passEncoder.encode(passwdOld);
-      String userID = (String) param.get("userID");
-      String issueID = (String) idParam;
+      String userPwOld = param.get("userPw").toString();
+      String userPwNew = passEncoder.encode(userPwOld);
+      String userId = (String) param.get("userId");
+      String issueId = (String) idParam;
       String signUpCheck = (String) param.get("signUpCheck");
-      String flagYN = (String) param.get("flagYN");
+      String flagYn = (String) param.get("flagYn");
 
       Object configSeqObj = param.get("configSeq");
       Object compCdObj = param.get("userConfigCompCd");
@@ -228,38 +226,38 @@ public class UserCTRL {
         Integer compCdInt = Integer.parseInt(compCdObj.toString());
         param.put("compCd", compCdInt);
       }
-      User storedUser = dao.showUser(userID);
+      User storedUser = dao.showUser(userId);
 
       // 1. 신규등록인 경우
       if (signUpCheck.equals("Y")) {
-        passwdNew = passEncoder.encode(passwdOld);
-        param.put("passwd", passwdNew);
-        param.put("issueID", issueID);
+        userPwNew = passEncoder.encode(userPwOld);
+        param.put("userPw", userPwNew);
+        param.put("issueId", issueId);
         dao.saveUser(param);
         map.put("result", "저장되었습니다");
       }
       // 2. 이미 등록된 아이디인 경우
       else {
         // 2-1. 없는 아이디인 경우
-        if (storedUser == null || storedUser.getUserID() == null) {
+        if (storedUser == null || storedUser.getUserId() == null) {
           map.put("result", "존재하지 않는 아이디입니다");
         }
         // 2-2. 존재하는 아이디인 경우
         else {
           // 2-2-1. 비밀번호를 변경한 직후 저장하는 경우 기존의 암호화된 비밀번호를 그대로 사용
-          String storedPasswd = storedUser.getPasswd();
-          if (passwdOld.equals("BCryptPassword")) {
-            passwdNew = storedPasswd;
+          String storedPasswd = storedUser.getUserPw();
+          if (userPwOld.equals("BCryptPassword")) {
+            userPwNew = storedPasswd;
           }
           // 2-2-2. 그렇지 않을경우 새로운 비밀번호를 암호화
           else {
-            passwdNew = passEncoder.encode(passwdOld);
+            userPwNew = passEncoder.encode(userPwOld);
           }
 
-          param.put("userID", userID);
-          param.put("passwd", passwdNew);
-          param.put("issueID", issueID);
-          param.put("flagYN", flagYN);
+          param.put("userId", userId);
+          param.put("userPw", userPwNew);
+          param.put("issueId", issueId);
+          param.put("flagYn", flagYn);
           dao.saveUser(param);
           map.put("result", "저장되었습니다");
         }
@@ -277,7 +275,7 @@ public class UserCTRL {
   @PostMapping(value="/act/updatePw", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> updatePw (
     @RequestBody User param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
 
@@ -285,26 +283,26 @@ public class UserCTRL {
 
     try {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-      String passwdOld = param.getPasswd();
-      String passwdNew = "";
-      User storedUser = dao.showUser(userID);
-      String storedPasswd = storedUser.getPasswd();
+      String userPwOld = param.getUserPw();
+      String userPwNew = "";
+      User storedUser = dao.showUser(userId);
+      String storedPasswd = storedUser.getUserPw();
 
       // 1. 없는 아이디인 경우
-      if (storedUser == null || storedUser.getUserID() == null) {
+      if (storedUser == null || storedUser.getUserId() == null) {
         result.put("result", "존재하지 않는 아이디입니다");
       }
       // 2. 존재하는 아이디인 경우
       else {
-        if (passwdOld.equals("BCryptPassword")) {
-          passwdNew = storedPasswd;
+        if (userPwOld.equals("BCryptPassword")) {
+          userPwNew = storedPasswd;
         }
         else {
-          passwdNew = passEncoder.encode(passwdOld);
+          userPwNew = passEncoder.encode(userPwOld);
         }
 
-        param.setPasswd(passwdNew);
-        dao.updatePw(userID, passwdNew);
+        param.setUserPw(userPwNew);
+        dao.updatePw(userId, userPwNew);
         result.put("result", "비밀번호를 변경했습니다");
       }
     }

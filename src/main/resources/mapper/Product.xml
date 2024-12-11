@@ -22,28 +22,28 @@
     FROM (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) B ON B.houseCd = A.houseCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
-      SELECT IFNULL(SUM(qty), 0) inQty, prodCd, MAX(issueDate) issueDate
+      SELECT IFNULL(SUM(qty), 0) inQty, prodCd, MAX(issueDt) issueDt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = A.prodCd
     LEFT JOIN (
-      SELECT IFNULL(SUM(qty), 0) outQty, prodCd, MAX(issueDate) issueDate
+      SELECT IFNULL(SUM(qty), 0) outQty, prodCd, MAX(issueDt) issueDt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = A.prodCd
     LEFT JOIN (
@@ -52,7 +52,7 @@
       INNER JOIN (
         SELECT MAX(fileSeq) maxFileSeq
         FROM tblFiles
-        WHERE flagYN = 'Y' AND tableNm = "tblProduct"
+        WHERE flagYn = 'Y' AND tableNm = "tblProduct"
         GROUP BY tableNm, tableKey
       ) F2 ON F1.fileSeq = F2.maxFileSeq
     ) F ON F.tableKey = A.prodCd
@@ -61,9 +61,9 @@
 			WHERE A.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
 		</if>
 		ORDER BY GREATEST (
-      IFNULL(E.issueDate, "1000-10-10"),
-      IFNULL(D.issueDate, "1000-10-10"),
-      IFNULL(A.issueDate, "1000-10-10")
+      IFNULL(E.issueDt, "1000-10-10"),
+      IFNULL(D.issueDt, "1000-10-10"),
+      IFNULL(A.issueDt, "1000-10-10")
     ) DESC
   </select>
 
@@ -76,34 +76,34 @@
     <![CDATA[
     SELECT
       A.prodCd, A.prodNm, A.prodType, A.houseCd, A.compCd, A.maker, A.unit, A.quality,
-      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remark, A.flagYN,
-      A.regDate, A.issueDate, B.houseNm, C.compNm, D.inQty, E.outQty,
+      A.option1, A.option2, A.protectedQty, A.unitPrice, A.barcode, A.remarks, A.flagYn,
+      A.regDt, A.issueDt, B.houseNm, C.compNm, D.inQty, E.outQty,
       (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
     FROM (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y' AND prodCd = #{prodCd}
+      WHERE flagYn = 'Y' AND prodCd = #{prodCd}
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblHouse
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) B ON B.houseCd = A.houseCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = A.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = A.prodCd
     ]]>
@@ -113,7 +113,7 @@
   <select
   	id="saveProduct"
   	parameterType="Product"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
     CALL sp_Product (
       #{prodCd},
@@ -128,9 +128,9 @@
       #{option2},
       #{maker},
       #{unitPrice},
-      #{remark},
-      #{flagYN},
-      #{issueID}
+      #{remarks},
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

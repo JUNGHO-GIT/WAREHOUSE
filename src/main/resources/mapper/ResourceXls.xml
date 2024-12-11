@@ -26,9 +26,9 @@
       #{option2},
       #{maker},
       #{unitPrice},
-      #{remark},
-      #{flagYN},
-      #{issueID}
+      #{remarks},
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

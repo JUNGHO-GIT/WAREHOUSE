@@ -141,7 +141,7 @@ public class FilesCTRL {
     @RequestParam(value="tableKey", required=false) String tableKey,
     @RequestParam(value="keyColumn", required=false) String keyColumn,
     @RequestParam(value="fileSeq", required=false) Integer fileSeq,
-    @SessionAttribute("userID") String issueID
+    @SessionAttribute("userId") String issueId
   ) throws Exception {
 
     // 1. 보안을 위해 UUID 사용
@@ -163,12 +163,12 @@ public class FilesCTRL {
       files.setFileNm(fileNm);
       files.setTableNm(tableNm);
       files.setTableKey(tableKey);
-      files.setFlagYN("Y");
-      files.setIssueID(issueID);
+      files.setFlagYn("Y");
+      files.setIssueId(issueId);
 
       filesUtil.uploadFiles(multipartFile, tableNm, files);
       dao.saveFiles(files);
-      dao.updateIssueDate(tableNm, tableKey, keyColumn);
+      dao.updateIssueDt(tableNm, tableKey, keyColumn);
       map.put("result", "업로드 되었습니다");
     }
     catch (Exception e) {
@@ -183,7 +183,7 @@ public class FilesCTRL {
   @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveFiles (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     String tableNm = param.get("tableNm").toString();
@@ -198,13 +198,13 @@ public class FilesCTRL {
       file.setTableKey(param.get("tableKey").toString());
       file.setFileUrl(param.get("fileUrl").toString());
       file.setFileNm(param.get("fileNm").toString());
-      file.setFlagYN(param.get("flagYN").toString());
-      file.setIssueID(param.get("issueID").toString());
+      file.setFlagYn(param.get("flagYn").toString());
+      file.setIssueId(param.get("issueId").toString());
 
       dao.saveFiles(file);
-      dao.updateIssueDate(tableNm, tableKey, keyColumn);
+      dao.updateIssueDt(tableNm, tableKey, keyColumn);
 
-      map.put("result", file.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      map.put("result", file.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
       logs.error("saveFiles", e.getMessage());

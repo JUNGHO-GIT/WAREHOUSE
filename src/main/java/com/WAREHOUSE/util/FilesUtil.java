@@ -12,7 +12,6 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import lombok.RequiredArgsConstructor;
 
 @Component
 /* @RequiredArgsConstructor */

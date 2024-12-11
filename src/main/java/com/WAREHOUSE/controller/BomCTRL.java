@@ -80,7 +80,7 @@ public class BomCTRL {
   @PostMapping(value="/act/saveBom", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveBom (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
@@ -92,9 +92,9 @@ public class BomCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIDParam = (String) userID;
+      String userIdParam = (String) userId;
       String bomTypeParam = (String) jsonObj.get("bomType");
-      String flagYNParam = (String) jsonObj.get("flagYN");
+      String flagYnParam = (String) jsonObj.get("flagYn");
       Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
       Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
       Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
@@ -107,11 +107,11 @@ public class BomCTRL {
         param.setQty(qtyParam);
         param.setUnitQty(unitQtyParam);
         param.setBomType(bomTypeParam);
-        param.setFlagYN(flagYNParam);
-        param.setIssueID(userIDParam);
+        param.setFlagYn(flagYnParam);
+        param.setIssueId(userIdParam);
 
         dao.saveBom(param);
-        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+        map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
         logs.error("saveBom", e.getMessage());

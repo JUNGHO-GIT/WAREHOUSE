@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class House {
   private Integer houseCd;
-  private String houseNm, flagYN, issueID, step;
+  private String houseNm, flagYn, issueId, step;
   private String name, isParent, parentsHNm;
   private Integer parentsHCd, houseOrder;
   private Integer id, pId, tId, level;
-  private Date regDate, issueDate;
+  private Date regDt, issueDt;
 }

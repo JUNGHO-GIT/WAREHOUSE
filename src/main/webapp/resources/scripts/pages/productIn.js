@@ -191,7 +191,7 @@ function fnShow(inOutSeq) {
     success: (data) => {
 
       // 1. 제품 관련 (입출고)
-      $(`#remark`).val(data.remark);
+      $(`#remarks`).val(data.remarks);
       $(`#inOutSeq`).val(data.inOutSeq);
       $(`#inOutDt`).val(data.inOutDt);
       $(`#unitPrice`).val(fnGetNumWithComma(data.unitPrice));
@@ -213,13 +213,13 @@ function fnShow(inOutSeq) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave(flagYn) {
 
   let flagParam = "";
   let planParam = "";
   let prodCd = $(`#prodCd`).val();
 
-  if (flagYN === "N") {
+  if (flagYn === "N") {
     flagParam = "N";
     planParam = "N";
     if ($(`#grid02`).pqGrid("getData").length === 0) {
@@ -285,12 +285,12 @@ function fnSave(flagYN) {
     "compNm": $(`#compNm`).val() || "",
     "houseCd": $(`#house`).val() || 0,
     "houseNm": $(`#houseNm`).val() || "",
-    "remark": $(`#remark`).val() || "",
+    "remarks": $(`#remarks`).val() || "",
     "qty": qty || 0,
     "unitPrice": unitPrice || 0,
     "supplyPrice": unitPrice * qty,
-    "flagYN": flagParam,
-    "planYN": planParam
+    "flagYn": flagParam,
+    "planYn": planParam
   };
 
   $.ajax({
@@ -326,7 +326,7 @@ function fnReset() {
   $(`#qty`).val("0");
   $(`#unitPrice`).val("0");
   $(`#supplyPrice`).val("0");
-  $(`#remark`).val("");
+  $(`#remarks`).val("");
   $(`#inOutSeq`).val("");
   $(`#inOutDt`).val(curDate);
   $(`#inOut`).val("in");

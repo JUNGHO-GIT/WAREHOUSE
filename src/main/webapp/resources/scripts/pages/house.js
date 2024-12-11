@@ -77,7 +77,6 @@ function fnGetList02 (houseData) {
 	  }, 0);
 	  return sum.toLocaleString();
 	};
-
   const colModel = [
     {dataIndx:"prodNm", title:"품명", dataType:"string", align:"center",,
     },
@@ -150,7 +149,6 @@ function fnGetList03 (houseData) {
 	  }, 0);
 	  return sum.toLocaleString();
 	};
-
   const colModel = [
     {dataIndx:"resrcNm", title:"품명", dataType:"string", align:"center",,
     },
@@ -278,7 +276,7 @@ function fnSave(YN) {
     "houseNm": $(`#houseNm`).val() || "",
     "parentsHCd": $(`#parentsHCd`).val() || "0",
     "houseOrder": $(`#houseOrder`).val() || "99",
-    "flagYN": flagParam
+    "flagYn": flagParam
   };
 
   $.ajax({

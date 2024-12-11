@@ -5,8 +5,8 @@ CREATE PROCEDURE `sp_Bom`(
 	IN `@resrcCd` INT(10),
 	IN `@bomType` VARCHAR(5),
 	IN `@unitQty` DECIMAL(5,2),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -21,20 +21,20 @@ BEGIN
       resrcCd,
       unitQty,
       bomType,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@prodCd`,
       `@resrcCd`,
       `@unitQty`,
       `@bomType`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -42,9 +42,9 @@ BEGIN
     SET
       unitQty=`@unitQty`,
       bomType=`@bomType`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       prodCd=`@prodCd` AND resrcCd=`@resrcCd` AND bomType=`@bomType`;
 	END IF;
@@ -58,8 +58,8 @@ CREATE PROCEDURE `sp_Category`(
 	IN `@catNm` VARCHAR(100),
 	IN `@parentsCatSeq` INT(10),
 	IN `@catOrder` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -83,20 +83,20 @@ BEGIN
       parentsCatSeq,
       catOrder,
       step,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@catNm`,
       `@parentsCatSeq`,
       `@catOrder`,
       `@step`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -106,9 +106,9 @@ BEGIN
       step=`@step`,
       parentsCatSeq=`@parentsCatSeq`,
       catOrder=`@catOrder`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       catSeq=`@catSeq`;
 	END IF;
@@ -124,8 +124,8 @@ CREATE PROCEDURE `sp_CommonCd`(
 	IN `@itemNm` VARCHAR(50),
 	IN `@itemMemo` VARCHAR(400),
 	IN `@itemSeq` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -148,10 +148,10 @@ BEGIN
       itemNm,
       itemMemo,
       itemSeq,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@groupCd`,
@@ -160,10 +160,10 @@ BEGIN
       `@itemNm`,
       `@itemMemo`,
       `@itemSeq`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -173,9 +173,9 @@ BEGIN
       itemNm=`@itemNm`,
       itemMemo=`@itemMemo`,
       itemSeq=`@itemSeq`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       groupCd=`@groupCd` AND itemCd=`@itemCd`;
 	END IF;
@@ -190,14 +190,14 @@ CREATE PROCEDURE `sp_Company`(
 	IN `@compNo` VARCHAR(20),
 	IN `@compType` VARCHAR(1000),
 	IN `@compPart` VARCHAR(1000),
-	IN `@owner` VARCHAR(20),
-	IN `@major` VARCHAR(20),
-	IN `@phone` VARCHAR(100),
-	IN `@taxEmail` VARCHAR(100),
-	IN `@address` VARCHAR(100),
+	IN `@compOwner` VARCHAR(20),
+	IN `@compMajor` VARCHAR(20),
+	IN `@compAddr` VARCHAR(100),
+	IN `@compPhone` VARCHAR(20),
+	IN `@compEmail` VARCHAR(100),
 	IN `@remarks` VARCHAR(4000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -212,32 +212,32 @@ BEGIN
       compNo,
       compType,
       compPart,
-      owner,
-      major,
-      phone,
-      taxEmail,
-      address,
+      compOwner,
+      compMajor,
+      compAddr,
+      compEmail,
+      compPhone,
       remarks,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@compNm`,
       `@compNo`,
       `@compType`,
       `@compPart`,
-      `@owner`,
-      `@major`,
-      `@phone`,
-      `@taxEmail`,
-      `@address`,
+      `@compOwner`,
+      `@compMajor`,
+      `@compAddr`,
+      `@compEmail`,
+      `@compPhone`,
       `@remarks`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
 	ELSE
     UPDATE
@@ -247,15 +247,15 @@ BEGIN
       compNo=`@compNo`,
       compType=`@compType`,
       compPart=`@compPart`,
-      owner=`@owner`,
-      major=`@major`,
-      phone=`@phone`,
-      taxEmail=`@taxEmail`,
-      address=`@address`,
+      compOwner=`@compOwner`,
+      compMajor=`@compMajor`,
+      compAddr=`@compAddr`,
+      compEmail=`@compEmail`,
+      compPhone=`@compPhone`,
       remarks=`@remarks`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       compCd=`@compCd`;
 	END IF;
@@ -279,8 +279,8 @@ CREATE PROCEDURE `sp_Files`(
 	IN `@tableKey` VARCHAR(50),
 	IN `@fileUrl` VARCHAR(1000),
 	IN `@fileNm` VARCHAR(50),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -295,20 +295,20 @@ BEGIN
       tableKey,
       fileUrl,
       fileNm,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@tableNm`,
       `@tableKey`,
       `@fileUrl`,
       `@fileNm`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -318,9 +318,9 @@ BEGIN
       tableKey=`@tableKey`,
       fileUrl=`@fileUrl`,
       fileNm=`@fileNm`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       fileSeq=`@fileSeq`;
   END IF;
@@ -334,8 +334,8 @@ CREATE PROCEDURE `sp_House`(
 	IN `@houseNm` VARCHAR(100),
 	IN `@parentsHCd` INT(10),
 	IN `@houseOrder` INT(10),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -359,20 +359,20 @@ BEGIN
       parentsHCd,
       houseOrder,
       step,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@houseNm`,
       `@parentsHCd`,
       `@houseOrder`,
       `@step`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -382,9 +382,9 @@ BEGIN
       step=`@step`,
       parentsHCd=`@parentsHCd`,
       houseOrder=`@houseOrder`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       houseCd=`@houseCd`;
   END IF;
@@ -406,9 +406,9 @@ CREATE PROCEDURE `sp_Product`(
 	IN `@option2` VARCHAR(50),
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -431,11 +431,11 @@ BEGIN
       option2,
       maker,
       unitPrice,
-      remark,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@prodNm`,
@@ -449,11 +449,11 @@ BEGIN
       `@option2`,
       `@maker`,
       `@unitPrice`,
-      `@remark`,
-      `@flagYN`,
+      `@remarks`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -470,10 +470,10 @@ BEGIN
       option2=`@option2`,
       maker=`@maker`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      remarks=`@remarks`,
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       prodCd=`@prodCd`;
   END IF;
@@ -506,10 +506,10 @@ CREATE PROCEDURE `sp_ProductInOut`(
 	IN `@compCd` INT(10),
 	IN `@qty` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-  IN `@planYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(1000),
+	IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -526,12 +526,12 @@ BEGIN
       compCd,
       qty,
       unitPrice,
-      remark,
-      flagYN,
-      planYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@inOutDt`,
@@ -540,12 +540,12 @@ BEGIN
       `@compCd`,
       `@qty`,
       `@unitPrice`,
-      `@remark`,
-      `@flagYN`,
-      `@planYN`,
+      `@remarks`,
+      `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -556,12 +556,12 @@ BEGIN
       qty=`@qty`,
       houseCd=`@houseCd`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
+      remarks=`@remarks`,
       compCd=`@compCd`,
-      flagYN=`@flagYN`,
-      planYN=`@planYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      planYn=`@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       inOutSeq=`@inOutSeq`;
   END IF;
@@ -583,9 +583,9 @@ CREATE PROCEDURE `sp_ProductXls`(
   IN `@option2` VARCHAR(50),
   IN `@maker` VARCHAR(50),
   IN `@unitPrice` NUMERIC(18,0),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
@@ -603,11 +603,11 @@ BEGIN
     option2,
     maker,
     unitPrice,
-    remark,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
   )
   	VALUES (
     `@prodCd`,
@@ -622,11 +622,11 @@ BEGIN
     `@option2`,
     `@maker`,
     `@unitPrice`,
-    `@remark`,
-    `@flagYN`,
+    `@remarks`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 
 	SET `@prodCd`=LAST_INSERT_ID();
@@ -649,10 +649,10 @@ CREATE PROCEDURE `sp_ProductInOutXls`(
   IN `@compCd` INT(10),
   IN `@qty` INT(10),
   IN `@unitPrice` NUMERIC(15,0),
-  IN `@remark` VARCHAR(1000),
-  IN `@flagYN` VARCHAR(1),
-  IN `@planYN` VARCHAR(1),
-  IN `@issueID` VARCHAR(20)
+  IN `@remarks` VARCHAR(1000),
+  IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+  IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	INSERT INTO tblProductInOut (
@@ -662,12 +662,12 @@ BEGIN
     compCd,
     qty,
     unitPrice,
-    remark,
-    flagYN,
-    planYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    planYn,
+    regDt,
+    issueDt,
+    issueId
   )
 	VALUES (
 		`@inOutDt`,
@@ -676,12 +676,12 @@ BEGIN
     `@compCd`,
     `@qty`,
     `@unitPrice`,
-    `@remark`,
-    `@flagYN`,
-    `@planYN`,
+    `@remarks`,
+    `@flagYn`,
+    `@planYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 END $$
 DELIMITER ;
@@ -701,9 +701,9 @@ CREATE PROCEDURE `sp_Resource`(
   IN `@option2` VARCHAR(50),
 	IN `@maker` VARCHAR(50),
 	IN `@unitPrice` NUMERIC(18,0),
-	IN `@remark` VARCHAR(3000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(3000),
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -726,11 +726,11 @@ BEGIN
       option2,
       maker,
       unitPrice,
-      remark,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@resrcNm`,
@@ -744,11 +744,11 @@ BEGIN
       `@option2`,
       `@maker`,
       `@unitPrice`,
-      `@remark`,
-      `@flagYN`,
+      `@remarks`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -765,10 +765,10 @@ BEGIN
       option2=`@option2`,
       maker=`@maker`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      remarks=`@remarks`,
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       resrcCd=`@resrcCd`;
   END IF;
@@ -801,10 +801,10 @@ CREATE PROCEDURE `sp_ResourceInOut`(
 	IN `@compCd` INT(10),
 	IN `@qty` INT(10),
 	IN `@unitPrice` NUMERIC(15,0),
-	IN `@remark` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-  IN `@planYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@remarks` VARCHAR(1000),
+	IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -821,12 +821,12 @@ BEGIN
       compCd,
       qty,
       unitPrice,
-      remark,
-      flagYN,
-      planYN,
-      regDate,
-      issueDate,
-      issueID
+      remarks,
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
       `@inOutDt`,
@@ -835,12 +835,12 @@ BEGIN
       `@compCd`,
       `@qty`,
       `@unitPrice`,
-      `@remark`,
-      `@flagYN`,
-      `@planYN`,
+      `@remarks`,
+      `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
@@ -852,11 +852,11 @@ BEGIN
       compCd=`@compCd`,
       qty=`@qty`,
       unitPrice=`@unitPrice`,
-      remark=`@remark`,
-      flagYN=`@flagYN`,
-      planYN=`@planYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      remarks=`@remarks`,
+      flagYn=`@flagYn`,
+      planYn=`@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       inOutSeq=`@inOutSeq`;
   END IF;
@@ -872,10 +872,10 @@ CREATE PROCEDURE `sp_ResourceInOutXls`(
   IN `@compCd` INT(10),
   IN `@qty` INT(10),
   IN `@unitPrice` NUMERIC(15,0),
-  IN `@remark` VARCHAR(1000),
-  IN `@flagYN` VARCHAR(1),
-  IN `@planYN` VARCHAR(1),
-  IN `@issueID` VARCHAR(20)
+  IN `@remarks` VARCHAR(1000),
+  IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+  IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	INSERT INTO tblResourceInOut (
@@ -885,12 +885,12 @@ BEGIN
     compCd,
     qty,
     unitPrice,
-    remark,
-    flagYN,
-    planYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    planYn,
+    regDt,
+    issueDt,
+    issueId
   )
 	VALUES (
 		`@inOutDt`,
@@ -899,12 +899,12 @@ BEGIN
     `@compCd`,
     `@qty`,
     `@unitPrice`,
-    `@remark`,
-    `@flagYN`,
-    `@planYN`,
+    `@remarks`,
+    `@flagYn`,
+    `@planYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 END $$
 DELIMITER ;
@@ -924,9 +924,9 @@ CREATE PROCEDURE `sp_ResourceXls`(
   IN `@option2` VARCHAR(50),
   IN `@maker` VARCHAR(50),
   IN `@unitPrice` NUMERIC(18,0),
-  IN `@remark` VARCHAR(3000),
-  IN `@flagYN` VARCHAR(1),
-  IN `@issueID` VARCHAR(20)
+  IN `@remarks` VARCHAR(3000),
+  IN `@flagYn` VARCHAR(1),
+  IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@barcode` VARCHAR(8) DEFAULT '0';
@@ -944,11 +944,11 @@ BEGIN
     option2,
     maker,
     unitPrice,
-    remark,
-    flagYN,
-    regDate,
-    issueDate,
-    issueID
+    remarks,
+    flagYn,
+    regDt,
+    issueDt,
+    issueId
   )
   	VALUES (
     `@resrcCd`,
@@ -963,11 +963,11 @@ BEGIN
     `@option2`,
     `@maker`,
     `@unitPrice`,
-    `@remark`,
-    `@flagYN`,
+    `@remarks`,
+    `@flagYn`,
     NOW(),
     NOW(),
-    `@issueID`
+    `@issueId`
   );
 
 	SET `@resrcCd`=LAST_INSERT_ID();
@@ -985,14 +985,15 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_Shipping`(
 	IN `@shipCd` INT(10),
-	IN `@compCd` INT(10),
-	IN `@toMajor` VARCHAR(50),
-	IN `@toPhone` VARCHAR(20),
 	IN `@shipDt` VARCHAR(10),
 	IN `@shipMajor` VARCHAR(50),
+	IN `@toMajor` VARCHAR(50),
+	IN `@toPhone` VARCHAR(20),
+	IN `@compCd` INT(10),
 	IN `@inOutSeqs` VARCHAR(4000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+  IN `@planYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
@@ -1003,39 +1004,41 @@ BEGIN
 
 	IF `@isCd` = 0 THEN
     INSERT INTO tblShipping (
-      compCd,
-      toMajor,
-      toPhone,
       shipDt,
       shipMajor,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      toMajor,
+      toPhone,
+      compCd,
+      flagYn,
+      planYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
-      `@compCd`,
-      `@toMajor`,
-      `@toPhone`,
       `@shipDt`,
       `@shipMajor`,
-      `@flagYN`,
+      `@toMajor`,
+      `@toPhone`,
+      `@compCd`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
       tblShipping
     SET
-      compCd=`@compCd`,
-      toMajor=`@toMajor`,
-      toPhone=`@toPhone`,
       shipDt=`@shipDt`,
       shipMajor=`@shipMajor`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      toMajor=`@toMajor`,
+      toPhone=`@toPhone`,
+      compCd=`@compCd`,
+      flagYn=`@flagYn`,
+      planYn=`@planYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
       shipCd = `@shipCd`;
   END IF;
@@ -1045,7 +1048,11 @@ BEGIN
   END IF;
 
 	IF `@inOutSeqs` != '' THEN
-    CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueID`);
+    IF `@planYn` = 'Y' THEN
+      CALL sp_ShipPlan (`@shipCd`, `@inOutSeqs`, `@issueId`);
+    ELSE
+      CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueId`);
+    END IF;
   END IF;
 END $$
 DELIMITER ;
@@ -1055,20 +1062,20 @@ DELIMITER $$
 CREATE PROCEDURE `sp_ShipItems`(
 	IN `@shipCd` INT(10),
 	IN `@inOutSeqs` VARCHAR(4000),
-	IN `@issueID` VARCHAR(20)
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@pos` INT(10) DEFAULT 1;
 	DECLARE `@inOutSeq` VARCHAR(10) DEFAULT '';
 	DECLARE `@seq` INT(10) DEFAULT 0;
-	DECLARE `@flagYN` VARCHAR(1) DEFAULT 'Y';
+	DECLARE `@flagYn` VARCHAR(1) DEFAULT 'Y';
 	DECLARE `@now` DATETIME;
 	DECLARE `@seqs` VARCHAR(4000) DEFAULT '';
 
 	SET `@now`=NOW();
 
 	UPDATE tblShipItems
-  SET flagYN = 'N'
+  SET flagYn = 'N'
   WHERE shipCd = `@shipCd`;
 
 	WHILE `@pos`!=0 DO
@@ -1078,23 +1085,23 @@ BEGIN
       INSERT INTO tblShipItems (
         shipCd,
         inOutSeq,
-        flagYN,
-        regDate,
-        issueDate,
-        issueID
+        flagYn,
+        regDt,
+        issueDt,
+        issueId
       )
       VALUES (
         `@shipCd`,
         `@seq`,
-        `@flagYN`,
+        `@flagYn`,
         `@now`,
         `@now`,
-        `@issueID`
+        `@issueId`
       )
       ON DUPLICATE KEY UPDATE
-        flagYN=VALUES (`flagYN`),
-        issueDate=VALUES (`regDate`),
-        issueID=VALUES (`issueID`)
+        flagYn=VALUES (`flagYn`),
+        issueDt=VALUES (`regDt`),
+        issueId=VALUES (`issueId`)
       ;
 
       SET `@pos`=`@pos` + 1;
@@ -1115,133 +1122,135 @@ DELIMITER ;
 /**************************************************************************************************/
 DELIMITER $$
 CREATE PROCEDURE `sp_ShipPlan`(
-	IN `@shipPlanCd` INT(10),
-	IN `@compCd` INT(10),
-	IN `@toMajor` VARCHAR(50),
-	IN `@toPhone` VARCHAR(20),
-	IN `@shipDt` VARCHAR(10),
-	IN `@shipMajor` VARCHAR(50),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@shipCd` INT(10),
+	IN `@inOutSeqs` VARCHAR(4000),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
-  DECLARE `@isCd` INTEGER DEFAULT 0;
+  DECLARE `@pos` INT(10) DEFAULT 1;
+	DECLARE `@inOutSeq` VARCHAR(10) DEFAULT '';
+	DECLARE `@seq` INT(10) DEFAULT 0;
+	DECLARE `@flagYn` VARCHAR(1) DEFAULT 'Y';
+	DECLARE `@now` DATETIME;
+	DECLARE `@seqs` VARCHAR(4000) DEFAULT '';
 
-	SELECT COUNT(*) INTO `@isCd`
-  FROM tblShipPlan
-  WHERE shipPlanCd=`@shipPlanCd`;
+	SET `@now`=NOW();
 
-	IF `@isCd`=0 THEN
-    INSERT INTO tblShipPlan (
-      compCd,
-      toMajor,
-      toPhone,
-      shipDt,
-      shipMajor,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
-    )
-    VALUES (
-      `@compCd`,
-      `@toMajor`,
-      `@toPhone`,
-      `@shipDt`,
-      `@shipMajor`,
-      `@flagYN`,
-      NOW(),
-      NOW(),
-      `@issueID`
-    );
-  ELSE
-    UPDATE
-      tblShipPlan
-    SET
-      compCd=`@compCd`,
-      toMajor=`@toMajor`,
-      toPhone=`@toPhone`,
-      shipDt=`@shipDt`,
-      shipMajor=`@shipMajor`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
-    WHERE
-      shipPlanCd=`@shipPlanCd`;
-  END IF;
+  UPDATE tblShipPlan
+  SET flagYn = 'N'
+  WHERE shipCd = `@shipCd`;
+
+  WHILE `@pos`!=0 DO
+    SET `@inOutSeq`=SUBSTRING_INDEX(SUBSTRING_INDEX(`@inOutSeqs`, ',', `@pos`), ',' , -1);
+    IF `@seqs`!=`@inOutSeqs` THEN
+      SET `@seq` = CAST(`@inOutSeq` AS UNSIGNED);
+      INSERT INTO tblShipPlan (
+        shipCd,
+        inOutSeq,
+        flagYn,
+        regDt,
+        issueDt,
+        issueId
+      )
+      VALUES (
+        `@shipCd`,
+        `@seq`,
+        `@flagYn`,
+        `@now`,
+        `@now`,
+        `@issueId`
+      )
+      ON DUPLICATE KEY UPDATE
+        flagYn=VALUES (`flagYn`),
+        issueDt=VALUES (`regDt`),
+        issueId=VALUES (`issueId`)
+      ;
+
+      SET `@pos`=`@pos` + 1;
+
+      IF `@seqs`!='' THEN
+        SET `@seqs`=CONCAT(`@seqs`, ',');
+      END IF;
+
+      SET `@seqs`=CONCAT(`@seqs`, `@inOutSeq`);
+
+      ELSE
+        SET `@pos`=0;
+    END IF;
+  END WHILE;
 END $$
 DELIMITER ;
 
 /**************************************************************************************************/
 DELIMITER $$
 CREATE PROCEDURE `sp_User`(
-	IN `@userID` VARCHAR(20),
-	IN `@passwd` VARCHAR(1000),
+	IN `@userId` VARCHAR(20),
+	IN `@userPw` VARCHAR(1000),
 	IN `@userNm` VARCHAR(20),
-	IN `@phone` VARCHAR(100),
-	IN `@email` VARCHAR(100),
-	IN `@uLevel` VARCHAR(5),
+	IN `@userPhone` VARCHAR(100),
+	IN `@userEmail` VARCHAR(100),
+	IN `@userLevel` VARCHAR(5),
+	IN `@userPerm` VARCHAR(1000),
 	IN `@compCd` INT(10),
-	IN `@uPerm` VARCHAR(1000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
 
-	IF `@uLevel`='' THEN
-    SELECT `00100` INTo `@uLevel`;
+	IF `@userLevel`='' THEN
+    SELECT `00100` INTo `@userLevel`;
   END IF;
 
 	SELECT COUNT(*) INTO `@isCd`
   FROM tblUser
-  WHERE userID=`@userID`;
+  WHERE userId=`@userId`;
 
 	IF `@isCd`=0 THEN
     INSERT INTO tblUser (
-      userID,
-      passwd,
+      userId,
+      userPw,
       userNm,
-      phone,
-      email,
-      uLevel,
+      userPhone,
+      userEmail,
+      userLevel,
+      userPerm,
       compCd,
-      uPerm,
-      flagYN,
-      regDate,
-      issueDate,
-      issueID
+      flagYn,
+      regDt,
+      issueDt,
+      issueId
     )
     VALUES (
-      `@userID`,
-      `@passwd`,
+      `@userId`,
+      `@userPw`,
       `@userNm`,
-      `@phone`,
-      `@email`,
-      `@uLevel`,
+      `@userPhone`,
+      `@userEmail`,
+      `@userLevel`,
+      `@userPerm`,
       `@compCd`,
-      `@uPerm`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
       tblUser
     SET
-      passwd=`@passwd`,
+      userPw=`@userPw`,
       userNm=`@userNm`,
-      phone=`@phone`,
-      email=`@email`,
-      uLevel=`@uLevel`,
+      userPhone=`@userPhone`,
+      userEmail=`@userEmail`,
+      userLevel=`@userLevel`,
+      userPerm=`@userPerm`,
       compCd=`@compCd`,
-      uPerm=`@uPerm`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
-      userID=`@userID`;
+      userId=`@userId`;
   END IF;
 END $$
 DELIMITER ;
@@ -1250,49 +1259,49 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE `sp_UserConfig`(
 	IN `@configSeq` INT(10),
-	IN `@userID` VARCHAR(20),
+	IN `@userId` VARCHAR(20),
 	IN `@pageNm` VARCHAR(50),
 	IN `@gridCd` VARCHAR(10),
 	IN `@config` VARCHAR(8000),
-	IN `@flagYN` VARCHAR(1),
-	IN `@issueID` VARCHAR(20)
+	IN `@flagYn` VARCHAR(1),
+	IN `@issueId` VARCHAR(20)
 )
 BEGIN
 	DECLARE `@isCd` INTEGER DEFAULT 0;
 
 	SELECT COUNT(*) INTO `@isCd`
   FROM tblUserConfig
-  WHERE userID=`@userID` AND pageNm=`@pageNm` AND gridCd=`@gridCd`;
+  WHERE userId=`@userId` AND pageNm=`@pageNm` AND gridCd=`@gridCd`;
 
 	IF `@isCd`=0 THEN
     INSERT INTO tblUserConfig (
-      userID,
+      userId,
       pageNm,
       gridCd,
       config,
-      flagYN,
-      regDate,
-      issueID
+      flagYn,
+      regDt,
+      issueId
     )
     VALUES (
-      `@userID`,
+      `@userId`,
       `@pageNm`,
       `@gridCd`,
       `@config`,
-      `@flagYN`,
+      `@flagYn`,
       NOW(),
-      `@issueID`
+      `@issueId`
     );
   ELSE
     UPDATE
       tblUserConfig
     SET
       config=`@config`,
-      flagYN=`@flagYN`,
-      issueDate=NOW(),
-      issueID=`@issueID`
+      flagYn=`@flagYn`,
+      issueDt=NOW(),
+      issueId=`@issueId`
     WHERE
-      userID=`@userID`;
+      userId=`@userId`;
   END IF;
 END $$
 DELIMITER ;
@@ -1300,31 +1309,31 @@ DELIMITER ;
 /**************************************************************************************************/
 DELIMITER $$
 CREATE PROCEDURE `sp_SplitToRow`(
-  IN `tempchar` LONGTEXT,
-  IN `splitechar` CHAR(1)
+  IN `tempChar` LONGTEXT,
+  IN `splitChar` CHAR(1)
 )
 BEGIN
-  DECLARE spliti INTEGER DEFAULT 1;
-  DECLARE tempresult CHAR(255) DEFAULT '';
+  DECLARE splitInteger INTEGER DEFAULT 1;
+  DECLARE tempResult CHAR(255) DEFAULT '';
 
   CREATE TEMPORARY TABLE IF NOT EXISTS temp_table (
-    splitestr VARCHAR(255)
+    splitStr CHAR(255)
   );
 
-  SET spliti=1;
+  SET splitInteger = 1;
 
-  WHILE spliti != 0 DO
-    SET tempresult=SUBSTRING_INDEX (
-      SUBSTRING_INDEX (tempchar, splitechar, spliti),
-      splitechar,
+  WHILE splitInteger != 0 DO
+    SET tempResult = SUBSTRING_INDEX (
+      SUBSTRING_INDEX (tempChar, splitChar, splitInteger),
+      splitChar,
       -1
     );
-    IF tempresult != '' THEN
-      INSERT INTO temp_table (splitestr)
-      VALUES (tempresult);
-      SET spliti=spliti + 1;
+    IF tempResult != '' THEN
+      INSERT INTO temp_table (splitStr)
+      VALUES (tempResult);
+      SET splitInteger=splitInteger + 1;
     ELSE
-      SET spliti=0;
+      SET splitInteger = 0;
     END IF;
   END WHILE;
 

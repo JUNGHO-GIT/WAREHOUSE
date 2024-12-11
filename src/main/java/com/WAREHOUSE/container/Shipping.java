@@ -10,6 +10,6 @@ import lombok.Setter;
 public class Shipping {
   private Integer shipCd, compCd;
   private String toMajor, toPhone, shipDt, shipMajor, inOutSeq;
-  private String flagYN, planYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, planYn, issueId;
+  private Date regDt, issueDt;
 }

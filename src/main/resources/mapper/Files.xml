@@ -15,11 +15,11 @@
   >
     <![CDATA[
     SELECT
-      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
+      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYn
     FROM
       tblFiles
     WHERE
-      flagYN = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
+      flagYn = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
     ]]>
   </select>
 
@@ -31,24 +31,24 @@
   >
     <![CDATA[
     SELECT
-      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYN
+      fileSeq, tableNm, tableKey, fileUrl, fileNm, flagYn
     FROM
       tblFiles
     WHERE
-      flagYN = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
+      flagYn = 'Y' AND tableNm = #{tableNm} AND tableKey = #{tableKey}
     ]]>
   </select>
 
   <update
-    id="updateIssueDate"
+    id="updateIssueDt"
     parameterType="hashmap"
   >
-    /* Files.updateIssueDate */
+    /* Files.updateIssueDt */
     <![CDATA[
     UPDATE
       ${tableNm}
     SET
-      issueDate = NOW()
+      issueDt = NOW()
     WHERE
     	${keyColumn} = #{tableKey}
    	]]>
@@ -58,7 +58,7 @@
   <select
   	id="saveFiles"
   	parameterType="Files"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
     CALL sp_Files (
       #{fileSeq},
@@ -66,8 +66,8 @@
       #{tableKey},
       #{fileUrl},
       #{fileNm},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

@@ -17,6 +17,7 @@ import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.container.Shipping;
 import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.dao.ShipItemsDAO;
+import com.WAREHOUSE.util.Json;
 import com.WAREHOUSE.util.Logs;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class ShipItemsCTRL {
   private final ShipItemsDAO dao;
   private final CompanyDAO companyDao;
   private final Logs logs;
+  private final Json json;
   private final Utils utils;
 
   // -----------------------------------------------------------------------------------------------
@@ -106,15 +108,17 @@ public class ShipItemsCTRL {
   @PostMapping(value="/act/saveShipItems", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveShipItems (
     @RequestBody Shipping param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
+
+    logs.info("saveShipItems", json.toJson(param));
 
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      param.setIssueID(userID);
+      param.setIssueId(userId);
       dao.saveShipItems(param);
-      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
       logs.error("saveShipItems", e.getMessage());

@@ -41,7 +41,7 @@ public class ProductInOutAllCTRL {
   @PostMapping(value="/act/saveProductInOutAll", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveProductInOutAll (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
@@ -52,7 +52,7 @@ public class ProductInOutAllCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIDParam = (String) userID;
+      String userIdParam = (String) userId;
       String inOutParam = (String) jsonObj.get("inOut");
       String inOutDtParam = (String) jsonObj.get("inOutDt");
       String prodNmParam = (String) jsonObj.get("prodNm");
@@ -83,12 +83,12 @@ public class ProductInOutAllCTRL {
         param.setQty(qtyParam);
         param.setUnitPrice(unitPriceParam);
         param.setInOutDt(inOutDtParam);
-        param.setIssueID(userIDParam);
-        param.setFlagYN("Y");
-        param.setPlanYN("N");
+        param.setIssueId(userIdParam);
+        param.setFlagYn("Y");
+        param.setPlanYn("N");
 
         dao.saveProductInOut(param);
-        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+        map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
         logs.error("saveProductInOutAll", e.getMessage());

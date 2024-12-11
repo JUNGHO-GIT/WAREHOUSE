@@ -19,8 +19,8 @@
       A.${paramMap.keyCd}, A.inOutDt, A.qty, A.sessionCnt, D.${paramMap.keyNm},
       (SELECT SUM(qty)
         FROM ${paramMap.tableNm}
-        WHERE flagYN = 'Y'
-        AND planYN = '${paramMap.planYN}'
+        WHERE flagYn = 'Y'
+        AND planYn = '${paramMap.planYn}'
         AND qty ${paramMap.sign} 0
         AND inOutDt BETWEEN '${startDt}' AND '${endDt}'
       ) totalQty
@@ -30,8 +30,8 @@
       FROM
         ${paramMap.tableNm}
       WHERE
-        flagYN = 'Y'
-        AND planYN = '${paramMap.planYN}'
+        flagYn = 'Y'
+        AND planYn = '${paramMap.planYn}'
         AND qty ${paramMap.sign} 0
         AND inOutDt BETWEEN '${startDt}' AND '${endDt}'
       GROUP BY
@@ -40,7 +40,7 @@
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.${paramMap.keyCd} = A.${paramMap.keyCd}
     GROUP BY
       A.${paramMap.keyCd}, A.inOutDt, D.prodNm
@@ -59,56 +59,56 @@
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
-      WHERE flagYN = 'Y'
-      AND planYN = '${paramMap.planYN}'
+      WHERE flagYn = 'Y'
+      AND planYn = '${paramMap.planYn}'
       AND shipDt BETWEEN '${startDt}' AND '${endDt}'
       GROUP BY shipCd, shipDt
     ) A
-    <if test='paramMap.planYN == "Y"'>
+    <if test='paramMap.planYn == "Y"'>
     LEFT JOIN (
       SELECT shipCd, inOutSeq
       FROM tblShipPlan
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     </if>
-    <if test='paramMap.planYN == "N"'>
+    <if test='paramMap.planYn == "N"'>
     LEFT JOIN (
       SELECT shipCd, inOutSeq
       FROM tblShipItems
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     </if>
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND qty <![CDATA[<]]> 0
+      WHERE flagYn = 'Y' AND qty <![CDATA[<]]> 0
     ) D ON D.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
     LEFT JOIN (
       SELECT B.shipCd, SUM(D.qty * -1) as totalQty
       FROM tblProductInOut D
       LEFT JOIN (
         <choose>
-          <when test='paramMap.planYN == "Y"'>
-            SELECT shipCd, inOutSeq FROM tblShipPlan WHERE flagYN = 'Y'
+          <when test='paramMap.planYn == "Y"'>
+            SELECT shipCd, inOutSeq FROM tblShipPlan WHERE flagYn = 'Y'
           </when>
           <otherwise>
-            SELECT shipCd, inOutSeq FROM tblShipItems WHERE flagYN = 'Y'
+            SELECT shipCd, inOutSeq FROM tblShipItems WHERE flagYn = 'Y'
           </otherwise>
         </choose>
       ) B ON B.inOutSeq = D.inOutSeq
-      WHERE D.flagYN = 'Y' AND D.qty <![CDATA[<]]> 0
+      WHERE D.flagYn = 'Y' AND D.qty <![CDATA[<]]> 0
       GROUP BY B.shipCd
     ) G ON G.shipCd = A.shipCd
     GROUP BY
@@ -129,18 +129,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
+        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -159,18 +159,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
+        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -190,40 +190,40 @@
       IFNULL(B.cnt, 0) cnt, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
       (SELECT SUM(qty)
         FROM tblShipping
-        WHERE flagYN = 'Y' AND planYN = 'Y' AND qty < 0 AND shipDt = #{shipDt}
+        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND shipDt = #{shipDt}
       ) totalQty
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipDt = #{shipDt}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND shipDt = #{shipDt}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = C.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = C.prodCd
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
     ORDER BY
       A.shipCd DESC;
@@ -242,18 +242,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -272,18 +272,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -303,40 +303,40 @@
       IFNULL(B.cnt, 0) cnt, (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND shipDt = #{shipDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND shipDt = #{shipDt}
       ) totalQty
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'N' AND shipDt = #{shipDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND shipDt = #{shipDt}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipItems
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = C.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = C.prodCd
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
     ORDER BY
       A.shipCd DESC;
@@ -355,18 +355,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -385,18 +385,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -415,18 +415,18 @@
       A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       GROUP BY prodCd
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) D ON D.prodCd = A.prodCd
     GROUP BY
       A.prodCd, A.inOutDt, D.prodNm
@@ -449,18 +449,18 @@
     FROM (
       SELECT prodCd, prodNm, protectedQty
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) A
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = A.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = A.prodCd
     WHERE
@@ -480,12 +480,12 @@
       DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM
       tblProductInOut
     WHERE
-      flagYN = 'Y' AND planYN = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
     GROUP BY
       DATE_FORMAT(inOutDt, '%Y-%m-%d')
     ORDER BY
@@ -505,12 +505,12 @@
       DATE_FORMAT(inOutDt, '%Y-%m-%d') date,
       (SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND  planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND  planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM
       tblProductInOut
     WHERE
-      flagYN = 'Y' AND planYN = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
     GROUP BY
       DATE_FORMAT(inOutDt, '%Y-%m-%d')
     ORDER BY
@@ -532,40 +532,40 @@
       (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
       (SELECT SUM(qty)
         FROM tblShipping
-        WHERE flagYN = 'Y' AND  planYN = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
+        WHERE flagYn = 'Y' AND  planYn = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
       ) totalQty
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
+      WHERE flagYn = 'Y' AND planYn = 'N' AND shipDt BETWEEN #{startDt} AND #{endDt}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipItems
-      WHERE flagYN = 'N'
+      WHERE flagYn = 'N'
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) inQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty > 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0
       GROUP BY prodCd
     ) D ON D.prodCd = C.prodCd
     LEFT JOIN (
       SELECT IFNULL(SUM(qty), 0) outQty, prodCd
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND planYN = 'N' AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0
       GROUP BY prodCd
     ) E ON E.prodCd = C.prodCd
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
     GROUP BY
       DATE_FORMAT(A.shipDt, '%Y-%m-%d')

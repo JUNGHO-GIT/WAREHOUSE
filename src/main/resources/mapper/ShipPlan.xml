@@ -15,29 +15,28 @@
   >
     <![CDATA[
     SELECT
-      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
       B.inOutSeq, C.compNm, C.compCd, (D.qty * -1) qty,
       IFNULL(B.cnt, 0) cnt
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipDt BETWEEN #{findStartDt} AND #{findEndDt}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND shipDt BETWEEN #{findStartDt} AND #{findEndDt}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
-      WHERE flagYN = 'Y'
-      GROUP BY shipCd
+      WHERE flagYn = 'Y'
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     ORDER BY
       A.shipCd DESC
@@ -59,32 +58,31 @@
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipCd = #{shipCd}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND shipCd = #{shipCd}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
-      WHERE flagYN = 'Y'
-      GROUP BY shipCd, inOutSeq
+      WHERE flagYn = 'Y'
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
-    ]]>
     ORDER BY
       A.shipCd DESC;
+    ]]>
   </select>
 
   <!-- ShipPlan.showShipPlan -->
@@ -95,52 +93,53 @@
   >
     <![CDATA[
     SELECT
-      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYN, A.planYN,
+      A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
       C.compNm, C.compCd, (D.qty * -1) qty,
       IFNULL(B.cnt, 0) cnt
     FROM (
       SELECT *
       FROM tblShipping
-      WHERE flagYN = 'Y' AND planYN = 'Y' AND shipCd = #{shipCd}
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND shipCd = #{shipCd}
     ) A
     LEFT JOIN (
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
-      WHERE flagYN = 'Y'
-      GROUP BY shipCd
+      WHERE flagYn = 'Y'
+      -- GROUP BY 필수 !!
+      GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblCompany
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) C ON C.compCd = A.compCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
-    ]]>
     ORDER BY
       A.shipDt DESC
+    ]]>
   </select>
 
   <!-- ShipPlan.saveShipPlan -->
   <select
   	id="saveShipPlan"
   	parameterType="Shipping"
-    resultType="Integer"
+    resultType="hashmap"
   >
     CALL sp_Shipping (
       #{shipCd},
-      #{compCd},
-      #{toMajor},
-      #{toPhone},
       #{shipDt},
       #{shipMajor},
+      #{toMajor},
+      #{toPhone},
+      #{compCd},
       #{inOutSeq},
-      #{flagYN},
-      #{planYN},
-      #{issueID}
+      #{flagYn},
+      #{planYn},
+      #{issueId}
     );
   </select>
 

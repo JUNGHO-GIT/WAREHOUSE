@@ -109,7 +109,7 @@ function fnShowExcel(body) {
       minWidth:100, required:true,
     },
     {
-      title:"비고", dataIndx:"remark", dataType:"string", align:"center",
+      title:"비고", dataIndx:"remarks", dataType:"string", align:"center",
       minWidth:100,
     },
   ];
@@ -261,7 +261,7 @@ function fnFilePicked(oEvent) {
       const limit = data.length;
       // 동적할당을 위해 resrcCd, houseCd, compCd는 비워둔다.
       const keyMap = [
-        "resrcNm", "inOutDt", "houseNm", "compNm", "qty", "unitPrice", "remark", "inOutCheck"
+        "resrcNm", "inOutDt", "houseNm", "compNm", "qty", "unitPrice", "remarks", "inOutCheck"
       ];
 
       for (let k = 1; k < limit; k++) {

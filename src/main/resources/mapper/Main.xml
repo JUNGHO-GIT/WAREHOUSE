@@ -21,10 +21,10 @@
     FROM
     	tblSysMenu
     WHERE
-    	flagYN = 'Y'
-    ]]>
+    	flagYn = 'Y'
     ORDER BY
     	pageOrder
+    ]]>
   </select>
 
   <!-- Main.listSysMenu -->
@@ -39,7 +39,7 @@
     FROM
       tblSysMenu
 	  WHERE
-      flagYN = 'Y' AND subPage!='00' AND pageUrl IN (${pageNm})
+      flagYn = 'Y' AND subPage!='00' AND pageUrl IN (${pageNm})
     ]]>
   </select>
 

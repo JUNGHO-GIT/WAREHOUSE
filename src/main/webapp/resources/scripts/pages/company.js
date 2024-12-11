@@ -36,22 +36,6 @@ function fnGetList01 () {
       minWidth:150
     },
     {
-      title:"대표자", dataIndx:"owner", dataType:"string", align:"center",
-      minWidth:100
-    },
-    {
-      title:"담당자", dataIndx:"major", dataType:"string", align:"center",
-      minWidth:100
-    },
-    {
-      title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
-      minWidth:100
-    },
-    {
-      title:"주소", dataIndx:"address", dataType:"string", align:"center",
-      minWidth:100
-    },
-    {
       title:"업태", dataIndx:"compType", dataType:"string", align:"center",
       minWidth:100
     },
@@ -60,7 +44,27 @@ function fnGetList01 () {
       minWidth:100
     },
     {
-      title:"유효", dataIndx:"flagYN", dataType:"string", align:"center",
+      title:"대표자", dataIndx:"compOwner", dataType:"string", align:"center",
+      minWidth:100
+    },
+    {
+      title:"담당자", dataIndx:"compMajor", dataType:"string", align:"center",
+      minWidth:100
+    },
+    {
+      title:"주소", dataIndx:"compAddr", dataType:"string", align:"center",
+      minWidth:100
+    },
+    {
+      title:"이메일", dataIndx:"compEmail", dataType:"string", align:"center",
+      minWidth:100
+    },
+    {
+      title:"전화번호", dataIndx:"compPhone", dataType:"string", align:"center",
+      minWidth:100
+    },
+    {
+      title:"유효", dataIndx:"flagYn", dataType:"string", align:"center",
       minWidth:100
     },
   ];
@@ -110,11 +114,11 @@ function fnShow(compCd) {
       $(`#compCd`).val(data.compCd);
       $(`#compNm`).val(data.compNm);
       $(`#compNo`).val(data.compNo);
-      $(`#owner`).val(data.owner);
-      $(`#major`).val(data.major);
-      $(`#phone`).val(data.phone);
-      $(`#taxEmail`).val(data.taxEmail);
-      $(`#address`).val(data.address);
+      $(`#compOwner`).val(data.compOwner);
+      $(`#compMajor`).val(data.compMajor);
+      $(`#compPhone`).val(data.compPhone);
+      $(`#compEmail`).val(data.compEmail);
+      $(`#compAddr`).val(data.compAddr);
       $(`#compType`).val(data.compType);
       $(`#compPart`).val(data.compPart);
       $(`#remarks`).val(data.remarks);
@@ -130,11 +134,11 @@ function fnShow(compCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave(flagYn) {
 
   let flagParam = "";
 
-  if (flagYN === "N") {
+  if (flagYn === "N") {
     flagParam = "N";
     if ($(`#compCd`).val() == "") {
       alert("거래처를 선택해 주세요");
@@ -160,17 +164,17 @@ function fnSave(flagYN) {
 
   const param = {
     "compCd": $(`#compCd`).val() || "0",
-    "compNm": $(`#compNm`).val() || "",
     "compNo": $(`#compNo`).val() || "",
-    "owner": $(`#owner`).val() || "",
-    "major": $(`#major`).val() || "",
-    "phone": $(`#phone`).val() || "",
-    "taxEmail": $(`#taxEmail`).val() || "",
-    "address": $(`#address`).val() || "",
+    "compNm": $(`#compNm`).val() || "",
     "compType": $(`#compType`).val() || "",
     "compPart": $(`#compPart`).val() || "",
+    "compOwner": $(`#compOwner`).val() || "",
+    "compMajor": $(`#compMajor`).val() || "",
+    "compAddr": $(`#compAddr`).val() || "",
+    "compEmail": $(`#compEmail`).val() || "",
+    "compPhone": $(`#compPhone`).val() || "",
     "remarks": $(`#remarks`).val() || "",
-    "flagYN": flagParam
+    "flagYn": flagParam
   };
 
   $.ajax({
@@ -201,18 +205,18 @@ function fnReset() {
 
   // 거래처 초기화
   $(`#compCd`).val("0");
-  $(`#compNm`).val("");
   $(`#compNo`).val("");
-  $(`#owner`).val("");
-  $(`#major`).val("");
-  $(`#phone`).val("");
-  $(`#taxEmail`).val("");
-  $(`#address`).val("");
-  $(`#addressDetail`).val("");
+  $(`#compNm`).val("");
   $(`#compType`).val("");
   $(`#compPart`).val("");
+  $(`#compOwner`).val("");
+  $(`#compMajor`).val("");
+  $(`#compAddr`).val("");
+  $(`#compAddrDetail`).val("");
+  $(`#compEmail`).val("");
+  $(`#compPhone`).val("");
   $(`#remarks`).val("");
-  $(`#flagYN`).val("Y");
+  $(`#flagYn`).val("Y");
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);

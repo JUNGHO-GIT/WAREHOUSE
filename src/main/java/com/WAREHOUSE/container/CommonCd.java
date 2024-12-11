@@ -12,6 +12,6 @@ public class CommonCd {
   private String groupNm, itemNm;
   private Integer itemSeq;
   private String itemMemo;
-  private String flagYN, issueID;
-  private Date regDate, issueDate;
+  private String flagYn, issueId;
+  private Date regDt, issueDt;
 }

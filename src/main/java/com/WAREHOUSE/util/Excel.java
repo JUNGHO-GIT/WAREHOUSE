@@ -54,11 +54,11 @@ public class Excel {
 			HSSFSheet sheet1 = xlsxWb.getSheetAt(0);
 			String compNm = comp.getCompNm();
 			String compType = comp.getCompType();
-			String address = comp.getAddress();
+			String compAddr = comp.getCompAddr();
 			String compPart = comp.getCompPart();
 			String compNo = comp.getCompNo();
-			String phone = comp.getPhone();
-			String owner = comp.getOwner();
+			String compPhone = comp.getCompPhone();
+			String compOwner = comp.getCompOwner();
 			String shipMajor = (String) shipDetail.get("shipMajor");
 			String account = (String) shipDetail.get("compNm");
 			String count = String.valueOf(shipDetail.get("cnt"));
@@ -75,11 +75,11 @@ public class Excel {
 			Cell cell = null;
 			exPOI.createCellBasic(11, 2, detailed, row, cell, sheet1);
 			exPOI.createCellBasic(6, 0, shipMajor, row, cell, sheet1);
-			exPOI.createCellBasic(9, 5, phone, row, cell, sheet1); // 17
-			exPOI.createCellBasic(6, 7, owner, row, cell, sheet1);
+			exPOI.createCellBasic(9, 5, compPhone, row, cell, sheet1);
+			exPOI.createCellBasic(6, 7, compOwner, row, cell, sheet1);
 			exPOI.createCellBasic(5, 0, account, row, cell, sheet1);
 			exPOI.createCellBasic(8, 5, compType, row, cell, sheet1);
-			exPOI.createCellBasic(7, 5, address, row, cell, sheet1);
+			exPOI.createCellBasic(7, 5, compAddr, row, cell, sheet1);
 			exPOI.createCellBasic(8, 7, compPart, row, cell, sheet1);
 			exPOI.createCellBasic(5, 5, compNo, row, cell, sheet1);
 			exPOI.createCellBasic(6, 5, compNm, row, cell, sheet1);

@@ -151,7 +151,7 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
     "tableNm": $(`#tableNm`).val(),
     "tableKey": $(`#tableKey`).val(),
     "keyColumn": $(`#keyColumn`).val(),
-    "flagYN": "N"
+    "flagYn": "N"
   };
 
   $.ajax({

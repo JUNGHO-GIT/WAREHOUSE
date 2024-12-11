@@ -106,15 +106,15 @@ public class ShipPlanCTRL {
   @PostMapping(value="/act/saveShipPlan", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveShipPlan (
     @RequestBody Shipping param,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      param.setIssueID(userID);
+      param.setIssueId(userId);
       dao.saveShipPlan(param);
-      map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+      map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
       logs.error("saveShipPlan", e.getMessage());

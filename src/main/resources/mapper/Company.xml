@@ -15,9 +15,9 @@
   >
     <![CDATA[
     SELECT
-      A.compCd, A.compNm, A.compNo, A.owner, A.major, A.phone, A.taxEmail, A.address,
-      A.compType, A.compPart, A.remarks, A.issueID, F.fileUrl,
-      CASE WHEN A.flagYN = 'Y' THEN "유효" ELSE "무효" END flagYN
+      A.compCd, A.compNm, A.compNo, A.compOwner, A.compMajor, A.compPhone, A.compEmail, A.compAddr,
+      A.compType, A.compPart, A.remarks, A.issueId, F.fileUrl,
+      CASE WHEN A.flagYn = 'Y' THEN "유효" ELSE "무효" END flagYn
     FROM (
       SELECT *
       FROM tblCompany
@@ -28,7 +28,7 @@
       INNER JOIN (
         SELECT MAX(fileSeq) maxFileSeq
         FROM tblFiles
-        WHERE flagYN = 'Y' AND tableNm = "tblCompany"
+        WHERE flagYn = 'Y' AND tableNm = "tblCompany"
         GROUP BY tableNm, tableKey
       ) F2 ON F1.fileSeq = F2.maxFileSeq
     ) F ON F.tableKey = A.compCd
@@ -47,8 +47,8 @@
   >
     <![CDATA[
     SELECT
-      compCd, compNm, compNo, owner, major, phone, taxEmail, address, compType, compPart,
-      remarks, flagYN, regDate, issueDate, issueID
+      compCd, compNm, compNo, compOwner, compMajor, compPhone, compEmail, compAddr, compType, compPart,
+      remarks, flagYn, regDt, issueDt, issueId
     FROM (
       SELECT *
       FROM tblCompany
@@ -61,7 +61,7 @@
   <select
   	id="saveCompany"
   	parameterType="Company"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
 		CALL sp_Company (
       #{compCd},
@@ -69,14 +69,14 @@
       #{compNo},
       #{compType},
       #{compPart},
-      #{owner},
-      #{major},
-      #{phone},
-      #{taxEmail},
-      #{address},
+      #{compOwner},
+      #{compMajor},
+      #{compAddr},
+      #{compEmail},
+      #{compPhone},
       #{remarks},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

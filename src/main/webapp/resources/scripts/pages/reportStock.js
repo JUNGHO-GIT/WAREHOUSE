@@ -19,7 +19,6 @@ function fnGetList01 () {
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
   };
-
   const colModel = [
     {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center",,
       minWidth:200
@@ -87,7 +86,6 @@ function fnGetList02() {
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
   };
-
   const colModel = [
     {dataIndx:"resrcNm", title:"제품명", dataType:"string", align:"center",,
       minWidth:200

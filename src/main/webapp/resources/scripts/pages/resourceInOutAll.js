@@ -434,10 +434,10 @@ function fnReset() {
   $(`#qty`).val("0");
   $(`#unitPrice`).val("0");
   $(`#supplyPrice`).val("0");
-  $(`#remark`).val("");
+  $(`#remarks`).val("");
   $(`#inOutSeq`).val("");
   $(`#inOutDt`).val(curDate);
-  $(`#flagYN`).val("Y");
+  $(`#flagYn`).val("Y");
 
   // 창고 초기화
   $(`#houseCd`).val("");

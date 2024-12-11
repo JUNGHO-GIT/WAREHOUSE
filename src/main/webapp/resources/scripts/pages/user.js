@@ -21,7 +21,7 @@ function fnGetList01 () {
     numberCell: {show: true, resizable: false, width: 30},
     summaryData:  [],
     rowClick: (_, ui) => {
-      fnShow (ui.rowData.userID);
+      fnShow (ui.rowData.userId);
     }
   };
   const colModel = [
@@ -30,23 +30,23 @@ function fnGetList01 () {
       minWidth:100,
     },
     {
-      title:"사용자 아이디", dataIndx:"userID", dataType:"string", align:"center",
+      title:"사용자 아이디", dataIndx:"userId", dataType:"string", align:"center",
       minWidth:100,
     },
     {
-      title:"연락처", dataIndx:"phone", dataType:"string", align:"center",
+      title:"연락처", dataIndx:"userPhone", dataType:"string", align:"center",
       minWidth:100,
     },
     {
-      title:"E-mail", dataIndx:"email", dataType:"string", align:"center",
+      title:"E-mail", dataIndx:"userEmail", dataType:"string", align:"center",
       minWidth:100,
     },
     {
-      title:"회원등급", dataIndx:"uLevel", dataType:"string", align:"center",
+      title:"회원등급", dataIndx:"userLevel", dataType:"string", align:"center",
       minWidth:100,
     },
     {
-      title:"유효여부", dataIndx:"flagYN", dataType:"string", align:"center",
+      title:"유효여부", dataIndx:"flagYn", dataType:"string", align:"center",
       minWidth:50,
     },
   ];
@@ -109,7 +109,7 @@ function fnGetPartsUser() {
 
       for (let i = 0; i < data.length; i++) {
         const detail = data[i];
-        const uPermHtml = (/* javascript */`
+        const userPermHtml = (/* javascript */`
         <div class="row mt-10px">
           <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
             <div class="fs-0-7rem fw-600 light-black">
@@ -144,7 +144,7 @@ function fnGetPartsUser() {
           </div>
         </div>
         `);
-        $(`#userPerms`).append(uPermHtml);
+        $(`#userPerms`).append(userPermHtml);
       }
     },
     error: ajaxErrorHandler
@@ -152,10 +152,10 @@ function fnGetPartsUser() {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-function fnShow (userID) {
+function fnShow (userId) {
   $.ajax({
     url: "act/showUser",
-    data: `userID=${userID}`,
+    data: `userId=${userId}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -165,17 +165,17 @@ function fnShow (userID) {
 
       fnResetPw();
 
-      $(`#userIDCheck`).val("Y");
-      $(`#userID`).val(data.userID);
+      $(`#userIdCheck`).val("Y");
+      $(`#userId`).val(data.userId);
       $(`#userNm`).val(data.userNm);
-      $(`#phone`).val(data.phone);
-      $(`#email`).val(data.email);
-      $(`#uLevel`).val(data.uLevel);
-      $(`#flagYN`).val("Y");
-      $(`#passwd`).val("BCryptPassword");
+      $(`#userPhone`).val(data.userPhone);
+      $(`#userEmail`).val(data.userEmail);
+      $(`#userLevel`).val(data.userLevel);
+      $(`#flagYn`).val("Y");
+      $(`#userPw`).val("BCryptPassword");
 
       // 권한 데이터 처리
-      const userPerms = data?.uPerm?.split(",");
+      const userPerms = data?.userPerm?.split(",");
       if (!userPerms || userPerms.length === 0) {
         return;
       }
@@ -208,8 +208,8 @@ function fnShow (userID) {
       });
 
       $(`#tableNm`).val("tblUser");
-      $(`#tableKey`).val(data.userID);
-      fnShowFiles("tblUser", data.userID, "files");
+      $(`#tableKey`).val(data.userId);
+      fnShowFiles("tblUser", data.userId, "files");
     },
     error: ajaxErrorHandler
   });
@@ -217,13 +217,13 @@ function fnShow (userID) {
 
 
 // 3-1. 저장 ---------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave(flagYn) {
 
 	let flagParam = "";
 
-  if (flagYN === "N") {
+  if (flagYn === "N") {
     flagParam = "N";
-    if ($(`#userID`).val() == "") {
+    if ($(`#userId`).val() == "") {
       alert("사용자를 선택해 주세요");
       return;
     }
@@ -238,38 +238,38 @@ function fnSave(flagYN) {
       $(`#userNm`).on("focus", function () {});
       return;
     }
-    if ($(`#userID`).val() == "") {
+    if ($(`#userId`).val() == "") {
       alert("사용자 아이디를 입력해 주세요");
-      $(`#userID`).on("focus", function () {});
+      $(`#userId`).on("focus", function () {});
       return;
     }
-    if ($(`#userIDCheck`).val() == "N") {
+    if ($(`#userIdCheck`).val() == "N") {
       alert("사용자 아이디 중복 체크를 해주세요");
-      $(`#userID`).on("focus", function () {});
+      $(`#userId`).on("focus", function () {});
       return;
     }
-    if ($(`#passwd`).val() == "") {
+    if ($(`#userPw`).val() == "") {
       alert("비밀번호를 입력해 주세요");
-      $(`#passwd`).on("focus", function () {});
+      $(`#userPw`).on("focus", function () {});
       return;
     }
-    if ($(`#uLevel`).val() == "") {
+    if ($(`#userLevel`).val() == "") {
       alert("회원등급을 선택해 주세요");
-      $(`#uLevel`).on("focus", function () {});
+      $(`#userLevel`).on("focus", function () {});
       return;
     }
   }
 
   // 권한 설정
   // 'on' 클래스가 있는 요소만 선택
-  let uPerm = "";
+  let userPerm = "";
   document.querySelectorAll(`[data-value]`).forEach((el) => {
     if (el.classList.contains("primary") && el.classList.contains("on")) {
-      uPerm += `${el.getAttribute("name")},`;
+      userPerm += `${el.getAttribute("name")},`;
     }
   });
   // 마지막 ',' 제거
-  uPerm = uPerm.slice(0, -1);
+  userPerm = userPerm.slice(0, -1);
 
   // 신규등록인지 여부 체크
   const signUpCheck = $(`#signUpCheck`).val();
@@ -278,15 +278,15 @@ function fnSave(flagYN) {
   $(`#changeFlag`).val() === "Y"
 
   const param = {
-    "userID": $(`#userID`).val(),
+    "userId": $(`#userId`).val(),
     "userNm": $(`#userNm`).val(),
-    "passwd": $(`#passwd`).val(),
-    "email":$(`#email`).val(),
-    "phone": $(`#phone`).val(),
-    "uLevel": $(`#uLevel`).val(),
+    "userPw": $(`#userPw`).val(),
+    "userEmail":$(`#userEmail`).val(),
+    "userPhone": $(`#userPhone`).val(),
+    "userLevel": $(`#userLevel`).val(),
     "compCd": $(`#compCd`).val() || 0,
-    "uPerm": uPerm,
-    "flagYN": flagParam,
+    "userPerm": userPerm,
+    "flagYn": flagParam,
     "signUpCheck": signUpCheck
   };
 
@@ -308,17 +308,17 @@ function fnSave(flagYN) {
 };
 
 // 3-2. 아이디 중복 체크 ---------------------------------------------------------------------------
-function fnCheckUserID() {
+function fnCheckUserId() {
 
-  if ($(`#userID`).val() == "") {
+  if ($(`#userId`).val() == "") {
     alert("아이디를 바르게 입력해 주세요");
-    $(`#userID`).on("focus", function () {});
+    $(`#userId`).on("focus", function () {});
     return;
   }
 
   $.ajax({
-    url: "act/checkUserID",
-    data: `userID=${$(`#userID`).val()}`,
+    url: "act/checkUserId",
+    data: `userId=${$(`#userId`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
@@ -326,13 +326,13 @@ function fnCheckUserID() {
     },
     success: (data) => {
       if(data == 0) {
-        $(`#userIDCheck`).val("Y");
+        $(`#userIdCheck`).val("Y");
         alert("사용할 수 있는 아이디 입니다");
       }
       else {
         alert("이미 사용중인 아이디 입니다.\n 다른 아이디를 입력해 주세요");
-        $(`#userID`).on("focus", function () {});
-        $(`#userIDCheck`).val("N");
+        $(`#userId`).on("focus", function () {});
+        $(`#userIdCheck`).val("N");
       }
     },
     error: ajaxErrorHandler
@@ -345,16 +345,16 @@ function fnUpdatePw() {
   const changeFlag = $(`#changeFlag`).val();
 
   // 비번 입력안한 경우
-  if ($(`#passwd`).val() == "") {
+  if ($(`#userPw`).val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $(`#passwd`).on("focus", function () {});
+    $(`#userPw`).on("focus", function () {});
     return;
   }
 
   // 비밀번호 필드 활성화
   if (changeFlag === "N") {
-    $(`#passwd`).prop("readonly", false);
-    $(`#passwd`).val("");
+    $(`#userPw`).prop("readonly", false);
+    $(`#userPw`).val("");
     $(`#changePw`).text("비번저장");
     $(`#changeFlag`).val("Y");
     return;
@@ -365,8 +365,8 @@ function fnUpdatePw() {
   }
 
   const param = {
-    "userID": $(`#userID`).val(),
-    "passwd": $(`#passwd`).val(),
+    "userId": $(`#userId`).val(),
+    "userPw": $(`#userPw`).val(),
   };
 
   $.ajax({
@@ -381,14 +381,14 @@ function fnUpdatePw() {
     success: (data) => {
       if (data) {
         alert(data.result);
-        $(`#passwd`).prop("type", "password");
-        $(`#passwd`).val("BCryptPassword");
-        $(`#passwd`).prop("readonly", true);
+        $(`#userPw`).prop("type", "password");
+        $(`#userPw`).val("BCryptPassword");
+        $(`#userPw`).prop("readonly", true);
         $(`#changePw`).html("비번변경");
         $(`#changeFlag`).val("N");
       }
       else {
-        $(`#passwd`).prop("readonly", true);
+        $(`#userPw`).prop("readonly", true);
         $(`#changeFlag`).val("N");
       }
     },
@@ -411,20 +411,20 @@ function fnReset() {
   });
 
   // 회원 초기화
-  $(`#userID`).val("");
-  $(`#passwd`).val("");
+  $(`#userId`).val("");
+  $(`#userPw`).val("");
   $(`#userNm`).val("");
-  $(`#phone`).val("");
-  $(`#email`).val("");
-  $(`#uLevel`).val("");
+  $(`#userPhone`).val("");
+  $(`#userEmail`).val("");
+  $(`#userLevel`).val("");
   $(`#compCd`).val("");
-  $(`#uPerm`).val("");
-  $(`#flagYN`).val("Y");
-  $(`#userIDCheck`).val("N");
+  $(`#userPerm`).val("");
+  $(`#flagYn`).val("Y");
+  $(`#userIdCheck`).val("N");
 
   // 입력필드 상태 초기화
   $(`#userNm`).removeAttr("readonly");
-  $(`#passwd`).removeAttr("readonly");
+  $(`#userPw`).removeAttr("readonly");
 
   // signUpCheck 설정
   $(`#signUpCheck`).val("Y");
@@ -436,8 +436,8 @@ function fnReset() {
 
 // 5-2. 초기화 (비밀번호) --------------------------------------------------------------------------
 function fnResetPw() {
-  $(`#passwd`).prop("readonly", true);
-  $(`#passwd`).val("BCryptPassword");
+  $(`#userPw`).prop("readonly", true);
+  $(`#userPw`).val("BCryptPassword");
   $(`#changePw`).html("비번변경");
   $(`#changeFlag`).val("N");
 };
@@ -451,7 +451,7 @@ function fnChangeList() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  const comboStr = [{part:"comCode", target:"uLevel", groupCd:"0001", format:"combo"}];
+  const comboStr = [{part:"comCode", target:"userLevel", groupCd:"0001", format:"combo"}];
   fnInitCombo(comboStr, function() {
     fnGetList01();
   });

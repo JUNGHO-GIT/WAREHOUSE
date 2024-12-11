@@ -40,7 +40,7 @@
       LEFT JOIN (
         SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblProductInOut
-        WHERE qty > 0 AND flagYN = 'Y'
+        WHERE qty > 0 AND flagYn = 'Y'
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
@@ -82,13 +82,13 @@
       LEFT JOIN (
         SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblResourceInOut
-        WHERE qty > 0 AND flagYN = 'Y'
+        WHERE qty > 0 AND flagYn = 'Y'
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    ]]>
     GROUP BY Z.resrcNm
     ORDER BY Z.resrcNm
+    ]]>
   </select>
 
   <!-- Report.listReportProdOut -->
@@ -124,13 +124,13 @@
       LEFT JOIN (
         SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblProductInOut
-        WHERE qty < 0 AND flagYN = 'Y'
+        WHERE qty < 0 AND flagYn = 'Y'
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
-    ]]>
     GROUP BY Z.prodNm
     ORDER BY Z.prodNm
+    ]]>
   </select>
 
   <!-- Report.listReportResrcOut -->
@@ -166,13 +166,13 @@
       LEFT JOIN (
         SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblResourceInOut
-        WHERE qty < 0 AND flagYN = 'Y'
+        WHERE qty < 0 AND flagYn = 'Y'
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    ]]>
     GROUP BY Z.resrcNm
     ORDER BY Z.resrcNm
+    ]]>
   </select>
 
   <!-- Report.listReportProdStock -->
@@ -209,7 +209,7 @@
         SELECT prodCd, '${curYear}-01' dt,
         CASE WHEN '${curYear}-01' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-02-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-02-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -217,7 +217,7 @@
         SELECT prodCd, '${curYear}-02' dt,
         CASE WHEN '${curYear}-02' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-03-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-03-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -225,7 +225,7 @@
         SELECT prodCd, '${curYear}-03' dt,
         CASE WHEN '${curYear}-03' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-04-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-04-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -233,7 +233,7 @@
         SELECT prodCd, '${curYear}-04' dt,
         CASE WHEN '${curYear}-04' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-05-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-05-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -241,7 +241,7 @@
         SELECT prodCd, '${curYear}-05' dt,
         CASE WHEN '${curMonth}' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-06-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-06-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -249,7 +249,7 @@
         SELECT prodCd, '${curYear}-06' dt,
         CASE WHEN '${curYear}-06' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-07-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-07-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -257,7 +257,7 @@
         SELECT prodCd, '${curYear}-07' dt,
         CASE WHEN '${curYear}-07' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-08-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-08-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -265,7 +265,7 @@
         SELECT prodCd, '${curYear}-08' dt,
         CASE WHEN '${curYear}-08' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-09-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-09-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -273,7 +273,7 @@
         SELECT prodCd, '${curYear}-09' dt,
         CASE WHEN '${curYear}-09' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-10-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-10-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -281,7 +281,7 @@
         SELECT prodCd, '${curYear}-10' dt,
         CASE WHEN '${curYear}-10' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-11-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-11-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -289,7 +289,7 @@
         SELECT prodCd, '${curYear}-11' dt,
         CASE WHEN '${curYear}-11' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-12-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-12-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
 
         UNION ALL
@@ -297,13 +297,13 @@
         SELECT prodCd, '${curYear}-12' dt,
         CASE WHEN '${curYear}-12' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM tblProductInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${nextYear}-01-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${nextYear}-01-01'
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
-    ]]>
     GROUP BY Z.prodNm
     ORDER BY Z.prodNm
+    ]]>
   </select>
 
   <!-- Report.listReportResrcStock -->
@@ -340,7 +340,7 @@
         SELECT resrcCd, '${curYear}-01' dt,
         CASE WHEN '${curYear}-01' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-02-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-02-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -348,7 +348,7 @@
         SELECT resrcCd, '${curYear}-02' dt,
         CASE WHEN '${curYear}-02' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-03-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-03-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -356,7 +356,7 @@
         SELECT resrcCd, '${curYear}-03' dt,
         CASE WHEN '${curYear}-03' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-04-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-04-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -364,7 +364,7 @@
         SELECT resrcCd, '${curYear}-04' dt,
         CASE WHEN '${curYear}-04' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-05-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-05-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -372,7 +372,7 @@
         SELECT resrcCd, '${curYear}-05' dt,
         CASE WHEN '${curMonth}' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-06-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-06-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -380,7 +380,7 @@
         SELECT resrcCd, '${curYear}-06' dt,
         CASE WHEN '${curYear}-06' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-07-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-07-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -388,7 +388,7 @@
         SELECT resrcCd, '${curYear}-07' dt,
         CASE WHEN '${curYear}-07' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-08-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-08-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -396,7 +396,7 @@
         SELECT resrcCd, '${curYear}-08' dt,
         CASE WHEN '${curYear}-08' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-09-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-09-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -404,7 +404,7 @@
         SELECT resrcCd, '${curYear}-09' dt,
         CASE WHEN '${curYear}-09' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-10-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-10-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -412,7 +412,7 @@
         SELECT resrcCd, '${curYear}-10' dt,
         CASE WHEN '${curYear}-10' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-11-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-11-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -420,7 +420,7 @@
         SELECT resrcCd, '${curYear}-11' dt,
         CASE WHEN '${curYear}-11' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${curYear}-12-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${curYear}-12-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
 
         UNION ALL
@@ -428,13 +428,13 @@
         SELECT resrcCd, '${curYear}-12' dt,
         CASE WHEN '${curYear}-12' <= '${curMonth}' THEN SUM(qty) ELSE 0 END totalQty
         FROM  tblResourceInOut
-        WHERE flagYN = 'Y' AND inOutDt < '${nextYear}-01-01'
+        WHERE flagYn = 'Y' AND inOutDt < '${nextYear}-01-01'
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    ]]>
     GROUP BY Z.resrcNm
     ORDER BY Z.resrcNm
+    ]]>
   </select>
 
 </mapper>

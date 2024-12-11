@@ -20,37 +20,37 @@
 		FROM (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYN = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) A
     LEFT JOIN (
       SELECT *
       FROM tblProduct
-      WHERE flagYN = 'Y'
+      WHERE flagYn = 'Y'
     ) B ON B.prodCd = A.prodCd
-    ]]>
     GROUP BY
       A.inOutSeq
 		ORDER BY
       A.inOutDt DESC
+    ]]>
   </select>
 
   <!-- Shipping.saveShipping -->
   <select
   	id="saveShipping"
   	parameterType="Shipping"
-    resultType="Integer"
+    resultType="hashmap"
   >
     CALL sp_Shipping (
       #{shipCd},
-      #{compCd},
-      #{toMajor},
-      #{toPhone},
       #{shipDt},
       #{shipMajor},
+      #{toMajor},
+      #{toPhone},
+      #{compCd},
       #{inOutSeq},
-      #{flagYN},
-      #{planYN},
-      #{issueID}
+      #{flagYn},
+      #{planYn},
+      #{issueId}
     );
   </select>
 

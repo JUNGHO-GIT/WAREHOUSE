@@ -20,10 +20,10 @@
       #{compCd},
       #{qty},
       #{unitPrice},
-      #{remark},
-      #{flagYN},
-      #{planYN},
-      #{issueID}
+      #{remarks},
+      #{flagYn},
+      #{planYn},
+      #{issueId}
     );
   </select>
 

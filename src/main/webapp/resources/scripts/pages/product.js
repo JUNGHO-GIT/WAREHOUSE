@@ -118,9 +118,9 @@ function fnShow(prodCd) {
       $(`#option2`).val(data.option2);
       $(`#quality`).val(data.quality);
       $(`#maker`).val(data.maker);
-      $(`#remark`).val(data.remark);
+      $(`#remarks`).val(data.remarks);
       $(`#barcode`).val(data.barcode);
-      $(`#flagYN`).val("Y");
+      $(`#flagYn`).val("Y");
       $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
       $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
@@ -141,11 +141,11 @@ function fnShow(prodCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYN) {
+function fnSave(flagYn) {
 
   let flagParam = "";
 
-  if (flagYN === "N") {
+  if (flagYn === "N") {
     flagParam = "N";
     if ($(`#prodCd`).val() == "") {
       alert("제품을 선택해 주세요");
@@ -200,10 +200,10 @@ function fnSave(flagYN) {
     "option2": $(`#option2`).val() || "",
     "quality": $(`#quality`).val() || "",
     "maker": $(`#maker`).val() || "",
-    "remark": $(`#remark`).val() || "",
+    "remarks": $(`#remarks`).val() || "",
     "protectedQty": parseInt(String($(`#protectedQty`).val()).replace(/,/gm, "")) || 0,
     "unitPrice": parseInt(String($(`#unitPrice`).val()).replace(/,/gm, "")) || 0,
-    "flagYN": flagParam
+    "flagYn": flagParam
   };
 
   $.ajax({
@@ -245,9 +245,9 @@ function fnReset() {
   $(`#maker`).val("");
   $(`#unitPrice`).val("0");
   $(`#compCd`).val("");
-  $(`#remark`).val("");
+  $(`#remarks`).val("");
   $(`#barcode`).val("");
-  $(`#flagYN`).val("Y");
+  $(`#flagYn`).val("Y");
 
   // 창고 초기화
   $(`#houseCd`).val("");

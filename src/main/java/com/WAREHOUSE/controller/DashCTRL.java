@@ -176,7 +176,7 @@ public class DashCTRL {
     String plan = request.getParameter("plan");
     String date = request.getParameter("date");
     String tableNm = ("tblProductInOut");
-    String planYN = (plan != null && !plan.isEmpty()) ? "Y" : "N";
+    String planYn = (plan != null && !plan.isEmpty()) ? "Y" : "N";
     String sign = (inOut.equals("In")) ? ">" : "<";
 
     // paramMap 에 파라미터 추가
@@ -188,7 +188,7 @@ public class DashCTRL {
     paramMap.put("plan", plan);
     paramMap.put("date", date);
     paramMap.put("tableNm", tableNm);
-    paramMap.put("planYN", planYN);
+    paramMap.put("planYn", planYn);
     paramMap.put("sign", sign);
 
     // 오늘날짜 기준 어제날짜 대비 증감 계산 변수

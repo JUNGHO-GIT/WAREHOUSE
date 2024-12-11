@@ -266,11 +266,11 @@ public class Utils {
     try {
       String compNm = Objects.toString(company.getCompNm(), "");
       String compType = Objects.toString(company.getCompType(), "");
-      String address = Objects.toString(company.getAddress(), "");
+      String compAddr = Objects.toString(company.getCompAddr(), "");
       String compPart = Objects.toString(company.getCompPart(), "");
       String compNo = Objects.toString(company.getCompNo(), "");
-      String phone = Objects.toString(company.getPhone(), "");
-      String owner = Objects.toString(company.getOwner(), "");
+      String compPhone = Objects.toString(company.getCompPhone(), "");
+      String compOwner = Objects.toString(company.getCompOwner(), "");
       String shipMajor = Objects.toString(shipDetail.get("shipMajor"), "");
       String account = Objects.toString(shipDetail.get("compNm"), "");
       String count = Objects.toString(shipDetail.get("cnt"), "");
@@ -292,11 +292,11 @@ public class Utils {
 
       exPOI.createCellBasic(11, 2, detailed, row, cell, sheet1);
       exPOI.createCellBasic(6, 0, shipMajor, row, cell, sheet1);
-      exPOI.createCellBasic(9, 5, phone, row, cell, sheet1);
-      exPOI.createCellBasic(6, 7, owner, row, cell, sheet1);
+      exPOI.createCellBasic(9, 5, compPhone, row, cell, sheet1);
+      exPOI.createCellBasic(6, 7, compOwner, row, cell, sheet1);
       exPOI.createCellBasic(5, 0, account, row, cell, sheet1);
       exPOI.createCellBasic(8, 5, compType, row, cell, sheet1);
-      exPOI.createCellBasic(7, 5, address, row, cell, sheet1);
+      exPOI.createCellBasic(7, 5, compAddr, row, cell, sheet1);
       exPOI.createCellBasic(8, 7, compPart, row, cell, sheet1);
       exPOI.createCellBasic(5, 5, compNo, row, cell, sheet1);
       exPOI.createCellBasic(6, 5, compNm, row, cell, sheet1);

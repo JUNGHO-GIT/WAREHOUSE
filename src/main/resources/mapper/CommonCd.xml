@@ -15,7 +15,7 @@
   >
     <![CDATA[
     SELECT
-      groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYN
+      groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq, flagYn
     FROM
       tblCommonCd
     ORDER BY
@@ -32,7 +32,7 @@
     <![CDATA[
   	SELECT
       groupCd, groupNm, itemCd, itemNm, itemMemo, itemSeq,
-      CASE WHEN flagYN = 'Y' THEN '유효' ELSE '삭제' END flagYN
+      CASE WHEN flagYn = 'Y' THEN '유효' ELSE '삭제' END flagYn
   	FROM
       tblCommonCd
 	  WHERE
@@ -90,7 +90,7 @@
     FROM
       tblCommonCd
     WHERE
-      flagYN = 'Y' and groupCd = #{groupCd}
+      flagYn = 'Y' and groupCd = #{groupCd}
     ORDER BY
       itemSeq
     ]]>
@@ -108,7 +108,7 @@
     FROM
       tblCommonCd
     WHERE
-      flagYN = 'Y'
+      flagYn = 'Y'
     GROUP BY
       groupCd, groupNm
     ]]>
@@ -118,7 +118,7 @@
   <select
   	id="saveCommonCd"
   	parameterType="CommonCd"
-  	resultType="Integer"
+  	resultType="hashmap"
   >
   	CALL sp_CommonCd (
       #{groupCd},
@@ -127,8 +127,8 @@
       #{itemNm},
       #{itemMemo},
       #{itemSeq},
-      #{flagYN},
-      #{issueID}
+      #{flagYn},
+      #{issueId}
     );
   </select>
 

@@ -41,7 +41,7 @@ public class ResourceInOutAllCTRL {
   @PostMapping(value="/act/saveResourceInOutAll", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveResourceInOutAll (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userID") String userID
+    @SessionAttribute("userId") String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
@@ -52,7 +52,7 @@ public class ResourceInOutAllCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIDParam = (String) userID;
+      String userIdParam = (String) userId;
       String inOutParam = (String) jsonObj.get("inOut");
       String inOutDtParam = (String) jsonObj.get("inOutDt");
       String resrcNmParam = (String) jsonObj.get("resrcNm");
@@ -83,13 +83,13 @@ public class ResourceInOutAllCTRL {
         param.setQty(qtyParam);
         param.setUnitPrice(unitPriceParam);
         param.setInOutDt(inOutDtParam);
-        param.setFlagYN("Y");
-        param.setPlanYN("N");
-        param.setRemark("");
-        param.setIssueID(userIDParam);
+        param.setFlagYn("Y");
+        param.setPlanYn("N");
+        param.setRemarks("");
+        param.setIssueId(userIdParam);
 
         dao.saveResourceInOut(param);
-        map.put("result", param.getFlagYN().equals("N") ? "삭제되었습니다" : "저장되었습니다");
+        map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
         e.printStackTrace();

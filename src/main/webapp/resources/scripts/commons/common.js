@@ -311,7 +311,7 @@ function fnGReset(layer, except) {
 function fnSetFindCC(t) {
   var valUrl = "./action/common/listCC.php";
   var findStr = "";
-  var curVal = G_userID;
+  var curVal = G_userId;
   if (t == undefined) var target = "findCC";
   else var target = t;
   var showStr = "CC";
@@ -1809,7 +1809,7 @@ function fnCommonCd(part, groupCd, cd, target, format, findStr) { //part: 구분
 };
 
 
-function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보이게 / 'N' 삭제버튼 안보이게
+function fnGetFiles(cd, seq, target, flagYn) { // flagYn = 'Y' 삭제버튼 보이게 / 'N' 삭제버튼 안보이게
 
   var param = "bbsCd=" + cd;
   param += "&bbsSeq=" + seq;
@@ -1841,22 +1841,22 @@ function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보�
 
         /* if(fileUrl.length > 45){
            showFiles += "<div style='display:inline-block;margin-top:-3px'>";
-             //if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+fileSeq+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileSeq+"')\"> </p></div>";
+             //if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+fileSeq+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileSeq+"')\"> </p></div>";
 
            // 기존 코드
-           //if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
-           if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+cd+"', '"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
+           //if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
+           if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+cd+"', '"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
              else showFiles += "<div style='float:left;width:50px;height:50px;text-align:center;'><p> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
              showFiles += "<div style='float:left;width:280px;height:50px;text-align:left;'><p>"+fileUrl+"</p></div>";
              showFiles += "</div>";
          }
          else{
            showFiles += "<div style='display:inline-block;margin-top:-3px'>";
-           //if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+fileSeq+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileSeq+"')\"> </p></div>";
+           //if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+fileSeq+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileSeq+"')\"> </p></div>";
 
            // 기존코드
-           //if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
-           if(flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+cd+"', '"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
+           //if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
+           if(flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('"+cd+"', '"+seq+"', '"+fileUrl+"', '"+fileNm+"', '"+upGroup+"', '"+fileSeq+"', '"+fileFlag+"')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
            else showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('"+fileUrl+"', '"+fileNm+"')\"> </p></div>";
              showFiles += "<div style='float:left;width:280px;height:21px;text-align:left;'><p>"+fileUrl+"</p></div>";
              showFiles += "</div>";
@@ -1868,7 +1868,7 @@ function fnGetFiles(cd, seq, target, flagYN) { // flagYN = 'Y' 삭제버튼 보�
         }
 
         showFiles += "<div style='display:inline-block;margin-top:-3px'>";
-        if (flagYN == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('" + cd + "', '" + seq + "', '" + fileUrl + "', '" + fileNm + "', '" + upGroup + "', '" + fileSeq + "', '" + fileFlag + "')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('" + fileUrl + "', '" + fileNm + "')\"> </p></div>";
+        if (flagYn == 'Y') showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p><img src=\"/imgs/icon_fileddel.png\" style=\"cursor:pointer;\" onclick=\"fnDelFile('" + cd + "', '" + seq + "', '" + fileUrl + "', '" + fileNm + "', '" + upGroup + "', '" + fileSeq + "', '" + fileFlag + "')\"> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('" + fileUrl + "', '" + fileNm + "')\"> </p></div>";
         else showFiles += "<div style='float:left;width:50px;height:21px;text-align:center;'><p> <img src=\"/imgs/icon_filedown.png\" style=\"cursor:pointer;\" onclick=\"fnDownFile('" + fileUrl + "', '" + fileNm + "')\"> </p></div>";
         showFiles += "<div style='float:left;width:340px;height:21px;text-align:left;'><p>" + fileNmSubStr + "</p></div>"; // fileUrl // width : 280px;
         showFiles += "</div>";
