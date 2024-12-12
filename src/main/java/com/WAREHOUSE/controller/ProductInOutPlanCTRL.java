@@ -33,7 +33,7 @@ public class ProductInOutPlanCTRL {
       return new ModelAndView("productInPlan");
     }
     catch (Exception e) {
-      logs.error("productInPlan", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -47,7 +47,7 @@ public class ProductInOutPlanCTRL {
       return new ModelAndView("productOutPlan");
     }
     catch (Exception e) {
-      logs.error("productOutPlan", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -64,7 +64,7 @@ public class ProductInOutPlanCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listProductInOutPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -81,7 +81,7 @@ public class ProductInOutPlanCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showProductInOutPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -102,7 +102,7 @@ public class ProductInOutPlanCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveProductInOutPlan", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

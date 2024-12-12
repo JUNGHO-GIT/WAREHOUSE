@@ -35,7 +35,7 @@ public class UserCTRL {
       return new ModelAndView("userLogin");
     }
     catch (Exception e) {
-      logs.error("login", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -49,7 +49,7 @@ public class UserCTRL {
       return new ModelAndView("reLogin");
     }
     catch (Exception e) {
-      logs.error("reLogin", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -63,7 +63,7 @@ public class UserCTRL {
       return new ModelAndView("user");
     }
     catch (Exception e) {
-      logs.error("user", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -116,7 +116,7 @@ public class UserCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("auth", e.getMessage());
+      e.printStackTrace();
       map.put("result", "로그인에 실패하였습니다");
     }
 
@@ -134,7 +134,7 @@ public class UserCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listUser", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -149,7 +149,7 @@ public class UserCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listUserPerm", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -166,7 +166,7 @@ public class UserCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showUser", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -183,7 +183,7 @@ public class UserCTRL {
       return ResponseEntity.ok(checkID);
     }
     catch (Exception e) {
-      logs.error("checkUserId", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -264,7 +264,7 @@ public class UserCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("saveUser", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 
@@ -307,7 +307,7 @@ public class UserCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("updatePw", e.getMessage());
+      e.printStackTrace();
       result.put("result", "비밀번호 변경에 실패하셨습니다");
     }
 

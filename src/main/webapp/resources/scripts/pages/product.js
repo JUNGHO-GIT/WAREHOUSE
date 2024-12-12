@@ -82,14 +82,13 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("product", "제품 관리", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("제품 관리", data);
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
-      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -159,32 +158,32 @@ function fnSave(flagYn) {
     flagParam = "Y";
     if ($(`#prodNm`).val() == "") {
       alert("제품 이름을 입력해 주세요");
-      $(`#prod`).on("focus", function () {});
+      $(`#prodNm`).trigger("focus");
       return;
     }
     if ($(`#prodType`).val() == "") {
       alert("제품 분류를 입력해 주세요");
-      $(`#prodNm`).on("focus", function () {});
+      $(`#prodType`).trigger("focus");
       return;
     }
     if ($(`#comp`).val() == "") {
       alert("거래처를 입력해 주세요");
-      $(`#comp`).on("focus", function () {});
+      $(`#comp`).trigger("focus");
       return;
     }
     if ($(`#house`).val() == "") {
       alert("창고를 입력해 주세요");
-      $(`#house`).on("focus", function () {});
+      $(`#house`).trigger("focus");
       return;
     }
     if ($(`#protectedQty`).val() == "" || $(`#protectedQty`).val() == "0") {
       alert("안전재고를 입력해 주세요");
-      $(`#protectedQty`).on("focus", function () {});
+      $(`#protectedQty`).trigger("focus");
       return;
     }
     if ($(`#unitPrice`).val() == "" || $(`#unitPrice`).val() == "0") {
       alert("표준단가를 입력해 주세요");
-      $(`#unitPrice`).on("focus", function () {});
+      $(`#unitPrice`).trigger("focus");
       return;
     }
   }
@@ -282,9 +281,7 @@ function fnChangeList() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
-  const comboStr = [
-    {part:"comCode", target:"prodType", groupCd:"0002", format:"combo"}
-  ];
+  const comboStr = [{part:"comCode", target:"prodType", groupCd:"0002", format:"combo"}];
   fnInitCombo (comboStr, function () {
     fnGetList01();
   });

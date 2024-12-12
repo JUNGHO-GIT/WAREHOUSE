@@ -52,8 +52,8 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
+    success: (data) => {
+      obj.dataModel = {data:data};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
@@ -147,8 +147,8 @@ function fnGetList02() {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
+    success: (data) => {
+      obj.dataModel = {data:data};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
@@ -277,8 +277,8 @@ function fnShow(prodCd, bomType) {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
+    success: (data) => {
+      obj.dataModel = {data:data};
       $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler

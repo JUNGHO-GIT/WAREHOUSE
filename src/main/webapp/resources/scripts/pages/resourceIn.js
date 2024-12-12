@@ -82,13 +82,13 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("resourceIn", "자재 입고 관리", myJsonData);
-      gridOption.summaryData = updateSummary("resrc", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("자재 입고 관리", data);
+      gridOption.summaryData = updateSummary("resrc", data);
 
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -164,11 +164,11 @@ function fnGetList02 (resrcCd) {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("resourceInOut", "제품 입출고 내역", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("제품 입출고 내역", data);
       $grid02.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -235,32 +235,32 @@ function fnSave(flagYn) {
     planParam = "N";
     if ($(`#resrc`).val() == "") {
       alert("자재 이름을 입력해 주세요");
-      $(`#resrc`).on("focus", function () {});
+      $(`#resrc`).trigger("focus");
       return;
     }
     if (!$(`#inOutDt`).val()) {
       alert("날짜를 입력해 주세요");
-      $(`#inOutDt`).on("focus", function () {});
+      $(`#inOutDt`).trigger("focus");
       return;
     }
     if ($(`#comp`).val() == "") {
       alert("거래처를 입력해 주세요");
-      $(`#comp`).on("focus", function () {});
+      $(`#comp`).trigger("focus");
       return;
     }
     if ($(`#house`).val() == "") {
       alert("창고를 입력해 주세요");
-      $(`#house`).on("focus", function () {});
+      $(`#house`).trigger("focus");
       return;
     }
     if ($(`#qty`).val() == "" || $(`#qty`).val() == "0") {
       alert("수량을 입력해 주세요");
-      $(`#qty`).on("focus", function () {});
+      $(`#qty`).trigger("focus");
       return;
     }
     if ($(`#unitPrice`).val() == "" || $(`#unitPrice`).val() == "0") {
       alert("표준단가를 입력해 주세요");
-      $(`#unitPrice`).on("focus", function () {});
+      $(`#unitPrice`).trigger("focus");
       return;
     }
   }

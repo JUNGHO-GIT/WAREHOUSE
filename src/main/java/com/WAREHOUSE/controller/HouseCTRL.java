@@ -33,7 +33,7 @@ public class HouseCTRL {
       return new ModelAndView("house");
     }
     catch (Exception e) {
-      logs.error("house", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -50,7 +50,7 @@ public class HouseCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listHouse", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -73,7 +73,7 @@ public class HouseCTRL {
       return ResponseEntity.ok(map);
     }
     catch (Exception e) {
-      logs.error("showHouse", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -94,7 +94,7 @@ public class HouseCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveHouse", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

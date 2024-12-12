@@ -33,7 +33,7 @@ public class CompanyCTRL {
       return new ModelAndView("company");
     }
     catch (Exception e) {
-      logs.error("company", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -50,7 +50,7 @@ public class CompanyCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listCompany", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -67,7 +67,7 @@ public class CompanyCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showCompany", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -88,7 +88,7 @@ public class CompanyCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveCompany", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

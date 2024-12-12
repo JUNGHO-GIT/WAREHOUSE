@@ -33,7 +33,7 @@ public class ResourceInOutXlsCTRL {
       return new ModelAndView("resourceInOutXls");
     }
     catch (Exception e) {
-      logs.error("resourceInOutXls", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -86,7 +86,7 @@ public class ResourceInOutXlsCTRL {
       }
       catch (Exception e) {
         e.printStackTrace();
-        logs.error("saveResourceInOutXls", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

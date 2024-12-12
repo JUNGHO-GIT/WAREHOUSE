@@ -65,10 +65,10 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
+    success: (data) => {
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -114,12 +114,12 @@ function fnSave(flagYn) {
     flagParam = "N";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $(`#groupCd`).on("focus", function () {});
+      $(`#groupCd`).trigger("focus");
       return;
     }
     if (!$(`#itemCd`).val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $(`#itemCd`).on("focus", function () {});
+      $(`#itemCd`).trigger("focus");
       return;
     }
     if (!confirm("삭제 하시겠습니까?")) {
@@ -130,17 +130,17 @@ function fnSave(flagYn) {
     flagParam = "Y";
     if (!groupCd && !regGroup) {
       alert("그룹을 바르게 선택해 주세요");
-      $(`#groupCd`).on("focus", function () {});
+      $(`#groupCd`).trigger("focus");
       return;
     }
     if (!$(`#itemCd`).val()) {
       alert("아이템 코드를 바르게 선택해 주세요");
-      $(`#itemCd`).on("focus", function () {});
+      $(`#itemCd`).trigger("focus");
       return;
     }
     if (!$(`#itemNm`).val()) {
       alert("아이템을 바르게 입력해 주세요");
-      $(`#itemNm`).on("focus", function () {});
+      $(`#itemNm`).trigger("focus");
       return;
     }
     if (regGroup) {
@@ -148,7 +148,7 @@ function fnSave(flagYn) {
         let regSplit = (typeof regGroup === 'string' ? regGroup : '').split("@");
         if (regSplit.length != 2) {
           alert("그룹코드@그룹명 형태로 등록해주세요");
-          $(`#regGroup`).on("focus", function () {});
+          $(`#regGroup`).trigger("focus");
           return;
         }
         groupCd = regSplit[0];

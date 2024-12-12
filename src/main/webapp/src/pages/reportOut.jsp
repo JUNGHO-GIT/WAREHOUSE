@@ -13,33 +13,56 @@
         <!-- form -->
         <form id="formData1" name="formData1" class="formData1">
           <div class="row d-row-left">
-            <div class="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
               <div class="p-5px bg-dark-white d-right mr-10px">
                 <div class="fs-0-8rem fw-600 dark">
-              <p class="control-label">년도</p>
+                  기간별 조회
+                </div>
+              </div>
             </div>
-            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-2px">
-              <select class="form-control form-control-sm" id="findYear" onchange="fnPressGet01(event)"></select>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <div class="d-row-left mr-10px">
+                <select
+                  id="findYear"
+                  name="findYear"
+                  class="form-control form-control-sm pointer"
+                  onchange="fnPressGet01(event)"
+                >
+                </select>
+              </div>
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button class="btn btn-primary btn-xs" type="button" onclick="fnPressGet01(event)">
+              <div class="btn btn-primary btn-xs" onclick="fnPressGet01(event)">
                 조회
-              </button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
     <!-- /.row 1 -->
 
     <!-- row 2 ------------------------------------------------------------------------------------>
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="cards" id="gridView">
-          <div id="grid01" class="h-45p"></div>
-          <hr/>
-          <div id="grid02" class="h-45p"></div>
-        </div>
+        <!-- form -->
+        <form id="formData2" name="formData2" class="formData2">
+          <div class="row">
+            <!-- grid 1 -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-10px">
+              <div class="grid-main h-min-45vh">
+                <div id="grid01"></div>
+              </div>
+            </div>
+            <div class="divider-all d-none"></div>
+            <!-- grid 2 -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-10px">
+              <div class="grid-main h-min-45vh">
+                <div id="grid02"></div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <!-- /.row 2 -->

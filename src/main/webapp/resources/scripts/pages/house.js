@@ -261,12 +261,12 @@ function fnSave(YN) {
     flagParam = "Y";
     if ($(`#houseNm`).val() == "") {
       alert("창고이름을 입력해 주세요");
-      $(`#houseNm`).on("focus", function () {});
+      $(`#houseNm`).trigger("focus");
       return;
     }
     if ($(`#houseOrder`).val() == "") {
       alert("창고순서를 입력해 주세요");
-      $(`#houseOrder`).on("focus", function () {});
+      $(`#houseOrder`).trigger("focus");
       return;
     }
   }

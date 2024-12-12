@@ -31,7 +31,7 @@ public class ReportCTRL {
       return new ModelAndView("reportIn");
     }
     catch (Exception e) {
-      logs.error("reportIn", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -45,7 +45,7 @@ public class ReportCTRL {
       return new ModelAndView("reportOut");
     }
     catch (Exception e) {
-      logs.error("reportOut", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -59,7 +59,7 @@ public class ReportCTRL {
       return new ModelAndView("reportStock");
     }
     catch (Exception e) {
-      logs.error("reportStock", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -73,14 +73,14 @@ public class ReportCTRL {
       return new ModelAndView("reportHouse");
     }
     catch (Exception e) {
-      logs.error("reportHouse", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportProdIn", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/listReportProdIn", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listReportProdIn (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -97,14 +97,14 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportProdIn", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcIn", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcIn", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listReportResrcIn (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -121,7 +121,7 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportResrcIn", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -145,14 +145,14 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportProdOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcOut", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcOut", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listReportResrcOut (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -169,14 +169,14 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportResrcOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportProdStock", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/listReportProdStock", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listReportProdStock (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -193,14 +193,14 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportProdStock", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcStock", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcStock", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listReportResrcStock (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -217,7 +217,7 @@ public class ReportCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listReportResrcStock", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 

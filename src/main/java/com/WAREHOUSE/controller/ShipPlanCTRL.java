@@ -39,7 +39,7 @@ public class ShipPlanCTRL {
       return new ModelAndView("shipPlan");
     }
     catch (Exception e) {
-      logs.error("shipPlan", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -58,7 +58,7 @@ public class ShipPlanCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listShipPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -77,7 +77,7 @@ public class ShipPlanCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listShipPlanDetail", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -96,7 +96,7 @@ public class ShipPlanCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showShipPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -117,7 +117,7 @@ public class ShipPlanCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveShipPlan", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 
@@ -155,7 +155,7 @@ public class ShipPlanCTRL {
       map.put("result", "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("shipItemsExcelDown", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

@@ -42,13 +42,9 @@
               </div>
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button
-                type="button"
-                class="btn btn-primary btn-xs"
-                onclick="fnPressGet01(event)"
-              >
+              <div class="btn btn-primary btn-xs" onclick="fnPressGet01(event)">
                 조회
-              </button>
+              </div>
             </div>
           </div>
         </form>
@@ -209,28 +205,18 @@
                   </div>
                 </div>
                 <div class="row mt-5vh">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
-                    <button
-                      type="button"
-                      class="btn btn-success btn-xs mr-10px"
-                      onclick="fnReset()"
-                    >
-                      신규
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-xs mr-10px"
-                      onclick="fnExcelDown()"
-                    >
-                      Excel Download
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-xs"
-                      onclick="fnDel()"
-                    >
-                      삭제
-                    </button>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div class="btn btn-success btn-xs mr-10px" onclick="fnReset()">
+                        신규
+                      </div>
+                      <div class="btn btn-primary btn-xs mr-10px" onclick="fnExcelDown()">
+                        Excel Download
+                      </div>
+                      <div class="btn btn-danger btn-xs" onclick="fnDel()">
+                        삭제
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- hidden -->
@@ -247,7 +233,7 @@
 
     <!-- js -->
     <div class="h-5vh"></div>
-    <script defer src="${rsPath}/scripts/pages/shipItems.js"></script>
+    <script defer src="${rsPath}/scripts/pages/shipPlan.js"></script>
 
   </div>
 </body>

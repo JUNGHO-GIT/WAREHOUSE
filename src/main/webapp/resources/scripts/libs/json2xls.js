@@ -2074,7 +2074,6 @@ const XLS = {};
   function parse_RkRec (blob, length) {
     var ixfe = blob.read_shift(2);
     var RK = parse_RkNumber(blob);
-    //console.log("::", ixfe, RK,";;");
     return [ixfe, RK];
   }
 
@@ -3764,7 +3763,6 @@ const XLS = {};
       length = target - blob.l;
       id = blob[blob.l];
       R = PtgTypes[id];
-      //console.log("ptg", id, R)
       if (id === 0x18 || id === 0x19) {
         id = blob[blob.l + 1];
         R = (id === 0x18 ? Ptg18 : Ptg19)[id];
@@ -3783,10 +3781,8 @@ const XLS = {};
     var _range = range !== undefined ? range : {s: {c: 0, r: 0}};
     var stack = [], e1, e2, type, c, ixti, nameidx, r;
     if (!formula[0] || !formula[0][0]) return "";
-    //console.log("--",cell,formula[0])
     for (var ff = 0, fflen = formula[0].length; ff < fflen; ++ff) {
       var f = formula[0][ff];
-      //console.log("++",f, stack)
       switch (f[0]) {
         /* 2.2.2.1 Unary Operator Tokens */
         /* 2.5.198.93 */
@@ -4026,9 +4022,7 @@ const XLS = {};
 
         default: throw 'Unrecognized Formula Token: ' + f;
       }
-      //console.log("::",f, stack)
     }
-    //console.log("--",stack);
     return stack[0];
   }
   /* 2.5.198.44 */
@@ -6158,7 +6152,6 @@ const XLS = {};
             case 'CRN': break;
 
             case 'Scl': {
-              //console.log("Zoom Level:", val[0]/val[1],val);
             } break;
             case 'SheetExt': {
 

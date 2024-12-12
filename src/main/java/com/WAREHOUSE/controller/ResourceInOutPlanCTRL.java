@@ -33,7 +33,7 @@ public class ResourceInOutPlanCTRL {
       return new ModelAndView("resourceInPlan");
     }
     catch (Exception e) {
-      logs.error("resourceInPlan", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -47,7 +47,7 @@ public class ResourceInOutPlanCTRL {
       return new ModelAndView("resourceOutPlan");
     }
     catch (Exception e) {
-      logs.error("resourceOutPlan", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -64,7 +64,7 @@ public class ResourceInOutPlanCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listResourceInOutPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -81,7 +81,7 @@ public class ResourceInOutPlanCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showResourceInOutPlan", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -102,7 +102,7 @@ public class ResourceInOutPlanCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveResourceInOutPlan", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

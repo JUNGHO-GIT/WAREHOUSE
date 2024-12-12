@@ -82,12 +82,11 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("resource", "자재 관리", myJsonData);
-
+    success: (data) => {
+      gridOption.title = updateTitle("자재 관리", data);
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -159,32 +158,32 @@ function fnSave (flagYn) {
     flagParam = "Y";
     if ($(`#resrcNm`).val() == "") {
       alert("자재 이름을 입력해 주세요");
-      $(`#resrc`).on("focus", function () {});
+      $(`#resrcNm`).trigger("focus");
       return;
     }
     if ($(`#resrcType`).val() == "") {
       alert("자재 분류를 입력해 주세요");
-      $(`#resrcNm`).on("focus", function () {});
+      $(`#resrcType`).trigger("focus");
       return;
     }
     if ($(`#comp`).val() == "") {
       alert("거래처를 입력해 주세요");
-      $(`#comp`).on("focus", function () {});
+      $(`#comp`).trigger("focus");
       return;
     }
     if ($(`#house`).val() == "") {
       alert("창고를 입력해 주세요");
-      $(`#house`).on("focus", function () {});
+      $(`#house`).trigger("focus");
       return;
     }
     if ($(`#protectedQty`).val() == "" || $(`#protectedQty`).val() == "0") {
       alert("안전재고를 입력해 주세요");
-      $(`#protectedQty`).on("focus", function () {});
+      $(`#protectedQty`).trigger("focus");
       return;
     }
     if ($(`#unitPrice`).val() == "" || $(`#unitPrice`).val() == "0") {
       alert("표준단가를 입력해 주세요");
-      $(`#unitPrice`).on("focus", function () {});
+      $(`#unitPrice`).trigger("focus");
       return;
     }
   }

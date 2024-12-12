@@ -1,44 +1,67 @@
-let TABS = "/";
-let TABS_TARGET = "/";
-let TABS_LIMIT = 8;
+let TABS = "";
+let TABS_TARGET = "";
+let TABS_LIMIT = 5;
 let HEIGHT = window.innerHeight * 0.9;
 
-// 0. 탭 코드 ------------------------------------------------------------------------------------
-function fnMkTabCd(pageNo, pageUrl, pageParam) {
+// 0. 탭 갯수 동적 조정 ----------------------------------------------------------------------------
+function fnDynamicTabsLimit() {
+  if (window.matchMedia("(min-width: 0px) and (max-width: 576px)").matches) {
+    TABS_LIMIT = 2;
+  }
+  else if (window.matchMedia("(min-width: 577px) and (max-width: 768px)").matches) {
+    TABS_LIMIT = 3;
+  }
+  else if (window.matchMedia("(min-width: 769px) and (max-width: 992px)").matches) {
+    TABS_LIMIT = 4;
+  }
+  else if (window.matchMedia("(min-width: 993px) and (max-width: 1200px)").matches) {
+    TABS_LIMIT = 5;
+  }
+  else if (window.matchMedia("(min-width: 1201px) and (max-width: 10000px)").matches) {
+    TABS_LIMIT = 8;
+  }
+};
 
+// 0. 탭 코드 --------------------------------------------------------------------------------------
+function fnMkTabCd(pageNo, pageUrl, pageParam) {
   let newTab = pageNo;
-  let divTabCd = TABS.split("/");
-  let divTabTarget = TABS_TARGET.split("/");
+  let divTabCd = TABS.split("/").filter(tab => tab); // 빈 항목 제거
+  let divTabTarget = TABS_TARGET.split("/").filter(target => target); // 빈 항목 제거
   let tabCnt = divTabCd.length;
 
-  if (tabCnt - 1 > TABS_LIMIT) {
+  // 탭 제한 초과 시 처리
+  if (tabCnt > TABS_LIMIT) {
     TABS = "/";
     TABS_TARGET = "/";
     for (let k = 0; k < tabCnt; k++) {
-      if (k > 1) {
+      if (k > 1) { // 두 번째 이후 탭 유지
         TABS += `${divTabCd[k]}/`;
         TABS_TARGET += `${divTabTarget[k]}/`;
-      }
-      else {
+      } else { // 첫 번째와 두 번째 탭 제거
         $(`#tab${divTabCd[k]}`).remove();
       }
     }
   }
-  if (pageParam == "add") {
-    if (TABS.indexOf(`/${pageNo}/`) < 0) {
+
+  if (pageParam === "add") {
+    // 새로운 탭 추가
+    if (!TABS.includes(`/${pageNo}/`)) {
       TABS += `${pageNo}/`;
     }
-    if (TABS_TARGET.indexOf(`/${pageUrl}/`) < 0) {
+    if (!TABS_TARGET.includes(`/${pageUrl}/`)) {
       TABS_TARGET += `${pageUrl}/`;
     }
-  }
-  else {
-    TABS = TABS.split(`/${pageNo}/`).join("/");
-    TABS_TARGET = TABS_TARGET.split(`/${pageUrl}/`).join("/");
-    const divTabs = TABS.split("/");
+  } else {
+    // 기존 탭 제거
+    TABS = TABS.replace(new RegExp(`/${pageNo}/`, "g"), "/");
+    TABS_TARGET = TABS_TARGET.replace(new RegExp(`/${pageUrl}/`, "g"), "/");
+
+    // 마지막 남은 탭 확인
+    const divTabs = TABS.split("/").filter(tab => tab); // 빈 항목 제거
     const tabSize = divTabs.length;
-    newTab = divTabs[tabSize - 2];
+    newTab = tabSize > 0 ? divTabs[tabSize - 1] : null; // 남은 탭이 없으면 null 반환
   }
+
   return newTab;
 };
 
@@ -333,7 +356,8 @@ function fnTabSortAndDrag() {
     delay: 0,
     dropOnEmpty: true,
     helper: 'clone',
-  }).disableSelection();
+  })
+  .disableSelection();
 };
 
 // 0. 버전정보 표시 --------------------------------------------------------------------------------
@@ -377,21 +401,10 @@ function fnCheckSession() {
 
 // 0. 현재 열려있는 탭 정보 console에 표시 ---------------------------------------------------------
 function fnConsoleTabInfo (tabNo) {
-  const tabs = document.querySelectorAll(`.tabEl`);
-  const tabIdRegex = /^tab\d+$/;
-  const info = Array.from(tabs).map((tab) => {
-    return tabIdRegex.test(tab.id) ? tab.id : '';
-  })
-  .filter((id) => {
-    return id !== '';
-  })
-  .join(', ');
-
   console.log(`
     =============================
-    닫기버튼을 누른 탭: ${tabNo}
-    현재 열려있는 탭 갯수: ${info.split(",").length}
-    현재 열려있는 탭: ${info}
+    누른 탭: ${tabNo}
+    현재 열려있는 탭 갯수: ${TABS.split("/").length - 1}
     TABS: ${TABS}
     =============================
   `);
@@ -403,3 +416,6 @@ jQuery(function($) {
   fnCheckSession();
   fnTabSortAndDrag();
 });
+
+// 0. 화면 크기 변경시 실행 ------------------------------------------------------------------------
+window.addEventListener("resize", fnDynamicTabsLimit);

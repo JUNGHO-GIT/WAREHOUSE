@@ -36,7 +36,7 @@ public class UserConfigCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showUserConfigTab", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -53,7 +53,7 @@ public class UserConfigCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showUserConfigInfo", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -82,7 +82,7 @@ public class UserConfigCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("updateConfigPw", e.getMessage());
+      e.printStackTrace();
       map.put("result", "비밀번호 변경에 실패하셨습니다");
     }
 
@@ -155,7 +155,7 @@ public class UserConfigCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("saveUserConfigInfo", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 
@@ -205,7 +205,7 @@ public class UserConfigCTRL {
       map.put("result", "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveUserConfigTab", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

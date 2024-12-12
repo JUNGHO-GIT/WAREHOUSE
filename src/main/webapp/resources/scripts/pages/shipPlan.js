@@ -33,7 +33,7 @@ function fnGetList01 () {
       hidden:true,
     },
     {
-      title:"출하일", dataIndx:"shipDt", dataType:"string", align:"center",
+      title:"출하예정일", dataIndx:"shipDt", dataType:"string", align:"center",
       minWidth:100,
     },
     {
@@ -54,23 +54,23 @@ function fnGetList01 () {
     },
     {
       title:"항목수", dataIndx:"cnt", dataType:"string", align:"center",
-      minWidth:50,
+      minWidth:70,
     },
   ];
   $.ajax({
-    url: "act/listShipItems",
+    url: "act/listShipPlan",
     data:`shipDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("shipPlan", "출하 계획 관리", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("출하 계획 관리", data);
 
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -85,8 +85,8 @@ function fnGetList02 (shipCd) {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "shippingList.xlsx",
-    title: "   출하 계획 관리 목록",
+    xlsNm: "shipPlanDetail.xlsx",
+    title: "   출하 계획 목록",
     width: "auto",
     height: "100%",
     wrap: false,
@@ -110,16 +110,8 @@ function fnGetList02 (shipCd) {
       minWidth:100,
     },
     {
-      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
-      minWidth:100,
-    },
-    {
-      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
-      minWidth:100,
-    },
-    {
       title:"출하수량", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth:50,
+      minWidth:70,
     },
   ];
 
@@ -132,10 +124,10 @@ function fnGetList02 (shipCd) {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
+    success: (data) => {
       $grid02.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");

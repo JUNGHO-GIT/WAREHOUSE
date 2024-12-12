@@ -604,7 +604,7 @@ function fnSetDate(obj, m) {
   else {
     if (m == "check") {
       alert("생년월일을 입력해 주세요.\nEx) 1980-01-02");
-      $(`#C00BRTHDY`).focus();
+      $(`#C00BRTHDY`).trigger("focus");
       return;
     }
   }
@@ -1939,14 +1939,14 @@ function fnDelFile(seq) {
 
  if (!$(`#userFile`).val()) {
      alert('파일을 먼저 선택해 주세요');
-     $(`#userFile`).focus();
+     $(`#userFile`).trigger("focus");
      return;
  }
 
 
  if (!$(`#blueprintCd`).val()) {
      alert('도면을 먼저 선택해 주세요');
-     $(`#blueprintCd`).focus();
+     $(`#blueprintCd`).trigger("focus");
      return;
  }
 
@@ -1956,7 +1956,7 @@ function fnDelFile(seq) {
  if (G_enableFile.indexOf("/."+fileExt+"/") < 0) {
      alert('등록 불가능한 파일입니다.\n다음의 파일만 등록 가능합니다.\n'+G_enableFile);
      $(`#userFile`).val("");
-     $(`#userFile`).focus();
+     $(`#userFile`).trigger("focus");
      return;
  }
 

@@ -31,7 +31,7 @@ public class ProductXlsCTRL {
       return new ModelAndView("productXls");
     }
     catch (Exception e) {
-      logs.error("productXls", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -87,7 +87,7 @@ public class ProductXlsCTRL {
         map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
-        logs.error("saveProductXls", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

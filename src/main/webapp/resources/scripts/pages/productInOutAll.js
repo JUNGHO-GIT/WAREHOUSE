@@ -117,13 +117,13 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("productInOut", "제품 입출고 관리", myJsonData.length);
-      gridOption.summaryData = updateSummary("prod", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("제품 입출고 관리", data);
+      gridOption.summaryData = updateSummary("prod", data);
 
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");

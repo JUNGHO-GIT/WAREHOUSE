@@ -148,33 +148,26 @@
               </div>
               <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
                 <div class="d-row-left mr-10px">
-                  <button
-                    type="button"
+                  <div
                     class="btn btn-primary btn-xs"
                     id="changeConfigPw"
                     onclick="fnUpdateConfigPw()"
                   >
                     변경하기
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="row mt-5vh">
-              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-xs mr-10px"
-                  onclick="fnSaveUserConfigInfo()"
-                >
-                  저장
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger btn-xs"
-                  onclick="fnGridPopup('popupUserConfig', 'off')"
-                >
-                  닫기
-                </button>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="d-row-center">
+                  <div class="btn btn-primary btn-xs mr-10px" onclick="fnSaveUserConfigInfo()">
+                    저장
+                  </div>
+                  <div class="btn btn-danger btn-xs" onclick="fnGridPopup('popupUserConfig', 'off')">
+                    닫기
+                  </div>
+                </div>
               </div>
             </div>
             <!-- hidden -->

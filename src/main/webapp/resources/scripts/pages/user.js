@@ -47,7 +47,7 @@ function fnGetList01 () {
     },
     {
       title:"유효여부", dataIndx:"flagYn", dataType:"string", align:"center",
-      minWidth:50,
+      minWidth:70,
     },
   ];
 
@@ -59,10 +59,10 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
+    success: (data) => {
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -235,27 +235,27 @@ function fnSave(flagYn) {
     flagParam = "Y";
     if ($(`#userNm`).val() == "") {
       alert("사용자 이름을 입력해 주세요");
-      $(`#userNm`).on("focus", function () {});
+      $(`#userNm`).trigger("focus");
       return;
     }
     if ($(`#userId`).val() == "") {
       alert("사용자 아이디를 입력해 주세요");
-      $(`#userId`).on("focus", function () {});
+      $(`#userId`).trigger("focus");
       return;
     }
     if ($(`#userIdCheck`).val() == "N") {
       alert("사용자 아이디 중복 체크를 해주세요");
-      $(`#userId`).on("focus", function () {});
+      $(`#userId`).trigger("focus");
       return;
     }
     if ($(`#userPw`).val() == "") {
       alert("비밀번호를 입력해 주세요");
-      $(`#userPw`).on("focus", function () {});
+      $(`#userPw`).trigger("focus");
       return;
     }
     if ($(`#userLevel`).val() == "") {
       alert("회원등급을 선택해 주세요");
-      $(`#userLevel`).on("focus", function () {});
+      $(`#userLevel`).trigger("focus");
       return;
     }
   }
@@ -312,7 +312,7 @@ function fnCheckUserId() {
 
   if ($(`#userId`).val() == "") {
     alert("아이디를 바르게 입력해 주세요");
-    $(`#userId`).on("focus", function () {});
+    $(`#userId`).trigger("focus");
     return;
   }
 
@@ -331,7 +331,7 @@ function fnCheckUserId() {
       }
       else {
         alert("이미 사용중인 아이디 입니다.\n 다른 아이디를 입력해 주세요");
-        $(`#userId`).on("focus", function () {});
+        $(`#userId`).trigger("focus");
         $(`#userIdCheck`).val("N");
       }
     },
@@ -347,7 +347,7 @@ function fnUpdatePw() {
   // 비번 입력안한 경우
   if ($(`#userPw`).val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $(`#userPw`).on("focus", function () {});
+    $(`#userPw`).trigger("focus");
     return;
   }
 

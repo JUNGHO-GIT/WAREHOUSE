@@ -36,7 +36,7 @@ public class DashCTRL {
       return new ModelAndView("dash");
     }
     catch (Exception e) {
-      logs.error("dash", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -471,7 +471,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("prodInChartWeek", e.getMessage());
+      e.printStackTrace();
       todayQty = "0";
     }
 
@@ -484,7 +484,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("prodInChartWeek", e.getMessage());
+      e.printStackTrace();
       yesterdayQty = "0";
     }
 
@@ -582,7 +582,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("prodOutChartWeek", e.getMessage());
+      e.printStackTrace();
       todayQty = "0";
     }
 
@@ -595,7 +595,7 @@ public class DashCTRL {
       }
     }
     catch (Exception e) {
-      logs.error("prodOutChartWeek", e.getMessage());
+      e.printStackTrace();
       yesterdayQty = "0";
     }
 

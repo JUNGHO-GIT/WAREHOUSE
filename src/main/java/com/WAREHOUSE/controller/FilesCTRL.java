@@ -50,7 +50,7 @@ public class FilesCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listFiles", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(500).body(null);
     }
   }
@@ -67,7 +67,7 @@ public class FilesCTRL {
       return ResponseEntity.ok(showFiles);
     }
     catch (Exception e) {
-      logs.error("showFiles", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(500).body(null);
     }
   }
@@ -127,14 +127,14 @@ public class FilesCTRL {
       .body(fileContent);
     }
     catch (Exception e) {
-      logs.error("viewFiles", e.getMessage());
+      e.printStackTrace();
       String result = "파일 처리 중 오류가 발생했습니다.";
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/uploadFiles", produces="text/html;charset=UTF-8")
+  @PostMapping(value="/act/uploadFiles", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> uploadFiles (
     @RequestParam(value="userFile", required=false) MultipartFile multipartFile,
     @RequestParam(value="tableNm", required=false) String tableNm,
@@ -172,7 +172,7 @@ public class FilesCTRL {
       map.put("result", "업로드 되었습니다");
     }
     catch (Exception e) {
-      logs.error("uploadFiles", e.getMessage());
+      e.printStackTrace();
       map.put("result", "업로드 실패");
     }
 
@@ -207,7 +207,7 @@ public class FilesCTRL {
       map.put("result", file.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveFiles", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 
@@ -270,7 +270,7 @@ public class FilesCTRL {
       .body(fileContent);
     }
     catch (Exception e) {
-      logs.error("fileDownload", e.getMessage());
+      e.printStackTrace();
       String result = "파일 다운로드 중 오류가 발생했습니다.";
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }

@@ -33,7 +33,7 @@ public class ShippingCTRL {
       return new ModelAndView("shipping");
     }
     catch (Exception e) {
-      logs.error("shipping", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -54,7 +54,7 @@ public class ShippingCTRL {
       return ResponseEntity.ok(listShipping);
     }
     catch (Exception e) {
-      logs.error("listShipping", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -75,7 +75,7 @@ public class ShippingCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveShipping", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

@@ -35,7 +35,7 @@ public class BomCTRL {
       return new ModelAndView("bom");
     }
     catch (Exception e) {
-      logs.error("bom", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -52,7 +52,7 @@ public class BomCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listBom", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -70,7 +70,7 @@ public class BomCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showBom", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -114,7 +114,7 @@ public class BomCTRL {
         map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
-        logs.error("saveBom", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

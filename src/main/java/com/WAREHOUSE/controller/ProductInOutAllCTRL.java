@@ -31,7 +31,7 @@ public class ProductInOutAllCTRL {
       return new ModelAndView("productInOutAll");
     }
     catch (Exception e) {
-      logs.error("productInOutAll", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -91,7 +91,7 @@ public class ProductInOutAllCTRL {
         map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
       }
       catch (Exception e) {
-        logs.error("saveProductInOutAll", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

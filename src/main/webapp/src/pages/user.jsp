@@ -32,13 +32,9 @@
               </div>
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button
-                type="button"
-                class="btn btn-primary btn-xs"
-                onclick="fnPressGet01(event)"
-              >
+              <div class="btn btn-primary btn-xs" onclick="fnPressGet01(event)">
                 조회
-              </button>
+              </div>
             </div>
           </div>
         </form>
@@ -63,8 +59,7 @@
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 px-10px">
               <div class="grid-switch">
                 <div class="d-row-left">
-                  <button
-                    type="button"
+                  <div
                     id="detailTab"
                     class="btn btn-secondary btn-xs radius-bottom-0 mr-5px active"
                     onclick="fnSwitchPage('detail')"
@@ -77,9 +72,8 @@
                       checked
                     />
                     사용자정보
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     id="permTab"
                     class="btn btn-secondary btn-xs radius-bottom-0"
                     onclick="fnSwitchPage('perm')"
@@ -91,7 +85,7 @@
                       value="perm"
                     />
                     권한
-                  </button>
+                  </div>
                 </div>
               </div>
               <div class="grid-detail h-min-100vh">
@@ -128,13 +122,9 @@
                   </div>
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
                     <div class="d-row-left mr-10px">
-                      <button
-                        type="button"
-                        class="btn btn-warning btn-xs"
-                        onclick="fnCheckUserId()"
-                      >
+                      <div class="btn btn-warning btn-xs" onclick="fnCheckUserId()">
                         중복체크
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -161,13 +151,9 @@
                   </div>
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-col-left">
                     <div class="d-row-left mr-10px">
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-xs"
-                        onclick="fnUpdatePw()"
-                      >
+                      <div class="btn btn-primary btn-xs" onclick="fnUpdatePw()">
                         비번변경
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -255,28 +241,18 @@
                   </div>
                 </div>
                 <div class="row mt-5vh">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
-                    <button
-                      type="button"
-                      class="btn btn-success btn-xs mr-10px"
-                      onclick="fnReset()"
-                    >
-                      신규
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-xs mr-10px"
-                      onclick="fnSave()"
-                    >
-                      저장
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-xs"
-                      onclick="fnDel()"
-                    >
-                      삭제
-                    </button>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div class="btn btn-success btn-xs mr-10px" onclick="fnReset()">
+                        신규
+                      </div>
+                      <div class="btn btn-primary btn-xs mr-10px" onclick="fnSave()">
+                        저장
+                      </div>
+                      <div class="btn btn-danger btn-xs" onclick="fnDel()">
+                        삭제
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

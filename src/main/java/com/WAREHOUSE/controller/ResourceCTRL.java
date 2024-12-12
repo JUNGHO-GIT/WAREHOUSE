@@ -35,7 +35,7 @@ public class ResourceCTRL {
       return new ModelAndView("resource");
     }
     catch (Exception e) {
-      logs.error("resource", e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }
@@ -51,7 +51,7 @@ public class ResourceCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listResource", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }
@@ -67,7 +67,7 @@ public class ResourceCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showResource", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }
@@ -89,7 +89,7 @@ public class ResourceCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveResource", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

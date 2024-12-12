@@ -12,12 +12,12 @@ function fnUploadFiles(formParam) {
 
   if (!$(`#userFile`).val()) {
     alert("파일을 먼저 선택해 주세요");
-    $(`#userFile`).on("focus", function () {});
+    $(`#userFile`).trigger("focus");
     return;
   }
   if (fileExt != "jpg" && fileExt != "JPG" && fileExt != "png" && fileExt != "PNG") {
     alert("등록 불가능한 파일입니다");
-    $(`#userFile`).on("focus", function () {});
+    $(`#userFile`).trigger("focus");
     return;
   }
   $(`#fileUpBtn`).html("ing..");
@@ -55,9 +55,11 @@ function fnUploadFiles(formParam) {
 
 // 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
 function fnShowFiles(tableNm, tableKey, target) {
-  var imgStyle = "cursor:pointer; margin-left:2px; border-radius:30%;";
-  var imgFile = [".jpg", ".JPG", ".png", ".PNG"];
-  var currentSelectedRow = null;
+
+  const $target = $(`#${target}`);
+  const imgStyle = `style="cursor:pointer; margin-left:2px; border-radius:30%;"`;
+  const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
+  let currentSelectedRow = null;
 
   $.ajax({
     url: "act/showFiles",
@@ -67,69 +69,59 @@ function fnShowFiles(tableNm, tableKey, target) {
     success: (data) => {
 
       // 1. 값 초기화
-      $("#" + target).empty();
+      $target.empty();
       $(`#showImage`).empty();
 
       // 2. 최신순으로 정렬
       data.reverse();
 
-      if (currentSelectedRow !== null) {
-        $("#imageRow" + currentSelectedRow).css("background-color", "");
+      if (currentSelectedRow) {
+        $(`#imageRow${currentSelectedRow}`).css("background-color", "");
       }
       currentSelectedRow = null;
 
-      data.forEach(function (file, k) {
-        if (imgFile.includes(`.${file.fileUrl.split(".").pop()}`)) {
-          $("#" + target).append(`
-            <div id="imageRow${k}" class="d-inline-block text-left pointer"
-            onclick="fnShowSelectedFiles('${file.fileUrl}', ${k})">
-              <img src="/imgs/pre.png"
-                onclick="fnPopupImage('${file.fileUrl}');"
-                style="${imgStyle}"
-                loading="lazy"
-              />
-              <img src="/imgs/download.png"
-                onclick="fnDownloadFiles('${file.fileUrl}');"
-                style="${imgStyle}"
-                loading="lazy"
-              />
-              <img src="/imgs/del.png"
-                onclick="fnDeleteFiles('${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}');"
-                style="${imgStyle}"
-                loading="lazy"
-              />
-              <span>${file.fileUrl}</span>
-            </div>
-          `);
+      data.forEach((file, k) => {
+        if (!imgFile.includes(`.${file.fileUrl.split(".").pop()}`)) {
+          return;
         }
+        const imgBox = (/* javascript */`
+          <div
+            id="imageRow${k}"
+            name="imageRow"
+            class="d-inline-block text-left pointer"
+            onclick="fnShowSelectedFiles('${file.fileUrl}', ${k})"
+          >
+            <i class="fas fa-image" onclick="fnPopupImage('${file.fileUrl}');" ${imgStyle}></i>
+            <i class="fas fa-download" onclick="fnDownloadFiles('${file.fileUrl}');" ${imgStyle}></i>
+            <i class="fas fa-trash-alt" onclick="fnDeleteFiles('${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}');" ${imgStyle}></i>
+            <span>${file.fileUrl}</span>
+          </div>
+        `);
+        $target.append(imgBox);
       });
-      var firstImg = data.find(function (file) {
+      const firstImg = data.find((file) => {
         return imgFile.includes(`.${file.fileUrl.split(".").pop().toLowerCase()}`);
       });
-      if (firstImg) {
-        fnShowSelectedFiles(firstImg.fileUrl, 0);
-      }
+      firstImg && fnShowSelectedFiles(firstImg.fileUrl, 0);
     },
     error: ajaxErrorHandler
   });
 };
 
 // 2-2. 리스트 이미지 클릭시 표시 ------------------------------------------------------------------
-function fnShowSelectedFiles(fileUrl, rowId) {
+function fnShowSelectedFiles (fileUrl, rowId) {
 
-  var imgUrl = "viewFiles?fileUrl=" + fileUrl;
+  const imgUrl = `viewFiles?fileUrl=${fileUrl}`;
 
   $(`#showImage`).html(`<img src="${imgUrl}" class="cards-image" loading="lazy" />`);
   $(`[id^="imageRow"]`).css("background-color", "");
-  $("#imageRow" + rowId).css("background-color", "#ccc");
-
-  /* currentSelectedRow = rowId; */
+  $(`#imageRow${rowId}`).css("background-color", "#ccc");
 };
 
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
-function fnPopupImage(fileUrl) {
-  var valUrl = "viewFiles?fileUrl=" + fileUrl;
-  window.open(valUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
+function fnPopupImage (fileUrl) {
+  const popupUrl = `viewFiles?fileUrl=${fileUrl}`;
+  window.open(popupUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
 };
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------

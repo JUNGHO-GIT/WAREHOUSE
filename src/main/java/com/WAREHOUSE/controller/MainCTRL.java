@@ -85,7 +85,7 @@ public class MainCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listSysMenu", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }
@@ -131,7 +131,7 @@ public class MainCTRL {
       return ResponseEntity.ok(map);
     }
     catch (Exception e) {
-      logs.error("showVersion", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }

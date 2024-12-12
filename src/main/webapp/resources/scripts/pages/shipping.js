@@ -60,7 +60,7 @@ function fnGetList01 () {
       minWidth:100,
     },
     {
-      title:"제품명명", dataIndx:"prodNm", dataType:"string", align:"center",
+      title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
       minWidth:150,
     },
     {
@@ -84,12 +84,12 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("shipping", "제품 출고 현황", myJsonData);
+    success: (data) => {
+      gridOption.title = updateTitle("제품 출고 현황", data);
 
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -106,7 +106,7 @@ function fnGetList02() {
 
   const gridOption = {
     xlsNm: "shipDetail.xlsx",
-    title: "   제품 출하 대기 목록",
+    title: "   출하 대기 목록",
     width: "auto",
     height: "100%",
     wrap: false,
@@ -148,16 +148,8 @@ function fnGetList02() {
       minWidth:150,
     },
     {
-      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
-      minWidth:100,
-    },
-    {
-      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
-      minWidth:100,
-    },
-    {
       title:"출하수량", dataIndx:"qty", dataType:"string", align:"center",
-      minWidth:100,
+      minWidth:70,
     },
   ];
   $grid02.pqGrid({
@@ -179,27 +171,27 @@ function fnSaveItems() {
   }
   if ($(`#comp`).val() == "") {
     alert("거래처를 입력해 주세요");
-    $(`#compNm`).on("focus", function () {});
+    $(`#compNm`).trigger("focus");
     return;
   }
   if ($(`#toMajor`).val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $(`#toMajor`).on("focus", function () {});
+    $(`#toMajor`).trigger("focus");
     return;
   }
   if ($(`#toPhone`).val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $(`#toPhone`).on("focus", function () {});
+    $(`#toPhone`).trigger("focus");
     return;
   }
   if ($(`#shipDt`).val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $(`#shipDt`).on("focus", function () {});
+    $(`#shipDt`).trigger("focus");
     return;
   }
   if ($(`#shipMajor`).val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $(`#shipMajor`).on("focus", function () {});
+    $(`#shipMajor`).trigger("focus");
     return;
   }
   if (!confirm("출하 하시겠습니까?")) {
@@ -257,27 +249,27 @@ function fnSavePlan() {
   }
   if ($(`#comp`).val() == "") {
     alert("거래처를 입력해 주세요");
-    $(`#compNm`).on("focus", function () {});
+    $(`#compNm`).trigger("focus");
     return;
   }
   if ($(`#toMajor`).val() == "") {
     alert("거래처 담당자를 입력해 주세요");
-    $(`#toMajor`).on("focus", function () {});
+    $(`#toMajor`).trigger("focus");
     return;
   }
   if ($(`#toPhone`).val() == "") {
     alert("담당자 번호를 입력해 주세요");
-    $(`#toPhone`).on("focus", function () {});
+    $(`#toPhone`).trigger("focus");
     return;
   }
   if ($(`#shipDt`).val() == "") {
     alert("출하 일자를 입력해 주세요");
-    $(`#shipDt`).on("focus", function () {});
+    $(`#shipDt`).trigger("focus");
     return;
   }
   if ($(`#shipMajor`).val() == "") {
     alert("출하 담당자를 입력해 주세요");
-    $(`#shipMajor`).on("focus", function () {});
+    $(`#shipMajor`).trigger("focus");
     return;
   }
   if (!confirm("출하 계획을 등록 하시겠습니까?")) {

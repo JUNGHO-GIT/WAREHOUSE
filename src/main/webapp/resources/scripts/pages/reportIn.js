@@ -2,7 +2,6 @@
 function fnGetList01 () {
 
   const $grid01 = $(`#grid01`);
-  var showYear = $(`#findYear`).val();
 
   const gridOption = {
     xlsNm: "reportIn.xlsx",
@@ -18,34 +17,60 @@ function fnGetList01 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
+    summaryData:  [],
   };
   const colModel = [
-    {dataIndx:"prodNm", title:"제품명", dataType:"string", align:"center",,
+    {
+      title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
       minWidth:200
     },
-    {dataIndx:"01", title: showYear + "년 1월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"1월", dataIndx:"01", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"02", title: showYear + "년 2월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"2월", dataIndx:"02", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"03", title: showYear + "년 3월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"3월", dataIndx:"03", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"04", title: showYear + "년 4월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"4월", dataIndx:"04", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"05", title: showYear + "년 5월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"5월", dataIndx:"05", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"06", title: showYear + "년 6월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"6월", dataIndx:"06", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"07", title: showYear + "년 7월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"7월", dataIndx:"07", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"08", title: showYear + "년 8월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"8월", dataIndx:"08", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"09", title: showYear + "년 9월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"9월", dataIndx:"09", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"10", title: showYear + "년 10월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"10월", dataIndx:"10", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"11", title: showYear + "년 11월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"11월", dataIndx:"11", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"12", title: showYear + "년 12월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"12월", dataIndx:"12", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
   ];
 
@@ -57,9 +82,14 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+    success: (data) => {
+      gridOption.title = updateTitle("(제품) 연간 입고 현황", data);
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: data },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -69,7 +99,6 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  var showYear = $(`#findYear`).val();
 
   const gridOption = {
     xlsNm: "reportIn.xlsx",
@@ -87,32 +116,57 @@ function fnGetList02() {
     numberCell: {show: true, resizable: false, width: 30},
   };
   const colModel = [
-    {dataIndx:"resrcNm", title:"자재명", dataType:"string", align:"center",,
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
       minWidth:200
     },
-    {dataIndx:"01", title: showYear + "년 1월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"1월", dataIndx:"01", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"02", title: showYear + "년 2월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"2월", dataIndx:"02", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"03", title: showYear + "년 3월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"3월", dataIndx:"03", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"04", title: showYear + "년 4월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"4월", dataIndx:"04", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"05", title: showYear + "년 5월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"5월", dataIndx:"05", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"06", title: showYear + "년 6월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"6월", dataIndx:"06", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"07", title: showYear + "년 7월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"7월", dataIndx:"07", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"08", title: showYear + "년 8월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"8월", dataIndx:"08", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"09", title: showYear + "년 9월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"9월", dataIndx:"09", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"10", title: showYear + "년 10월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"10월", dataIndx:"10", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"11", title: showYear + "년 11월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"11월", dataIndx:"11", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
-    {dataIndx:"12", title: showYear + "년 12월", dataType:"string", align:"center", format:"#,###",
+    {
+      title:"12월", dataIndx:"12", dataType:"string", align:"center", format:"#,###",
+      minWidth:100
     },
   ];
 
@@ -124,9 +178,14 @@ function fnGetList02() {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      obj.dataModel = {data:myJsonData};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+    success: (data) => {
+      gridOption.title = updateTitle("(자재) 연간 입고 현황", data);
+      $grid02.pqGrid({
+        ...gridOption,
+        dataModel: { data: data },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -134,14 +193,17 @@ function fnGetList02() {
 
 // -------------------------------------------------------------------------------------------------
 function fnSetYears(selectId) {
-  var year = new Date().getFullYear();
-  var select = $("#" + selectId);
+  const year = new Date().getFullYear();
+  const yearStr = year.toString().trim();
+  const select = $(`#${selectId}`);
+
   select.empty();
-  select.append(`<option value=${year}>${year}</option>`);
-  for (let i = year - 1; i >= 2010; i--) {
+  select.append(`<option value=${yearStr}>${yearStr}</option>`);
+
+  for (let i = year-1; i >= 2010; i--) {
     select.append($("<option>", {
-      value: i,
-      text: i
+      value: i.toString().trim(),
+      text: i.toString().trim(),
     }));
   }
 };

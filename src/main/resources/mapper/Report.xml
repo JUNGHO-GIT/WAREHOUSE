@@ -15,7 +15,7 @@
   >
     <![CDATA[
     SELECT
-      prodNm,
+      Z.prodNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -40,13 +40,15 @@
       LEFT JOIN (
         SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblProductInOut
-        WHERE qty > 0 AND flagYn = 'Y'
+        WHERE qty > 0 AND flagYn = 'Y' AND planYn = 'N'
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
+    GROUP BY
+      Z.prodNm
+    ORDER BY
+      Z.prodNm
     ]]>
-    GROUP BY Z.prodNm
-    ORDER BY Z.prodNm
   </select>
 
   <!-- Report.listReportResrcIn -->
@@ -57,7 +59,7 @@
   >
     <![CDATA[
     SELECT
-      resrcNm,
+      Z.resrcNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -82,12 +84,14 @@
       LEFT JOIN (
         SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblResourceInOut
-        WHERE qty > 0 AND flagYn = 'Y'
+        WHERE qty > 0 AND flagYn = 'Y' AND planYn = 'N'
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    GROUP BY Z.resrcNm
-    ORDER BY Z.resrcNm
+    GROUP BY
+      Z.resrcNm
+    ORDER BY
+      Z.resrcNm
     ]]>
   </select>
 
@@ -99,7 +103,7 @@
   >
     <![CDATA[
     SELECT
-      prodNm,
+      Z.prodNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -124,12 +128,14 @@
       LEFT JOIN (
         SELECT prodCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblProductInOut
-        WHERE qty < 0 AND flagYn = 'Y'
+        WHERE qty < 0 AND flagYn = 'Y' AND planYn = 'N'
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
-    GROUP BY Z.prodNm
-    ORDER BY Z.prodNm
+    GROUP BY
+      Z.prodNm
+    ORDER BY
+      Z.prodNm
     ]]>
   </select>
 
@@ -141,7 +147,7 @@
   >
     <![CDATA[
     SELECT
-      resrcNm,
+      Z.resrcNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -166,12 +172,14 @@
       LEFT JOIN (
         SELECT resrcCd, LEFT (inOutDt, 7) dt, SUM(qty) totalQty
         FROM tblResourceInOut
-        WHERE qty < 0 AND flagYn = 'Y'
+        WHERE qty < 0 AND flagYn = 'Y' AND planYn = 'N'
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    GROUP BY Z.resrcNm
-    ORDER BY Z.resrcNm
+    GROUP BY
+      Z.resrcNm
+    ORDER BY
+      Z.resrcNm
     ]]>
   </select>
 
@@ -183,7 +191,7 @@
   >
     <![CDATA[
     SELECT
-      prodNm,
+      Z.prodNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -301,8 +309,10 @@
         GROUP BY LEFT (inOutDt, 7), prodCd
       ) B ON A.prodCd = B.prodCd
     ) Z
-    GROUP BY Z.prodNm
-    ORDER BY Z.prodNm
+    GROUP BY
+      Z.prodNm
+    ORDER BY
+      Z.prodNm
     ]]>
   </select>
 
@@ -314,7 +324,7 @@
   >
     <![CDATA[
     SELECT
-      resrcNm,
+      Z.resrcNm,
       SUM(`${curYear}-01`) '01', SUM(`${curYear}-02`) '02', SUM(`${curYear}-03`) '03',
       SUM(`${curYear}-04`) '04', SUM(`${curYear}-05`) '05', SUM(`${curYear}-06`) '06',
       SUM(`${curYear}-07`) '07', SUM(`${curYear}-08`) '08', SUM(`${curYear}-09`) '09',
@@ -432,8 +442,10 @@
         GROUP BY LEFT (inOutDt, 7), resrcCd
       ) B ON A.resrcCd = B.resrcCd
     ) Z
-    GROUP BY Z.resrcNm
-    ORDER BY Z.resrcNm
+    GROUP BY
+      Z.resrcNm
+    ORDER BY
+      Z.resrcNm
     ]]>
   </select>
 

@@ -37,7 +37,6 @@ function init_sidebar ()  {
 		$RIGHT_COL.css("min-height", n);
 	};
 	$SIDEBAR_MENU.find("a").on("click", function  (i)  {
-		console.log("clicked - sidebar_menu");
 		var t = $(this).parent();
 		if (t.is(".active")) {
 			t.removeClass("active active-sm");
@@ -63,7 +62,6 @@ function init_sidebar ()  {
 		}
 	});
 	$MENU_TOGGLE.on("click", function  ()  {
-		console.log("clicked - menu toggle");
 		if ($BODY.hasClass("nav-md")) {
 			$SIDEBAR_MENU.find("li.active ul").hide();
 			$SIDEBAR_MENU.find("li.active").addClass("active-sm").removeClass("active");
@@ -139,7 +137,6 @@ function init_compose ()  {
 	if (typeof $.fn.slideToggle === "undefined") {
 		return;
 	}
-	console.log("init_compose");
 	$("#compose, .compose-close").click(function  ()  {
 		$(".compose").slideToggle();
 	});

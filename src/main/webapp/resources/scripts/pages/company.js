@@ -77,18 +77,18 @@ function fnGetList01 () {
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
-    success: (myJsonData) => {
-      gridOption.title = updateTitle("company", "거래처 관리", myJsonData.length);
+    success: (data) => {
+      gridOption.title = updateTitle("거래처 관리", data);
       // compCd가 1인 항목을 찾아 맨위로 이동
-      const index = myJsonData.findIndex((item) => item.compCd === 1);
+      const index = data.findIndex((item) => item.compCd === 1);
       if (index > -1) {
-        const selectedItem = myJsonData.splice(index, 1)[0];
-        myJsonData.unshift(selectedItem);
+        const selectedItem = data.splice(index, 1)[0];
+        data.unshift(selectedItem);
       }
-      gridOption.dataModel = {data:myJsonData};
+      gridOption.dataModel = {data:data};
       $grid01.pqGrid({
         ...gridOption,
-        dataModel: { data: myJsonData },
+        dataModel: { data: data },
         colModel: colModel,
       })
       .pqGrid("refreshDataAndView");
@@ -152,12 +152,12 @@ function fnSave(flagYn) {
     flagParam = "Y";
     if ($(`#compNm`).val() == "") {
       alert("거래처 이름을 입력해 주세요");
-      $(`#compNm`).on("focus", function () {});
+      $(`#compNm`).trigger("focus");
       return;
     }
     if ($(`#compNo`).val() == "") {
       alert("사업자번호를 입력해 주세요");
-      $(`#compNo`).on("focus", function () {});
+      $(`#compNo`).trigger("focus");
       return;
     }
   }

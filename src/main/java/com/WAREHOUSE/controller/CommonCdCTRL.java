@@ -34,7 +34,7 @@ public class CommonCdCTRL {
       return new ModelAndView("commonCd");
     }
     catch (Exception e) {
-      logs.error("commonCd", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -78,7 +78,7 @@ public class CommonCdCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listCommonCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -96,7 +96,7 @@ public class CommonCdCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showCommonCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -117,7 +117,7 @@ public class CommonCdCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveCommonCd", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

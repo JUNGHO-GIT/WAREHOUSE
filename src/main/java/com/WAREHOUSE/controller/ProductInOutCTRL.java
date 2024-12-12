@@ -33,7 +33,7 @@ public class ProductInOutCTRL {
       return new ModelAndView("productIn");
     }
     catch (Exception e) {
-      logs.error("productIn", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -47,7 +47,7 @@ public class ProductInOutCTRL {
       return new ModelAndView("productOut");
     }
     catch (Exception e) {
-      logs.error("productOut", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -64,7 +64,7 @@ public class ProductInOutCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listProductInOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -81,7 +81,7 @@ public class ProductInOutCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showProductInOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -102,7 +102,7 @@ public class ProductInOutCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveProductInOut", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

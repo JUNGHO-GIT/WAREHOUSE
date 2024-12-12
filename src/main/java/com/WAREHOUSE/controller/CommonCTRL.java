@@ -33,7 +33,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findBom", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -50,7 +50,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findHouseNm", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -68,7 +68,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findHouseCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -85,7 +85,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findCompNm", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -103,7 +103,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findCompCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -120,7 +120,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findProdNm", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -138,7 +138,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findProdCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -155,7 +155,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findResrcNm", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -173,7 +173,7 @@ public class CommonCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("findResrcCd", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 

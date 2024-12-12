@@ -16,8 +16,9 @@
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
-      B.inOutSeq, C.compNm, C.compCd, (D.qty * -1) qty,
-      IFNULL(B.cnt, 0) cnt
+      B.inOutSeq, IFNULL(B.cnt, 0) cnt,
+      C.compNm, C.compCd,
+      (D.qty * -1) qty
     FROM (
       SELECT *
       FROM tblShipping
@@ -53,7 +54,8 @@
     SELECT
       A.shipDt, A.shipCd,
       B.inOutSeq, IFNULL(B.cnt, 0) cnt,
-      C.inOutDt, (D.qty * -1) qty,
+      C.inOutDt,
+      (D.qty * -1) qty,
       F.prodCd, F.prodNm, F.option1, F.option2
     FROM (
       SELECT *
@@ -64,6 +66,8 @@
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
       WHERE flagYn = 'Y'
+      -- GROUP BY 필수 !!
+      GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
@@ -94,8 +98,9 @@
     <![CDATA[
     SELECT
       A.shipCd, A.shipDt, A.toMajor, A.toPhone, A.shipMajor, A.flagYn, A.planYn,
-      C.compNm, C.compCd, (D.qty * -1) qty,
-      IFNULL(B.cnt, 0) cnt
+      B.inOutSeq, IFNULL(B.cnt, 0) cnt,
+      C.compNm, C.compCd,
+      (D.qty * -1) qty
     FROM (
       SELECT *
       FROM tblShipping
@@ -105,8 +110,6 @@
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
       WHERE flagYn = 'Y'
-      -- GROUP BY 필수 !!
-      GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *

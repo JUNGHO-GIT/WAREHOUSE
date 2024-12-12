@@ -33,7 +33,7 @@ public class ResourceInOutCTRL {
       return new ModelAndView("resourceIn");
     }
     catch (Exception e) {
-      logs.error("resourceIn", e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }
@@ -46,7 +46,7 @@ public class ResourceInOutCTRL {
       return new ModelAndView("resourceOut");
     }
     catch (Exception e) {
-      logs.error("resourceOut", e.getMessage());
+      e.printStackTrace();
       return null;
     }
   }
@@ -62,7 +62,7 @@ public class ResourceInOutCTRL {
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {
-      logs.error("listResourceInOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -79,7 +79,7 @@ public class ResourceInOutCTRL {
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
-      logs.error("showResourceInOut", e.getMessage());
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
@@ -100,7 +100,7 @@ public class ResourceInOutCTRL {
       map.put("result", param.getFlagYn().equals("N") ? "삭제되었습니다" : "저장되었습니다");
     }
     catch (Exception e) {
-      logs.error("saveResourceInOut", e.getMessage());
+      e.printStackTrace();
       map.put("result", "저장 실패");
     }
 

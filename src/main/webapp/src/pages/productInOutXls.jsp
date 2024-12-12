@@ -29,38 +29,24 @@
                   accept=".xls, .xlsx"
                   class="d-none"
                 />
-                <button
-                  type="button"
-                  class="btn btn-primary btn-xs"
-                  onclick="$('#productInOutXls').click()"
-                >
-                  파일선택
-                </button>
+                <div class="btn btn-primary btn-xs">
+                  <label for="productInOutXls">파일선택</label>
+                </div>
               </div>
             </div>
             <div class="divider-md d-none"></div>
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 align-md">
-              <button
-                type="button"
-                class="btn btn-success btn-xs ml-10px"
-                onclick="fnReset()"
-              >
-                초기화
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary btn-xs ml-10px"
-                onclick="fnSave()"
-              >
-                저장
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-xs ml-10px"
-                onclick="fnExDownload()"
-              >
-                Sample Download
-              </button>
+              <div class="d-row-center">
+                <div class="btn btn-success btn-xs ml-10px" onclick="fnUpload()">
+                  초기화
+                </div>
+                <div class="btn btn-primary btn-xs ml-10px" onclick="fnSave()">
+                  저장
+                </div>
+                <div class="btn btn-danger btn-xs ml-10px" onclick="fnExDownload()">
+                  Sample Download
+                </div>
+              </div>
             </div>
           </div>
         </form>

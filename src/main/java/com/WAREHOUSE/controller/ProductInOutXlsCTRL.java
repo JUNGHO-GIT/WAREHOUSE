@@ -31,7 +31,7 @@ public class ProductInOutXlsCTRL {
       return new ModelAndView("productInOutXls");
     }
     catch (Exception e) {
-      logs.error("productInOutXls", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -84,7 +84,7 @@ public class ProductInOutXlsCTRL {
       }
       catch (Exception e) {
         e.printStackTrace();
-        logs.error("saveProductInOutXls", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

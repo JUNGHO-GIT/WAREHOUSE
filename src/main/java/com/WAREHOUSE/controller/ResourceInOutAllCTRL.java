@@ -31,7 +31,7 @@ public class ResourceInOutAllCTRL {
       return new ModelAndView("resourceInOutAll");
     }
     catch (Exception e) {
-      logs.error("resourceInOutAll", e.getMessage());
+      e.printStackTrace();
       return null;
     }
 
@@ -93,7 +93,7 @@ public class ResourceInOutAllCTRL {
       }
       catch (Exception e) {
         e.printStackTrace();
-        logs.error("saveResourceInOutAll", e.getMessage());
+        e.printStackTrace();
         map.put("result", "저장 실패");
       }
     }

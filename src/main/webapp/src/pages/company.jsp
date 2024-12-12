@@ -32,13 +32,9 @@
               </div>
             </div>
             <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-              <button
-                type="button"
-                class="btn btn-primary btn-xs"
-                onclick="fnPressGet01(event)"
-              >
+              <div class="btn btn-primary btn-xs" onclick="fnPressGet01(event)">
                 조회
-              </button>
+              </div>
             </div>
           </div>
         </form>
@@ -259,12 +255,12 @@
                   </div>
                   <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
                     <div class="d-row-left mr-10px">
-                      <textarea
+                      <input
+                        type="text"
                         id="remarks"
                         name="remarks"
-                        class="form-control resize-none"
-                        rows="1"
-                      ></textarea>
+                        class="form-control form-control-sm"
+                      />
                     </div>
                   </div>
                 </div>
@@ -296,16 +292,15 @@
                         type="file"
                         name="userFile"
                         id="userFile"
-                        class="w-100p"
+                        class="form-control form-control-sm"
                       />
-                      <button
-                        class="btn btn-success btn-xs"
-                        type="button"
+                      <div
                         id="fileUpBtn"
+                        class="btn btn-success btn-xs"
                         onclick="fnUploadFiles(this.form)"
                       >
                         업로드
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -324,28 +319,18 @@
                   </div>
                 </div>
                 <div class="row mt-5vh">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-center">
-                    <button
-                      type="button"
-                      class="btn btn-success btn-xs mr-10px"
-                      onclick="fnReset()"
-                    >
-                      신규
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-xs mr-10px"
-                      onclick="fnSave()"
-                    >
-                      저장
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-xs"
-                      onclick="fnDel()"
-                    >
-                      삭제
-                    </button>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div class="btn btn-success btn-xs mr-10px" onclick="fnReset()">
+                        신규
+                      </div>
+                      <div class="btn btn-primary btn-xs mr-10px" onclick="fnSave()">
+                        저장
+                      </div>
+                      <div class="btn btn-danger btn-xs" onclick="fnDel()">
+                        삭제
+                      </div>
+                    </div>
                   </div>
                   <!-- hidden -->
                   <div class="hidden-wrapper">

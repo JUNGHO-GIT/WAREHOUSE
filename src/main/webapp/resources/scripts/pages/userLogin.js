@@ -3,12 +3,12 @@ function fnAuth() {
 
   if ($(`#userId`).val() == "") {
     alert("아이디를 입력해 주세요");
-    $(`#userId`).on("focus", function () {});
+    $(`#userId`).trigger("focus");
     return;
   }
   if ($(`#userPw`).val() == "") {
     alert("비밀번호를 입력해 주세요");
-    $(`#userPw`).on("focus", function () {});
+    $(`#userPw`).trigger("focus");
     return;
   }
   if ($(`#setId`).is(":checked")) {
@@ -47,9 +47,9 @@ jQuery(function($) {
   if ($.cookie("userId")) {
     $(`#userId`).val($.cookie("userId"));
     $(`#setId`).prop("checked", "checked");
-    $(`#userPw`).on("focus", function () {});
+    $(`#userPw`).trigger("focus");
   }
   else {
-    $(`#userId`).on("focus", function () {});
+    $(`#userId`).trigger("focus");
   }
 });

@@ -13,7 +13,7 @@ function calcLowStock(data) {
 
 // -------------------------------------------------------------------------------------------------
 function displayLowStock (data) {
-  return data.rowData.lowStock === 1 ? `<span class="fs-1-2rem red">●</span>` : "";
+  return data.rowData.lowStock === 1 ? `<div class="fs-1-2rem red">●</div>` : "";
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -56,8 +56,13 @@ function checkBoxRender (data) {
 }
 
 // -------------------------------------------------------------------------------------------------
-function updateTitle (titleNm, titleKo, data) {
-  if (!titleNm.includes("prod") || !titleNm.includes("res")) {
+function updateTitle (titleKo, data) {
+
+  const nonCalc = [
+    "거래처", "창고", "입출고 내역", "출하", "제품 출고 현황", "연간 입고 현황", "연간 출고 현황", "연간 재고 현황", "예정 내역",
+  ];
+
+  if (nonCalc.some((item) => titleKo.includes(item))) {
     return (/* javascript */`
       <div class="row">
         <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
