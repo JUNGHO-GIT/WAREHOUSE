@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.House;
 import com.WAREHOUSE.dao.HouseDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class HouseCTRL {
 
   private final HouseDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/house", produces="text/html;charset=UTF-8")
   public ModelAndView house () throws Exception {
-
     try {
       return new ModelAndView("house");
     }
@@ -36,7 +37,6 @@ public class HouseCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ public class HouseCTRL {
   public ResponseEntity<?> listHouse (
     @RequestParam(value="id", required=false) Integer id
   ) throws Exception {
-
     try {
       ArrayList<House> list = dao.listHouse(id);
       return ResponseEntity.ok(list);
@@ -53,7 +52,6 @@ public class HouseCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ public class HouseCTRL {
   public ResponseEntity<?> showHouse (
     @RequestParam(value="houseCd", required=false) Integer houseCd
   ) throws Exception {
-
     try {
       ArrayList<HashMap<String, Object>> productPerHouse = dao.showHousePerProduct(houseCd);
       ArrayList<HashMap<String, Object>> resourcePerHouse = dao.showHousePerResource(houseCd);
@@ -76,7 +73,6 @@ public class HouseCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

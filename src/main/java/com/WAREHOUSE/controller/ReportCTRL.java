@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.ReportDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
 
@@ -20,13 +21,13 @@ import lombok.RequiredArgsConstructor;
 public class ReportCTRL {
 
   private final ReportDAO dao;
-  private final Logs logs;
   private final Utils utils;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportIn", produces="text/html;charset=UTF-8")
   public ModelAndView reportIn () throws Exception {
-
     try {
       return new ModelAndView("reportIn");
     }
@@ -34,13 +35,11 @@ public class ReportCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportOut", produces="text/html;charset=UTF-8")
   public ModelAndView reportOut () throws Exception {
-
     try {
       return new ModelAndView("reportOut");
     }
@@ -48,13 +47,11 @@ public class ReportCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportStock", produces="text/html;charset=UTF-8")
   public ModelAndView reportStock () throws Exception {
-
     try {
       return new ModelAndView("reportStock");
     }
@@ -62,13 +59,11 @@ public class ReportCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/reportHouse", produces="text/html;charset=UTF-8")
   public ModelAndView reportHouse () throws Exception {
-
     try {
       return new ModelAndView("reportHouse");
     }
@@ -76,7 +71,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -100,7 +94,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -124,7 +117,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -148,7 +140,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -172,7 +163,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -196,7 +186,6 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -220,6 +209,5 @@ public class ReportCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 }

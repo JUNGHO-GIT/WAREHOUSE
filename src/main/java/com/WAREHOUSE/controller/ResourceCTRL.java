@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.ResourceDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
-import com.WAREHOUSE.util.Json;
+import com.WAREHOUSE.util.JsonUtil;
 
 // -------------------------------------------------------------------------------------------------
 @Controller
@@ -24,13 +24,12 @@ import com.WAREHOUSE.util.Json;
 public class ResourceCTRL {
 
   private final ResourceDAO dao;
-  private final Logs logs;
-  private final Json json;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/resource", produces="text/html;charset=UTF-8")
   public ModelAndView resource () throws Exception {
-
     try {
       return new ModelAndView("resource");
     }
@@ -45,7 +44,6 @@ public class ResourceCTRL {
   public ResponseEntity<?> listResource (
     @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
-
     try {
       ArrayList<Resource> list = dao.listResource(findResrcNm);
       return ResponseEntity.ok(list);
@@ -61,7 +59,6 @@ public class ResourceCTRL {
   public ResponseEntity<?> showResource (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
-
     try {
       Resource show = dao.showResource(Integer.parseInt(resrcCd));
       return ResponseEntity.ok(show);
@@ -78,8 +75,6 @@ public class ResourceCTRL {
     @RequestBody Resource param,
     @SessionAttribute("userId") String userId
   ) throws Exception {
-
-    logs.info("saveResource", json.toJson(param));
 
     Map<String, Object> map = new HashMap<String, Object>();
 

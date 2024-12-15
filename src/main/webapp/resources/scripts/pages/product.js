@@ -6,18 +6,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "product.xlsx",
     title: "   제품 관리",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.prodCd);
     },
@@ -84,11 +84,13 @@ function fnGetList01 () {
     },
     success: (data) => {
       gridOption.title = updateTitle("제품 관리", data);
+      gridOption.summaryData = updateSummary("prod", data);
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: data },
         colModel: colModel,
       })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });

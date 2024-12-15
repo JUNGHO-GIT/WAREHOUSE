@@ -21,6 +21,7 @@
   <resources mapping="/resources/**" location="/resources/" />
   <resources location="/resources/" mapping="/resources/**" />
   <resources location="/src/" mapping="/src/**" />
+  <resources location="/src/errors/" mapping="/errors/**" />
 
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/src/pages/" />
@@ -39,7 +40,7 @@
   <interceptors>
     <interceptor>
       <mapping path="/act/**" />
-      <beans:bean id="commonInterceptor" class="com.WAREHOUSE.util.LoginCheckInterceptor" />
+      <beans:bean id="commonInterceptor" class="com.WAREHOUSE.util.SessionInterceptor" />
     </interceptor>
   </interceptors>
 

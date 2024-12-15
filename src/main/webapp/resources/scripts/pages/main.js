@@ -1,421 +1,391 @@
-let TABS = "";
-let TABS_TARGET = "";
+// -------------------------------------------------------------------------------------------------
+let TABS = "/";
+let TABS_TARGET = "/";
 let TABS_LIMIT = 5;
 let HEIGHT = window.innerHeight * 0.9;
 
-// 0. 탭 갯수 동적 조정 ----------------------------------------------------------------------------
-function fnDynamicTabsLimit() {
-  if (window.matchMedia("(min-width: 0px) and (max-width: 576px)").matches) {
+// 탭 관련 함수 ------------------------------------------------------------------------------------
+function fnGetTabList() {
+  return TABS.split("/").filter(tab => tab.trim() !== "");
+}
+function fnGetTargetList() {
+  return TABS_TARGET.split("/").filter(target => target.trim() !== "");
+}
+function fnSetTabsAndTargets(tabList, targetList) {
+  TABS = "/";
+  TABS_TARGET = "/";
+  tabList.forEach((tab, index) => {
+    TABS += `${tab}/`;
+    TABS_TARGET += `${targetList[index]}/`;
+  });
+}
+
+// 현재 TABS_LIMIT을 기준으로 탭을 조정 ------------------------------------------------------------
+function fnAdjustTabsToLimit() {
+  const tabList = fnGetTabList();
+  const targetList = fnGetTargetList();
+
+  while (tabList.length > TABS_LIMIT) {
+    const removedTabNo = tabList.shift();
+    targetList.shift();
+    $(`#tab${removedTabNo}`).remove();
+    $(`#tabContents${removedTabNo}`).remove();
+  }
+
+  fnSetTabsAndTargets(tabList, targetList);
+}
+
+// 반응형 규칙에 따라 TABS_LIMIT 설정 -------------------------------------------------------------
+function fnUpdateTabsLimitBasedOnMediaQuery() {
+  const xs = window.matchMedia("(min-width: 0px) and (max-width: 576px)");
+  const sm = window.matchMedia("(min-width: 577px) and (max-width: 768px)");
+  const md = window.matchMedia("(min-width: 769px) and (max-width: 992px)");
+  const lg = window.matchMedia("(min-width: 993px) and (max-width: 1200px)");
+  const xl = window.matchMedia("(min-width: 1201px) and (max-width: 10000px)");
+
+  if (xs.matches) {
+    TABS_LIMIT = 1;
+  }
+  else if (sm.matches) {
     TABS_LIMIT = 2;
   }
-  else if (window.matchMedia("(min-width: 577px) and (max-width: 768px)").matches) {
+  else if (md.matches) {
     TABS_LIMIT = 3;
   }
-  else if (window.matchMedia("(min-width: 769px) and (max-width: 992px)").matches) {
+  else if (lg.matches) {
     TABS_LIMIT = 4;
   }
-  else if (window.matchMedia("(min-width: 993px) and (max-width: 1200px)").matches) {
+  else if (xl.matches) {
     TABS_LIMIT = 5;
   }
-  else if (window.matchMedia("(min-width: 1201px) and (max-width: 10000px)").matches) {
-    TABS_LIMIT = 8;
-  }
-};
 
-// 0. 탭 코드 --------------------------------------------------------------------------------------
-function fnMkTabCd(pageNo, pageUrl, pageParam) {
-  let newTab = pageNo;
-  let divTabCd = TABS.split("/").filter(tab => tab); // 빈 항목 제거
-  let divTabTarget = TABS_TARGET.split("/").filter(target => target); // 빈 항목 제거
-  let tabCnt = divTabCd.length;
+  fnAdjustTabsToLimit();
+}
 
-  // 탭 제한 초과 시 처리
-  if (tabCnt > TABS_LIMIT) {
-    TABS = "/";
-    TABS_TARGET = "/";
-    for (let k = 0; k < tabCnt; k++) {
-      if (k > 1) { // 두 번째 이후 탭 유지
-        TABS += `${divTabCd[k]}/`;
-        TABS_TARGET += `${divTabTarget[k]}/`;
-      } else { // 첫 번째와 두 번째 탭 제거
-        $(`#tab${divTabCd[k]}`).remove();
-      }
+// 탭 추가, 제거 함수 ------------------------------------------------------------------------------
+function fnModifyTabs(pageNo, pageUrl, action) {
+  const tabList = fnGetTabList();
+  const targetList = fnGetTargetList();
+  let currentTab = pageNo;
+
+  if (action === "add") {
+    if (!tabList.includes(pageNo)) {
+      tabList.push(pageNo);
+      targetList.push(pageUrl);
     }
-  }
 
-  if (pageParam === "add") {
-    // 새로운 탭 추가
-    if (!TABS.includes(`/${pageNo}/`)) {
-      TABS += `${pageNo}/`;
+    if (tabList.length > TABS_LIMIT) {
+      const removedTabNo = tabList.shift();
+      targetList.shift();
+      $(`#tab${removedTabNo}`).remove();
+      $(`#tabContents${removedTabNo}`).remove();
     }
-    if (!TABS_TARGET.includes(`/${pageUrl}/`)) {
-      TABS_TARGET += `${pageUrl}/`;
+    fnSetTabsAndTargets(tabList, targetList);
+  }
+
+  if (action === "rm") {
+    const idx = tabList.indexOf(pageNo);
+    if (idx > -1) {
+      tabList.splice(idx, 1);
+      targetList.splice(idx, 1);
     }
-  } else {
-    // 기존 탭 제거
-    TABS = TABS.replace(new RegExp(`/${pageNo}/`, "g"), "/");
-    TABS_TARGET = TABS_TARGET.replace(new RegExp(`/${pageUrl}/`, "g"), "/");
 
-    // 마지막 남은 탭 확인
-    const divTabs = TABS.split("/").filter(tab => tab); // 빈 항목 제거
-    const tabSize = divTabs.length;
-    newTab = tabSize > 0 ? divTabs[tabSize - 1] : null; // 남은 탭이 없으면 null 반환
+    fnSetTabsAndTargets(tabList, targetList);
+
+    // 마지막 탭 활성화
+    currentTab = tabList.length > 0 ? tabList[tabList.length - 1] : null;
   }
 
-  return newTab;
-};
+  return currentTab;
+}
 
-// 1. 탭 불러오기 ----------------------------------------------------------------------------------
-function fnSetTab(tabs) {
-
-  if (!tabs) {
-    return;
-  }
-
-  let pageUrl = "";
-  const tabArray = tabs.split(",");
-  for (let i = 0; i < tabArray.length; i++) {
-    const tabSplit = tabArray[i].split("@");
-    if (pageUrl) {
-      pageUrl += ",";
-    }
-    pageUrl += tabSplit[1];
-  }
-
-  $.ajax({
-    url: "act/listSysMenu",
-    type: "POST",
-    dataType:"json",
-    data: `config=${pageUrl}`,
-    beforeSend: (xmlHttpRequest) => {
-      xmlHttpRequest.setRequestHeader("AJAX", "true");
-    },
-    success: (data) => {
-      let obj = {};
-      for (let i = 0; i < data.length; i++) {
-        obj[data[i].pageUrl] = data[i].pageNm;
-      }
-      fnTabInit(obj, tabArray);
-    },
-    error: ajaxErrorHandler
-  });
-};
-
-// 2. 탭 초기화 ----------------------------------------------------------------------------------
-function fnTabInit(obj, tabArray) {
-
-  const lastPage = {
-    url: "",
-    no: "",
-  };
-
-  for (var i = 0; i < tabArray.length; i++) {
-    let tabSplit = tabArray[i].split("@");
-    let pageUrl = "";
-    let pageNm = "";
-    for (var key in obj) {
-      pageNm = obj[key];
-      pageUrl = key;
-      if (pageUrl == tabSplit[1]) {
-        fnAddTabAll(pageNm, pageUrl, tabSplit[0]);
-        lastPage.url = pageUrl;
-        lastPage.no = tabSplit[0];
-      }
-    }
-  }
-
-  if (lastPage.no) {
-    const resultContents = (/* javascript */`
-      <div id="tabContents${lastPage.no}">
-        <iframe
-          id="ifr${lastPage.no}"
-          src="${lastPage.url}"
-          width="100%"
-          height="${HEIGHT}px"
-          border="0"
-          frameborder="0"
-          loading="lazy"
-        >
-        </iframe>
-      </div>
-    `);
-    $(`#tabContents`).append(resultContents);
-  }
-};
-
-// 3. 탭 불러오기 -------------------------------------------------------------------------------
-function fnAddTabAll(pageNm, pageUrl, pageNo) {
-
-  if (TABS.indexOf(`/${pageNo}/`) > -1) {
-    fnShowTab(pageNo, pageUrl);
-  }
-  else {
-    const tabs = TABS.split("/");
-    for (let k = 0; k < tabs.length; k++) {
-      if (tabs[k]) {
-        $(`#tab${tabs[k]}`).prop("class", "");
-      }
-    }
-    fnMkTabCd(pageNo, pageUrl, "add");
-
-    const tabCnt = TABS.split("/").length - 1;
-    if (tabCnt > TABS_LIMIT) {
-      const firstTab = TABS.split("/")[1];
-      fnRmTab(firstTab, "");
-    }
-    else {
-      const resultTab = (/* javascript */`
-        <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
-          <div
-            class="border-1 shadow-1 p-15px pointer"
-            style="display: flex; justify-content: center; align-items: center;"
-          >
-            <div
-              class="fs-0-8rem fw-500 navy pointer-navy"
-              onclick="fnShowTab('${pageNo}', '${pageUrl}')"
-            >
-              ${pageNm}
-            </div>
-            <div
-              class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
-              onclick="fnRmTab('${pageNo}', '${pageUrl}')"
-            >
-            </div>
-          </div>
-        </li>
-      `);
-      $(`#tabs`).append(resultTab);
-    }
-  }
-};
-
-// 1-2. 탭 추가 ------------------------------------------------------------------------------------
-function fnAddTab(pageNm, pageUrl, pageNo) {
-
-  if (TABS.indexOf(`/${pageNo}/`) > -1) {
-    fnShowTab(pageNo, pageUrl);
-  }
-  else {
-    const tabs = TABS.split("/");
-    for (let k = 0; k < tabs.length; k++) {
-      if (tabs[k]) {
-        $(`#tab${tabs[k]}`).prop("class", "");
-        $(`#tabContents${tabs[k]}`).css("display", "none");
-      }
-    }
-    fnMkTabCd(pageNo, pageUrl, "add");
-
-    const resultTab = (/* javascript */`
-      <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
-        <div
-          class="border-1 shadow-1 p-15px pointer"
-          style="display: flex; justify-content: center; align-items: center;"
-        >
-          <div
-            class="fs-0-8rem fw-500 navy pointer-navy"
-            onclick="fnShowTab('${pageNo}', '${pageUrl}')"
-          >
-            ${pageNm}
-          </div>
-          <div
-            class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
-            onclick="fnRmTab('${pageNo}', '${pageUrl}')"
-          >
-          </div>
-        </div>
-      </li>
-    `);
-    $(`#tabs`).append(resultTab);
-
-    if ($(`#tabContents${pageNo}`).html() == undefined) {
-      const resultContents = (/* javascript */`
-        <div id="tabContents${pageNo}">
-          <iframe
-            id="ifr${pageNo}"
-            src="${pageUrl}"
-            width="100%"
-            height="${HEIGHT}px"
-            border="0"
-            frameborder="0"
-            loading="lazy"
-          >
-          </iframe>
-        </div>
-      `);
-      $(`#tabContents`).append(resultContents);
-    }
-  }
-
-  fnConsoleTabInfo(pageNo);
-};
-
-// 1-4. 탭 활성화 ----------------------------------------------------------------------------------
+// 탭 활성화 함수 ----------------------------------------------------------------------------------
 function fnShowTab(pageNo, pageUrl) {
 
-  const tabContents = $(`#tabContents${pageNo}`).html();
-
-  if (!tabContents) {
-    const resultContents = (/* javascript */`
+  // 해당 탭 콘텐츠가 없는 경우 생성
+  if (!$(`#tabContents${pageNo}`).length) {
+    const iframeContent = `
       <div id="tabContents${pageNo}">
         <iframe
           id="ifr${pageNo}"
           src="${pageUrl}"
           width="100%"
           height="${HEIGHT}px"
-          border="0"
           frameborder="0"
-          loading="lazy"
-        >
+          loading="lazy">
         </iframe>
       </div>
-    `);
-    $(`#tabContents`).append(resultContents);
+    `;
+    $("#tabContents").append(iframeContent);
   }
 
-  const tabs = TABS.split("/");
-  for (let k = 0; k < tabs.length; k++) {
-    if (tabs[k]) {
-      $(`#tab${tabs[k]}`).prop("class", "");
-      $(`#tabContents${tabs[k]}`).css("display", "none");
+  // 모든 탭 비활성화 후 현재 탭 활성화
+  const tabList = fnGetTabList();
+  tabList.forEach((t) => {
+    $(`#tab${t}`).removeClass("active");
+    $(`#tabContents${t}`).hide();
+  });
+
+  $(`#tab${pageNo}`).addClass("active");
+  $(`#tabContents${pageNo}`).show();
+
+  // fnLogTabInfo(pageNo);
+}
+
+// 탭 초기 로딩 및 생성 ---------------------------------------------------------------------------
+function fnInitializeTabs(tabs) {
+
+  if (!tabs) {
+    return;
+  }
+
+  const tabArray = tabs.split(",");
+  const pageUrls = tabArray.map(item => item.split("@")[1]).join(",");
+
+  $.ajax({
+    url: "act/listSysMenu",
+    type: "POST",
+    dataType: "json",
+    data: `config=${pageUrls}`,
+    beforeSend: (xhr) => xhr.setRequestHeader("AJAX", "true"),
+    success: (data) => {
+      const urlToNameMap = {};
+      data.forEach(item => {
+        urlToNameMap[item.pageUrl] = item.pageNm;
+      });
+      fnInitializeTabElements(urlToNameMap, tabArray);
+    },
+    error: ajaxErrorHandler
+  });
+}
+
+// 탭 초기화 함수 ----------------------------------------------------------------------------------
+function fnInitializeTabElements(urlToNameMap, tabArray) {
+
+  let lastTabNo = "";
+  let lastTabUrl = "";
+
+  tabArray.forEach((tabInfo) => {
+    const [pageNo, pageUrl] = tabInfo.split("@");
+    if (urlToNameMap[pageUrl]) {
+      fnAddTabWithoutActivation(urlToNameMap[pageUrl], pageUrl, pageNo);
+      lastTabNo = pageNo;
+      lastTabUrl = pageUrl;
     }
+  });
+
+  if (!lastTabNo) {
+    return;
   }
-  $(`#tab${pageNo}`).prop("class", "active");
-  $(`#tabContents${pageNo}`).css("display", "");
 
-  fnConsoleTabInfo(pageNo);
-};
+  const iframeContent = (/* javascript */`
+    <div id="tabContents${lastTabNo}">
+      <iframe
+        id="ifr${lastTabNo}"
+        src="${lastTabUrl}"
+        width="100%"
+        height="${HEIGHT}px"
+        frameborder="0"
+        loading="lazy">
+      </iframe>
+    </div>
+  `);
+  $("#tabContents").append(iframeContent);
+}
 
-// 1-3. 탭 제거 ------------------------------------------------------------------------------------
-function fnRmTab(pageNo, pageUrl) {
-
-  let posit = "";
-
-  if ($(`#tab${pageNo}`).prop("class") === "active") {
-    posit = "last";
+// 탭을 비활성화된 상태로 추가 (초기화용) ----------------------------------------------------------
+function fnAddTabWithoutActivation(pageName, pageUrl, pageNo) {
+  const tabList = fnGetTabList();
+  if (tabList.includes(pageNo)) {
+    fnShowTab(pageNo, pageUrl);
+    return;
   }
+
+  tabList.forEach(t => $(`#tab${t}`).removeClass("active"));
+  fnModifyTabs(pageNo, pageUrl, "add");
+
+  const tabElement = (/* javascript */`
+    <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
+      <div
+        class="border-1 shadow-1 p-15px pointer"
+        style="display: flex; justify-content: center; align-items: center;"
+      >
+        <div
+          class="fs-0-8rem fw-500 navy pointer-navy"
+          onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+        >
+          ${pageName}
+        </div>
+        <div
+          class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+          onclick="fnRemoveTab('${pageNo}', '${pageUrl}')"
+        >
+        </div>
+      </div>
+    </li>
+  `);
+  $("#tabs").append(tabElement);
+}
+
+// 사용자가 직접 탭을 추가할 때 호출 ---------------------------------------------------------------
+function fnAddTab(pageName, pageUrl, pageNo) {
+  const tabList = fnGetTabList();
+
+  // 모든 탭 비활성화
+  tabList.forEach((t) => {
+    $(`#tab${t}`).removeClass("active");
+    $(`#tabContents${t}`).hide();
+  });
+
+  const wasExist = tabList.includes(pageNo);
+  fnModifyTabs(pageNo, pageUrl, "add");
+
+  if (wasExist) {
+    fnShowTab(pageNo, pageUrl);
+    return
+  }
+
+  if ($(`#tab${pageNo}`).length) {
+    $(`#tab${pageNo}`).addClass("active");
+    $(`#tabContents${pageNo}`).show();
+    return;
+  }
+
+  const tabElement = (/* javascript */`
+    <li class="active tabEl" id="tab${pageNo}" pageUrl="${pageUrl}">
+      <div
+        class="border-1 shadow-1 p-15px pointer"
+        style="display: flex; justify-content: center; align-items: center;"
+      >
+        <div
+          class="fs-0-8rem fw-500 navy pointer-navy"
+          onclick="fnShowTab('${pageNo}', '${pageUrl}')"
+        >
+          ${pageName}
+        </div>
+        <div
+          class="fs-0-8rem fa fa-close dark-grey pointer-red ml-10px"
+          onclick="fnRemoveTab('${pageNo}', '${pageUrl}')"
+        >
+        </div>
+      </div>
+    </li>
+  `);
+  $("#tabs").append(tabElement);
+
+  const iframeContent = (/* javascript */`
+    <div id="tabContents${pageNo}">
+      <iframe
+        id="ifr${pageNo}"
+        src="${pageUrl}"
+        width="100%"
+        height="${HEIGHT}px"
+        frameborder="0"
+        loading="lazy">
+      </iframe>
+    </div>
+  `);
+  $("#tabContents").append(iframeContent);
+
+  // fnLogTabInfo(pageNo);
+}
+
+// 탭 제거 -----------------------------------------------------------------------------------------
+function fnRemoveTab(pageNo, pageUrl) {
+  const wasActive = $(`#tab${pageNo}`).hasClass("active");
   $(`#tab${pageNo}`).remove();
   $(`#tabContents${pageNo}`).remove();
 
-  const lastTab = fnMkTabCd(pageNo, pageUrl, "rm");
-
-  if (posit === "last") {
-    $(`#tab${lastTab}`).prop("class", "active");
-    $(`#tabContents${lastTab}`).css("display", "");
+  const lastActiveTab = fnModifyTabs(pageNo, pageUrl, "rm");
+  if (wasActive && lastActiveTab) {
+    $(`#tab${lastActiveTab}`).addClass("active");
+    $(`#tabContents${lastActiveTab}`).show();
   }
 
-  fnConsoleTabInfo(pageNo);
-};
+  // fnLogTabInfo(pageNo);
+}
 
-// 1-5. 새로고침 -----------------------------------------------------------------------------------
-function fnIfrRefresh() {
-  const tabs = TABS.split("/");
-  for (let k = 0; k < tabs.length; k++) {
-    if (tabs[k]) {
-      $(`#ifr${tabs[k]}`).attr("src", $(`#ifr${tabs[k]}`).attr("src"));
-    }
-  }
-};
+// 탭 전체 새로고침 --------------------------------------------------------------------------------
+function fnRefreshAllTabs() {
+  const tabList = fnGetTabList();
+  tabList.forEach(t => {
+    const src = $(`#ifr${t}`).attr("src");
+    $(`#ifr${t}`).attr("src", src);
+  });
+}
 
-// 1-6. 탭 순서 저장 -------------------------------------------------------------------------------
-function fnTabOrder() {
+// 현재 탭 순서를 문자열로 반환 --------------------------------------------------------------------
+function fnGetTabOrder() {
+  const tabs = [];
+  $("#tabs li").each(function() {
+    const tabNo = $(this).attr("id").replace("tab", "");
+    const pageUrl = $(this).attr("pageUrl");
+    tabs.push(`${tabNo}@${pageUrl}`);
+  });
+  return tabs.join(",");
+}
 
-  let tabs = "";
-  let tabsLi = document.querySelectorAll(`#tabs li`);
-
-  for (let i = 0; i < tabsLi.length; i++) {
-    const tabCd = tabsLi[i].id.split("tab").join("");
-    const tabPage = tabsLi[i].getAttribute("pageUrl");
-    if (tabs) {
-      tabs += ",";
-    }
-    tabs += `${tabCd}@${tabPage}`;
-  }
-  return tabs;
-};
-
-// 1-10. 탭 전부 닫기 ------------------------------------------------------------------------------
-function fnCloseAllTab() {
-
-  const tabs = TABS.split("/");
-  for (let k = 0; k < tabs.length; k++) {
-    if (tabs[k]) {
-      $(`#tab${tabs[k]}`).remove();
-      $(`#tabContents${tabs[k]}`).remove();
-    }
-  }
+// 모든 탭 닫기 ------------------------------------------------------------------------------------
+function fnCloseAllTabs() {
+  const tabList = fnGetTabList();
+  tabList.forEach(t => {
+    $(`#tab${t}`).remove();
+    $(`#tabContents${t}`).remove();
+  });
   TABS = "/";
   TABS_TARGET = "/";
-};
+}
 
-// 3-1. 탭 sort ------------------------------------------------------------------------------------
-function fnTabSortAndDrag() {
-  $(`#tabs`).sortable({
+// 탭 순서 변경 가능하도록 설정 --------------------------------------------------------------------
+function fnEnableTabSorting() {
+  $("#tabs").sortable({
     axis: 'x',
     cursor: 'move',
     zIndex: 9999,
     delay: 0,
     dropOnEmpty: true,
-    helper: 'clone',
-  })
-  .disableSelection();
-};
+    helper: 'clone'
+  }).disableSelection();
+}
 
-// 0. 버전정보 표시 --------------------------------------------------------------------------------
-function fnShowVersion() {
-  $.ajax({
-    type: "GET",
-    url: "showVersion",
-    dataType:"JSON",
-    success: (data) => {
-      $(`#showVersion`).html(data);
-      $(`#showVersion`).css("color", "currentColor");
-      $(`#showVersion`).css("font-size", "17px");
-      $(`#showVersion`).css("font-weight", "700px");
-      $(`#showVersion`).css("text-align", "center");
-    },
-    error: ajaxErrorHandler
-  });
-};
-
-// 0. 로그아웃 -------------------------------------------------------------------------------------
-function fnLogOut() {
-  const encryptedItem = {"loginSession": "false"};
-  const encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
-  localStorage.setItem("loginSession", encryptedValue.toString());
-  fnGoPage("reLogin");
-};
-
-// 0. 세션 체크 ------------------------------------------------------------------------------------
-function fnCheckSession() {
-  window.addEventListener("storage", (e) => {
-    if (e.key === "loginSession") {
-      const decryptedItem = localStorage.getItem("loginSession");
-      const decryptedValue = CryptoJS.AES.decrypt(decryptedItem, "loginSession");
-      const decryptedObj = JSON.parse(decryptedValue.toString(CryptoJS.enc.Utf8));
-      if (decryptedObj.loginSession == "false") {
-        fnGoPage("reLogin");
-      }
-    }
-  });
-};
-
-// 0. 현재 열려있는 탭 정보 console에 표시 ---------------------------------------------------------
-function fnConsoleTabInfo (tabNo) {
+// 탭 정보 콘솔 출력 -------------------------------------------------------------------------------
+function fnLogTabInfo(tabNo) {
   console.log(`
     =============================
     누른 탭: ${tabNo}
-    현재 열려있는 탭 갯수: ${TABS.split("/").length - 1}
+    현재 열려있는 탭 갯수: ${fnGetTabList().length}
+    현재 탭 제한 갯수: ${TABS_LIMIT}
     TABS: ${TABS}
     =============================
   `);
-};
+}
 
-// 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
-jQuery(function($) {
-  fnShowVersion();
-  fnCheckSession();
-  fnTabSortAndDrag();
+// 버전 정보 표시 ----------------------------------------------------------------------------------
+function fnShowVersionInfo() {
+  $.ajax({
+    type: "GET",
+    url: "showVersion",
+    dataType: "JSON",
+    success: (data) => {
+      $("#showVersion").html(data).css({
+        "color": "currentColor",
+        "font-size": "17px",
+        "font-weight": "700",
+        "text-align": "center"
+      });
+    },
+    error: ajaxErrorHandler
+  });
+}
+
+// 초기 로딩 ---------------------------------------------------------------------------------------
+$(function() {
+  fnShowVersionInfo();
+  fnEnableTabSorting();
+  fnUpdateTabsLimitBasedOnMediaQuery();
 });
 
-// 0. 화면 크기 변경시 실행 ------------------------------------------------------------------------
-window.addEventListener("resize", fnDynamicTabsLimit);
+// 리사이즈 이벤트 ---------------------------------------------------------------------------------
+window.addEventListener("resize", () => {
+  fnUpdateTabsLimitBasedOnMediaQuery();
+});

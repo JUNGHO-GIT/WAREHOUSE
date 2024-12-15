@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Shipping;
 import com.WAREHOUSE.dao.ShippingDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ShippingCTRL {
 
   private final ShippingDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/shipping", produces="text/html;charset=UTF-8")
   public ModelAndView shipping () throws Exception {
-
     try {
       return new ModelAndView("shipping");
     }
@@ -36,7 +37,6 @@ public class ShippingCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -46,7 +46,6 @@ public class ShippingCTRL {
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
-
     try {
       ArrayList<HashMap<String, Object>> listShipping = (
         dao.listShipping(inOutDt, findStartDt, findEndDt)
@@ -57,7 +56,6 @@ public class ShippingCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

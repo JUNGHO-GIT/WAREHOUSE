@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutPlanDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ResourceInOutPlanCTRL {
 
   private final ResourceInOutPlanDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // 0. 자재 입고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/resourceInPlan", produces="text/html;charset=UTF-8")
   public ModelAndView resourceInPlan () throws Exception {
-
     try {
       return new ModelAndView("resourceInPlan");
     }
@@ -36,13 +37,11 @@ public class ResourceInOutPlanCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // 0. 자재 출고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/resourceOutPlan", produces="text/html;charset=UTF-8")
   public ModelAndView resourceOutPlan () throws Exception {
-
     try {
       return new ModelAndView("resourceOutPlan");
     }
@@ -50,7 +49,6 @@ public class ResourceInOutPlanCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // 1-1. 자재 입출고 예정 리스트 -----------------------------------------------------------------
@@ -58,7 +56,6 @@ public class ResourceInOutPlanCTRL {
   public ResponseEntity<?> listResourceInOutPlan (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
-
     try {
       ArrayList<ResourceInOut> list = dao.listResourceInOutPlan(resrcCd);
       return ResponseEntity.ok(list);
@@ -67,7 +64,6 @@ public class ResourceInOutPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // 1-2. 자재 입출고 예정 상세 -------------------------------------------------------------------
@@ -75,7 +71,6 @@ public class ResourceInOutPlanCTRL {
   public ResponseEntity<?> showResourceInOutPlan (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
-
     try {
       ResourceInOut show = dao.showResourceInOutPlan(inOutSeq);
       return ResponseEntity.ok(show);
@@ -84,7 +79,6 @@ public class ResourceInOutPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // 1-3. 자재 입출고 예정 저장 --------------------------------------------------------------------

@@ -6,18 +6,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "shipPlan.xlsx",
     title: "   출하 계획 관리",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnShow(ui.rowData.shipCd);
       fnGetList02(ui.rowData.shipCd);
@@ -87,11 +87,11 @@ function fnGetList02 (shipCd) {
   const gridOption = {
     xlsNm: "shipPlanDetail.xlsx",
     title: "   출하 계획 목록",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
@@ -226,8 +226,10 @@ function fnReset() {
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
-	$(`#grid02`).pqGrid("option", "dataModel.data", []);
-	$(`#grid02`).pqGrid("refreshDataAndView");
+	$(`#grid02`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
@@ -239,8 +241,8 @@ function fnExcelDown() {
     return;
   }
 
-  const valUrl = `/shipPlanDetailExcelDown?shipCd=${shipCd}`;
-  window.open(valUrl);
+  const valUrl = `/shipPlanExcelDown?shipCd=${shipCd}`;
+  location.href = valUrl;
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------

@@ -52,8 +52,8 @@ public class Utils {
     Map<String, String> rsList = new HashMap<String, String>();
     for (Integer p = 0; p < list.size(); p++) {
       Map<String, String> row = (Map<String, String>) list.get(p);
-      String keys = (String) row.get(key);
-      String vals = (String) row.get(val);
+      String keys = String.valueOf(row.get(key));
+      String vals = String.valueOf(row.get(val));
       rsList.put(keys, vals);
     }
 
@@ -70,7 +70,7 @@ public class Utils {
     Map<String, Object> rsList = new HashMap<String, Object>();
     for (Integer p = 0; p < list.size(); p++) {
       Map<String, Object> row = (Map<String, Object>) list.get(p);
-      String keys = (String) row.get(key);
+      String keys = String.valueOf(row.get(key));
       Object vals = row.get(val);
       rsList.put(keys, vals);
     }
@@ -261,7 +261,7 @@ public class Utils {
       anchor.setDy2(heightInPixels);
       drawing.createPicture(anchor, pictureIdx);
     }
-    POIExcelMaker exPOI = new POIExcelMaker();
+    PoiExcelMaker exPOI = new PoiExcelMaker();
 
     try {
       String compNm = Objects.toString(company.getCompNm(), "");
@@ -278,7 +278,7 @@ public class Utils {
       String detailed = "";
 
       if (shippingList.get(0).get("prodNm") != null) {
-        detailed = shippingList.get(0).get("prodNm").toString() + " 외 " + cnt + " 건";
+        detailed = String.valueOf(shippingList.get(0).get("prodNm")) + " 외 " + cnt + " 건";
       }
       else {
       	detailed = "외 " + cnt + " 건";

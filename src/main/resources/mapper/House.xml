@@ -17,19 +17,19 @@
     SELECT
       (A.houseCd) id,
       (A.houseCd) tId,
-      (A.parentsHCd) pId,
+      (A.houseParentCd) pId,
       (A.houseNm) name,
       (CASE WHEN B.houseCd = '' THEN 'false' ELSE 'true' END) isParent
     FROM (
       SELECT *
       FROM tblHouse
-      WHERE flagYn = 'Y' AND parentsHCd = #{parentsHCd}
+      WHERE flagYn = 'Y' AND houseParentCd = #{houseParentCd}
     ) A
     LEFT JOIN (
-      SELECT parentsHCd houseCd
+      SELECT (houseParentCd) houseCd
       FROM tblHouse
-      WHERE flagYn = 'Y' AND parentsHCd != 0
-      GROUP BY parentsHCd
+      WHERE flagYn = 'Y' AND houseParentCd != 0
+      GROUP BY houseParentCd
     ) B ON B.houseCd = A.houseCd
     ORDER BY
       A.houseOrder
@@ -44,8 +44,8 @@
   >
     <![CDATA[
     SELECT
-      A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
-      (B.houseNm) parentsHNm,
+      A.houseCd, A.houseNm, A.houseParentCd, A.houseOrder, A.houseStep,
+      (B.houseNm) houseParentNm,
       C.prodNm, G.prodCd,
       G.inQty, G.outQty,
       (G.inQty + G.outQty) qty
@@ -58,7 +58,7 @@
       SELECT houseCd, houseNm
       FROM tblHouse
       WHERE flagYn = 'Y'
-    ) B ON B.houseCd = A.parentsHCd
+    ) B ON B.houseCd = A.houseParentCd
     LEFT JOIN (
       SELECT prodCd, houseCd,
       SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) inQty,
@@ -85,8 +85,8 @@
   >
     <![CDATA[
     SELECT
-      A.houseCd, A.houseNm, A.parentsHCd, A.houseOrder, A.step,
-      (B.houseNm) parentsHNm,
+      A.houseCd, A.houseNm, A.houseParentCd, A.houseOrder, A.houseStep,
+      (B.houseNm) houseParentNm,
       C.resrcNm, G.resrcCd,
       G.inQty, G.outQty,
       (G.inQty + G.outQty) qty
@@ -99,11 +99,11 @@
       SELECT houseCd, houseNm
       FROM tblHouse
       WHERE flagYn = 'Y'
-    ) B ON B.houseCd = A.parentsHCd
+    ) B ON B.houseCd = A.houseParentCd
     LEFT JOIN (
       SELECT resrcCd, houseCd,
-      SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) inQty,
-      SUM(CASE WHEN qty < 0 THEN qty ELSE 0 END) outQty
+        SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) inQty,
+        SUM(CASE WHEN qty < 0 THEN qty ELSE 0 END) outQty
       FROM tblResourceInOut
       WHERE flagYn = 'Y' AND planYn = 'N' AND houseCd = #{houseCd}
       GROUP BY resrcCd, houseCd
@@ -127,7 +127,7 @@
     CALL sp_House (
       #{houseCd},
       #{houseNm},
-      #{parentsHCd},
+      #{houseParentCd},
       #{houseOrder},
       #{flagYn},
       #{issueId}

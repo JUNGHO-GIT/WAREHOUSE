@@ -17,7 +17,8 @@ import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.container.Shipping;
 import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.dao.ShipPlanDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +29,13 @@ public class ShipPlanCTRL {
 
   private final ShipPlanDAO dao;
   private final CompanyDAO companyDao;
-  private final Logs logs;
   private final Utils utils;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/shipPlan", produces="text/html;charset=UTF-8")
   public ModelAndView shipPlan () throws Exception {
-
     try {
       return new ModelAndView("shipPlan");
     }
@@ -42,7 +43,6 @@ public class ShipPlanCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -52,7 +52,6 @@ public class ShipPlanCTRL {
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
-
     try {
       ArrayList<HashMap<String, Object>> list = dao.listShipPlan(shipDt, findStartDt, findEndDt);
       return ResponseEntity.ok(list);
@@ -61,7 +60,6 @@ public class ShipPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -71,7 +69,6 @@ public class ShipPlanCTRL {
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
-
     try {
       ArrayList<HashMap<String, Object>> list = dao.listShipPlanDetail(shipCd, findStartDt, findEndDt);
       return ResponseEntity.ok(list);
@@ -80,7 +77,6 @@ public class ShipPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -90,7 +86,6 @@ public class ShipPlanCTRL {
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt
   ) throws Exception {
-
     try {
       HashMap<String, Object> show = dao.showShipPlan(shipCd, findStartDt, findEndDt);
       return ResponseEntity.ok(show);
@@ -99,7 +94,6 @@ public class ShipPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

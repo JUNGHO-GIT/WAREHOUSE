@@ -11,11 +11,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommonCdDAO {
 
-  public ArrayList<CommonCd> listAllCommonCd(
-  );
+  public ArrayList<CommonCd> listAllCommonCd();
 
-  public List<CommonCd> mappingGroupCd(
-  );
+  public List<CommonCd> mappingGroupCd();
 
   public ArrayList<CommonCd> listCommonCd(
     @Param("findGroupCd") String findGroupCd,

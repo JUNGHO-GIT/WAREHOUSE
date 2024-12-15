@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ProductInOutCTRL {
 
   private final ProductInOutDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productIn", produces="text/html;charset=UTF-8")
   public ModelAndView productIn () throws Exception {
-
     try {
       return new ModelAndView("productIn");
     }
@@ -36,13 +37,11 @@ public class ProductInOutCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productOut", produces="text/html;charset=UTF-8")
   public ModelAndView productOut () throws Exception {
-
     try {
       return new ModelAndView("productOut");
     }
@@ -50,7 +49,6 @@ public class ProductInOutCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -58,7 +56,6 @@ public class ProductInOutCTRL {
   public ResponseEntity<?> listProductInOut(
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
-
     try {
       ArrayList<ProductInOut> list = dao.listProductInOut(prodCd);
       return ResponseEntity.ok(list);
@@ -67,7 +64,6 @@ public class ProductInOutCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -75,7 +71,6 @@ public class ProductInOutCTRL {
   public ResponseEntity<?> showProductInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
-
     try {
       ProductInOut show = dao.showProductInOut(inOutSeq);
       return ResponseEntity.ok(show);
@@ -84,7 +79,6 @@ public class ProductInOutCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

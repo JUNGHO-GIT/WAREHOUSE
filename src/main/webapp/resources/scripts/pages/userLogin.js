@@ -11,6 +11,8 @@ function fnAuth() {
     $(`#userPw`).trigger("focus");
     return;
   }
+
+
   if ($(`#setId`).is(":checked")) {
     $.cookie("userId", $(`#userId`).val(), {expires: 365});
   }
@@ -27,15 +29,15 @@ function fnAuth() {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      if (data.result == "로그인에 성공하였습니다") {
-        var encryptedItem = {"loginSession": "true"};
-        var encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
+      if (data.result === "success") {
+        const encryptedItem = {"loginSession": "true"};
+        const encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
         localStorage.setItem("loginSession", encryptedValue.toString());
-        alert(data.result);
+        alert(data.msg);
         fnGoPage("main");
       }
       else {
-        alert(data.result);
+        alert(data.msg);
       }
     },
     error: ajaxErrorHandler

@@ -6,18 +6,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "productOut.xlsx",
     title: "   제품 출고 관리",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnGetList02(ui.rowData.prodCd);
       fnReset();
@@ -45,6 +45,11 @@ function fnGetList01 () {
       minWidth:100,
     },
     {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth:100,
+      render: displayLowStock,
+    },
+    {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
       minWidth:100,
     },
@@ -62,11 +67,6 @@ function fnGetList01 () {
       title:"재고", dataIndx:"qty", dataType:"string", align:"center",
       minWidth:100,
       render: renderZero,
-    },
-    {
-      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth:100,
-      render: displayLowStock,
     },
     {
       title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
@@ -105,18 +105,18 @@ function fnGetList02 (prodCd) {
   const gridOption = {
     xlsNm: "productInOut.xlsx",
     title: "   제품 입출고 내역",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnShow(ui.rowData.inOutSeq);
     },
@@ -357,8 +357,10 @@ function fnResetWhenSearch() {
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
-	$(`#grid02`).pqGrid("option", "dataModel.data", []);
-	$(`#grid02`).pqGrid("refreshDataAndView");
+	$(`#grid02`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

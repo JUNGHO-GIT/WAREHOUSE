@@ -6,18 +6,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "productInPlan.xlsx",
     title: "   제품 입고 예정",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnGetList02(ui.rowData.prodCd);
       fnReset();
@@ -105,18 +105,18 @@ function fnGetList02 (prodCd) {
   const gridOption = {
     xlsNm: "productInPlan.xlsx",
     title: "   제품 입출고 예정 내역",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       fnShow(ui.rowData.inOutSeq);
     },
@@ -357,8 +357,10 @@ function fnResetWhenSearch() {
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
-	$(`#grid02`).pqGrid("option", "dataModel.data", []);
-	$(`#grid02`).pqGrid("refreshDataAndView");
+	$(`#grid02`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

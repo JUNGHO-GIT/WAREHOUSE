@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductXlsDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -21,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 public class ProductXlsCTRL {
 
   private final ProductXlsDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/productXls", produces="text/html;charset=UTF-8")
   public ModelAndView productXls () throws Exception {
-
     try {
       return new ModelAndView("productXls");
     }
@@ -34,7 +35,6 @@ public class ProductXlsCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -52,19 +52,19 @@ public class ProductXlsCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIdParam = (String) userId;
-      String prodNmParam = (String) jsonObj.get("prodNm");
-      String prodTypeParam = (String) jsonObj.get("prodType");
-      String qualityParam = (String) jsonObj.get("quality");
-      String option1Param = (String) jsonObj.get("option1");
-      String option2Param = (String) jsonObj.get("option2");
-      String remarksParam = (String) jsonObj.get("remarks");
-      String makerParam = (String) jsonObj.get("maker");
-      String unitParam = (String) jsonObj.get("unit");
-      Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
-      Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
-      Integer protectedQtyParam = Integer.parseInt((String) jsonObj.get("protectedQty"));
-      Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
+      String userIdParam = String.valueOf(userId);
+      String prodNmParam = String.valueOf(jsonObj.get("prodNm"));
+      String prodTypeParam = String.valueOf(jsonObj.get("prodType"));
+      String qualityParam = String.valueOf(jsonObj.get("quality"));
+      String option1Param = String.valueOf(jsonObj.get("option1"));
+      String option2Param = String.valueOf(jsonObj.get("option2"));
+      String remarksParam = String.valueOf(jsonObj.get("remarks"));
+      String makerParam = String.valueOf(jsonObj.get("maker"));
+      String unitParam = String.valueOf(jsonObj.get("unit"));
+      Integer houseCdParam = Integer.parseInt(String.valueOf(jsonObj.get("houseCd")));
+      Integer compCdParam = Integer.parseInt(String.valueOf(jsonObj.get("compCd")));
+      Integer protectedQtyParam = Integer.parseInt(String.valueOf(jsonObj.get("protectedQty")));
+      Double unitPriceParam = Double.parseDouble(String.valueOf(jsonObj.get("unitPrice")));
 
       try {
         Product param = new Product();

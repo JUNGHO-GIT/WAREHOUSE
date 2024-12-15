@@ -5,19 +5,19 @@ function fnGetList01 () {
 
   const gridOption = {
     xlsNm: "reportOut.xlsx",
-    title: "   (제품) 연간 출고 현황",
-    width: "auto",
+    title: "   [제품] 연간 출고 현황",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
   };
   const colModel = [
     {
@@ -83,7 +83,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      gridOption.title = updateTitle("(제품) 연간 출고 현황", data);
+      gridOption.title = updateTitle("[제품] 연간 출고 현황", data);
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: data },
@@ -102,12 +102,12 @@ function fnGetList02() {
 
   const gridOption = {
     xlsNm: "reportOut.xlsx",
-    title: "   (자재) 연간 출고 현황",
-    width: "auto",
+    title: "   [자재] 연간 출고 현황",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
@@ -179,7 +179,7 @@ function fnGetList02() {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      gridOption.title = updateTitle("(자재) 연간 출고 현황", data);
+      gridOption.title = updateTitle("[자재] 연간 출고 현황", data);
       $grid02.pqGrid({
         ...gridOption,
         dataModel: { data: data },

@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.dao.CompanyDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class CompanyCTRL {
 
   private final CompanyDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/company", produces="text/html;charset=UTF-8")
   public ModelAndView company () throws Exception {
-
     try {
       return new ModelAndView("company");
     }
@@ -36,7 +37,6 @@ public class CompanyCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ public class CompanyCTRL {
   public ResponseEntity<?> listCompany(
     @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
-
     try {
       ArrayList<Company> list = dao.listCompany(findCompNm);
       return ResponseEntity.ok(list);
@@ -53,7 +52,6 @@ public class CompanyCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ public class CompanyCTRL {
   public ResponseEntity<?> showCompany(
     @RequestParam(value="compCd", required=false) Integer compCd
   ) throws Exception {
-
     try {
       Company show = dao.showCompany(compCd);
       return ResponseEntity.ok(show);
@@ -70,7 +67,6 @@ public class CompanyCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

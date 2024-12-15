@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.User;
 import com.WAREHOUSE.dao.UserDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -25,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class UserCTRL {
 
   private final UserDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/", "/login"}, produces="text/html;charset=UTF-8")
   public ModelAndView login () throws Exception {
-
     try {
       return new ModelAndView("userLogin");
     }
@@ -38,13 +39,11 @@ public class UserCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/reLogin", "/logout"}, produces="text/html;charset=UTF-8")
   public ModelAndView reLogin () throws Exception {
-
     try {
       return new ModelAndView("reLogin");
     }
@@ -52,13 +51,11 @@ public class UserCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   //-----------------------------------------------------------------------------------------------
   @GetMapping(value="/user", produces="text/html;charset=UTF-8")
   public ModelAndView user () throws Exception {
-
     try {
       return new ModelAndView("user");
     }
@@ -66,7 +63,6 @@ public class UserCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -108,16 +104,19 @@ public class UserCTRL {
           session.setAttribute("userConfigLevel", userInfo.getUserLevel());
           session.setAttribute("userConfigPerm", userInfo.getUserPerm());
 
-          map.put("result", "로그인에 성공하였습니다");
+          map.put("result", "success");
+          map.put("msg", "로그인에 성공하였습니다");
         }
         else {
-          map.put("result", "비밀번호가 일치하지 않습니다");
+          map.put("result", "fail");
+          map.put("msg", "비밀번호가 일치하지 않습니다");
         }
       }
     }
     catch (Exception e) {
       e.printStackTrace();
-      map.put("result", "로그인에 실패하였습니다");
+      map.put("result", "fail");
+      map.put("msg", "로그인에 실패하였습니다");
     }
 
     return ResponseEntity.ok(map);
@@ -128,7 +127,6 @@ public class UserCTRL {
   public ResponseEntity<?> listUser (
     @RequestParam(value="findUserNm", required=false) String findUserNm
   ) throws Exception {
-
     try {
       ArrayList<User> list = dao.listUser(findUserNm);
       return ResponseEntity.ok(list);
@@ -137,13 +135,11 @@ public class UserCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listUserPerm", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> listUserPerm () throws Exception {
-
     try {
       ArrayList<HashMap<String, Object>> list = dao.listUserPerm();
       return ResponseEntity.ok(list);
@@ -152,7 +148,6 @@ public class UserCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -160,7 +155,6 @@ public class UserCTRL {
   public ResponseEntity<?> showUser (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
-
     try {
       User show = dao.showUser(userId);
       return ResponseEntity.ok(show);
@@ -169,7 +163,6 @@ public class UserCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -177,7 +170,6 @@ public class UserCTRL {
   public ResponseEntity<?> checkUserId (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
-
     try {
       Integer checkID = dao.checkUserId(userId);
       return ResponseEntity.ok(checkID);
@@ -186,7 +178,6 @@ public class UserCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   //------------------------------------------------------------------------------------------------
@@ -201,12 +192,12 @@ public class UserCTRL {
 
     try {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-      String userPwOld = param.get("userPw").toString();
-      String userPwNew = passEncoder.encode(userPwOld);
-      String userId = (String) param.get("userId");
-      String issueId = (String) idParam;
-      String signUpCheck = (String) param.get("signUpCheck");
-      String flagYn = (String) param.get("flagYn");
+      String userPwOld = String.valueOf(param.get("userPw"));
+      String userPwNew = String.valueOf(passEncoder.encode(userPwOld));
+      String userId = String.valueOf(param.get("userId"));
+      String issueId = String.valueOf(idParam);
+      String signUpCheck = String.valueOf(param.get("signUpCheck"));
+      String flagYn = String.valueOf(param.get("flagYn"));
 
       Object configSeqObj = param.get("configSeq");
       Object compCdObj = param.get("userConfigCompCd");
@@ -215,7 +206,7 @@ public class UserCTRL {
         param.put("configSeq", 0);
       }
       else {
-        Integer configSeqInt = Integer.parseInt(configSeqObj.toString());
+        Integer configSeqInt = Integer.parseInt(String.valueOf(configSeqObj));
         param.put("configSeq", configSeqInt);
       }
 
@@ -223,7 +214,7 @@ public class UserCTRL {
         param.put("compCd", 0);
       }
       else {
-        Integer compCdInt = Integer.parseInt(compCdObj.toString());
+        Integer compCdInt = Integer.parseInt(String.valueOf(compCdObj));
         param.put("compCd", compCdInt);
       }
       User storedUser = dao.showUser(userId);

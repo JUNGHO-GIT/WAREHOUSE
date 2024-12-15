@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ProductCTRL {
 
   private final ProductDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/product", produces="text/html;charset=UTF-8")
   public ModelAndView product () throws Exception {
-
     try {
       return new ModelAndView("product");
     }
@@ -36,7 +37,6 @@ public class ProductCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ public class ProductCTRL {
   public ResponseEntity<?> listProduct(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
-
     try {
       ArrayList<Product> list = dao.listProduct(findProdNm);
       return ResponseEntity.ok(list);
@@ -53,7 +52,6 @@ public class ProductCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ public class ProductCTRL {
   public ResponseEntity<?> showProduct (
     @RequestParam(value="prodCd", required=false) Integer prodCd
   ) throws Exception {
-
     try {
       Product show = dao.showProduct(prodCd);
       return ResponseEntity.ok(show);
@@ -70,7 +67,6 @@ public class ProductCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

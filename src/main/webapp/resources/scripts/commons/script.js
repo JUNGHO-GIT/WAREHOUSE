@@ -181,8 +181,9 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
     $(gridId).pqGrid("updateRow", {
       rowIndx: rowIndx,
       row: dynamicRowData
-    })
-    .pqGrid("refreshDataAndView");
+    });
+
+    $(gridId).pqGrid("refreshDataAndView");
   })
   .catch((error) => {
     console.error("Error:", error);
@@ -487,7 +488,7 @@ function ajaxErrorHandler (request, status, error) {
 };
 
 // 0. 엔터일때만 실행 ------------------------------------------------------------------------------
-function onKeyDown (event) {
+function fnPressAuth(event) {
   if (event.key === "Enter") {
     event.preventDefault();
     fnAuth();
@@ -525,51 +526,88 @@ function fnPressGet02(event) {
   }
 };
 
+// 0. 로그아웃 -------------------------------------------------------------------------------------
+function fnLogOut() {
+  const encryptedItem = {"loginSession": "false"};
+  const encryptedValue = CryptoJS.AES.encrypt(JSON.stringify(encryptedItem), "loginSession");
+  localStorage.setItem("loginSession", encryptedValue.toString());
+  fnGoPage("reLogin");
+};
+
+// 0. 세션 체크 ------------------------------------------------------------------------------------
+function fnCheckSession() {
+  window.addEventListener("storage", (e) => {
+    if (e.key === "loginSession") {
+      const decryptedItem = localStorage.getItem("loginSession");
+      const decryptedValue = CryptoJS.AES.decrypt(decryptedItem, "loginSession");
+      const decryptedObj = JSON.parse(decryptedValue.toString(CryptoJS.enc.Utf8));
+      if (decryptedObj.loginSession == "false") {
+        fnGoPage("reLogin");
+      }
+    }
+  });
+};
+
 // -------------------------------------------------------------------------------------------------
 function dynamicDisplay () {
+
+  const xsToSm = window.matchMedia("(min-width: 0px) and (max-width: 576px)");
+  const smToXl = window.matchMedia("(min-width: 577px) and (max-width: 10000px)");
 
   const xsToMd = window.matchMedia("(min-width: 0px) and (max-width: 768px)");
   const mdToXl = window.matchMedia("(min-width: 769px) and (max-width: 10000px)");
 
-  const dividerMd = document.querySelectorAll(".divider-md");
-  const dividerAll = document.querySelectorAll(".divider-all");
+  const alignSm = document.querySelectorAll(".align-sm");
   const alignMd = document.querySelectorAll(".align-md");
 
-  dividerMd.forEach((el) => {
-    if (xsToMd.matches && !el.classList.contains("my-2vh")) {
-      el.classList.remove("d-none");
-      el.classList.add("my-2vh");
-      el.setAttribute("style", "flex: 0 0 100%;");
+  const marginSm = document.querySelectorAll(".margin-sm");
+  const marginMd = document.querySelectorAll(".margin-md");
+
+  marginSm.forEach((el) => {
+    if (xsToSm.matches) {
+      el?.classList?.add("mb-4vh");
+      el?.classList?.remove("pr-2vw");
     }
-    else if (mdToXl.matches && !el.classList.contains("d-none")) {
-      el.classList.add("d-none");
-      el.classList.remove("my-2vh");
-      el.setAttribute("style", "flex: 0 0 0;");
+    else if (smToXl.matches) {
+      el?.classList?.remove("mb-4vh");
+      el?.classList?.add("pr-2vw");
     }
   });
 
-  dividerAll.forEach((el) => {
-    el.classList.remove("d-none");
-    el.classList.add("my-2vh");
-    el.setAttribute("style", "flex: 0 0 100%;");
+  marginMd.forEach((el) => {
+    if (xsToMd.matches) {
+      el?.classList?.add("mb-4vh");
+      el?.classList?.remove("pr-2vw");
+    }
+    else if (mdToXl.matches) {
+      el?.classList?.remove("mb-4vh");
+      el?.classList?.add("pr-2vw");
+    }
+  });
+
+  alignSm.forEach((el) => {
+    if (xsToSm.matches) {
+      el.classList.add("d-center");
+    }
+    else if (smToXl.matches) {
+      el.classList.remove("d-center");
+    }
   });
 
   alignMd.forEach((el) => {
-    if (xsToMd.matches && !el.classList.contains("d-center")) {
-      el.classList.remove("d-right");
-      el.classList.remove("d-left");
+    if (xsToMd.matches) {
       el.classList.add("d-center");
     }
-    else if (mdToXl.matches && !el.classList.contains("d-right")) {
+    else if (mdToXl.matches) {
       el.classList.remove("d-center");
-      el.classList.add("d-right");
-    }
-    else if (mdToXl.matches && !el.classList.contains("d-left")) {
-      el.classList.remove("d-center");
-      el.classList.add("d-left");
     }
   });
 }
 // 이벤트 리스터 등록
 dynamicDisplay();
 window.addEventListener("resize", dynamicDisplay);
+
+// -------------------------------------------------------------------------------------------------
+jQuery(function($) {
+  fnCheckSession();
+});

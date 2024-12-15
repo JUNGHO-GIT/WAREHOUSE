@@ -10,12 +10,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.DashDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.JsonUtil;
+import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,15 +27,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DashCTRL {
 
-  private final DashDAO dao;
-  private final Logs logs;
   private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
   private final NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
+  private final DashDAO dao;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/dash", produces="text/plain;charset=UTF-8")
   public ModelAndView dash () throws Exception {
-
     try {
       return new ModelAndView("dash");
     }
@@ -39,7 +43,6 @@ public class DashCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -154,208 +157,213 @@ public class DashCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/dash", produces="application/json;charset=UTF-8")
-  public HashMap<String, Object> dash (
-    HttpServletRequest request
+  public ResponseEntity<?> dash (
+    @RequestParam(value="key", required=false) String key,
+    @RequestParam(value="inOut", required=false) String inOut,
+    @RequestParam(value="plan", required=false) String plan,
+    @RequestParam(value="date", required=false) String date
   ) throws Exception {
 
-    // 날짜 데이터
-    HashMap<String, Object> dateMap = getRelatedDate();
-    String todayDt = (String) dateMap.get("todayDt");
-    String yesterdayDt = (String) dateMap.get("yesterdayDt");
-    String weekAgoDt = (String) dateMap.get("weekAgoDt");
-    String thisWeekSatDt = (String) dateMap.get("thisWeekSatDt");
-    String lastWeekSunDt = (String) dateMap.get("lastWeekSunDt");
+    try {
+      // 날짜 데이터
+      HashMap<String, Object> dateMap = getRelatedDate();
+      String todayDt = String.valueOf(dateMap.get("todayDt"));
+      String yesterdayDt = String.valueOf(dateMap.get("yesterdayDt"));
+      String weekAgoDt = String.valueOf(dateMap.get("weekAgoDt"));
+      String thisWeekSatDt = String.valueOf(dateMap.get("thisWeekSatDt"));
+      String lastWeekSunDt = String.valueOf(dateMap.get("lastWeekSunDt"));
 
-    // 파라미터
-    HashMap<String, Object> paramMap = new HashMap<>();
-    String key = request.getParameter("key");
-    String keyUp = Character.toUpperCase(key.charAt(0)) + key.substring(1);
-    String keyCd = (key + "Cd");
-    String keyNm = (key + "Nm");
-    String inOut = request.getParameter("inOut");
-    String plan = request.getParameter("plan");
-    String date = request.getParameter("date");
-    String tableNm = ("tblProductInOut");
-    String planYn = (plan != null && !plan.isEmpty()) ? "Y" : "N";
-    String sign = (inOut.equals("In")) ? ">" : "<";
+      // 파라미터
+      HashMap<String, Object> paramMap = new HashMap<>();
+      String keyUp = Character.toUpperCase(key.charAt(0)) + key.substring(1);
+      String keyCd = (key + "Cd");
+      String keyNm = (key + "Nm");
+      String tableNm = ("tblProductInOut");
+      String planYn = (plan != null && !plan.isEmpty()) ? "Y" : "N";
+      String sign = (inOut.equals("In")) ? ">" : "<";
 
-    // paramMap 에 파라미터 추가
-    paramMap.put("key", key);
-    paramMap.put("keyUp", keyUp);
-    paramMap.put("keyCd", keyCd);
-    paramMap.put("keyNm", keyNm);
-    paramMap.put("inOut", inOut);
-    paramMap.put("plan", plan);
-    paramMap.put("date", date);
-    paramMap.put("tableNm", tableNm);
-    paramMap.put("planYn", planYn);
-    paramMap.put("sign", sign);
+      // paramMap 에 파라미터 추가
+      paramMap.put("key", key);
+      paramMap.put("keyUp", keyUp);
+      paramMap.put("keyCd", keyCd);
+      paramMap.put("keyNm", keyNm);
+      paramMap.put("inOut", inOut);
+      paramMap.put("plan", plan);
+      paramMap.put("date", date);
+      paramMap.put("tableNm", tableNm);
+      paramMap.put("planYn", planYn);
+      paramMap.put("sign", sign);
 
-    // 오늘날짜 기준 어제날짜 대비 증감 계산 변수
-    String totalQty = "";
-    String todayQty = "";
-    String yesterdayQty = "";
+      // 오늘날짜 기준 어제날짜 대비 증감 계산 변수
+      String totalQty = "";
+      String todayQty = "";
+      String yesterdayQty = "";
 
-    // 데이터 리스트
-    ArrayList<HashMap<String, Object>> todayList = new ArrayList<>();
-    ArrayList<HashMap<String, Object>> yesterdayList = new ArrayList<>();
-    ArrayList<HashMap<String, Object>> weekList = new ArrayList<>();
-    ArrayList<HashMap<String, Object>> sunToSatList = new ArrayList<>();
+      // 데이터 리스트
+      ArrayList<HashMap<String, Object>> todayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> yesterdayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> weekList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> sunToSatList = new ArrayList<>();
 
-    if (key.equals("ship")) {
-      // 오늘 데이터
-      todayList = dao.getShipData(paramMap, todayDt, todayDt);
+      if (key.equals("ship")) {
+        // 오늘 데이터
+        todayList = dao.getShipData(paramMap, todayDt, todayDt);
 
-      // 어제 데이터
-      yesterdayList = dao.getShipData(paramMap, yesterdayDt, yesterdayDt);
+        // 어제 데이터
+        yesterdayList = dao.getShipData(paramMap, yesterdayDt, yesterdayDt);
 
-      // 일주일 데이터 (오늘기준 일주일)
-      weekList = dao.getShipData(paramMap, weekAgoDt, todayDt);
+        // 일주일 데이터 (오늘기준 일주일)
+        weekList = dao.getShipData(paramMap, weekAgoDt, todayDt);
 
-      // 일주일 데이터 (일요일부터 토요일까지)
-      sunToSatList = dao.getShipData(paramMap, lastWeekSunDt, thisWeekSatDt);
-    }
-    else {
-      // 오늘 데이터
-      todayList = dao.getInOutData(paramMap, todayDt, todayDt);
-
-      // 어제 데이터
-      yesterdayList = dao.getInOutData(paramMap, yesterdayDt, yesterdayDt);
-
-      // 일주일 데이터 (오늘기준 일주일)
-      weekList = dao.getInOutData(paramMap, weekAgoDt, todayDt);
-
-      // 일주일 데이터 (일요일부터 토요일까지)
-      sunToSatList = dao.getInOutData(paramMap, lastWeekSunDt, thisWeekSatDt);
-    }
-
-    // keyCd가 null인 항목이 있는지 확인
-    for (HashMap<String, Object> item : todayList) {
-      if (item.get(keyCd) == null) {
-        todayList = new ArrayList<>();
+        // 일주일 데이터 (일요일부터 토요일까지)
+        sunToSatList = dao.getShipData(paramMap, lastWeekSunDt, thisWeekSatDt);
       }
-    }
-    for (HashMap<String, Object> item : yesterdayList) {
-      if (item.get(keyCd) == null) {
-        yesterdayList = new ArrayList<>();
-      }
-    }
-    for (HashMap<String, Object> item : weekList) {
-      if (item.get(keyCd) == null) {
-        weekList = new ArrayList<>();
-      }
-    }
-    for (HashMap<String, Object> item : sunToSatList) {
-      if (item.get(keyCd) == null) {
-        sunToSatList = new ArrayList<>();
-      }
-    }
+      else {
+        // 오늘 데이터
+        todayList = dao.getInOutData(paramMap, todayDt, todayDt);
 
-    // 오늘 리스트
-    if (todayList != null && !todayList.isEmpty()) {
-      Object totalQtyObj = todayList.get(0).get("totalQty");
-      if (totalQtyObj != null) {
-        totalQty = formatter.format(Integer.parseInt(totalQtyObj.toString()));
+        // 어제 데이터
+        yesterdayList = dao.getInOutData(paramMap, yesterdayDt, yesterdayDt);
+
+        // 일주일 데이터 (오늘기준 일주일)
+        weekList = dao.getInOutData(paramMap, weekAgoDt, todayDt);
+
+        // 일주일 데이터 (일요일부터 토요일까지)
+        sunToSatList = dao.getInOutData(paramMap, lastWeekSunDt, thisWeekSatDt);
+      }
+
+      // keyCd가 null인 항목이 있는지 확인
+      for (HashMap<String, Object> item : todayList) {
+        if (item.get(keyCd) == null) {
+          todayList = new ArrayList<>();
+        }
+      }
+      for (HashMap<String, Object> item : yesterdayList) {
+        if (item.get(keyCd) == null) {
+          yesterdayList = new ArrayList<>();
+        }
+      }
+      for (HashMap<String, Object> item : weekList) {
+        if (item.get(keyCd) == null) {
+          weekList = new ArrayList<>();
+        }
+      }
+      for (HashMap<String, Object> item : sunToSatList) {
+        if (item.get(keyCd) == null) {
+          sunToSatList = new ArrayList<>();
+        }
+      }
+
+      // 오늘 리스트
+      if (todayList != null && !todayList.isEmpty()) {
+        Object totalQtyObj = todayList.get(0).get("totalQty");
+        if (totalQtyObj != null) {
+          totalQty = formatter.format(Integer.parseInt(String.valueOf(totalQtyObj)));
+        }
+        else {
+          totalQty = "0";
+        }
       }
       else {
         totalQty = "0";
       }
-    }
-    else {
-      totalQty = "0";
-    }
 
-    // 어제 리스트
-    if (yesterdayList != null && !yesterdayList.isEmpty()) {
-      Object totalQtyObj = yesterdayList.get(0).get("totalQty");
-      if (totalQtyObj != null) {
-        yesterdayQty = formatter.format(Integer.parseInt(totalQtyObj.toString()));
+      // 어제 리스트
+      if (yesterdayList != null && !yesterdayList.isEmpty()) {
+        Object totalQtyObj = yesterdayList.get(0).get("totalQty");
+        if (totalQtyObj != null) {
+          yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(totalQtyObj)));
+        }
+        else {
+          yesterdayQty = "0";
+        }
       }
       else {
         yesterdayQty = "0";
       }
-    }
-    else {
-      yesterdayQty = "0";
-    }
 
-    // 일주일 리스트 (오늘기준 일주일)
-    if (weekList != null && !weekList.isEmpty()) {
-      for (HashMap<String, Object> weekMap : weekList) {
-        Object totalQtyObj = weekMap.get("totalQty");
-        if (totalQtyObj != null) {
-          weekMap.put("totalQty", formatter.format(Integer.parseInt(totalQtyObj.toString())));
-        }
-        else {
-          weekMap.put("totalQty", "0");
+      // 일주일 리스트 (오늘기준 일주일)
+      if (weekList != null && !weekList.isEmpty()) {
+        for (HashMap<String, Object> weekMap : weekList) {
+          Object totalQtyObj = weekMap.get("totalQty");
+          if (totalQtyObj != null) {
+            weekMap.put("totalQty", formatter.format(Integer.parseInt(String.valueOf(totalQtyObj))));
+          }
+          else {
+            weekMap.put("totalQty", "0");
+          }
         }
       }
-    }
-    else if (weekList != null) {
-      HashMap<String, Object> weekMap = new HashMap<>();
-      weekMap.put("totalQty", "0");
-      weekList.add(weekMap);
-    }
+      else if (weekList != null) {
+        HashMap<String, Object> weekMap = new HashMap<>();
+        weekMap.put("totalQty", "0");
+        weekList.add(weekMap);
+      }
 
-    // 일주일 리스트 (일요일부터 토요일까지)
-    if (sunToSatList != null && !sunToSatList.isEmpty()) {
-      for (HashMap<String, Object> sunToSatMap : sunToSatList) {
-        Object totalQtyObj = sunToSatMap.get("totalQty");
-        if (totalQtyObj != null) {
-          sunToSatMap.put("totalQty", formatter.format(Integer.parseInt(totalQtyObj.toString())));
-        }
-        else {
-          sunToSatMap.put("totalQty", "0");
+      // 일주일 리스트 (일요일부터 토요일까지)
+      if (sunToSatList != null && !sunToSatList.isEmpty()) {
+        for (HashMap<String, Object> sunToSatMap : sunToSatList) {
+          Object totalQtyObj = sunToSatMap.get("totalQty");
+          if (totalQtyObj != null) {
+            sunToSatMap.put("totalQty", formatter.format(String.valueOf(totalQtyObj)));
+          }
+          else {
+            sunToSatMap.put("totalQty", "0");
+          }
         }
       }
+      else if (sunToSatList != null) {
+        HashMap<String, Object> sunToSatMap = new HashMap<>();
+        sunToSatMap.put("totalQty", "0");
+        sunToSatList.add(sunToSatMap);
+      }
+
+      // dash 리스트 생성
+      ArrayList<HashMap<String, Object>> dash = new ArrayList<>();
+
+      // dash 에 percentMap 추가
+      HashMap<String, Object> percentMap = calcPercent(todayQty, yesterdayQty);
+      HashMap<String, Object> percentMapWrapper = new HashMap<>();
+      percentMapWrapper.put("percentMap", percentMap);
+      dash.add(percentMapWrapper);
+
+      // dash 에 totalQty 추가
+      HashMap<String, Object> totalQtyMap = new HashMap<>();
+      totalQtyMap.put("totalQty", totalQty);
+      dash.add(totalQtyMap);
+
+      // dash 에 todayList 추가
+      HashMap<String, Object> todayListMap = new HashMap<>();
+      todayListMap.put("todayList", todayList);
+      dash.add(todayListMap);
+
+      // dash 에 yesterdayList 추가
+      HashMap<String, Object> yesterdayListMap = new HashMap<>();
+      yesterdayListMap.put("yesterdayList", yesterdayList);
+      dash.add(yesterdayListMap);
+
+      // dash 에 weekList 추가
+      HashMap<String, Object> weekListMap = new HashMap<>();
+      weekListMap.put("weekList", weekList);
+      dash.add(weekListMap);
+
+      // dash 에 sunToSatList 추가
+      HashMap<String, Object> sunToSatListMap = new HashMap<>();
+      sunToSatListMap.put("sunToSatList", sunToSatList);
+      dash.add(sunToSatListMap);
+
+      // 최종 반환
+      HashMap<String, Object> result = new HashMap<>();
+      String resultStr = (key + inOut + plan + date);
+
+      result.put(resultStr, dash);
+
+      return ResponseEntity.ok(result);
     }
-    else if (sunToSatList != null) {
-      HashMap<String, Object> sunToSatMap = new HashMap<>();
-      sunToSatMap.put("totalQty", "0");
-      sunToSatList.add(sunToSatMap);
+    catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
-    // dash 리스트 생성
-    ArrayList<HashMap<String, Object>> dash = new ArrayList<>();
-
-    // dash 에 percentMap 추가
-    HashMap<String, Object> percentMap = calcPercent(todayQty, yesterdayQty);
-    HashMap<String, Object> percentMapWrapper = new HashMap<>();
-    percentMapWrapper.put("percentMap", percentMap);
-    dash.add(percentMapWrapper);
-
-    // dash 에 totalQty 추가
-    HashMap<String, Object> totalQtyMap = new HashMap<>();
-    totalQtyMap.put("totalQty", totalQty);
-    dash.add(totalQtyMap);
-
-    // dash 에 todayList 추가
-    HashMap<String, Object> todayListMap = new HashMap<>();
-    todayListMap.put("todayList", todayList);
-    dash.add(todayListMap);
-
-    // dash 에 yesterdayList 추가
-    HashMap<String, Object> yesterdayListMap = new HashMap<>();
-    yesterdayListMap.put("yesterdayList", yesterdayList);
-    dash.add(yesterdayListMap);
-
-    // dash 에 weekList 추가
-    HashMap<String, Object> weekListMap = new HashMap<>();
-    weekListMap.put("weekList", weekList);
-    dash.add(weekListMap);
-
-    // dash 에 sunToSatList 추가
-    HashMap<String, Object> sunToSatListMap = new HashMap<>();
-    sunToSatListMap.put("sunToSatList", sunToSatList);
-    dash.add(sunToSatListMap);
-
-    // 최종 반환
-    HashMap<String, Object> result = new HashMap<>();
-    String resultStr = (key + inOut + plan + date);
-
-    result.put(resultStr, dash);
-
-    return result;
   }
 
   // 4-1. 안전 재고 현황 (제품) --------------------------------------------------------------------
@@ -366,7 +374,7 @@ public class DashCTRL {
 
     // 날짜 데이터
     HashMap<String, Object> dateMap = getRelatedDate();
-    String todayDt = (String) dateMap.get("todayDt");
+    String todayDt = String.valueOf(dateMap.get("todayDt"));
 
     // 계산 변수
     String todayQty = "";
@@ -464,7 +472,7 @@ public class DashCTRL {
 
     try {
       if (prodInTodayList != null && !prodInTodayList.isEmpty()) {
-        todayQty = formatter.format(Integer.parseInt(prodInTodayList.get(0).get("totalQty").toString()));
+        todayQty = formatter.format(Integer.parseInt(String.valueOf(prodInTodayList.get(0).get("totalQty"))));
       }
       else {
         todayQty = "0";
@@ -477,7 +485,7 @@ public class DashCTRL {
 
     try {
       if (prodInYesterdayList != null && !prodInYesterdayList.isEmpty()) {
-        yesterdayQty = formatter.format(Integer.parseInt(prodInYesterdayList.get(0).get("totalQty").toString()));
+        yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodInYesterdayList.get(0).get("totalQty"))));
       }
       else {
         yesterdayQty = "0";
@@ -575,7 +583,7 @@ public class DashCTRL {
 
     try {
       if (prodOutTodayList != null && !prodOutTodayList.isEmpty()) {
-        todayQty = formatter.format(Integer.parseInt(prodOutTodayList.get(0).get("totalQty").toString()));
+        todayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutTodayList.get(0).get("totalQty"))));
       }
       else {
         todayQty = "0";
@@ -588,7 +596,7 @@ public class DashCTRL {
 
     try {
       if (prodOutYesterdayList != null && !prodOutYesterdayList.isEmpty()) {
-        yesterdayQty = formatter.format(Integer.parseInt(prodOutYesterdayList.get(0).get("totalQty").toString()));
+        yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutYesterdayList.get(0).get("totalQty"))));
       }
       else {
         yesterdayQty = "0";

@@ -27,7 +27,7 @@ public class FilesUtil {
   private String BUCKET_FOLDER;
 
   private StringBuilder strBuilder;
-  private Logs logs;
+  private LogsUtil logs;
 
   // -----------------------------------------------------------------------------------------------
   public void uploadFiles(
@@ -37,8 +37,8 @@ public class FilesUtil {
   ) throws Exception {
 
     // 변수 선언
-    String existingFile = (String) files.getFileNm();
-    String fileName = (String) files.getFileUrl();
+    String existingFile = String.valueOf(files.getFileNm());
+    String fileName = String.valueOf(files.getFileUrl());
     String newFile = "";
     String mergedFile = "";
 
@@ -69,7 +69,7 @@ public class FilesUtil {
     strBuilder.append(fileName);
 
     // 최종 newFile 설정
-    newFile = strBuilder.toString().trim();
+    newFile = String.valueOf(strBuilder);
 
     // 이미지 URL 합치기
     if (existingFile != null && existingFile.length() > 0) {

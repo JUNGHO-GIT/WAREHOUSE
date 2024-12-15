@@ -6,18 +6,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "shipping.xlsx",
     title: "   제품 출고 현황",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       const getData = $(`#grid02`).pqGrid("getData");
       const newRow = {
@@ -102,23 +102,23 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  const delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
+  const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "shipDetail.xlsx",
     title: "   출하 대기 목록",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     cellClick: (_, ui) => {
       if (ui.colIndx === 2) {
         fnDelProd(ui.rowIndx);
@@ -341,8 +341,10 @@ function fnReset() {
 
   // 그리드 초기화
   $(`#grid01`).pqGrid("setSelection", null);
-	$(`#grid02`).pqGrid("option", "dataModel.data", []);
-	$(`#grid02`).pqGrid("refreshDataAndView");
+	$(`#grid02`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 5-2. 초기화 (검색시) ----------------------------------------------------------------------------

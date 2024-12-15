@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutPlanDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ProductInOutPlanCTRL {
 
   private final ProductInOutPlanDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // 0. 제품 입고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/productInPlan", produces="text/html;charset=UTF-8")
   public ModelAndView productInPlan () throws Exception {
-
     try {
       return new ModelAndView("productInPlan");
     }
@@ -36,13 +37,11 @@ public class ProductInOutPlanCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // 0. 제품 출고 예정 -----------------------------------------------------------------------------
   @GetMapping(value="/productOutPlan", produces="text/html;charset=UTF-8")
   public ModelAndView productOutPlan () throws Exception {
-
     try {
       return new ModelAndView("productOutPlan");
     }
@@ -50,7 +49,6 @@ public class ProductInOutPlanCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
@@ -58,7 +56,6 @@ public class ProductInOutPlanCTRL {
   public ResponseEntity<?> listProductInOutPlan (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
-
     try {
       ArrayList<ProductInOut> list = dao.listProductInOutPlan(prodCd);
       return ResponseEntity.ok(list);
@@ -67,7 +64,6 @@ public class ProductInOutPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
@@ -75,7 +71,6 @@ public class ProductInOutPlanCTRL {
   public ResponseEntity<?> showProductInOutPlan (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
-
     try {
       ProductInOut show = dao.showProductInOutPlan(inOutSeq);
       return ResponseEntity.ok(show);
@@ -84,7 +79,6 @@ public class ProductInOutPlanCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // 1-3. 제품 입출고 예정 저장 -------------------------------------------------------------------

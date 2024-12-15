@@ -8,9 +8,13 @@ function fnInOutChart(keyParam, inOutParam, planParam, dateParam) {
   var downStr = `${key}${inOut}${plan}${date}`;
 
   $.ajax({
-    url: `act/dash?key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
+    url: `act/dash`,
+    data: `key=${key}&inOut=${inOut}&plan=${plan}&date=${date}`,
     type: "POST",
     dataType:"JSON",
+    beforeSend: (xmlHttpRequest) => {
+      xmlHttpRequest.setRequestHeader("AJAX", "true");
+    },
     success: (data) => {
 
       var dashBoardData = data[downStr];

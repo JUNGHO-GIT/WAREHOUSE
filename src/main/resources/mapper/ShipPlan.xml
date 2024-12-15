@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
@@ -28,6 +27,7 @@
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
       WHERE flagYn = 'Y'
+      GROUP BY shipCd
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
@@ -37,7 +37,7 @@
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt}
     ) D ON D.inOutSeq = B.inOutSeq
     ORDER BY
       A.shipCd DESC
@@ -66,18 +66,18 @@
       SELECT shipCd, inOutSeq, COUNT(*) cnt
       FROM tblShipPlan
       WHERE flagYn = 'Y'
-      -- GROUP BY 필수 !!
       GROUP BY shipCd, inOutSeq
     ) B ON B.shipCd = A.shipCd
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y'
+      -- WHERE flagYn = 'Y'
+      WHERE flagYn IS NOT NULL
     ) C ON C.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND planYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *

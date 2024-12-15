@@ -14,8 +14,7 @@ public interface UserDAO {
     @Param("findUserNm") String findUserNm
   );
 
-  public ArrayList<HashMap<String, Object>> listUserPerm(
-  );
+  public ArrayList<HashMap<String, Object>> listUserPerm();
 
   public User showUser(
     @Param("userId") String userId

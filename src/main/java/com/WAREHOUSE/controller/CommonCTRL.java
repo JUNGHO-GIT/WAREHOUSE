@@ -11,7 +11,8 @@ import com.WAREHOUSE.container.House;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.CommonDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -20,14 +21,14 @@ import lombok.RequiredArgsConstructor;
 public class CommonCTRL {
 
   private final CommonDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/findBom", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> findBom (
     @RequestParam(value="findBom", required=false) String findBom
   ) throws Exception {
-
     try {
       ArrayList<Product> list = dao.findBom(findBom);
       return ResponseEntity.ok(list);
@@ -36,7 +37,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ public class CommonCTRL {
   public ResponseEntity<?> findHouseNm (
     @RequestParam(value="findHouseNm", required=false) String findHouseNm
   ) throws Exception {
-
     try {
       ArrayList<House> list = dao.findHouseNm(findHouseNm);
       return ResponseEntity.ok(list);
@@ -53,7 +52,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -62,7 +60,6 @@ public class CommonCTRL {
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
   ) throws Exception {
-
     try {
       ArrayList<House> list = dao.findHouseCd(findNm, findCd);
       return ResponseEntity.ok(list);
@@ -71,7 +68,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -79,7 +75,6 @@ public class CommonCTRL {
   public ResponseEntity<?> findCompNm (
     @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
-
     try {
       ArrayList<Company> list = dao.findCompNm(findCompNm);
       return ResponseEntity.ok(list);
@@ -88,7 +83,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -97,7 +91,6 @@ public class CommonCTRL {
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
   ) throws Exception {
-
     try {
       ArrayList<Company> list = dao.findCompCd(findNm, findCd);
       return ResponseEntity.ok(list);
@@ -106,7 +99,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -114,7 +106,6 @@ public class CommonCTRL {
   public ResponseEntity<?> findProdNm (
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
-
     try {
       ArrayList<Product> list = dao.findProdNm(findProdNm);
       return ResponseEntity.ok(list);
@@ -123,7 +114,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -132,7 +122,6 @@ public class CommonCTRL {
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
   ) throws Exception {
-
     try {
       ArrayList<Product> list = dao.findProdCd(findNm, findCd);
       return ResponseEntity.ok(list);
@@ -141,7 +130,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -149,7 +137,6 @@ public class CommonCTRL {
   public ResponseEntity<?> findResrcNm (
     @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
-
     try {
       ArrayList<Resource> list = dao.findResrcNm(findResrcNm);
       return ResponseEntity.ok(list);
@@ -158,7 +145,6 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -167,7 +153,6 @@ public class CommonCTRL {
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
   ) throws Exception {
-
     try {
       ArrayList<Resource> list = dao.findResrcCd(findNm, findCd);
       return ResponseEntity.ok(list);
@@ -176,6 +161,5 @@ public class CommonCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 }

@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ResourceInOutCTRL {
 
   private final ResourceInOutDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   //-----------------------------------------------------------------------------------------------
   @GetMapping(value="/resourceIn", produces="text/html;charset=UTF-8")
   public ModelAndView resourceIn () throws Exception {
-
     try {
       return new ModelAndView("resourceIn");
     }
@@ -41,7 +42,6 @@ public class ResourceInOutCTRL {
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/resourceOut", produces="text/html;charset=UTF-8")
   public ModelAndView resourceOut () throws Exception {
-
     try {
       return new ModelAndView("resourceOut");
     }
@@ -56,7 +56,6 @@ public class ResourceInOutCTRL {
   public ResponseEntity<?> listResourceInOut (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
-
     try {
       ArrayList<ResourceInOut> list = dao.listResourceInOut(resrcCd);
       return ResponseEntity.ok(list);
@@ -65,7 +64,6 @@ public class ResourceInOutCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -73,7 +71,6 @@ public class ResourceInOutCTRL {
   public ResponseEntity<?> showResourceInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
-
     try {
       ResourceInOut show = dao.showResourceInOut(inOutSeq);
       return ResponseEntity.ok(show);
@@ -82,7 +79,6 @@ public class ResourceInOutCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

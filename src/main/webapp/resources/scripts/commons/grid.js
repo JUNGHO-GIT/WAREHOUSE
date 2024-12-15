@@ -13,20 +13,22 @@ function calcLowStock(data) {
 
 // -------------------------------------------------------------------------------------------------
 function displayLowStock (data) {
+  // summary 는 건너뛰기
+  if (data.rowData.pq_rowcls === `summary-row`) {
+    return undefined;
+  }
   return data.rowData.lowStock === 1 ? `<div class="fs-1-2rem red">●</div>` : "";
 };
 
 // -------------------------------------------------------------------------------------------------
-function calcSum (data, dataIndex) {
-  if (!data) {
-    return "0";
-  }
-  const sum = data.reduce(function(acc, row) {
-    const value = Number(row[dataIndex]);
-    return acc + (isNaN(value) ? 0 : value);
-  }, 0);
-  return sum.toLocaleString();
-};
+function calcSum (data=[], dataIndx="") {
+  return (
+    data.reduce((acc, row) => {
+      const value = Number(row[dataIndx]);
+      return acc + (isNaN(value) ? 0 : value);
+    }, 0).toLocaleString()
+  );
+}
 
 // -------------------------------------------------------------------------------------------------
 function renderImage (data) {
@@ -37,7 +39,7 @@ function renderImage (data) {
   return (/* javascript */`
     <img
       src="viewFiles?fileUrl=${data.rowData.fileUrl || 'noGridImage.webp'}"
-      class="w-100p h-auto radius-1 shadow-1"
+      class="w-100p h-auto radius-1 shadow-1 border-1 p-5px"
       loading="lazy"
     />`
   );
@@ -59,38 +61,43 @@ function checkBoxRender (data) {
 function updateTitle (titleKo, data) {
 
   const nonCalc = [
-    "거래처", "창고", "입출고 내역", "출하", "제품 출고 현황", "연간 입고 현황", "연간 출고 현황", "연간 재고 현황", "예정 내역",
+    "거래처", "창고", "입출고 내역", "출하", "제품 출고 현황", "연간 입고 현황", "연간 출고 현황", "연간 재고 현황", "예정 내역", "제품 정보", "자재 정보", "BOM",
   ];
 
   if (nonCalc.some((item) => titleKo.includes(item))) {
     return (/* javascript */`
-      <div class="row">
-        <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
-          <span class="fs-0-8rem">${titleKo}</span>
+      <div class="d-row-left">
+        <div class="d-row-center">
+          <div class="fs-0-8rem fw-600">
+            ${titleKo}
+          </div>
         </div>
       </div>
     `);
   }
   return (/* javascript */`
-    <div class="row">
-      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
-        <span class="fs-0-8rem">${titleKo}</span>
+    <div class="d-row-left">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600">
+          ${titleKo}
+        </div>
       </div>
-      <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-right ml-n50px">
-        <span class="fs-0-9rem red">●</span>
-        <span class="ml-5px mr-5px">안전재고 이하 : </span>
-        <span class="red">${calcLowStock(data)}</span>
+      <div class="d-row-center ml-auto mr-50px">
+        <div class="fs-0-8rem red">●</div>
+        <div class="fs-0-8rem ml-5px mr-5px">안전재고: </div>
+        <div class="fs-0-8rem red">${calcLowStock(data)}</div>
       </div>
     </div>
   `);
 };
 
 // -------------------------------------------------------------------------------------------------
-function updateSummary (target="", data={}) {
+function updateSummary (target="", data=[]) {
   return [{
     pq_rowcls: "summary-row",
     fileUrl: "",
-    [`${target}Nm`]: `<div class="fs-1-0rem fw-700 py-2vh">Total</div>`,
+    [`${target}Nm`]: `<div class="fs-1-0rem fw-500 py-2vh">Total</div>`,
+    lowStock: calcSum(data, "lowStock"),
     protectedQty: calcSum(data, "protectedQty"),
     inQty: calcSum(data, "inQty"),
     outQty: calcSum(data, "outQty"),

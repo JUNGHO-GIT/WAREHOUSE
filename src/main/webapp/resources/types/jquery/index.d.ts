@@ -7,3 +7,4 @@
 /// <reference path="jquery-ui.d.ts" />
 /// <reference path="jquery-pqgrid.d.ts" />
 /// <reference path="jquery-sortable.d.ts" />
+/// <reference path="jquery-ztree.d.ts" />

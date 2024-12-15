@@ -16,7 +16,8 @@ import com.WAREHOUSE.container.Bom;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.BomDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -25,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class BomCTRL {
 
   private final BomDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/bom", produces="text/html;charset=UTF-8")
   public ModelAndView bom () throws Exception {
-
     try {
       return new ModelAndView("bom");
     }
@@ -38,7 +39,6 @@ public class BomCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -46,7 +46,6 @@ public class BomCTRL {
   public ResponseEntity<?> listBom(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
-
     try {
       ArrayList<Product> list = dao.listBom(findProdNm);
       return ResponseEntity.ok(list);
@@ -55,7 +54,6 @@ public class BomCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -64,7 +62,6 @@ public class BomCTRL {
     @RequestParam(value="prodCd", required=false) Integer prodCd,
     @RequestParam(value="bomType", required=false) String bomType
   ) throws Exception {
-
     try {
       ArrayList<Resource> show = dao.showBom(prodCd, bomType);
       return ResponseEntity.ok(show);
@@ -73,7 +70,6 @@ public class BomCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -91,14 +87,13 @@ public class BomCTRL {
 
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
-
-      String userIdParam = (String) userId;
-      String bomTypeParam = (String) jsonObj.get("bomType");
-      String flagYnParam = (String) jsonObj.get("flagYn");
-      Integer prodCdParam = Integer.parseInt((String) jsonObj.get("prodCd"));
-      Integer resrcCdParam = Integer.parseInt((String) jsonObj.get("resrcCd"));
-      Integer qtyParam = Integer.parseInt((String) jsonObj.get("qty"));
-      Double unitQtyParam = Double.parseDouble((String) jsonObj.get("unitQty"));
+      String userIdParam = String.valueOf(userId);
+      String bomTypeParam = String.valueOf(jsonObj.get("bomType"));
+      String flagYnParam = String.valueOf(jsonObj.get("flagYn"));
+      Integer prodCdParam = Integer.parseInt(String.valueOf(jsonObj.get("prodCd")));
+      Integer resrcCdParam = Integer.parseInt(String.valueOf(jsonObj.get("resrcCd")));
+      Integer qtyParam = Integer.parseInt(String.valueOf(jsonObj.get("qty")));
+      Double unitQtyParam = Double.parseDouble(String.valueOf(jsonObj.get("unitQty")));
 
       try {
         Bom param = new Bom();

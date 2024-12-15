@@ -1938,9 +1938,9 @@ DROP TABLE IF EXISTS `tblHouse`;
 CREATE TABLE `tblHouse` (
   `houseCd` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '창고코드',
   `houseNm` VARCHAR(100) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '창고 섹션 이름',
-  `parentsHCd` INT DEFAULT '0' COMMENT '부모 창고',
+  `houseParentCd` INT DEFAULT '0' COMMENT '부모 창고',
   `houseOrder` INT DEFAULT '1' COMMENT '순서',
-  `step` INT DEFAULT '0' COMMENT '단계',
+  `houseStep` INT DEFAULT '0' COMMENT '창고 단계',
   `flagYn` VARCHAR(1) CHARACTER SET utf8mb4 DEFAULT 'Y' COMMENT '삭제여부(Y:유효/N:삭제)',
   `issueId` VARCHAR(20) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '최종저장자',
   `regDt` datetime DEFAULT NULL COMMENT '최초저장일',

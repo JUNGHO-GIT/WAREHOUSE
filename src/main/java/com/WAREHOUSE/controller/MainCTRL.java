@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.FilesDAO;
 import com.WAREHOUSE.dao.MainDAO;
-import com.WAREHOUSE.util.Json;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -31,8 +31,8 @@ public class MainCTRL {
 
   private final MainDAO dao;
   private final FilesDAO filesDao;
-  private final Logs logs;
-  private final Json json;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/main", produces="text/html;charset=UTF-8")
@@ -49,7 +49,7 @@ public class MainCTRL {
     String fileUrl = "";
     if (!logoFilesList.isEmpty()) {
       Map<String, Object> logoFile = logoFilesList.get(0);
-      fileUrl = (String) logoFile.get("fileUrl");
+      fileUrl = String.valueOf(logoFile.get("fileUrl"));
     }
 
     // 세션에 값 저장
@@ -80,8 +80,6 @@ public class MainCTRL {
       pageNm = "'" + pageNm + "'";
 
       ArrayList<HashMap<String, Object>> list = dao.listSysMenu(pageNm);
-      logs.info("listSysMenu", json.toJson(list));
-
       return ResponseEntity.ok(list);
     }
     catch (Exception e) {

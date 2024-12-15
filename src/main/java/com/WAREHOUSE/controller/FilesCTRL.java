@@ -24,7 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.WAREHOUSE.container.Files;
 import com.WAREHOUSE.dao.FilesDAO;
 import com.WAREHOUSE.util.FilesUtil;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class FilesCTRL {
 
   private final FilesDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
   private final Utils utils;
   private final FilesUtil filesUtil;
 
@@ -44,7 +46,6 @@ public class FilesCTRL {
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="tableKey", required=false) String tableKey
   ) throws Exception {
-
     try {
       ArrayList<Files> list = dao.listFiles(tableNm, tableKey);
       return ResponseEntity.ok(list);
@@ -61,7 +62,6 @@ public class FilesCTRL {
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="tableKey", required=false) String tableKey
   ) throws Exception {
-
     try {
       List<Map<String, Object>> showFiles = dao.showFiles(tableNm, tableKey);
       return ResponseEntity.ok(showFiles);
@@ -146,7 +146,7 @@ public class FilesCTRL {
 
     // 1. 보안을 위해 UUID 사용
     UUID uuid = UUID.randomUUID();
-    String uuidStr = uuid.toString().substring(0, 8);
+    String uuidStr = String.valueOf(uuid).substring(0, 8);
 
     String fileNm = multipartFile.getOriginalFilename();
     String fileUrl = String.format(
@@ -186,20 +186,20 @@ public class FilesCTRL {
     @SessionAttribute("userId") String userId
   ) throws Exception {
 
-    String tableNm = param.get("tableNm").toString();
-    String tableKey = param.get("tableKey").toString();
-    String keyColumn = param.get("keyColumn").toString();
+    String tableNm = String.valueOf(param.get("tableNm"));
+    String tableKey = String.valueOf(param.get("tableKey"));
+    String keyColumn = String.valueOf(param.get("keyColumn"));
 
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       Files file = new Files();
-      file.setFileSeq(Integer.parseInt(param.get("fileSeq").toString()));
-      file.setTableNm(param.get("tableNm").toString());
-      file.setTableKey(param.get("tableKey").toString());
-      file.setFileUrl(param.get("fileUrl").toString());
-      file.setFileNm(param.get("fileNm").toString());
-      file.setFlagYn(param.get("flagYn").toString());
-      file.setIssueId(param.get("issueId").toString());
+      file.setFileSeq(Integer.parseInt(String.valueOf(param.get("fileSeq"))));
+      file.setTableNm(String.valueOf(param.get("tableNm")));
+      file.setTableKey(String.valueOf(param.get("tableKey")));
+      file.setFileUrl(String.valueOf(param.get("fileUrl")));
+      file.setFileNm(String.valueOf(param.get("fileNm")));
+      file.setFlagYn(String.valueOf(param.get("flagYn")));
+      file.setIssueId(String.valueOf(param.get("issueId")));
 
       dao.saveFiles(file);
       dao.updateIssueDt(tableNm, tableKey, keyColumn);

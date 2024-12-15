@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.ResourceXlsDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 public class ResourceXlsCTRL {
 
   private final ResourceXlsDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/resourceXls", produces="text/html;charset=UTF-8")
   public ModelAndView resourceXls () throws Exception {
-
     try {
       return new ModelAndView("resourceXls");
     }
@@ -36,7 +37,6 @@ public class ResourceXlsCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -54,19 +54,19 @@ public class ResourceXlsCTRL {
     for (int i = 0; i < dataList.size(); i++) {
       HashMap<Object, Object> jsonObj = dataList.get(i);
 
-      String userIdParam = (String) userId;
-      String resrcNmParam = (String) jsonObj.get("resrcNm");
-      String resrcTypeParam = (String) jsonObj.get("resrcType");
-      String qualityParam = (String) jsonObj.get("quality");
-      String option1Param = (String) jsonObj.get("option1");
-      String option2Param = (String) jsonObj.get("option2");
-      String remarksParam = (String) jsonObj.get("remarks");
-      String makerParam = (String) jsonObj.get("maker");
-      String unitParam = (String) jsonObj.get("unit");
-      Integer houseCdParam = Integer.parseInt((String) jsonObj.get("houseCd"));
-      Integer compCdParam = Integer.parseInt((String) jsonObj.get("compCd"));
-      Integer protectedQtyParam = Integer.parseInt((String) jsonObj.get("protectedQty"));
-      Double unitPriceParam = Double.parseDouble((String) jsonObj.get("unitPrice"));
+      String userIdParam = String.valueOf(userId);
+      String resrcNmParam = String.valueOf(jsonObj.get("resrcNm"));
+      String resrcTypeParam = String.valueOf(jsonObj.get("resrcType"));
+      String qualityParam = String.valueOf(jsonObj.get("quality"));
+      String option1Param = String.valueOf(jsonObj.get("option1"));
+      String option2Param = String.valueOf(jsonObj.get("option2"));
+      String remarksParam = String.valueOf(jsonObj.get("remarks"));
+      String makerParam = String.valueOf(jsonObj.get("maker"));
+      String unitParam = String.valueOf(jsonObj.get("unit"));
+      Integer houseCdParam = Integer.parseInt(String.valueOf(jsonObj.get("houseCd")));
+      Integer compCdParam = Integer.parseInt(String.valueOf(jsonObj.get("compCd")));
+      Integer protectedQtyParam = Integer.parseInt(String.valueOf(jsonObj.get("protectedQty")));
+      Double unitPriceParam = Double.parseDouble(String.valueOf(jsonObj.get("unitPrice")));
 
       try {
         Resource param = new Resource();

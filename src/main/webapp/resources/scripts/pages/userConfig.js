@@ -11,7 +11,7 @@ function fnShowUserConfig() {
     },
     success: (data) => {
       if (data) {
-        fnSetTab(data.config);
+        fnInitializeTabs(data.config);
       }
     },
     error: ajaxErrorHandler
@@ -121,7 +121,7 @@ function fnSaveUserConfigTab() {
     "userId": $(`#userConfigID`).val(),
     "pageNm": "tabs",
     "gridCd": "",
-    "config": fnTabOrder(),
+    "config": fnGetTabOrder(),
     "flagYn": "Y",
   };
 
@@ -225,6 +225,6 @@ jQuery(function($) {
   $(`#popupUserConfig`).draggable({
     handle: `#popTop`,
     cursor: "move",
-    containment: "document"
+    containment: "window"
   });
 });

@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface HouseDAO {
 
   public ArrayList<House> listHouse(
-    @Param("parentsHCd") Integer parentsHCd
+    @Param("houseParentCd") Integer houseParentCd
   );
 
   public ArrayList<HashMap<String, Object>> showHousePerProduct(

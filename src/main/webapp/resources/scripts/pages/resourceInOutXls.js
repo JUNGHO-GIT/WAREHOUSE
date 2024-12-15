@@ -7,7 +7,7 @@ function fnShowExcel(body) {
   const gridOption = {
     xlsNm: "resourceInOutXls.xlsx",
     title: "   자재 입출고 관리",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
@@ -18,7 +18,7 @@ function fnShowExcel(body) {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     cellClick: (_, ui) => {
       if (ui.dataIndx === "checkStatus") {
         const isChecked = !ui.rowData.checkStatus;
@@ -43,7 +43,7 @@ function fnShowExcel(body) {
     {
       title:inputBox, dataIndx:"checkStatus", dataType:"bool", align:"center", type: "checkBox",
       cb: {all:true, header:true, select:true, deselect:true},
-      minWidth:30, maxWidth:30, editable:false, sortable:false,
+      minWidth:30, maxWidth:30, editable: false, sortable:false,
       render: checkBoxRender
     },
     {

@@ -4,6 +4,7 @@ CREATE PROCEDURE `sp_Bom`(
 	IN `@prodCd` INT(10),
 	IN `@resrcCd` INT(10),
 	IN `@bomType` VARCHAR(5),
+  IN `@qty` INT(10),
 	IN `@unitQty` DECIMAL(5,2),
 	IN `@flagYn` VARCHAR(1),
 	IN `@issueId` VARCHAR(20)
@@ -19,8 +20,9 @@ BEGIN
     INSERT INTO tblBom (
       prodCd,
       resrcCd,
-      unitQty,
       bomType,
+      qty,
+      unitQty,
       flagYn,
       regDt,
       issueDt,
@@ -29,8 +31,9 @@ BEGIN
     VALUES (
       `@prodCd`,
       `@resrcCd`,
-      `@unitQty`,
       `@bomType`,
+      `@qty`,
+      `@unitQty`,
       `@flagYn`,
       NOW(),
       NOW(),
@@ -40,8 +43,9 @@ BEGIN
     UPDATE
       tblBom
     SET
-      unitQty=`@unitQty`,
       bomType=`@bomType`,
+      qty=`@qty`,
+      unitQty=`@unitQty`,
       flagYn=`@flagYn`,
       issueDt=NOW(),
       issueId=`@issueId`
@@ -332,33 +336,33 @@ DELIMITER $$
 CREATE PROCEDURE `sp_House`(
 	IN `@houseCd` INT(10),
 	IN `@houseNm` VARCHAR(100),
-	IN `@parentsHCd` INT(10),
+	IN `@houseParentCd` INT(10),
 	IN `@houseOrder` INT(10),
 	IN `@flagYn` VARCHAR(1),
 	IN `@issueId` VARCHAR(20)
 )
 BEGIN
   DECLARE `@isCd` INTEGER DEFAULT 0;
-  DECLARE `@step` INTEGER DEFAULT 0;
+  DECLARE `@houseStep` INTEGER DEFAULT 0;
 
   SELECT COUNT(*) INTO `@isCd`
   FROM tblHouse
   WHERE houseCd=`@houseCd`;
 
-  SELECT (step + 1) INTO `@step`
+  SELECT (houseStep + 1) INTO `@houseStep`
   FROM tblHouse
-  WHERE houseCd=`@parentsHCd`;
+  WHERE houseCd=`@houseParentCd`;
 
-  IF `@parentsHCd`=0 THEN
-	  SET `@step`=0;
+  IF `@houseParentCd`=0 THEN
+	  SET `@houseStep`=0;
   END IF;
 
 	IF `@isCd`=0 THEN
     INSERT INTO tblHouse (
       houseNm,
-      parentsHCd,
+      houseParentCd,
       houseOrder,
-      step,
+      houseStep,
       flagYn,
       regDt,
       issueDt,
@@ -366,9 +370,9 @@ BEGIN
     )
     VALUES (
       `@houseNm`,
-      `@parentsHCd`,
+      `@houseParentCd`,
       `@houseOrder`,
-      `@step`,
+      `@houseStep`,
       `@flagYn`,
       NOW(),
       NOW(),
@@ -379,9 +383,9 @@ BEGIN
       tblHouse
     SET
       houseNm=`@houseNm`,
-      step=`@step`,
-      parentsHCd=`@parentsHCd`,
+      houseParentCd=`@houseParentCd`,
       houseOrder=`@houseOrder`,
+      houseStep=`@houseStep`,
       flagYn=`@flagYn`,
       issueDt=NOW(),
       issueId=`@issueId`

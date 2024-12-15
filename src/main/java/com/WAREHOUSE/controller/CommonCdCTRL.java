@@ -15,7 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Common;
 import com.WAREHOUSE.container.CommonCd;
 import com.WAREHOUSE.dao.CommonCdDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -24,12 +25,12 @@ import lombok.RequiredArgsConstructor;
 public class CommonCdCTRL {
 
   private final CommonCdDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/commonCd", produces="text/html;charset=UTF-8")
   public ModelAndView commonCd () throws Exception {
-
     try {
       return new ModelAndView("commonCd");
     }
@@ -37,7 +38,6 @@ public class CommonCdCTRL {
       e.printStackTrace();
       return null;
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -72,7 +72,6 @@ public class CommonCdCTRL {
     @RequestParam(value="findGroupCd", required=false) String findGroupCd,
     @RequestParam(value="findItemNm", required=false) String findItemNm
   ) throws Exception {
-
     try {
       ArrayList<CommonCd> list = dao.listCommonCd(findGroupCd, findItemNm);
       return ResponseEntity.ok(list);
@@ -81,7 +80,6 @@ public class CommonCdCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -90,7 +88,6 @@ public class CommonCdCTRL {
     @RequestParam(value="groupCd", required=false) String groupCd,
     @RequestParam(value="itemCd", required=false) String itemCd
   ) throws Exception {
-
     try {
       CommonCd show = dao.showCommonCd(groupCd, itemCd);
       return ResponseEntity.ok(show);
@@ -99,7 +96,6 @@ public class CommonCdCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // -----------------------------------------------------------------------------------------------

@@ -8,18 +8,18 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "productInOutAll.xlsx",
     title: "   제품 입출고 관리",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
     numberCell: {show: true, resizable: false, width: 30},
-    summaryData:  [],
+    summaryData: [],
     rowClick: (_, ui) => {
       const today = fnToday();
       const getData02 = $grid02.pqGrid("getData");
@@ -80,8 +80,13 @@ function fnGetList01 () {
       minWidth:100,
     },
     {
+      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
+      minWidth:100,
+      render: displayLowStock,
+    },
+    {
       title:"안전재고", dataIndx:"protectedQty", dataType:"string", align:"center",
-      minWidth:100
+      minWidth:100,
     },
     {
       title:"입고", dataIndx:"inQty", dataType:"string", align:"center",
@@ -97,11 +102,6 @@ function fnGetList01 () {
       title:"재고", dataIndx:"qty", dataType:"string", align:"center",
       minWidth:100,
       render: renderZero
-    },
-    {
-      title:"재고부족", dataIndx:"lowStock", dataType:"string", align:"center",
-      minWidth:100,
-      render: displayLowStock
     },
     {
       title:"바코드", dataIndx:"barcode", dataType:"string", align:"center",
@@ -120,7 +120,6 @@ function fnGetList01 () {
     success: (data) => {
       gridOption.title = updateTitle("제품 입출고 관리", data);
       gridOption.summaryData = updateSummary("prod", data);
-
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: data },
@@ -136,13 +135,13 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  const chkBtn = `<div class="btn btn-primary btn-xs chkBtn">v</div>`;
-  const delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
+  const chkBtn = `<div class="chkBtn">v</div>`;
+  const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "productInOutAll.xlsx",
     title: "   일괄 입고",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
@@ -150,7 +149,7 @@ function fnGetList02() {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
     numberCell: {show: true, resizable: false, width: 30},
     cellClick: (_, ui) => {
       if (ui.colIndx == 3) {
@@ -174,36 +173,36 @@ function fnGetList02() {
   const colModel = [
     {
       title:"제품코드", dataIndx:"prodCd", dataType:"integer", align:"center",
-      hidden:true
+      hidden:true, editable: false,
     },
     {
       title:"거래처코드", dataIndx:"compCd", dataType:"integer", align:"center",
-      hidden:true
+      hidden:true, editable: false,
     },
     {
       title:"창고코드", dataIndx:"houseCd", dataType:"integer", align:"center",
-      hidden:true
+      hidden:true, editable: false,
     },
     {
       title:delBtn, dataIndx:"delBtn", dataType:"string", align:"center",
-      minWidth:30, maxWidth: 30,
+      minWidth:30, maxWidth: 30, editable: false,
       render: () => delBtn,
     },
     {
       title:chkBtn, dataIndx:"chkBtn", dataType:"string", align:"center",
-      minWidth:30, maxWidth: 30,
+      minWidth:30, maxWidth: 30, editable: false,
     },
     {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
-      minWidth:150
+      minWidth:150, editable: false,
     },
     {
       title:"일자", dataIndx:"inOutDt", dataType:"string", align:"center",
-      minWidth:100
+      minWidth:100, editable: false,
     },
     {
       title:"재고", dataIndx:"curQty", dataType:"string", align:"center",
-      minWidth:100
+      minWidth:100, editable: false,
     },
     {
       title:"창고", dataIndx:"houseNm", dataType:"string", align:"center",
@@ -238,7 +237,7 @@ function fnCheck() {
   const $grid02 = $(`#grid02`);
   const getData = $grid02.pqGrid("getData");
   const inOut = $("input[name=inOut]:checked").val();
-  const chkBtn = `<div class="btn btn-primary btn-xs chkBtn">v</div>`;
+  const chkBtn = `<div class="chkBtn">v</div>`;
 
   let validationErrors = [];
   let isVerified = true;

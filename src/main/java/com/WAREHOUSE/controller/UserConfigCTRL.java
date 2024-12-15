@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.UserConfig;
 import com.WAREHOUSE.dao.UserConfigDAO;
-import com.WAREHOUSE.util.Logs;
+import com.WAREHOUSE.util.LogsUtil;
+import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -21,7 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class UserConfigCTRL {
 
   private final UserConfigDAO dao;
-  private final Logs logs;
+  private final LogsUtil logs;
+  private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showUserConfigTab", produces="application/json;charset=UTF-8")
@@ -30,7 +32,6 @@ public class UserConfigCTRL {
     @RequestParam(value="gridCd", required=false) String gridCd,
     @SessionAttribute("userConfigID") String userConfigID
   ) throws Exception {
-
     try {
       UserConfig show = dao.showUserConfigTab(userConfigID, pageNm, gridCd);
       return ResponseEntity.ok(show);
@@ -39,7 +40,6 @@ public class UserConfigCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   // 2-2. 상세 (정보) ------------------------------------------------------------------------------
@@ -47,7 +47,6 @@ public class UserConfigCTRL {
   public ResponseEntity<?> showUserConfigInfo (
     @SessionAttribute("userConfigID") String userConfigID
   ) throws Exception {
-
     try {
       UserConfig show = dao.showUserConfigInfo(userConfigID);
       return ResponseEntity.ok(show);
@@ -56,7 +55,6 @@ public class UserConfigCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 
   //------------------------------------------------------------------------------------------------
@@ -76,7 +74,7 @@ public class UserConfigCTRL {
         map.put("result", "존재하지 않는 아이디입니다");
       }
       else {
-        String userPwNew = (String) passEncoder.encode(userPwOld);
+        String userPwNew = String.valueOf(passEncoder.encode(userPwOld));
         dao.updateUserConfigPw(userConfigID, userPwNew);
         map.put("result", "비밀번호를 변경했습니다");
       }
@@ -100,11 +98,11 @@ public class UserConfigCTRL {
 
     try {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-      String userId = (String) idParam;
-      String issueId = (String) idParam;
-      String userConfigID = (String) param.get("userConfigID");
-      String userPwOld = (String) param.get("userConfigPw");
-      String flagYn = (String) param.get("flagYn");
+      String userId = String.valueOf(idParam);
+      String issueId = String.valueOf(idParam);
+      String userConfigID = String.valueOf(param.get("userConfigID"));
+      String userPwOld = String.valueOf(param.get("userConfigPw"));
+      String flagYn = String.valueOf(param.get("flagYn"));
       String userPwNew = "";
 
       Object configSeqObj = param.get("configSeq");
@@ -114,7 +112,7 @@ public class UserConfigCTRL {
         param.put("configSeq", 0);
       }
       else {
-        Integer configSeqInt = Integer.parseInt(configSeqObj.toString());
+        Integer configSeqInt = Integer.parseInt(String.valueOf(configSeqObj));
         param.put("configSeq", configSeqInt);
       }
 
@@ -122,7 +120,7 @@ public class UserConfigCTRL {
         param.put("compCd", 0);
       }
       else {
-        Integer compCdInt = Integer.parseInt(compCdObj.toString());
+        Integer compCdInt = Integer.parseInt(String.valueOf(compCdObj));
         param.put("compCd", compCdInt);
       }
 
@@ -172,10 +170,10 @@ public class UserConfigCTRL {
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      String userId = (String) idParam;
-      String userConfigID = (String) param.get("userConfigID");
-      String issueId = (String) idParam;
-      String flagYn = (String) param.get("flagYn");
+      String userId = String.valueOf(idParam);
+      String userConfigID = String.valueOf(param.get("userConfigID"));
+      String issueId = String.valueOf(param.get("issueId"));
+      String flagYn = String.valueOf(param.get("flagYn"));
 
       Object configSeqObj = param.get("configSeq");
       Object compCdObj = param.get("userConfigCompCd");
@@ -184,7 +182,7 @@ public class UserConfigCTRL {
         param.put("configSeq", 0);
       }
       else {
-        Integer configSeqInt = Integer.parseInt(configSeqObj.toString());
+        Integer configSeqInt = Integer.parseInt(String.valueOf(configSeqObj));
         param.put("configSeq", configSeqInt);
       }
 
@@ -192,7 +190,7 @@ public class UserConfigCTRL {
         param.put("compCd", 0);
       }
       else {
-        Integer compCdInt = Integer.parseInt(compCdObj.toString());
+        Integer compCdInt = Integer.parseInt(String.valueOf(compCdObj));
         param.put("compCd", compCdInt);
       }
 

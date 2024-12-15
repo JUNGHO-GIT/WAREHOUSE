@@ -6,55 +6,67 @@ function fnGetList01 () {
   const gridOption = {
     xlsNm: "product.xlsx",
     title: "   제품 정보",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
-    editable:false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
-
-  // 행 클릭시 실행
-  obj.rowClick = function (event, ui) {
-    fnFindCd ("", ui.rowData.prodCd, "prod", null);
-    fnShow (ui.rowData.prodCd, ui.rowData.bomType);
+    summaryData: [],
+    rowClick: (_, ui) => {
+      fnFindCd("", ui.rowData.prodCd, "prod", null);
+      fnShow(ui.rowData.prodCd, ui.rowData.bomType);
+    },
   };
   const colModel = [
-    {dataIndx:"bomType", title:"bomType", align:"center", dataType:"string",
+    {
+      title:"bom타입", dataIndx:"bomType", align:"center", dataType:"string",
       hidden: true
     },
-    {dataIndx:"prodCd", title:"prodCd", align:"center", dataType:"string",
+    {
+      title:"제품코드드", dataIndx:"prodCd", align:"center", dataType:"string",
       hidden: true
     },
-    {dataIndx:"prodNm", title:"제품명", align:"center", dataType:"string",,
-      minWidth:200
+    {
+      title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
+      minWidth:70, maxWidth: 70,
+      render: renderImage,
     },
-    {dataIndx:"option1", title:"재질", align:"center", dataType:"string",
+    {
+      title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
+      minWidth:150
     },
-    {dataIndx:"option2", title:"규격", align:"center", dataType:"string",
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth:100
     },
-    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",,
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth:100
     },
   ];
 
-  var param = "findProdNm=" + $(`#findProdNm`).val();
-
   $.ajax({
     url: "act/listBom",
-    data: param,
+    data: `findProdNm=${$(`#findProdNm`).val()}`,
     type: "POST",
     dataType:"JSON",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      obj.dataModel = {data:data};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      gridOption.title = updateTitle("제품 정보", data);
+      $grid01.pqGrid({
+        ...gridOption,
+        dataModel: { data: data },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -64,29 +76,32 @@ function fnGetList01 () {
 function fnGetList02() {
 
   const $grid02 = $(`#grid02`);
-  var insertBtn=`<button type="button" class="btn btn-primary btn-xs insertBtn">&#x25bc;</button>`;
+  const $grid03 = $(`#grid03`);
+  const insertBtn = `<div class="insertBtn">▼</div>`;
 
   const gridOption = {
     xlsNm: "resource.xlsx",
     title: "   자재 정보",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
+    editable: false,
     swipeModel: {on:false},
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
+    summaryData: [],
+    cellClick: (_, ui) => {
+      if (ui.colIndx !== 1) {
+        return
+      }
+      const getData03 = $grid03.pqGrid("getData");
+      let duplicateFlag = false;
 
-  // 셀 클릭시 실행
-  obj.cellClick = function (event, ui) {
-    if (ui.colIndx == 1) {
-      // 1. 자재 추가
-      var getData = $(`#grid03`).pqGrid("getData");
-      var newRow = {
+      const newRow = {
         resrcCd: ui.rowData.resrcCd,
         resrcNm: ui.rowData.resrcNm,
         option1: ui.rowData.option1,
@@ -95,48 +110,49 @@ function fnGetList02() {
         unitQty: "0",
         barcode: ui.rowData.barcode,
       };
-      // 2. 자재 중복체크
-      var duplicateFlag = false;
-      for (let i = 0; i < getData.length; i++) {
-        var row = getData[i];
+      getData03.forEach((row) => {
         if (row.resrcCd === newRow.resrcCd) {
           duplicateFlag = true;
-          break;
         }
-      }
+      });
+
       if (duplicateFlag) {
         alert("이미 추가된 제품입니다");
         return;
       }
-      getData.push(newRow);
-      $(`#grid03`).pqGrid("option", "dataModel", {data: getData});
-      $(`#grid03`).pqGrid("refreshDataAndView");
-    }
+      getData03.push(newRow);
+      $grid03.pqGrid({
+        dataModel: { data: getData03 },
+      })
+      .pqGrid("refreshDataAndView");
+    },
   };
   const colModel = [
-    {dataIndx:"resrcCd", title:"자재 코드", align:"center", dataType:"string",
-      editable:false, hidden: true
+    {
+      title:"자재코드", dataIndx:"resrcCd", align:"center", dataType:"string",
+      hidden: true
     },
-    {dataIndx:"insertBtn", title:insertBtn, align:"center", dataType:"string",
-      editable:false, minWidth:30, maxWidth:30,
-      render: function () {return insertBtn;}
+    {
+      title:insertBtn, dataIndx:"insertBtn", align:"center", dataType:"string",
+      minWidth:30, maxWidth:30,
+      render: () => insertBtn,
     },
-    {dataIndx:"resrcNm", title:"자재명", align:"center", dataType:"string",
-      editable:false, minWidth:100,
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth:150
     },
-    {dataIndx:"option1", title:"재질", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth:100
     },
-    {dataIndx:"option2", title:"규격", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth:100
     },
-    {dataIndx:"qty", title:"재고", align:"right", dataType:"string",
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      editable:false,
-    },
-    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
-      editable:false,
-    },
+    {
+      title:"재고", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth:100
+    }
   ];
 
   $.ajax({
@@ -148,8 +164,13 @@ function fnGetList02() {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      obj.dataModel = {data:data};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      gridOption.title = updateTitle("자재 정보", data);
+      $grid02.pqGrid({
+        ...gridOption,
+        dataModel: { data: data },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -158,13 +179,13 @@ function fnGetList02() {
 // 1. 그리드 설정 및 리스트 호출 -------------------------------------------------------------------
 function fnGetList03 () {
 
-  const gridCd = "grid03";
-  var delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
+  const $grid03 = $(`#grid03`);
+  const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "bomList.xlsx",
     title: "   BOM 항목",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
@@ -174,55 +195,63 @@ function fnGetList03 () {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
-
-  // 셀 클릭시 실행
-  obj.cellClick = function (event, ui) {
-    if (ui.colIndx == 1) {
-      fnDel(ui.rowIndx);
-    }
+    summaryData: [],
+    cellClick: (_, ui) => {
+      if (ui.colIndx === 1) {
+        fnDel(ui.rowIndx);
+      }
+    },
   };
   const colModel = [
-    {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
-      editable:false, hidden: true
+    {
+      title:"자재코드", dataIndx:"resrcCd", align:"center", dataType:"string",
+      hidden: true, editable: false,
     },
-    {dataIndx:"delBtn", title:delBtn, align:"center", dataType:"string",
-      editable:false, sortable:false, minWidth:30, maxWidth:30,
-      render:function () {return delBtn;}
+    {
+      title:delBtn, dataIndx:"delBtn", align:"center", dataType:"string",
+      minWidth:30, maxWidth:30, editable: false,
+      render: () => delBtn,
     },
-    {dataIndx:"resrcNm", title:"자재명", align:"center", dataType:"string",
-      editable:false, minWidth:100,
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth:150, editable: false,
     },
-    {dataIndx:"option1", title:"재질", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"option2", title:"규격", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"qty", title:"재고", align:"right", dataType:"string", editable:false,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}]
+    {
+      title:"재고", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"unitQty", title:"소요수량", align:"right", dataType:"string",
+    {
+      title:"소요수량", dataIndx:"unitQty", dataType:"string", align:"right",
+      minWidth:100, editable:true, cls:"lightYellow",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      editable:true, cls:"lightYellow",
-    },
-    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
-      editable:false,
-    },
-  ]
-  $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+    }
+  ];
+
+  $grid03.pqGrid({
+    ...gridOption,
+    colModel: colModel,
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
 function fnShow(prodCd, bomType) {
 
-  const gridCd = "grid03";
-  var delBtn = `<div class="btn btn-danger btn-xs delBtn">x</div>`;
+  const $grid03 = $(`#grid03`);
+  const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
     xlsNm: "resource.xlsx",
     title: "   BOM 정보",
-    width: "auto",
+    width: "100%",
     height: "100%",
     wrap: false,
     hwrap: false,
@@ -232,40 +261,43 @@ function fnShow(prodCd, bomType) {
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
     numberCell: {show: true, resizable: false, width: 30},
-  };
-
-  // 셀 클릭시 실행
-  obj.cellClick = function (event, ui) {
-    if (ui.colIndx == 1) {
-      fnDelResrc(ui.rowIndx);
+    summaryData: [],
+    cellClick: (_, ui) => {
+      if (ui.colIndx === 1) {
+        fnDelResrc(ui.rowIndx);
+      }
     }
   };
   const colModel = [
-    {dataIndx:"resrcCd", title:"자재코드", align:"center", dataType:"string",
-      editable:false, hidden: true
+    {
+      title:"자재코드", dataIndx:"resrcCd", align:"center", dataType:"string",
+      hidden: true, editable: false,
     },
-    {dataIndx:"delBtn", title:delBtn, align:"center", dataType:"string",
-      editable:false, sortable:false, minWidth:30, maxWidth:30,
-      render:function () {return delBtn;}
+    {
+      title:delBtn, dataIndx:"delBtn", align:"center", dataType:"string",
+      minWidth:30, maxWidth:30, editable: false,
+      render: () => delBtn,
     },
-    {dataIndx:"resrcNm", title:"자재명", align:"center", dataType:"string",
-      editable:false, minWidth:100,
+    {
+      title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
+      minWidth:150, editable: false,
     },
-    {dataIndx:"option1", title:"재질", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"재질", dataIndx:"option1", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"option2", title:"규격", align:"center", dataType:"string",
-      editable:false,
+    {
+      title:"규격", dataIndx:"option2", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"qty", title:"재고", align:"right", dataType:"string", editable:false,
-      validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}]
+    {
+      title:"재고", dataIndx:"qty", dataType:"string", align:"center",
+      minWidth:100, editable: false,
     },
-    {dataIndx:"unitQty", title:"소요수량", align:"right", dataType:"string",
+    {
+      title:"소요수량", dataIndx:"unitQty", dataType:"string", align:"right",
+      minWidth:100, editable:true, cls:"lightYellow",
       validations: [{type: "regexp", value: /^([0-9,]+)?$/, msg: "숫자만 입력 가능합니다"}],
-      editable:true,  cls:"lightYellow",
-    },
-    {dataIndx:"barcode", title:"바코드", align:"center", dataType:"string",
-      editable:false,
     }
   ];
 
@@ -278,8 +310,13 @@ function fnShow(prodCd, bomType) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
-      obj.dataModel = {data:data};
-      $("#" + gridCd).pqGrid(obj).pqGrid("refreshDataAndView");
+      gridOption.title = updateTitle("BOM 정보", data);
+      $grid03.pqGrid({
+        ...gridOption,
+        dataModel: { data: data },
+        colModel: colModel,
+      })
+      .pqGrid("refreshDataAndView");
     },
     error: ajaxErrorHandler
   });
@@ -288,57 +325,57 @@ function fnShow(prodCd, bomType) {
 // 3. 저장 -----------------------------------------------------------------------------------------
 function fnSave() {
 
-  var getData = $(`#grid03`).pqGrid("getData");
-  var prodCd = $(`#prod`).val();
-  var bomType = "prod";
-  var flagYn = "Y";
+  const $grid03 = $(`#grid03`);
+  const getData03 = $grid03.pqGrid("getData");
+  const prodCd = $(`#prod`).val();
 
   if (!prodCd) {
     alert("제품을 선택해주세요");
     return;
   }
-  if (getData.length === 0) {
+  if (getData03.length === 0) {
     alert("자재를 추가해주세요");
     return;
   }
 
-  for (let i = 0; i < getData.length; i++) {
-    let qty = parseInt(getData[i].qty, 10);
-    var unitQty = parseInt(getData[i].unitQty, 10);
-    if (isNaN(unitQty)) {
+  for (let key in getData03) {
+    const row = getData03[key];
+
+    // 데이터 초기화 및 유효성 검사
+    row.resrcCd = row.resrcCd ? row.resrcCd.toString().trim() : "0";
+    row.qty = row.qty ? row.qty.toString().trim() : "0";
+    row.unitQty = row.unitQty ? row.unitQty.toString().trim() : "0";
+
+    if (!row.unitQty) {
       alert("소요수량을 입력해주세요");
       return;
     }
-    if (qty === 0 && unitQty !== 0) {
+    if (row.qty === "0" && row.unitQty !== "0") {
       alert("재고가 0인 자재는 소요수량을 0으로 설정해주세요");
       return;
     }
-    if (qty !== 0 && unitQty === 0) {
+    if (row.qty !== "0" && row.unitQty === "0") {
       alert("소요수량은 0으로 설정할 수 없습니다");
       return;
     }
-    if (qty < unitQty) {
+    if (parseInt(row.qty) < parseInt(row.unitQty)) {
       alert("소요수량이 재고를 초과합니다");
+      $grid03.pqGrid("setSelection", {rowIndx: key});
       return;
     }
+
+    getData03["prodCd"] = prodCd || "0";
+    getData03["bomType"] = "prod";
+    getData03["flagYn"] = "Y";
   }
 
   if (!confirm("저장 하시겠습니까?")) {
     return;
   }
 
-  for (let c = 0; c < getData.length; c++) {
-    getData[c]["prodCd"] = String (prodCd) || "0";
-    getData[c]["resrcCd"] = String (getData[c]["resrcCd"]) || "0";
-    getData[c]["qty"] = String (getData[c]["qty"]) || "0";
-    getData[c]["bomType"] = String (bomType) || "";
-    getData[c]["flagYn"] = String (flagYn) || "";
-    getData[c]["unitQty"] = String (getData[c]["unitQty"]).replace(/,/g, "") || "0";
-  }
-
   $.ajax({
     url: "act/saveBom",
-    data: JSON.stringify({dataList: getData}),
+    data: JSON.stringify({dataList: getData03}),
     type: "POST",
     dataType:"JSON",
     contentType: "application/json; charset=UTF-8",
@@ -347,7 +384,7 @@ function fnSave() {
     },
     success: (data) => {
       alert(data.result);
-      fnShow(prodCd, bomType);
+      fnShow(prodCd, "prod");
     },
     error: ajaxErrorHandler
   });
@@ -361,26 +398,21 @@ function fnDel(rowIdx) {
 // 4. 삭제 -----------------------------------------------------------------------------------------
 function fnDelResrc(rowIdx) {
 
-  var getData = $(`#grid03`).pqGrid("getRowData", {rowIndx: rowIdx});
-  var prodCd = $(`#prod`).val();
-  var bomType = "prod";
-  var flagYn = "N";
+  const $grid03 = $(`#grid03`);
+  const getRowData03 = $grid03.pqGrid("getRowData", {rowIndx: rowIdx});
+  const prodCd = $(`#prod`).val();
 
-  // 선택한 행이 없을 경우 리턴
-  if (rowIdx === null) {
-    return;
-  }
   if (!confirm("선택한 자재를 삭제하시겠습니까?")) {
     return;
   }
 
-  var bomData = {
-    "prodCd": String(prodCd) || "0",
-    "resrcCd": String(getData.resrcCd) || "0",
-    "qty": String(getData.qty) || "0",
-    "bomType": String(bomType) || "",
-    "flagYn": String(flagYn) || "",
-    "unitQty": String(getData.unitQty).replace(/,/g, "") || "0"
+  const bomData = {
+    "prodCd": prodCd || "0",
+    "resrcCd": getRowData03.resrcCd || "0",
+    "bomType": "prod",
+    "qty": getRowData03.qty || "0",
+    "unitQty": getRowData03.unitQty || "0",
+    "flagYn": "N",
   };
 
   $.ajax({
@@ -394,27 +426,27 @@ function fnDelResrc(rowIdx) {
     },
     success: (data) => {
       alert(data.result);
-      fnShow(prodCd, bomType);
+      fnShow(prodCd, "prod");
     },
     error: ajaxErrorHandler
   });
 };
 
 // 5-1. 그리드 초기화 ------------------------------------------------------------------------------
-function fnNew() {
+function fnReset() {
 
   fnReset();
-
-  // 그리드 비우기
-  $(`#grid03`).pqGrid("option", "dataModel.data", []);
 
   // 그리드 포커스 제거
   $(`#grid01`).pqGrid("setSelection", null);
   $(`#grid02`).pqGrid("setSelection", null);
   $(`#grid03`).pqGrid("setSelection", null);
 
-  // 그리드 갱신
-  $(`#grid03`).pqGrid("refreshDataAndView");
+  // 그리드 비우기
+  $(`#grid03`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 5-2. 그리드 초기화 ------------------------------------------------------------------------------
@@ -438,31 +470,38 @@ function fnResetWhenSearch() {
   $(`#prod`).val("");
   $(`#prod`).html(`<option value="">==제품==</option>`);
 
-  // 그리드 초기화
+  // 그리드 포커스 제거
   $(`#grid03`).pqGrid("setSelection", null);
-	$(`#grid03`).pqGrid("option", "dataModel.data", []);
-	$(`#grid03`).pqGrid("refreshDataAndView");
+
+  // 그리드 초기화
+  $(`#grid03`).pqGrid({
+    dataModel: { data: [] },
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. BOM input ------------------------------------------------------------------------------------
 function fnBomInput() {
 
+  const $grid03 = $(`#grid03`);
+
   // bomInput에 엔터 입력시 이벤트 (grid reset)
-  $(".bomInput").keydown(function(e) {
-    if (e.keyCode === 13) {
+  $(`.bomInput`).on("keydown", (e) => {
+    if (e.key === "Enter") {
       fnReset();
-      $(`#grid03`).pqGrid("setSelection", null);
-      $(`#grid03`).pqGrid("option", "dataModel.data", []);
-      $(`#grid03`).pqGrid("refreshDataAndView");
+      $grid03.pqGrid({
+        dataModel: { data: [] },
+      })
+      .pqGrid("refreshDataAndView");
     }
   });
 
   // `prod`셀렉트에 값이 선택되면 이벤트
-  $(`#prod`).on("change", function() {
+  $(`#prod`).on("change", () => {
     if ($(`#prod`).val() !== "") {
       fnShow($(`#prod`).val(), "prod");
     }
-    $(`#grid03`).pqGrid("refreshDataAndView");
+    $grid03.pqGrid("refreshDataAndView");
   });
 }
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------
@@ -475,6 +514,7 @@ function fnChangeList() {
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
+
   const curDate = fnToday();
   $(`#inOutDt`).datepicker(G_calendar);
   $(`#inOutDt`).val(curDate);
