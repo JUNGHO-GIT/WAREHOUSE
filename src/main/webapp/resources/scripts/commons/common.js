@@ -312,7 +312,7 @@ const fnAjaxErrorHandler = (request, status, error) => {
 const fnPressGetLogin = (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
-    fnAuth();
+    fnLogin();
   }
 };
 
@@ -394,6 +394,7 @@ const fnShowVersion = () => {
 
       const fmtHtml = (/* javascript */`
         <div class="d-row-center">
+          <div class="fs-0-6rem fw-500 light-black mr-10px">Test Version</div>
           <div class="fs-0-6rem fw-400 light-black mr-10px">v${latestVersion}</div>
           <div class="fs-0-6rem fw-400 light-black">${latestDateTime}</div>
         </div>

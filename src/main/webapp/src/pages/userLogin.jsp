@@ -69,7 +69,7 @@
                   </div>
                 </div>
                 <!-- save id -->
-                <div class="row mb-3vh">
+                <div class="row mb-5vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-center">
                       <input
@@ -85,10 +85,19 @@
                   </div>
                 </div>
                 <!-- login -->
+                <div class="row mb-2vh">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-row-center">
+                      <div class="btn btn-secondary btn-md w-100p" onclick="fnTestLogin()">
+                        테스트 로그인
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="row mb-5vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-center">
-                      <div class="btn btn-primary btn-md w-100p" onclick="fnAuth()">
+                      <div class="btn btn-primary btn-md w-100p" onclick="fnLogin()">
                         로그인
                       </div>
                     </div>

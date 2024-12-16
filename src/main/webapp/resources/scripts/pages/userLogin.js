@@ -1,6 +1,5 @@
 // 1. 로그인 ---------------------------------------------------------------------------------------
-function fnAuth() {
-
+const fnLogin = () => {
   if ($(`#userId`).val() == "") {
     alert("아이디를 입력해 주세요");
     $(`#userId`).trigger("focus");
@@ -11,15 +10,12 @@ function fnAuth() {
     $(`#userPw`).trigger("focus");
     return;
   }
-
-
   if ($(`#setId`).is(":checked")) {
     $.cookie("userId", $(`#userId`).val(), {expires: 365});
   }
   else {
     $.cookie("userId", "");
   }
-
   $.ajax({
     url: `auth`,
     type: "POST",
@@ -42,6 +38,13 @@ function fnAuth() {
     },
     error: fnAjaxErrorHandler
   });
+};
+
+// 2. 테스트 로그인 --------------------------------------------------------------------------------
+const fnTestLogin = () => {
+  $(`#userId`).val("123");
+  $(`#userPw`).val("123");
+  fnLogin();
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------

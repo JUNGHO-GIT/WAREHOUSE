@@ -45,6 +45,6 @@
   </servlet-mapping>
   <error-page>
     <error-code>404</error-code>
-    <location>/errors/error.html</location>
+    <location>/errors/error.jsp</location>
   </error-page>
 </web-app>

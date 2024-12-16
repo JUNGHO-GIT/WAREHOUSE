@@ -18,8 +18,6 @@
     <property name="connectionTimeout" value="30000" />
     <property name="maxLifetime" value="1800000" />
     <property name="poolName" value="HikariPool-Warehouse" />
-    <property name="connectionTestQuery" value="SELECT 1" />
-    <property name="logWriter" value="com.zaxxer.hikari.HikariConfigMXBean" />
   </bean>
 
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

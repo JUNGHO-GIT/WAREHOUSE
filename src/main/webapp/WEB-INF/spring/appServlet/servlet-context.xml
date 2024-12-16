@@ -17,9 +17,9 @@
   <context:component-scan base-package="com.WAREHOUSE" />
   <task:scheduler id="jobScheduler" pool-size="10" />
   <task:annotation-driven scheduler="jobScheduler" />
-  <resources location="/resources/" mapping="/resources/**" />
-  <resources location="/src/" mapping="/src/**" />
-  <resources location="/src/errors/" mapping="/errors/**" />
+  <resources mapping="/resources/**" location="/resources/" />
+  <resources mapping="/src/**" location="/src/" />
+  <resources mapping="/errors/**" location="/src/errors/" />
 
   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <beans:property name="prefix" value="/src/pages/" />
@@ -32,12 +32,7 @@
   </beans:bean>
 
   <beans:bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <beans:property name="locations">
-      <beans:list>
-        <beans:value>classpath:property/application.properties</beans:value>
-        <beans:value>classpath:property/log4j.properties</beans:value>
-      </beans:list>
-    </beans:property>
+    <beans:property name="location" value="classpath:property/application.properties" />
   </beans:bean>
 
   <interceptors>
