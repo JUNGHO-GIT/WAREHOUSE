@@ -245,3 +245,44 @@ const fnYearMonth = () => {
 
   return `${year}-${mon}`;
 }
+
+// 0. 요일포함 날짜 --------------------------------------------------------------------------------
+const fnGetToday = (curDate) => {
+
+  if (!curDate) {
+    return '';
+  }
+
+  const date = new Date(curDate);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const week = date.getDay();
+  const weekArr = ['일', '월', '화', '수', '목', '금', '토'];
+
+  return `${year}-${month}-${day}  (${weekArr[week]})`;
+};
+
+// 0. 어제 날짜 ------------------------------------------------------------------------------------
+const fnGetPrevDate = (curDate) => {
+  const date = new Date(curDate);
+  date.setDate(date.getDate() - 1);
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}-${month}-${day}`;
+}
+
+// 0. 내일 날짜 ------------------------------------------------------------------------------------
+const fnGetNextDate = (curDate) => {
+  const date = new Date(curDate);
+  date.setDate(date.getDate() + 1);
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}-${month}-${day}`;
+}

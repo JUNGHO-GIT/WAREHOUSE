@@ -28,9 +28,26 @@
             <img
               src="${rsPath}/images/logo.png"
               alt="logo"
-              class="w-60px h-auto"
+              class="w-55px h-auto"
               loading="lazy"
             />
+          </div>
+          <div class="app-header-date d-center p-10px mx-auto">
+            <div class="fs-1-0rem fw-500 grey mr-20px">
+              <i class="fas fa-arrow-left pointer-white" onclick="fnSetDateToPrev()"></i>
+            </div>
+            <div class="fs-1-1rem fw-600 white pointer mr-20px">
+              <div id="displayedDate" onclick="fnSetDateToToday()"></div>
+              <input id="inputDate" type="hidden" value="" />
+            </div>
+            <div class="fs-1-0rem fw-500 grey mr-20px">
+              <i class="fas fa-arrow-right pointer-white" onclick="fnSetDateToNext()"></i>
+            </div>
+            <div class="app-header-test d-center p-10px">
+              <div class="btn btn-sm btn-info hover" onclick="fnGetTestData()">
+                Get Test
+              </div>
+            </div>
           </div>
           <div class="app-header-nav d-center p-10px ml-auto">
             <i
@@ -503,10 +520,6 @@
                 전일대비
               </div>
               <div
-                id="prodInChartWeekSign"
-                class="fs-1-2rem fw-600 white d-block mr-10px"
-              ></div>
-              <div
                 id="prodInChartWeekCount"
                 class="fs-1-1rem fw-600 white d-block"
               ></div>
@@ -567,10 +580,6 @@
               >
                 전일대비
               </div>
-              <div
-                id="prodOutChartWeekSign"
-                class="fs-1-2rem fw-600 white d-block mr-10px"
-              ></div>
               <div
                 id="prodOutChartWeekCount"
                 class="fs-1-1rem fw-600 white d-block"

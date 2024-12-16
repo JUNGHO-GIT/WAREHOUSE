@@ -1,11 +1,32 @@
 // -------------------------------------------------------------------------------------------------
-const fnInOutChart = async (keyParam, inOutParam, planParam, dateParam) => {
+const PIE_CHART = {};
 
-  const downStr = `${keyParam}${inOutParam}${planParam}${dateParam}`;
+// -------------------------------------------------------------------------------------------------
+const fnAddPlusOrMinus = (value) => {
+
+  if (!value || parseInt(value) === 0) {
+    return "0";
+  }
+
+  if (parseInt(value) > 0) {
+    return `+${Math.abs(parseInt(value)).toString()}`;
+  }
+  else if (parseInt(value) < 0) {
+    return `-${Math.abs(parseInt(value)).toString()}`;
+  }
+
+  return value;
+};
+
+// -------------------------------------------------------------------------------------------------
+const fnInOutChart = async (key, inOut, plan, dateType) => {
+
+  const downStr = `${key}${inOut}${plan}${dateType}`;
+  const date = getValue(getById("inputDate"));
 
   fetch(`act/dash`, {
     method: "POST",
-    body: `key=${keyParam}&inOut=${inOutParam}&plan=${planParam}&date=${dateParam}`,
+    body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -26,7 +47,6 @@ const fnInOutChart = async (keyParam, inOutParam, planParam, dateParam) => {
     const todayList = resultMap.todayList;
     const percentMap = resultMap.dayPercentMap;
     const todayQty = resultMap.qtyMap.todayQty;
-    const thisWeekQty = resultMap.qtyMap.thisWeekQty;
 
     const htmlContent = todayList.map((item, index) => {
       const classStr = index === todayList.length - 1;
@@ -45,14 +65,12 @@ const fnInOutChart = async (keyParam, inOutParam, planParam, dateParam) => {
     }).join("");
 
     setInnerHTML(getById(`${downStr}`), htmlContent);
-    setTextContent(getById(`${downStr}Qty`), todayQty);
-    setTextContent(getById(`${downStr}QtyInWeek`), todayQty);
-    addClass(getById(`${downStr}Sign`), percentMap.color);
-    setTextContent(getById(`${downStr}Sign`), percentMap.sign);
+    setTextContent(getById(`${downStr}Qty`), fnAddPlusOrMinus(todayQty));
+    setTextContent(getById(`${downStr}QtyInWeek`), fnAddPlusOrMinus(todayQty));
     addClass(getById(`${downStr}Percent`), percentMap.color);
     setTextContent(getById(`${downStr}Percent`), `${percentMap.percent} %`);
     addClass(getById(`${downStr}Count`), percentMap.color);
-    setTextContent(getById(`${downStr}Count`), percentMap.count);
+    setTextContent(getById(`${downStr}Count`), fnAddPlusOrMinus(percentMap.count));
   })
   .catch((err) => {
     console.error(err);
@@ -60,21 +78,19 @@ const fnInOutChart = async (keyParam, inOutParam, planParam, dateParam) => {
 };
 
 // -------------------------------------------------------------------------------------------------
-const fnPieChart = async (keyParam, inOutParam, planParam, dateParam) => {
+const fnPieChart = async (key, inOut, plan, dateType) => {
 
-  const downStr = `${keyParam}${inOutParam}${planParam}${dateParam}`;
-  const strPie = `${keyParam}${inOutParam}Pie${planParam}${dateParam}`;
+  const downStr = `${key}${inOut}${plan}${dateType}`;
+  const strPie = `${key}${inOut}Pie${plan}${dateType}`;
+  const date = getValue(getById("inputDate"));
   const ctx = getEl(`#${strPie}`);
-  const pieCharts = {};
 
   // 기존 차트 인스턴스가 있으면 파괴
-  if (pieCharts[strPie]) {
-    pieCharts[strPie].destroy();
+  if (PIE_CHART[strPie]) {
+    PIE_CHART[strPie].destroy();
   }
 
-  // 차트 생성
-  // @ts-ignore
-  pieCharts[strPie] = new Chart(ctx, {
+  PIE_CHART[strPie] = new Chart(ctx instanceof HTMLCanvasElement && ctx, {
     type: "pie",
     data: {
       datasets: [{
@@ -98,7 +114,7 @@ const fnPieChart = async (keyParam, inOutParam, planParam, dateParam) => {
 
   fetch(`act/dash`, {
     method: "POST",
-    body: `key=${keyParam}&inOut=${inOutParam}&plan=${planParam}&date=${dateParam}`,
+    body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -119,24 +135,22 @@ const fnPieChart = async (keyParam, inOutParam, planParam, dateParam) => {
     const percentMap = resultMap.weekPercentMap;
     const thisWeekQty = resultMap.qtyMap.thisWeekQty;
 
-    setTextContent(getById(`${strPie}Qty`), thisWeekQty);
-    addClass(getById(`${strPie}Sign`), percentMap.color);
-    setTextContent(getById(`${strPie}Sign`), percentMap.sign);
+    setTextContent(getById(`${strPie}Qty`), fnAddPlusOrMinus(thisWeekQty));
     addClass(getById(`${strPie}Percent`), percentMap.color);
     setTextContent(getById(`${strPie}Percent`), `${percentMap.percent} %`);
     addClass(getById(`${strPie}Count`), percentMap.color);
-    setTextContent(getById(`${strPie}Count`), percentMap.count);
+    setTextContent(getById(`${strPie}Count`), fnAddPlusOrMinus(percentMap.count));
 
     // 차트 데이터 업데이트
     const percent = parseInt(percentMap.percent);
     if (!percent || percent === 0) {
-      pieCharts[strPie].data.datasets[0].data = [0, 100];
+      PIE_CHART[strPie].data.datasets[0].data = [0, 100];
     }
     else {
-      pieCharts[strPie].data.datasets[0].data = [percent, 100 - percent];
+      PIE_CHART[strPie].data.datasets[0].data = [percent, 100 - percent];
     }
 
-    pieCharts[strPie].update();
+    PIE_CHART[strPie].update();
   })
   .catch((err) => {
     console.error(err);
@@ -146,8 +160,11 @@ const fnPieChart = async (keyParam, inOutParam, planParam, dateParam) => {
 // -------------------------------------------------------------------------------------------------
 const fnProdProtected = async () => {
 
+  const date = getValue(getById("inputDate"));
+
   fetch(`act/prodProtected`, {
     method: "POST",
+    body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -201,6 +218,8 @@ const fnProdProtected = async () => {
 
 // -------------------------------------------------------------------------------------------------
 const fnProdInChartWeek = async () => {
+
+  const date = getValue(getById("inputDate"));
 
   const inChart = AmCharts.makeChart("prodInChartWeek", {
     type: "serial",
@@ -283,6 +302,7 @@ const fnProdInChartWeek = async () => {
 
   fetch(`act/prodInChartWeek`, {
     method: "POST",
+    body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -309,12 +329,10 @@ const fnProdInChartWeek = async () => {
     inChart.dataProvider = JSON.parse(successData);
     inChart.validateData();
 
-    addClass(getById("prodInChartWeekSign"), percentData.color);
-    setTextContent(getById("prodInChartWeekSign"), percentData.sign);
     addClass(getById("prodInChartWeekPercent"), percentData.color);
     setTextContent(getById("prodInChartWeekPercent"), `${percentData.percent} %`);
     addClass(getById("prodInChartWeekCount"), percentData.color);
-    setTextContent(getById("prodInChartWeekCount"), percentData.count);
+    setTextContent(getById("prodInChartWeekCount"), fnAddPlusOrMinus(percentData.count));
   })
   .catch((err) => {
     console.error(err);
@@ -323,6 +341,8 @@ const fnProdInChartWeek = async () => {
 
 // -------------------------------------------------------------------------------------------------
 const fnProdOutChartWeek = async () => {
+
+  const date = getValue(getById("inputDate"));
 
   const outChart = AmCharts.makeChart("prodOutChartWeek", {
     type: "serial",
@@ -405,6 +425,7 @@ const fnProdOutChartWeek = async () => {
 
   fetch(`act/prodOutChartWeek`, {
     method: "POST",
+    body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -426,19 +447,17 @@ const fnProdOutChartWeek = async () => {
       const displayDate = item.date === formattedToday ? "Today" : item.date.substring(5, 10);
       return {
         date: displayDate,
-        value1: item.totalQty
+        value1: Math.abs(item.totalQty)
       };
     }));
 
     outChart.dataProvider = JSON.parse(successData);
     outChart.validateData();
 
-    addClass(getById("prodOutChartWeekSign"), percentData.color);
-    setTextContent(getById("prodOutChartWeekSign"), percentData.sign);
     addClass(getById("prodOutChartWeekPercent"), percentData.color);
     setTextContent(getById("prodOutChartWeekPercent"), `${percentData.percent} %`);
     addClass(getById("prodOutChartWeekCount"), percentData.color);
-    setTextContent(getById("prodOutChartWeekCount"), percentData.count);
+    setTextContent(getById("prodOutChartWeekCount"), fnAddPlusOrMinus(percentData.count));
   })
   .catch((err) => {
     console.error(err);
@@ -456,11 +475,11 @@ const fnSwitch = (keyParam, inOutParam, planParam, dateParam, isPie) => {
   const noPlanId = isPie ? `${key}${inOut}Pie${date}` : `${key}${inOut}${date}`;
 
   const planArray = [
-    `${planId}Div`, `${planId}Qty`, `${planId}Subfix`, `${planId}Sign`, `${planId}Percent`
+    `${planId}Div`, `${planId}Qty`, `${planId}Subfix`, `${planId}Percent`
   ];
 
   const noPlanArray = [
-    `${noPlanId}Div`, `${noPlanId}Qty`, `${noPlanId}Subfix`, `${noPlanId}Sign`, `${noPlanId}Percent`
+    `${noPlanId}Div`, `${noPlanId}Qty`, `${noPlanId}Subfix`, `${noPlanId}Percent`
   ];
 
   // '예정' 상태로 전환
@@ -523,7 +542,53 @@ const fnSwitch = (keyParam, inOutParam, planParam, dateParam, isPie) => {
 };
 
 // -------------------------------------------------------------------------------------------------
-document.addEventListener("DOMContentLoaded", async () => {
+const fnGetTestData = () => {
+  const inputDate = getById("inputDate");
+  const displayedDate = getById("displayedDate");
+
+  setValue(inputDate, "2024-12-17");
+  setTextContent(displayedDate, fnGetToday(getValue(inputDate)));
+
+  fnLoadAllData();
+};
+
+// -------------------------------------------------------------------------------------------------
+const fnSetDateToToday = () => {
+  const inputDate = getById("inputDate");
+  const displayedDate = getById("displayedDate");
+
+  setValue(inputDate, fnToday());
+  setTextContent(displayedDate, fnGetToday(getValue(inputDate)));
+
+  fnLoadAllData();
+}
+
+// -------------------------------------------------------------------------------------------------
+const fnSetDateToPrev = () => {
+  const inputDate = getById("inputDate");
+  const displayedDate = getById("displayedDate");
+  const prevDate = fnGetPrevDate(getValue(inputDate));
+
+  setValue(inputDate, prevDate);
+  setTextContent(displayedDate, fnGetToday(getValue(inputDate)));
+
+  fnLoadAllData();
+};
+
+// -------------------------------------------------------------------------------------------------
+const fnSetDateToNext = () => {
+  const inputDate = getById("inputDate");
+  const displayedDate = getById("displayedDate");
+  const nextDate = fnGetNextDate(getValue(inputDate));
+
+  setValue(inputDate, nextDate);
+  setTextContent(displayedDate, fnGetToday(getValue(inputDate)));
+
+  fnLoadAllData();
+};
+
+// -------------------------------------------------------------------------------------------------
+const fnLoadAllData = async () => {
   await fnInOutChart("prod", "In", "", "Today");
   await fnInOutChart("prod", "In", "Plan", "Today");
   await fnInOutChart("prod", "Out", "", "Today");
@@ -539,4 +604,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   await fnProdProtected();
   await fnProdInChartWeek();
   await fnProdOutChartWeek();
+};
+
+// -------------------------------------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  fnSetDateToToday();
 });

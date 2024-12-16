@@ -46,45 +46,47 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  private HashMap<String, Object> getRelatedDate() throws ParseException {
+  private HashMap<String, Object> getRelatedDate(String date) throws ParseException {
+
     // 한국 시간대 설정
     TimeZone koreaTimeZone = TimeZone.getTimeZone("Asia/Seoul");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     simpleDateFormat.setTimeZone(koreaTimeZone);
 
-    // 오늘 날짜 - 한국 시간대
-    Calendar todayCal = Calendar.getInstance(koreaTimeZone);
+    // date 문자열을 Date 객체로 변환
+    Date curDate = simpleDateFormat.parse(date);
 
-    // 어제 날짜 - 한국 시간대
-    Calendar yesterdayCal = Calendar.getInstance(koreaTimeZone);
+    // 입력 날짜를 기준으로 캘린더 생성
+    Calendar curCal = Calendar.getInstance(koreaTimeZone);
+    curCal.setTime(curDate);
+
+    // 어제 날짜 계산
+    Calendar yesterdayCal = (Calendar) curCal.clone();
     yesterdayCal.add(Calendar.DATE, -1);
 
-    // 일주일 전 날짜 - 한국 시간대
-    Calendar weekAgoCal = Calendar.getInstance(koreaTimeZone);
+    // 일주일 전 날짜 계산
+    Calendar weekAgoCal = (Calendar) curCal.clone();
     weekAgoCal.add(Calendar.DATE, -6);
 
-    // 오늘 기준 이번주 시작 날짜 - 한국 시간대
-    Calendar thisWeekStartCal = Calendar.getInstance(koreaTimeZone);
+    // 이번 주 시작 날짜 계산
+    Calendar thisWeekStartCal = (Calendar) curCal.clone();
     thisWeekStartCal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-    thisWeekStartCal.add(Calendar.WEEK_OF_YEAR, 0);
 
-    // 오늘 기준 이번주 마지막 날짜 - 한국 시간대
-    Calendar thisWeekEndCal = Calendar.getInstance(koreaTimeZone);
+    // 이번 주 마지막 날짜 계산
+    Calendar thisWeekEndCal = (Calendar) curCal.clone();
     thisWeekEndCal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-    thisWeekEndCal.add(Calendar.WEEK_OF_YEAR, 0);
 
-    // 지난주 시작 날짜 - 한국 시간대
-    Calendar lastWeekStartCal = Calendar.getInstance(koreaTimeZone);
-    lastWeekStartCal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+    // 지난주 시작 날짜 계산
+    Calendar lastWeekStartCal = (Calendar) thisWeekStartCal.clone();
     lastWeekStartCal.add(Calendar.WEEK_OF_YEAR, -1);
 
-    // 지난주 마지막 날짜 - 한국 시간대
-    Calendar lastWeekEndCal = Calendar.getInstance(koreaTimeZone);
-    lastWeekEndCal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+    // 지난주 마지막 날짜 계산
+    Calendar lastWeekEndCal = (Calendar) thisWeekEndCal.clone();
     lastWeekEndCal.add(Calendar.WEEK_OF_YEAR, -1);
 
     // 결과 맵 생성 및 반환
     HashMap<String, Object> resultMap = new HashMap<>();
-    resultMap.put("todayDt", simpleDateFormat.format(todayCal.getTime()));
+    resultMap.put("todayDt", simpleDateFormat.format(curCal.getTime()));
     resultMap.put("yesterdayDt", simpleDateFormat.format(yesterdayCal.getTime()));
     resultMap.put("weekAgoDt", simpleDateFormat.format(weekAgoCal.getTime()));
     resultMap.put("thisWeekStartDt", simpleDateFormat.format(thisWeekStartCal.getTime()));
@@ -101,28 +103,26 @@ public class DashCTRL {
     String targetQtyParam
   ) throws Exception {
 
-    HashMap<String, Object> percentMap = new HashMap<>();
-
     Integer mainQty = 0;
+    Integer targetQty = 0;
+
     if (mainQtyParam != null && !mainQtyParam.equals("")) {
       if (mainQtyParam.indexOf(",") != -1) {
-        mainQty = Integer.parseInt(mainQtyParam.replaceAll(",", ""));
+        mainQty = Math.abs(Integer.parseInt(mainQtyParam.replaceAll(",", "")));
       }
       else {
-        mainQty = Integer.parseInt(mainQtyParam);
+        mainQty = Math.abs(Integer.parseInt(mainQtyParam));
       }
     }
     else {
       mainQty = 0;
     }
-
-    Integer targetQty = 0;
     if (targetQtyParam != null && !targetQtyParam.equals("")) {
       if (targetQtyParam.indexOf(",") != -1) {
-        targetQty = Integer.parseInt(targetQtyParam.replaceAll(",", ""));
+        targetQty = Math.abs(Integer.parseInt(targetQtyParam.replaceAll(",", "")));
       }
       else {
-        targetQty = Integer.parseInt(targetQtyParam);
+        targetQty = Math.abs(Integer.parseInt(targetQtyParam));
       }
     }
     else {
@@ -130,40 +130,36 @@ public class DashCTRL {
     }
 
     Integer percent = 0;
-    Integer count = mainQty - targetQty;
-
-    String sign = count >= 0 ? "+" : "-";
-    String color = "text-danger";
+    Integer count = 0;
+    String color = "";
 
     if (mainQty == 0 && targetQty == 0) {
       percent = 0;
       count = 0;
-      sign = "-";
       color = "text-theme";
     }
     else if (mainQty == 0) {
       percent = 0;
-      count = -targetQty;
-      sign = "-";
+      count = targetQty;
       color = "text-theme";
     }
     else if (targetQty == 0) {
       percent = 0;
       count = mainQty;
-      sign = "+";
+      color = "text-danger";
     }
     else {
-      percent = (int) (((double) count / targetQty) * 100);
+      percent = (int) Math.round(((double) (mainQty - targetQty) / targetQty) * 100);
+      count = mainQty - targetQty;
+      color = count >= 0 ? "text-danger" : "text-theme";
     }
 
-    percentMap.put("percent", percent);
-    percentMap.put("count", count);
-    percentMap.put("sign", sign);
-    percentMap.put("color", color);
-    percentMap.put("inOutColor", "text-theme");
-    percentMap.put("inOutSign", "+");
+    HashMap<String, Object> finalResult = new HashMap<>();
+    finalResult.put("percent", percent);
+    finalResult.put("count", count);
+    finalResult.put("color", color);
 
-    return percentMap;
+    return finalResult;
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -172,12 +168,13 @@ public class DashCTRL {
     @RequestParam(value="key", required=false) String key,
     @RequestParam(value="inOut", required=false) String inOut,
     @RequestParam(value="plan", required=false) String plan,
+    @RequestParam(value="dateType", required=false) String dateType,
     @RequestParam(value="date", required=false) String date
   ) throws Exception {
 
     try {
       // 날짜 데이터
-      HashMap<String, Object> dateMap = getRelatedDate();
+      HashMap<String, Object> dateMap = getRelatedDate(date);
       String todayDt = String.valueOf(dateMap.get("todayDt"));
       String yesterdayDt = String.valueOf(dateMap.get("yesterdayDt"));
       String thisWeekStartDt = String.valueOf(dateMap.get("thisWeekStartDt"));
@@ -193,7 +190,6 @@ public class DashCTRL {
       paramMap.put("keyNm", (key + "Nm"));
       paramMap.put("inOut", inOut);
       paramMap.put("plan", plan);
-      paramMap.put("date", date);
       paramMap.put("tableNm", ("tblProductInOut"));
       paramMap.put("planYn", (plan != null && !plan.isEmpty()) ? "Y" : "N");
       paramMap.put("sign", (inOut.equals("In")) ? ">" : "<");
@@ -244,14 +240,14 @@ public class DashCTRL {
 
       if (todayList != null && !todayList.isEmpty()) {
         Object qtyObj = todayList.get(0).get("totalQty");
-        todayQty = (qtyObj != null) ? String.valueOf(qtyObj) : "0";
+        todayQty = (qtyObj != null) ? String.valueOf(qtyObj).replaceAll(",", "") : "0";
       }
       else {
         todayQty = "0";
       }
       if (yesterdayList != null && !yesterdayList.isEmpty()) {
         Object qtyObj = yesterdayList.get(0).get("totalQty");
-        yesterdayQty = (qtyObj != null) ? String.valueOf(qtyObj) : "0";
+        yesterdayQty = (qtyObj != null) ? String.valueOf(qtyObj).replaceAll(",", "") : "0";
       }
       else {
         yesterdayQty = "0";
@@ -276,7 +272,7 @@ public class DashCTRL {
       qty.put("thisWeekQty", thisWeekQty);
       qty.put("lastWeekQty", lastWeekQty);
 
-      // 퍼센트 데이터터
+      // 퍼센트 데이터
       HashMap<String, Object> dayPercent = calcPercent(todayQty, yesterdayQty);
       HashMap<String, Object> weekPercent = calcPercent(thisWeekQty, lastWeekQty);
 
@@ -307,7 +303,7 @@ public class DashCTRL {
       listResult.add(lastWeekListMap);
 
       HashMap<String, Object> finalResult = new HashMap<>();
-      finalResult.put((key + inOut + plan + date), listResult);
+      finalResult.put((key + inOut + plan + dateType), listResult);
 
       return ResponseEntity.ok(finalResult);
     }
@@ -319,11 +315,13 @@ public class DashCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/prodProtected", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> prodProtected () throws Exception {
+  public ResponseEntity<?> prodProtected (
+    @RequestParam(value="date", required=false) String date
+  ) throws Exception {
 
     try {
       // 날짜 데이터
-      HashMap<String, Object> dateMap = getRelatedDate();
+      HashMap<String, Object> dateMap = getRelatedDate(date);
       String todayDt = String.valueOf(dateMap.get("todayDt"));
 
       // 계산 변수
@@ -353,45 +351,34 @@ public class DashCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/prodInChartWeek", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> prodInChartWeek () throws Exception {
+  public ResponseEntity<?> prodInChartWeek (
+    @RequestParam(value="date", required=false) String date
+  ) throws Exception {
+
     try {
-      // 오늘 날짜
-      Calendar todayDt = Calendar.getInstance();
-
-      // 오늘 날짜를 기준으로 일주일
-      Calendar weekAgoDt = Calendar.getInstance();
-      weekAgoDt.add(Calendar.DATE, -6);
-
-      // 어제 날짜
-      Calendar yesterdayDt = Calendar.getInstance();
-      yesterdayDt.add(Calendar.DATE, -1);
-
-      // 날짜 포맷
-      String weekAgoForm = simpleDateFormat.format(weekAgoDt.getTime());
-      String todayForm = simpleDateFormat.format(todayDt.getTime());
-      String yesterdayForm = simpleDateFormat.format(yesterdayDt.getTime());
-
-      // Date
-      Date weekAgo = simpleDateFormat.parse(weekAgoForm);
-      Date today = simpleDateFormat.parse(todayForm);
-
-      // Calendar
+      // 날짜 데이터
+      HashMap<String, Object> dateMap = getRelatedDate(date);
+      String todayDt = String.valueOf(dateMap.get("todayDt"));
+      String yesterdayDt = String.valueOf(dateMap.get("yesterdayDt"));
+      String thisWeekStartDt = String.valueOf(dateMap.get("thisWeekStartDt"));
+      String thisWeekEndDt = String.valueOf(dateMap.get("thisWeekEndDt"));
       Calendar calendar = Calendar.getInstance();
-      calendar.setTime(weekAgo);
+      calendar.setTime(simpleDateFormat.parse(thisWeekStartDt));
 
-      // 기존 리스트
-      ArrayList<HashMap<String, Object>> prodInChartWeekList = dao.getProdInChartWeek(
-        weekAgoForm, todayForm
-      );
-      // 새로운 리스트
+      // 리스트 데이터
+      ArrayList<HashMap<String, Object>> prodInTodayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> prodInYesterdayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> prodInChartWeekList = new ArrayList<>();
       ArrayList<HashMap<String, Object>> updatedProdInChartWeekList = new ArrayList<>();
 
-      // 7일 중 날짜가 존재하지 않는 경우에 대한 처리 (totalQty 0으로 삽입)
-      while (!calendar.getTime().after(today)) {
+      prodInTodayList = dao.getProdInToday(todayDt);
+      prodInYesterdayList = dao.getProdInToday(yesterdayDt);
+      prodInChartWeekList = dao.getProdInChartWeek(thisWeekStartDt, thisWeekEndDt);
 
+      // 7일 중 날짜가 존재하지 않는 경우 totalQty 0으로 삽입
+      while (!calendar.getTime().after(simpleDateFormat.parse(thisWeekEndDt))) {
         String currentDateStr = simpleDateFormat.format(calendar.getTime());
         boolean inDateFound = false;
-
         for (HashMap<String, Object> dashMap : prodInChartWeekList) {
           if (currentDateStr.equals(dashMap.get("date"))) {
             updatedProdInChartWeekList.add(dashMap);
@@ -409,47 +396,31 @@ public class DashCTRL {
         calendar.add(Calendar.DATE, 1);
       }
 
-      // 오늘 날짜 데이터
-      ArrayList<HashMap<String, Object>> prodInTodayList = dao.getProdInToday(
-        todayForm
-      );
-
-      // 어제 날짜 데이터
-      ArrayList<HashMap<String, Object>> prodInYesterdayList = dao.getProdInToday(
-        yesterdayForm
-      );
-
-      // 오늘날짜 기준 어제날짜 대비 증감 계산 변수
+      // qty 데이터
+      HashMap<String, Object> qty = new HashMap<>();
       String todayQty = "";
       String yesterdayQty = "";
 
-      try {
-        if (prodInTodayList != null && !prodInTodayList.isEmpty()) {
-          todayQty = formatter.format(Integer.parseInt(String.valueOf(prodInTodayList.get(0).get("totalQty"))));
-        }
-        else {
-          todayQty = "0";
-        }
+      if (prodInTodayList != null && !prodInTodayList.isEmpty()) {
+        todayQty = formatter.format(Integer.parseInt(String.valueOf(prodInTodayList.get(0).get("totalQty"))));
       }
-      catch (Exception e) {
-        e.printStackTrace();
+      else {
         todayQty = "0";
       }
-
-      try {
-        if (prodInYesterdayList != null && !prodInYesterdayList.isEmpty()) {
-          yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodInYesterdayList.get(0).get("totalQty"))));
-        }
-        else {
-          yesterdayQty = "0";
-        }
+      if (prodInYesterdayList != null && !prodInYesterdayList.isEmpty()) {
+        yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodInYesterdayList.get(0).get("totalQty"))));
       }
-      catch (Exception e) {
-        e.printStackTrace();
+      else {
         yesterdayQty = "0";
       }
 
+      qty.put("todayQty", todayQty);
+      qty.put("yesterdayQty", yesterdayQty);
+
+      // 퍼센트 데이터
       HashMap<String, Object> percentMap = calcPercent(todayQty, yesterdayQty);
+
+      // 결과 데이터
       HashMap<String, Object> finalResult = new HashMap<>();
       finalResult.put("percentMap", percentMap);
       finalResult.put("prodInChartWeekList", updatedProdInChartWeekList);
@@ -464,53 +435,42 @@ public class DashCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/prodOutChartWeek", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> prodOutChartWeek () throws Exception {
+  public ResponseEntity<?> prodOutChartWeek (
+    @RequestParam(value="date", required=false) String date
+  ) throws Exception {
+
     try {
-      // 오늘 날짜
-      Calendar todayDt = Calendar.getInstance();
-
-      // 오늘 날짜를 기준으로 일주일
-      Calendar weekAgoDt = Calendar.getInstance();
-      weekAgoDt.add(Calendar.DATE, -6);
-
-      // 어제 날짜
-      Calendar yesterdayDt = Calendar.getInstance();
-      yesterdayDt.add(Calendar.DATE, -1);
-
-      // 날짜 포맷
-      String weekAgoForm = simpleDateFormat.format(weekAgoDt.getTime());
-      String todayForm = simpleDateFormat.format(todayDt.getTime());
-      String yesterdayForm = simpleDateFormat.format(yesterdayDt.getTime());
-
-      // Date
-      Date weekAgo = simpleDateFormat.parse(weekAgoForm);
-      Date today = simpleDateFormat.parse(todayForm);
-
-      // Calendar
+      // 날짜 데이터
+      HashMap<String, Object> dateMap = getRelatedDate(date);
+      String todayDt = String.valueOf(dateMap.get("todayDt"));
+      String yesterdayDt = String.valueOf(dateMap.get("yesterdayDt"));
+      String thisWeekStartDt = String.valueOf(dateMap.get("thisWeekStartDt"));
+      String thisWeekEndDt = String.valueOf(dateMap.get("thisWeekEndDt"));
       Calendar calendar = Calendar.getInstance();
-      calendar.setTime(weekAgo);
+      calendar.setTime(simpleDateFormat.parse(thisWeekStartDt));
 
-      // 기존 리스트
-      ArrayList<HashMap<String, Object>> prodOutChartWeekList = dao.getProdOutChartWeek(
-        weekAgoForm, todayForm
-      );
-      // 새로운 리스트
+      // 리스트 데이터
+      ArrayList<HashMap<String, Object>> prodOutTodayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> prodOutYesterdayList = new ArrayList<>();
+      ArrayList<HashMap<String, Object>> prodOutChartWeekList = new ArrayList<>();
       ArrayList<HashMap<String, Object>> updatedProdOutChartWeekList = new ArrayList<>();
 
-      // 7일 중 날짜가 존재하지 않는 경우에 대한 처리 (totalQty 0으로 삽입)
-      while (!calendar.getTime().after(today)) {
+      prodOutTodayList = dao.getProdOutToday(todayDt);
+      prodOutYesterdayList = dao.getProdOutToday(yesterdayDt);
+      prodOutChartWeekList = dao.getProdOutChartWeek(thisWeekStartDt, thisWeekEndDt);
 
+      // 7일 중 날짜가 존재하지 않는 경우 totalQty 0으로 삽입
+      while (!calendar.getTime().after(simpleDateFormat.parse(thisWeekEndDt))) {
         String currentDateStr = simpleDateFormat.format(calendar.getTime());
-        boolean outDateFound = false;
-
+        boolean inDateFound = false;
         for (HashMap<String, Object> dashMap : prodOutChartWeekList) {
           if (currentDateStr.equals(dashMap.get("date"))) {
             updatedProdOutChartWeekList.add(dashMap);
-            outDateFound = true;
+            inDateFound = true;
             break;
           }
         }
-        if (!outDateFound) {
+        if (!inDateFound) {
           HashMap<String, Object> dateData = new HashMap<>();
           dateData.put("date", currentDateStr);
           dateData.put("totalQty", 0);
@@ -520,47 +480,31 @@ public class DashCTRL {
         calendar.add(Calendar.DATE, 1);
       }
 
-      // 오늘 날짜 데이터
-      ArrayList<HashMap<String, Object>> prodOutTodayList = dao.getProdOutToday(
-        todayForm
-      );
-
-      // 어제 날짜 데이터
-      ArrayList<HashMap<String, Object>> prodOutYesterdayList = dao.getProdOutToday(
-        yesterdayForm
-      );
-
-      // 오늘날짜 기준 어제날짜 대비 증감 계산 변수
+      // qty 데이터
+      HashMap<String, Object> qty = new HashMap<>();
       String todayQty = "";
       String yesterdayQty = "";
 
-      try {
-        if (prodOutTodayList != null && !prodOutTodayList.isEmpty()) {
-          todayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutTodayList.get(0).get("totalQty"))));
-        }
-        else {
-          todayQty = "0";
-        }
+      if (prodOutTodayList != null && !prodOutTodayList.isEmpty()) {
+        todayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutTodayList.get(0).get("totalQty"))));
       }
-      catch (Exception e) {
-        e.printStackTrace();
+      else {
         todayQty = "0";
       }
-
-      try {
-        if (prodOutYesterdayList != null && !prodOutYesterdayList.isEmpty()) {
-          yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutYesterdayList.get(0).get("totalQty"))));
-        }
-        else {
-          yesterdayQty = "0";
-        }
+      if (prodOutYesterdayList != null && !prodOutYesterdayList.isEmpty()) {
+        yesterdayQty = formatter.format(Integer.parseInt(String.valueOf(prodOutYesterdayList.get(0).get("totalQty"))));
       }
-      catch (Exception e) {
-        e.printStackTrace();
+      else {
         yesterdayQty = "0";
       }
 
+      qty.put("todayQty", todayQty);
+      qty.put("yesterdayQty", yesterdayQty);
+
+      // 퍼센트 데이터
       HashMap<String, Object> percentMap = calcPercent(todayQty, yesterdayQty);
+
+      // 결과 데이터
       HashMap<String, Object> finalResult = new HashMap<>();
       finalResult.put("percentMap", percentMap);
       finalResult.put("prodOutChartWeekList", updatedProdOutChartWeekList);
@@ -571,6 +515,5 @@ public class DashCTRL {
       e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
-
   }
 }
