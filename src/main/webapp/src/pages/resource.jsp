@@ -298,7 +298,7 @@
                         name="protectedQty"
                         class="form-control form-control-sm d-right"
                         value="0"
-                        onKeyUp="fnInputNum(this); fnSupplyPrice();"
+                        onkeyup="fnInputNum(this); fnSupplyPrice();"
                       />
                     </div>
                   </div>
@@ -322,7 +322,7 @@
                         name="unitPrice"
                         class="form-control form-control-sm d-right"
                         value="0"
-                        onKeyUp="fnInputNum(this); fnSupplyPrice();"
+                        onkeyup="fnInputNum(this); fnSupplyPrice();"
                       />
                     </div>
                   </div>

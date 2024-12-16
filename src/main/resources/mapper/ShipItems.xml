@@ -38,7 +38,7 @@
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt}
+      WHERE flagYn = 'Y' AND qty < 0 AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt}
     ) D ON D.inOutSeq = B.inOutSeq
     ORDER BY
       A.shipCd DESC
@@ -77,7 +77,7 @@
     LEFT JOIN (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y' AND planYn = 'N' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
     ) D ON D.inOutSeq = B.inOutSeq
     LEFT JOIN (
       SELECT *
@@ -139,7 +139,7 @@
       #{toMajor},
       #{toPhone},
       #{compCd},
-      #{inOutSeq},
+      #{inOutSeqs},
       #{flagYn},
       #{planYn},
       #{issueId}

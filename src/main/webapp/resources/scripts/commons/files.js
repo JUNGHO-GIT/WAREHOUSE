@@ -49,7 +49,7 @@ function fnUploadFiles(formParam) {
         $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -104,7 +104,7 @@ function fnShowFiles(tableNm, tableKey, target) {
       });
       firstImg && fnShowSelectedFiles(firstImg.fileUrl, 0);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -174,6 +174,6 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
         $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };

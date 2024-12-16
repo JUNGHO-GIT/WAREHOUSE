@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnFindCd("", ui.rowData.prodCd, "prod", null);
@@ -68,7 +68,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -91,8 +91,8 @@ function fnGetList02() {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     cellClick: (_, ui) => {
       if (ui.colIndx !== 1) {
@@ -172,7 +172,7 @@ function fnGetList02() {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -193,8 +193,8 @@ function fnGetList03 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     cellClick: (_, ui) => {
       if (ui.colIndx === 1) {
@@ -259,8 +259,8 @@ function fnShow(prodCd, bomType) {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     cellClick: (_, ui) => {
       if (ui.colIndx === 1) {
@@ -318,7 +318,7 @@ function fnShow(prodCd, bomType) {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -386,7 +386,7 @@ function fnSave() {
       alert(data.result);
       fnShow(prodCd, "prod");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -428,7 +428,7 @@ function fnDelResrc(rowIdx) {
       alert(data.result);
       fnShow(prodCd, "prod");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -516,7 +516,7 @@ function fnChangeList() {
 jQuery(function($) {
 
   const curDate = fnToday();
-  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).datepicker(CALENDAR);
   $(`#inOutDt`).val(curDate);
 
   fnBomInput();

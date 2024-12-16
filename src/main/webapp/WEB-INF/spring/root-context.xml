@@ -7,7 +7,7 @@
   http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
 >
 
-  <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+  <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
     <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
     <property name="jdbcUrl" value="jdbc:mysql://104.196.212.101:3306/WAREHOUSE?serverTimezone=UTC" />
     <property name="username" value="root" />
@@ -18,17 +18,14 @@
     <property name="connectionTimeout" value="30000" />
     <property name="maxLifetime" value="1800000" />
     <property name="poolName" value="HikariPool-Warehouse" />
+    <property name="connectionTestQuery" value="SELECT 1" />
+    <property name="logWriter" value="com.zaxxer.hikari.HikariConfigMXBean" />
   </bean>
 
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations" value="classpath:mapper/*.xml" />
     <property name="typeAliasesPackage" value="com.WAREHOUSE.container" />
-    <property name="configuration">
-      <bean class="org.apache.ibatis.session.Configuration">
-        <property name="logImpl" value="org.apache.ibatis.logging.log4j2.Log4j2Impl" />
-      </bean>
-    </property>
   </bean>
 
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

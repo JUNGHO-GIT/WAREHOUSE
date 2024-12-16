@@ -47,7 +47,7 @@
       #{toMajor},
       #{toPhone},
       #{compCd},
-      #{inOutSeq},
+      #{inOutSeqs},
       #{flagYn},
       #{planYn},
       #{issueId}

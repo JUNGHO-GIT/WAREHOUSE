@@ -36,7 +36,7 @@ function fnGetList01 (pCd)  {
     success: (data) => {
       $.fn.zTree.init($grid01, zSettings, data);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -57,8 +57,8 @@ function fnGetList02 (houseData)  {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
   };
   const colModel = [
@@ -123,8 +123,8 @@ function fnGetList03 (houseData)  {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
   };
   const colModel = [
@@ -201,7 +201,7 @@ function fnShow (event, treeId, treeNode)  {
       // fnGetList03 호출
       fnGetList03(resourcePerHouse);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -308,7 +308,7 @@ function fnSave (YN)  {
         fnGetList03(null);
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -354,7 +354,7 @@ function fnReset ()  {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function ($) {
   const curDate = fnToday();
-  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).datepicker(CALENDAR);
   $(`#inOutDt`).val(curDate);
 
   fnGetList01("0");

@@ -53,7 +53,7 @@
           <div class="row">
             <!-- grid 1 -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="grid-main h-min-50vh mb-4vh">
+              <div class="grid-main h-min-50vh mb-3vh">
                 <div id="grid01"></div>
               </div>
             </div>
@@ -94,7 +94,7 @@
                   </div>
                 </div>
               </div>
-              <div class="grid-main h-min-30vh mb-4vh">
+              <div class="grid-main h-min-30vh mb-3vh">
                 <div id="grid02"></div>
               </div>
               <div class="grid-detail">
@@ -110,7 +110,7 @@
                       <div class="btn btn-primary btn-xs mr-10px" onclick="fnSave()">
                         저장
                       </div>
-                      <div class="btn btn-danger btn-xs" onclick="fnGridPopup('popupInOutAll','on')">
+                      <div class="btn btn-danger btn-xs" onclick="fnPopup('popupInOutAll','on')">
                         일괄 적용
                       </div>
                     </div>

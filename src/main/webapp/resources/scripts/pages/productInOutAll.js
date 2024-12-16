@@ -18,7 +18,7 @@ function fnGetList01 () {
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
-    numberCell: {show: true, resizable: false, width: 30},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       const today = fnToday();
@@ -127,7 +127,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -150,7 +150,7 @@ function fnGetList02() {
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
     scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
-    numberCell: {show: true, resizable: false, width: 30},
+    numberCell: {show:true, resizable:false, width:30},
     cellClick: (_, ui) => {
       if (ui.colIndx == 3) {
         fnDel(ui.rowIndx);
@@ -359,7 +359,7 @@ function fnSave() {
       fnGetList02();
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -402,7 +402,7 @@ function fnSaveAll() {
       getData[i].compCd = newCompCd;
       getData[i].compNm = newCompNm;
     }
-    fnGridPopup("popupInOutAll","off")
+    fnPopup("popupInOutAll","off")
   }
 
   $grid02.pqGrid("refreshDataAndView");
@@ -470,7 +470,7 @@ function fnChangeList() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).datepicker(CALENDAR);
   $(`#inOutDt`).val(curDate);
 
   const comboStr = [{part:"comCode", target:"prodType", groupCd:"0003", format: "combo"}];

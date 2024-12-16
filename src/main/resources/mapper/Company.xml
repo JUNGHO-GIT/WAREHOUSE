@@ -36,7 +36,8 @@
     <if test='findCompNm!="" and findCompNm!=null'>
 		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
 		</if>
-		ORDER BY A.compNm ASC
+		ORDER BY
+      A.compNm ASC
   </select>
 
   <!-- Company.showCompany -->

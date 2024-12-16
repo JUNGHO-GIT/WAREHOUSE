@@ -99,7 +99,7 @@ public class UserCTRL {
           session.setAttribute("userLevel", userInfo.getUserLevel());
           session.setAttribute("userPerm", userInfo.getUserPerm());
 
-          session.setAttribute("userConfigID", userInfo.getUserId());
+          session.setAttribute("userConfigId", userInfo.getUserId());
           session.setAttribute("userConfigNm", userInfo.getUserNm());
           session.setAttribute("userConfigLevel", userInfo.getUserLevel());
           session.setAttribute("userConfigPerm", userInfo.getUserPerm());

@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserConfigDAO {
 
 	public UserConfig showUserConfigTab (
-    @Param("userConfigID") String userConfigID,
+    @Param("userConfigId") String userConfigId,
     @Param("pageNm") String pageNm,
     @Param("gridCd") String gridCd
   );
 
   public UserConfig showUserConfigInfo (
-    @Param("userConfigID") String userConfigID
+    @Param("userConfigId") String userConfigId
   );
 
   public void saveUserConfigTab (
@@ -28,7 +28,7 @@ public interface UserConfigDAO {
   );
 
   public void updateUserConfigPw (
-    @Param("userConfigID") String userConfigID,
+    @Param("userConfigId") String userConfigId,
     @Param("userConfigPw") String userConfigPw
   );
 

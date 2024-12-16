@@ -14,14 +14,14 @@ function fnShowUserConfig() {
         fnInitializeTabs(data.config);
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
 // 2. 팝업 화면 유저정보 ---------------------------------------------------------------------------
 function fnShowUserConfigInfo() {
 
-  fnGridPopup('popupUserConfig', 'on');
+  fnPopup('popupUserConfig', 'on');
 
   $.ajax({
     url: "act/showUserConfigInfo",
@@ -37,7 +37,7 @@ function fnShowUserConfigInfo() {
       fnResetPw();
 
       // 회원정보 설정
-      $(`#userConfigID`).val(data.userConfigID);
+      $(`#userConfigId`).val(data.userConfigId);
       $(`#userConfigPerm`).val(data.userConfigPerm);
       $(`#userConfigNm`).val(data.userConfigNm);
       $(`#userConfigPhone`).val(data.userConfigPhone);
@@ -49,7 +49,7 @@ function fnShowUserConfigInfo() {
       // 암호화된 비밀번호
       $(`#userConfigPw`).val("BCryptPassword");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -61,7 +61,7 @@ function fnSaveUserConfigInfo() {
     $(`#userNm`).trigger("focus");
     return;
   }
-  if ($(`#userConfigID`).val() == "") {
+  if ($(`#userConfigId`).val() == "") {
     alert("사용자 아이디를 입력해 주세요");
     $(`#userId`).trigger("focus");
     return;
@@ -86,7 +86,7 @@ function fnSaveUserConfigInfo() {
   $(`#changeConfigFlag`).val() === "Y"
 
   const param = {
-    "userConfigID": $(`#userConfigID`).val(),
+    "userConfigId": $(`#userConfigId`).val(),
     "userConfigNm": $(`#userConfigNm`).val(),
     "userConfigEmail": $(`#userConfigEmail`).val(),
     "userConfigPhone": $(`#userConfigPhone`).val(),
@@ -109,7 +109,7 @@ function fnSaveUserConfigInfo() {
     success: (data) => {
       alert(data.result);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -118,7 +118,7 @@ function fnSaveUserConfigTab() {
 
   const param = {
     "configSeq": $(`#configSeq`).val() || "0",
-    "userId": $(`#userConfigID`).val(),
+    "userId": $(`#userConfigId`).val(),
     "pageNm": "tabs",
     "gridCd": "",
     "config": fnGetTabOrder(),
@@ -137,14 +137,14 @@ function fnSaveUserConfigTab() {
     success: (data) => {
       alert(data.result);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
 // 3-3. 비밀번호 변경 ------------------------------------------------------------------------------
 function fnUpdateConfigPw() {
 
-  var changeConfigFlag = $(`#changeConfigFlag`).val();
+  const changeConfigFlag = $(`#changeConfigFlag`).val();
 
   // 비번 입력안한 경우
   if ($(`#userConfigPw`).val() == "") {
@@ -162,44 +162,41 @@ function fnUpdateConfigPw() {
     return;
   }
 
-  if (changeConfigFlag === "Y") {
+  const param = {
+    "userConfigId": $(`#userConfigId`).val(),
+    "userConfigPw": $(`#userConfigPw`).val()
+  };
 
-    var param = {
-      "userConfigID": $(`#userConfigID`).val(),
-      "userConfigPw": $(`#userConfigPw`).val()
-    };
-
-    $.ajax({
-      url: "act/updateConfigPw",
-      data: JSON.stringify(param),
-      type: "POST",
-      dataType:"JSON",
-      contentType: "application/json; charset=UTF-8",
-      beforeSend: (xmlHttpRequest) => {
-        xmlHttpRequest.setRequestHeader("AJAX", "true");
-      },
-      success: (data) => {
-        if (data) {
-          alert(data.result);
-          $(`#userConfigPw`).prop("type", "password");
-          $(`#userConfigPw`).val("BCryptPassword");
-          $(`#userConfigPw`).prop("readonly", true);
-          $(`#changeConfigPw`).html("변경하기");
-          $(`#changeConfigFlag`).val("N");
-        }
-        else {
-          $(`#userConfigPw`).prop("readonly", true);
-          $(`#changeConfigFlag`).val("N");
-        }
-      },
-      error: ajaxErrorHandler
-	  });
-	};
+  $.ajax({
+    url: "act/updateConfigPw",
+    data: JSON.stringify(param),
+    type: "POST",
+    dataType:"JSON",
+    contentType: "application/json; charset=UTF-8",
+    beforeSend: (xmlHttpRequest) => {
+      xmlHttpRequest.setRequestHeader("AJAX", "true");
+    },
+    success: (data) => {
+      if (data) {
+        alert(data.result);
+        $(`#userConfigPw`).prop("type", "password");
+        $(`#userConfigPw`).val("BCryptPassword");
+        $(`#userConfigPw`).prop("readonly", true);
+        $(`#changeConfigPw`).html("변경하기");
+        $(`#changeConfigFlag`).val("N");
+      }
+      else {
+        $(`#userConfigPw`).prop("readonly", true);
+        $(`#changeConfigFlag`).val("N");
+      }
+    },
+    error: fnAjaxErrorHandler
+  });
 };
 
 // 5-1. 초기화 -------------------------------------------------------------------------------------
 function fnReset() {
-  $(`#userConfigID`).val("");
+  $(`#userConfigId`).val("");
   $(`#userConfigPw`).val("");
   $(`#userConfigNm`).val("");
   $(`#userConfigLevel`).val("");

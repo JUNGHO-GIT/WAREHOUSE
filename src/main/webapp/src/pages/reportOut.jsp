@@ -26,14 +26,13 @@
                   id="findYear"
                   name="findYear"
                   class="form-control form-control-sm pointer"
-                  onchange="fnPressGet01(event)"
                 >
                 </select>
               </div>
             </div>
             <div class="col-2 col-sm-2 col-md-6 col-lg-6 col-xl-6">
               <div class="d-row-left">
-                <div class="btn btn-primary btn-xs" onclick="fnPressGet01(event)">
+                <div class="btn btn-primary btn-xs" onclick="fnPressGetReport(event)">
                   조회
                 </div>
               </div>
@@ -52,7 +51,7 @@
           <div class="row">
             <!-- grid 1 -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <div class="grid-main h-min-45vh mb-4vh">
+              <div class="grid-main h-min-45vh mb-3vh">
                 <div id="grid01"></div>
               </div>
             </div>

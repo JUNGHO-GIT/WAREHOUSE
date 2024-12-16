@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       const getData = $(`#grid02`).pqGrid("getData");
@@ -94,7 +94,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -116,8 +116,8 @@ function fnGetList02() {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     cellClick: (_, ui) => {
       if (ui.colIndx === 2) {
@@ -198,17 +198,17 @@ function fnSaveItems() {
     return;
   }
 
-  let inOutSeq = "";
-  rowCnt.forEach((i) => {
+  let inOutSeqs = "";
+  for (let i = 0; i < rowCnt; i++) {
     const gData = $(`#grid02`).pqGrid("getRowData", {rowIndxPage: i});
-    if (inOutSeq !== "" && i < rowCnt) {
-      inOutSeq += ",";
+    if (inOutSeqs !== "" && i < rowCnt) {
+      inOutSeqs += ",";
     }
-    inOutSeq += gData.inOutSeq;
-  });
+    inOutSeqs += gData.inOutSeq;
+  }
 
   const param = {
-    "inOutSeq": inOutSeq,
+    "inOutSeqs": inOutSeqs,
     "shipCd": 0,
     "shipDt": $(`#shipDt`).val() || "",
     "shipMajor": $(`#shipMajor`).val() || "",
@@ -233,7 +233,7 @@ function fnSaveItems() {
       fnGetList01();
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -276,18 +276,17 @@ function fnSavePlan() {
     return;
   }
 
-  // ex. 125,126,127 ...
-  let inOutSeq = "";
-  rowCnt.forEach((i) => {
+  let inOutSeqs = "";
+  for (let i = 0; i < rowCnt; i++) {
     const gData = $(`#grid02`).pqGrid("getRowData", {rowIndxPage: i});
-    if (inOutSeq !== "" && i < rowCnt) {
-      inOutSeq += ",";
+    if (inOutSeqs !== "" && i < rowCnt) {
+      inOutSeqs += ",";
     }
-    inOutSeq += gData.inOutSeq;
-  });
+    inOutSeqs += gData.inOutSeq;
+  }
 
   const param = {
-    "inOutSeq": inOutSeq,
+    "inOutSeqs": inOutSeqs,
     "shipCd": 0,
     "shipDt": $(`#shipDt`).val() || "",
     "shipMajor": $(`#shipMajor`).val() || "",
@@ -312,7 +311,7 @@ function fnSavePlan() {
       fnGetList01();
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -368,12 +367,12 @@ jQuery(function($) {
   const curDate = fnToday();
 
   // 2년 전
-  const pastDate = fnDateAdd(curDate, -730);
+  const pastDate = fnAddDate(curDate, -730);
 
-  $(`#shipDt`).datepicker(G_calendar);
+  $(`#shipDt`).datepicker(CALENDAR);
   $(`#shipDt`).val(curDate);
-  $(`#findStartDt`).datepicker(G_calendar);
-  $(`#findEndDt`).datepicker(G_calendar);
+  $(`#findStartDt`).datepicker(CALENDAR);
+  $(`#findEndDt`).datepicker(CALENDAR);
   $(`#findStartDt`).val(pastDate);
   $(`#findEndDt`).val(curDate);
 

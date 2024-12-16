@@ -16,7 +16,7 @@
                   창고 및 거래처 일괄적용
                 </div>
                 <div class="fs-1-4rem fw-600 white pointer-red mr-10px ml-auto"
-                  onclick="fnGridPopup('popupInOutAll','off')"
+                  onclick="fnPopup('popupInOutAll','off')"
                 >
                   x
                 </div>
@@ -94,7 +94,7 @@
                     <div class="btn btn-primary btn-xs mr-10px" onclick="fnSaveAll()">
                       저장
                     </div>
-                    <div class="btn btn-danger btn-xs" onclick="fnGridPopup('popupInOutAll','off')">
+                    <div class="btn btn-danger btn-xs" onclick="fnPopup('popupInOutAll','off')">
                       닫기
                     </div>
                   </div>

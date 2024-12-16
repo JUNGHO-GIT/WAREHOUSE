@@ -102,7 +102,7 @@ public class MainCTRL {
 
       // 패턴 설정: 버전과 날짜 추출
       Pattern versionPattern = Pattern.compile("(\\s*)(\\d+[.]\\d+[.]\\d+)(\\s*)");
-      Pattern dateTimePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\(\\d{2}:\\d{2}:\\d{2}\\)");
+      Pattern dateTimePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2}) \\(\\d{2}:\\d{2}:\\d{2}\\)");
 
       // 버전과 날짜 추출
       Matcher versionMatcher = versionPattern.matcher(changelogContent);
@@ -115,7 +115,7 @@ public class MainCTRL {
         versionList.add(versionMatcher.group(2));
       }
       while (dateTimeMatcher.find()) {
-        dateTimeList.add(dateTimeMatcher.group());
+        dateTimeList.add(dateTimeMatcher.group(1));
       }
 
       // 최신 버전과 날짜 추출 (리스트의 마지막 요소를 선택)

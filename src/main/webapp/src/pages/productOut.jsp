@@ -59,7 +59,7 @@
             </div>
             <!-- grid 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-              <div class="grid-main h-min-40vh mb-4vh">
+              <div class="grid-main h-min-40vh mb-3vh">
                 <div id="grid02"></div>
               </div>
               <div class="grid-detail">
@@ -69,6 +69,34 @@
                       <i class="fa fa-list-alt mr-1vw"></i>
                       <div class="fs-0-9rem fw-700 light-black">
                         제품 출고 상세
+                      </div>
+                      <div class="d-row-center ml-auto">
+                        <div class="d-center mr-15px">
+                          <div
+                            id="in"
+                            data-value="in"
+                            class="fs-0-7rem fw-500 light on pointer"
+                            onclick="fnToggleInOut(this)"
+                          >
+                            ●
+                          </div>
+                          <div class="fs-0-7rem fw-400 light-black">
+                            입고
+                          </div>
+                        </div>
+                        <div class="d-center mr-15px">
+                          <div
+                            id="out"
+                            data-value="out"
+                            class="fs-0-7rem fw-500 light pointer"
+                            onclick="fnToggleInOut(this)"
+                          >
+                            ●
+                          </div>
+                          <div class="fs-0-7rem fw-400 light-black">
+                            출고
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -90,7 +118,7 @@
                         type="text"
                         id="inOutDt"
                         name="inOutDt"
-                        class="form-control form-control-sm"
+                        class="form-control form-control-sm pointer"
                       />
                     </div>
                   </div>
@@ -220,7 +248,7 @@
                         name="qty"
                         class="form-control form-control-sm d-right"
                         value="0"
-                        onKeyUp="fnInputNum(this); fnSupplyPrice();"
+                        onkeyup="fnInputNum(this); fnSupplyPrice();"
                       />
                     </div>
                   </div>
@@ -244,7 +272,7 @@
                         name="unitPrice"
                         class="form-control form-control-sm d-right"
                         value="0"
-                        onKeyUp="fnInputNum(this); fnSupplyPrice();"
+                        onkeyup="fnInputNum(this); fnSupplyPrice();"
                       />
                     </div>
                   </div>

@@ -19,10 +19,10 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     HttpSession session = request.getSession(false);
     String ajaxCall = "";
     String userId = "";
-    String userConfigID = "";
+    String userConfigId = "";
 
     try {
-      ajaxCall = String.valueOf(request.getHeader("AJAX"));
+      ajaxCall = request.getHeader("AJAX");
     }
     catch(Exception ex) {
       ajaxCall = "";
@@ -43,9 +43,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     }
 
     userId = String.valueOf(session.getAttribute("userId"));
-    userConfigID = String.valueOf(session.getAttribute("userConfigID"));
+    userConfigId = String.valueOf(session.getAttribute("userConfigId"));
 
-    if (userId == null && userConfigID == null) {
+    if (userId == null || userId.equals("") || userConfigId == null || userConfigId.equals("")) {
       if (ajaxCall.equals("true") == false) {
         response.sendRedirect(request.getContextPath() + "/reLogin");
       }

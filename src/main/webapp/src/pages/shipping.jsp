@@ -64,7 +64,7 @@
             </div>
             <!-- grid 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-              <div class="grid-main h-min-40vh mb-4vh">
+              <div class="grid-main h-min-40vh mb-3vh">
                 <div id="grid02"></div>
               </div>
               <div class="grid-detail">
@@ -173,7 +173,7 @@
                         type="text"
                         id="shipDt"
                         name="shipDt"
-                        class="form-control form-control-sm"
+                        class="form-control form-control-sm pointer"
                       />
                     </div>
                   </div>
@@ -206,11 +206,11 @@
                       <div class="btn btn-success btn-xs mr-10px" onclick="fnReset()">
                         신규
                       </div>
-                      <div class="btn btn-primary btn-xs mr-10px" onclick="fnExcelDown()">
-                        Excel Download
+                      <div class="btn btn-primary btn-xs mr-10px" onclick="fnSaveItems()">
+                        출하 등록
                       </div>
-                      <div class="btn btn-danger btn-xs" onclick="fnDel()">
-                        삭제
+                      <div class="btn btn-danger btn-xs" onclick="fnSavePlan()">
+                        출하 계획 등록
                       </div>
                     </div>
                   </div>

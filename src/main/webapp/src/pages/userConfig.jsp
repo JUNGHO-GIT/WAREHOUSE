@@ -16,7 +16,7 @@
               </div>
               <div
                 class="fs-1-4rem fw-600 white pointer-red mr-10px ml-auto"
-                onclick="fnGridPopup('popupUserConfig', 'off')"
+                onclick="fnPopup('popupUserConfig', 'off')"
               >
                 x
               </div>
@@ -82,10 +82,10 @@
                   <div class="d-row-left mr-10px">
                     <input
                       type="text"
-                      id="userConfigID"
-                      name="userConfigID"
+                      id="userConfigId"
+                      name="userConfigId"
                       class="form-control form-control-sm"
-                      value="${sessionScope.userConfigID}"
+                      value="${sessionScope.userConfigId}"
                       readonly
                     />
                   </div>
@@ -161,7 +161,7 @@
                     <div class="btn btn-primary btn-xs mr-10px" onclick="fnSaveUserConfigInfo()">
                       저장
                     </div>
-                    <div class="btn btn-danger btn-xs" onclick="fnGridPopup('popupUserConfig', 'off')">
+                    <div class="btn btn-danger btn-xs" onclick="fnPopup('popupUserConfig', 'off')">
                       닫기
                     </div>
                   </div>

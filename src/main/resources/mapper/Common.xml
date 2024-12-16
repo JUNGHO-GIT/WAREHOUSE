@@ -72,7 +72,8 @@
     <if test='findProdNm!="" and findProdNm!=null'>
 		  WHERE A.prodNm LIKE CONCAT('%', #{findProdNm}, '%')
 		</if>
-		ORDER BY A.prodNm ASC
+		ORDER BY
+      A.prodNm ASC
   </select>
 
   <!-- Common.findProdCd -->
@@ -112,7 +113,8 @@
         </if>
       </otherwise>
     </choose>
-    ORDER BY A.prodNm ASC
+    ORDER BY
+      A.prodNm ASC
   </select>
 
   <!-- Common.findResrcNm -->
@@ -145,7 +147,8 @@
     <if test='findResrcNm!="" and findResrcNm!=null'>
       WHERE A.resrcNm LIKE CONCAT('%', #{findResrcNm}, '%')
     </if>
-    ORDER BY A.resrcNm ASC
+    ORDER BY
+      A.resrcNm ASC
   </select>
 
   <!-- Common.findResrcCd -->
@@ -185,7 +188,8 @@
         </if>
       </otherwise>
     </choose>
-    ORDER BY A.resrcNm ASC
+    ORDER BY
+      A.resrcNm ASC
   </select>
 
   <!-- Common.findHouseNm -->
@@ -206,7 +210,8 @@
     <if test='findHouseNm != "" and findHouseNm != null'>
 		  WHERE A.houseNm LIKE CONCAT('%', #{findHouseNm}, '%')
 		</if>
-		ORDER BY A.houseCd ASC;
+		ORDER BY
+      A.houseCd ASC;
   </select>
 
   <!-- Common.findHouseCd -->
@@ -234,7 +239,8 @@
         </if>
       </otherwise>
     </choose>
-    ORDER BY A.houseCd ASC
+    ORDER BY
+      A.houseCd ASC
   </select>
 
   <!-- Common.findCompNm -->
@@ -255,7 +261,8 @@
     <if test='findCompNm!="" and findCompNm!=null'>
 		  WHERE A.compNm LIKE CONCAT('%', #{findCompNm}, '%')
 		</if>
-		ORDER BY A.compCd ASC;
+		ORDER BY
+      A.compCd ASC;
   </select>
 
   <!-- Common.findCompCd -->
@@ -283,7 +290,8 @@
         </if>
       </otherwise>
     </choose>
-    ORDER BY A.compCd ASC;
+    ORDER BY
+      A.compCd ASC;
   </select>
 
 </mapper>

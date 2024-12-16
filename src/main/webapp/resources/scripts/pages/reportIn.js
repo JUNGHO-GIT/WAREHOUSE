@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
   };
   const colModel = [
@@ -91,7 +91,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -112,8 +112,8 @@ function fnGetList02() {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
   };
   const colModel = [
     {
@@ -187,7 +187,7 @@ function fnGetList02() {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -205,19 +205,6 @@ function fnSetYears(selectId) {
       value: i.toString().trim(),
       text: i.toString().trim(),
     }));
-  }
-};
-
-// 0. 엔터, 클릭, 체인지 이벤트 발생시에만 조회 ----------------------------------------------------
-function fnPressGet01(event) {
-  if (
-    (event.key === "Enter") ||
-    (event.type === "click") ||
-    (event.type === "change")
-  ) {
-    event.preventDefault();
-    fnGetList01();
-    fnGetList02();
   }
 };
 

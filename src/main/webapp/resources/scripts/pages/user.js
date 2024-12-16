@@ -17,8 +17,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.userId);
@@ -67,25 +67,9 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
-
-function toggleOnOff(element) {
-  // 클릭된 요소의 부모 컨테이너 안의 모든 항목 찾기
-  const parent = element.closest(".row");
-  const allToggles = parent.querySelectorAll(`[data-value]`);
-
-  // 모든 항목 초기화
-  allToggles.forEach((el) => {
-    el.classList.remove("primary");
-    el.classList.add("light");
-  });
-
-  // 현재 클릭된 항목 활성화
-  element.classList.remove("light");
-  element.classList.add("primary");
-}
 
 // 1-2. 회원등급 -----------------------------------------------------------------------------------
 function fnGetPartsUser() {
@@ -121,7 +105,7 @@ function fnGetPartsUser() {
               name="${detail.page}${detail.subPage}"
               data-value="${detail.page}${detail.subPage}"
               class="fs-0-7rem fw-500 light on pointer"
-              onclick="toggleOnOff(this)"
+              onclick="fnToggleUserPerm(this)"
             >
               ●
             </div>
@@ -134,7 +118,7 @@ function fnGetPartsUser() {
               name="${detail.page}${detail.subPage}"
               data-value=""
               class="fs-0-7rem fw-500 light off pointer"
-              onclick="toggleOnOff(this)"
+              onclick="fnToggleUserPerm(this)"
             >
               ●
             </div>
@@ -147,7 +131,7 @@ function fnGetPartsUser() {
         $(`#userPerms`).append(userPermHtml);
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -211,7 +195,7 @@ function fnShow (userId) {
       $(`#tableKey`).val(data.userId);
       fnShowFiles("tblUser", data.userId, "files");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -303,7 +287,7 @@ function fnSave(flagYn) {
       alert(data.result);
       fnGetList01();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -335,7 +319,7 @@ function fnCheckUserId() {
         $(`#userIdCheck`).val("N");
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -392,7 +376,7 @@ function fnUpdatePw() {
         $(`#changeFlag`).val("N");
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 

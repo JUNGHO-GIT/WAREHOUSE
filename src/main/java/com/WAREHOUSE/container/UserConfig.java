@@ -10,7 +10,7 @@ import lombok.Setter;
 public class UserConfig {
   private Integer configSeq;
   private String config, userId, pageNm, gridCd;
-  private String userConfigID, userConfigPw;
+  private String userConfigId, userConfigPw;
   private String userConfigNm, userConfigPhone, userConfigEmail;
   private String userConfigLevel, userConfigPerm;
   private Integer userConfigCompCd;

@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnGetList02(ui.rowData.prodCd);
@@ -93,7 +93,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -114,8 +114,8 @@ function fnGetList02 (prodCd) {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow(ui.rowData.inOutSeq);
@@ -173,7 +173,7 @@ function fnGetList02 (prodCd) {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -194,10 +194,20 @@ function fnShow(inOutSeq) {
       $(`#remarks`).val(data.remarks);
       $(`#inOutSeq`).val(data.inOutSeq);
       $(`#inOutDt`).val(data.inOutDt);
-      $(`#unitPrice`).val(fnGetNumWithComma(data.unitPrice));
-      $(`#supplyPrice`).val(fnGetNumWithComma(data.supplyPrice));
-      $(`#qty`).val(fnGetNumWithComma(Math.abs(data.qty)));
+      $(`#unitPrice`).val(fnFormatNum(data.unitPrice));
+      $(`#supplyPrice`).val(fnFormatNum(data.supplyPrice));
+      $(`#qty`).val(fnFormatNum(Math.abs(data.qty)));
       $(`#inOut`).val(data.inOut);
+      $(`[data-value]`).each((_, el) => {
+        if (el.getAttribute("data-value") === data.inOut) {
+          el.classList.remove("light");
+          el.classList.add("primary");
+        }
+        else {
+          el.classList.remove("primary");
+          el.classList.add("light");
+        }
+      });
 
       // 2. 제품 관련 (일반)
       fnFindCd("", data.prodCd, "prod", null);
@@ -208,7 +218,7 @@ function fnShow(inOutSeq) {
       // 4. 거래처 관련
       fnFindCd("", data.compCd, "comp", null);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -266,8 +276,8 @@ function fnSave(flagYn) {
   }
 
   let inOut = $(`#inOut`).val();
-  let qty = fnGetNumRemoveComma($(`#qty`).val());
-  let unitPrice = fnGetNumRemoveComma($(`#unitPrice`).val());
+  let qty = fnRemoveComma($(`#qty`).val());
+  let unitPrice = fnRemoveComma($(`#unitPrice`).val());
 	if (inOut === "out") {
     qty = qty * -1;
   }
@@ -308,7 +318,7 @@ function fnSave(flagYn) {
       fnGetList02(prodCd);
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -373,7 +383,7 @@ function fnChangeList() {
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
 jQuery(function($) {
   const curDate = fnToday();
-  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).datepicker(CALENDAR);
   $(`#inOutDt`).val(curDate);
 
   const comboStr = [{part:"comCode", target:"prodType", groupCd:"0002", format:"combo"}];

@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow(ui.rowData.shipCd);
@@ -75,7 +75,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -96,8 +96,8 @@ function fnGetList02 (shipCd) {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
   };
   const colModel = [
@@ -132,7 +132,7 @@ function fnGetList02 (shipCd) {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -159,7 +159,7 @@ function fnShow(shipCd) {
       // 2. 거래처 관련
       fnFindCd("", data.compCd, "comp", null);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -203,7 +203,7 @@ function fnDel() {
       fnGetList02();
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -252,12 +252,12 @@ jQuery(function($) {
   const curDate = fnToday();
 
   // 2년 전
-  const pastDate = fnDateAdd(curDate, -730);
+  const pastDate = fnAddDate(curDate, -730);
 
-  $(`#inOutDt`).datepicker(G_calendar);
+  $(`#inOutDt`).datepicker(CALENDAR);
   $(`#inOutDt`).val(curDate);
-  $(`#findStartDt`).datepicker(G_calendar);
-  $(`#findEndDt`).datepicker(G_calendar);
+  $(`#findStartDt`).datepicker(CALENDAR);
+  $(`#findEndDt`).datepicker(CALENDAR);
   $(`#findStartDt`).val(pastDate);
   $(`#findEndDt`).val(curDate);
 

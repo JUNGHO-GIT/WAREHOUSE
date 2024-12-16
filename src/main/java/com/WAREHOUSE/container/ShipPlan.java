@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class ShipPlan {
   private Integer shipCd, cnt;
-  private String inOutSeq, flagYn, issueId;
+  private Integer inOutSeq;
+  private String inOutSeqs;
+  private String flagYn, issueId;
   private Date regDt, issueDt;
 }

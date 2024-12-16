@@ -52,7 +52,7 @@
           <div class="row">
             <!-- grid 1 -->
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 margin-md">
-              <div class="grid-main h-min-60vh">
+              <div class="grid-detail h-min-60vh mb-3vh">
                 <ul id="grid01" class="ztree"></ul>
               </div>
               <div class="grid-detail">
@@ -154,7 +154,7 @@
             </div>
             <!-- grid 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-              <div class="grid-main h-min-50vh mb-4vh">
+              <div class="grid-main h-min-50vh mb-3vh">
                 <div id="grid02"></div>
               </div>
               <div class="grid-main h-min-50vh">

@@ -155,7 +155,7 @@ function fnInitializeTabs(tabs) {
       });
       fnInitializeTabElements(urlToNameMap, tabArray);
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 }
 
@@ -360,27 +360,8 @@ function fnLogTabInfo(tabNo) {
   `);
 }
 
-// 버전 정보 표시 ----------------------------------------------------------------------------------
-function fnShowVersionInfo() {
-  $.ajax({
-    type: "GET",
-    url: "showVersion",
-    dataType: "JSON",
-    success: (data) => {
-      $("#showVersion").html(data).css({
-        "color": "currentColor",
-        "font-size": "17px",
-        "font-weight": "700",
-        "text-align": "center"
-      });
-    },
-    error: ajaxErrorHandler
-  });
-}
-
 // 초기 로딩 ---------------------------------------------------------------------------------------
-$(function() {
-  fnShowVersionInfo();
+jQuery(function($) {
   fnEnableTabSorting();
   fnUpdateTabsLimitBasedOnMediaQuery();
 });

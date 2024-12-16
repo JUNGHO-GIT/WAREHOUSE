@@ -30,10 +30,10 @@ public class UserConfigCTRL {
   public ResponseEntity<?> showUserConfigTab (
     @RequestParam(value="pageNm", required=false) String pageNm,
     @RequestParam(value="gridCd", required=false) String gridCd,
-    @SessionAttribute("userConfigID") String userConfigID
+    @SessionAttribute("userConfigId") String userConfigId
   ) throws Exception {
     try {
-      UserConfig show = dao.showUserConfigTab(userConfigID, pageNm, gridCd);
+      UserConfig show = dao.showUserConfigTab(userConfigId, pageNm, gridCd);
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
@@ -45,10 +45,10 @@ public class UserConfigCTRL {
   // 2-2. 상세 (정보) ------------------------------------------------------------------------------
   @PostMapping(value="/act/showUserConfigInfo", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showUserConfigInfo (
-    @SessionAttribute("userConfigID") String userConfigID
+    @SessionAttribute("userConfigId") String userConfigId
   ) throws Exception {
     try {
-      UserConfig show = dao.showUserConfigInfo(userConfigID);
+      UserConfig show = dao.showUserConfigInfo(userConfigId);
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {
@@ -64,18 +64,18 @@ public class UserConfigCTRL {
   ) throws Exception {
 
     BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
-    String userConfigID = param.getUserConfigID();
+    String userConfigId = param.getUserConfigId();
     String userPwOld = param.getUserConfigPw();
 
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
-      if (userConfigID == null || userConfigID.equals("")) {
+      if (userConfigId == null || userConfigId.equals("")) {
         map.put("result", "존재하지 않는 아이디입니다");
       }
       else {
         String userPwNew = String.valueOf(passEncoder.encode(userPwOld));
-        dao.updateUserConfigPw(userConfigID, userPwNew);
+        dao.updateUserConfigPw(userConfigId, userPwNew);
         map.put("result", "비밀번호를 변경했습니다");
       }
     }
@@ -91,7 +91,7 @@ public class UserConfigCTRL {
   @PostMapping(value="/act/saveUserConfigInfo", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveUserConfigInfo (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userConfigID") String idParam
+    @SessionAttribute("userConfigId") String idParam
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
@@ -100,7 +100,7 @@ public class UserConfigCTRL {
       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
       String userId = String.valueOf(idParam);
       String issueId = String.valueOf(idParam);
-      String userConfigID = String.valueOf(param.get("userConfigID"));
+      String userConfigId = String.valueOf(param.get("userConfigId"));
       String userPwOld = String.valueOf(param.get("userConfigPw"));
       String flagYn = String.valueOf(param.get("flagYn"));
       String userPwNew = "";
@@ -124,10 +124,10 @@ public class UserConfigCTRL {
         param.put("compCd", compCdInt);
       }
 
-      UserConfig storedUser = dao.showUserConfigInfo(userConfigID);
+      UserConfig storedUser = dao.showUserConfigInfo(userConfigId);
 
       // 1. 없는 아이디인 경우
-      if (storedUser == null || storedUser.getUserConfigID() == null) {
+      if (storedUser == null || storedUser.getUserConfigId() == null) {
         map.put("result", "존재하지 않는 아이디입니다");
       }
       // 2. 존재하는 아이디인 경우
@@ -143,7 +143,7 @@ public class UserConfigCTRL {
         }
 
         param.put("userId", userId);
-        param.put("userConfigID", userConfigID);
+        param.put("userConfigId", userConfigId);
         param.put("userConfigPw", userPwNew);
         param.put("issueId", issueId);
         param.put("flagYn", flagYn);
@@ -164,14 +164,14 @@ public class UserConfigCTRL {
   @PostMapping(value="/act/saveUserConfigTab", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> saveUserConfigTab (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userConfigID") String idParam
+    @SessionAttribute("userConfigId") String idParam
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
       String userId = String.valueOf(idParam);
-      String userConfigID = String.valueOf(param.get("userConfigID"));
+      String userConfigId = String.valueOf(param.get("userConfigId"));
       String issueId = String.valueOf(param.get("issueId"));
       String flagYn = String.valueOf(param.get("flagYn"));
 
@@ -195,7 +195,7 @@ public class UserConfigCTRL {
       }
 
       param.put("userId", userId);
-      param.put("userConfigID", userConfigID);
+      param.put("userConfigId", userConfigId);
       param.put("issueId", issueId);
       param.put("flagYn", flagYn);
 

@@ -235,6 +235,11 @@
       <artifactId>commons-net</artifactId>
       <version>3.6</version>
     </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
     <!-- etc -->
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
@@ -245,6 +250,11 @@
       <groupId>net.nurigo</groupId>
       <artifactId>javaSDK</artifactId>
       <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>log4sql</groupId>
+      <artifactId>log4sql</artifactId>
+      <version>7.8</version>
     </dependency>
   </dependencies>
   <!-- build -->

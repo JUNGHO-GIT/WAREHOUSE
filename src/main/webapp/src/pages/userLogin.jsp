@@ -63,7 +63,7 @@
                         name="userPw"
                         class="form-control form-control-sm"
                         placeholder="비밀번호"
-                        onkeydown="fnPressAuth(event)"
+                        onkeydown="fnPressGetLogin(event)"
                       />
                     </div>
                   </div>

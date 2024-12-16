@@ -64,7 +64,7 @@
             </div>
             <!-- grid 2 -->
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-              <div class="grid-main h-min-40vh mb-4vh">
+              <div class="grid-main h-min-40vh mb-3vh">
                 <div id="grid02"></div>
               </div>
               <div class="grid-detail">
@@ -173,7 +173,7 @@
                         type="text"
                         id="shipDt"
                         name="shipDt"
-                        class="form-control form-control-sm"
+                        class="form-control form-control-sm pointer"
                       />
                     </div>
                   </div>

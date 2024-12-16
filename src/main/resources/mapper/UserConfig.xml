@@ -13,14 +13,16 @@
   	parameterType="hashmap"
   	resultType="UserConfig"
   >
+    <![CDATA[
   	SELECT
       config
     FROM
       tblUserConfig
 	  WHERE
-      userId = #{userConfigID} AND pageNm = #{pageNm} AND gridCd = #{gridCd}
+      userId = #{userConfigId} AND pageNm = #{pageNm} AND gridCd = #{gridCd}
 	  ORDER BY
       issueDt DESC limit 1
+    ]]>
   </select>
 
   <!-- UserConfig.showUserConfigInfo -->
@@ -31,19 +33,19 @@
   >
     <![CDATA[
   	SELECT
-      userId userConfigID,
-      userPw userConfigPw,
-      userNm userConfigNm,
-      userLevel userConfigLevel,
-      userPerm userConfigPerm,
-      userPhone userConfigPhone,
-      userEmail userConfigEmail,
-      compCd userConfigCompCd,
-      flagYn flagYn
+      (userId) userConfigId,
+      (userPw) userConfigPw,
+      (userNm) userConfigNm,
+      (userLevel) userConfigLevel,
+      (userPerm) userConfigPerm,
+      (userPhone) userConfigPhone,
+      (userEmail) userConfigEmail,
+      (compCd) userConfigCompCd,
+      (flagYn) flagYn
     FROM
       tblUser
     WHERE
-      userId = #{userConfigID}
+      userId = #{userConfigId}
     ]]>
   </select>
 
@@ -58,7 +60,7 @@
     SET
       userPw = #{userConfigPw}
     WHERE
-      userId = #{userConfigID}
+      userId = #{userConfigId}
     ]]>
   </update>
 

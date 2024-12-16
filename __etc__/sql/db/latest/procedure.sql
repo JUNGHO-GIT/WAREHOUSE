@@ -1026,6 +1026,7 @@ BEGIN
       `@toPhone`,
       `@compCd`,
       `@flagYn`,
+      `@planYn`,
       NOW(),
       NOW(),
       `@issueId`
@@ -1051,13 +1052,12 @@ BEGIN
     SET `@shipCd` = LAST_INSERT_ID();
   END IF;
 
-	IF `@inOutSeqs` != '' THEN
-    IF `@planYn` = 'Y' THEN
-      CALL sp_ShipPlan (`@shipCd`, `@inOutSeqs`, `@issueId`);
-    ELSE
-      CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueId`);
-    END IF;
+  IF `@planYn` = 'Y' THEN
+    CALL sp_ShipPlan (`@shipCd`, `@inOutSeqs`, `@issueId`);
+  ELSE
+    CALL sp_ShipItems (`@shipCd`, `@inOutSeqs`, `@issueId`);
   END IF;
+
 END $$
 DELIMITER ;
 
@@ -1083,7 +1083,7 @@ BEGIN
   WHERE shipCd = `@shipCd`;
 
 	WHILE `@pos`!=0 DO
-    SET `@inOutSeq`=SUBSTRING_INDEX(SUBSTRING_INDEX(`@inOutSeqs`, ',', `@pos`), ',' , -1);
+    SET `@inOutSeq`=SUBSTRING_INDEX(SUBSTRING_INDEX(`@inOutSeqs`, ',', `@pos`), ',', -1);
     IF `@seqs`!=`@inOutSeqs` THEN
       SET `@seq` = CAST(`@inOutSeq` AS UNSIGNED);
       INSERT INTO tblShipItems (
@@ -1116,10 +1116,11 @@ BEGIN
 
       SET `@seqs`=CONCAT(`@seqs`, `@inOutSeq`);
 
-      ELSE
-        SET `@pos`=0;
+    ELSE
+      SET `@pos`=0;
     END IF;
 	END WHILE;
+
 END $$
 DELIMITER ;
 
@@ -1140,12 +1141,12 @@ BEGIN
 
 	SET `@now`=NOW();
 
-  UPDATE tblShipPlan
+	UPDATE tblShipPlan
   SET flagYn = 'N'
   WHERE shipCd = `@shipCd`;
 
-  WHILE `@pos`!=0 DO
-    SET `@inOutSeq`=SUBSTRING_INDEX(SUBSTRING_INDEX(`@inOutSeqs`, ',', `@pos`), ',' , -1);
+	WHILE `@pos`!=0 DO
+    SET `@inOutSeq`=SUBSTRING_INDEX(SUBSTRING_INDEX(`@inOutSeqs`, ',', `@pos`), ',', -1);
     IF `@seqs`!=`@inOutSeqs` THEN
       SET `@seq` = CAST(`@inOutSeq` AS UNSIGNED);
       INSERT INTO tblShipPlan (
@@ -1178,10 +1179,11 @@ BEGIN
 
       SET `@seqs`=CONCAT(`@seqs`, `@inOutSeq`);
 
-      ELSE
-        SET `@pos`=0;
+    ELSE
+      SET `@pos`=0;
     END IF;
-  END WHILE;
+	END WHILE;
+
 END $$
 DELIMITER ;
 

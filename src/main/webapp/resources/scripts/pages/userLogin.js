@@ -40,7 +40,7 @@ function fnAuth() {
         alert(data.msg);
       }
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 

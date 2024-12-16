@@ -15,8 +15,8 @@ function fnGetList01 () {
     pasteModel: {on:false},
     selectionModel: {type:"row", fireSelectChange:true},
     pageModel: {type:"local", rPP:100, strRpp:"{0}", strDisplay:"Total:{2}"},
-    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent: true},
-    numberCell: {show: true, resizable: false, width: 30},
+    scrollModel: {autoFit:true, theme:true, pace:"fast", horizontal:true, flexContent:true},
+    numberCell: {show:true, resizable:false, width:30},
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.resrcCd);
@@ -92,7 +92,7 @@ function fnGetList01 () {
       })
       .pqGrid("refreshDataAndView");
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 
@@ -106,8 +106,10 @@ function fnShow(resrcCd) {
       "AJAX": "true"
     }
   })
-  .then(async (response) => {
-    const data = await response.json();
+  .then((response) => (
+    response.json()
+  ))
+  .then((data) => {
 
     // 1. 자재 관련
     $(`#resrcCd`).val(data.resrcCd);
@@ -137,7 +139,7 @@ function fnShow(resrcCd) {
     $(`#tableKey`).val(data.resrcCd);
     fnShowFiles("tblResource", data.resrcCd, "files");
   })
-  .catch(ajaxErrorHandler);
+  .catch(fnAjaxErrorHandler);
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
@@ -221,7 +223,7 @@ function fnSave (flagYn) {
       $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
       fnReset();
     },
-    error: ajaxErrorHandler
+    error: fnAjaxErrorHandler
   });
 };
 

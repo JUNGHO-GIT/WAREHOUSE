@@ -13,66 +13,57 @@
       <img
         src="${rsPath}/images/logo.png"
         alt="logo"
-        class="sidebar-logo"
+        class="sidebar-img pointer hover"
         onclick="fnGoPage('main')"
       />
     </div>
+    <div class="my-1vh h-1px bg-dark"></div>
     <div class="sidebar-menu">
       <ul class="nav side-menu">
         <c:set var="childOpen" value="false" />
         <c:forEach var="page" items="${mainList}" varStatus="status">
-          <c:set var="userPerm" value="${sessionScope.userPerm}" />
-          <c:set var="findPage" value="${page.findPage}" />
-          <c:set var="nm" value="${page.pageNm}" />
-          <c:set var="url" value="${page.pageUrl}" />
-          <c:set var="order" value="${page.pageOrder}" />
-          <c:set var="icon" value="${page.pageIcon}" />
-          <c:set var="sub" value="${page.subPage}" />
-          <c:set var="isDash" value="${fn:contains(page.pageUrl, 'dash')}" />
-          <c:choose>
-            <c:when test="${sub == '00'}">
-              <c:if test="${childOpen}">
-                <c:set var="childOpen" value="false" />
-                </ul></li>
-              </c:if>
+          <c:if test="${page.subPage == '00'}">
+            <c:if test="${childOpen}">
+              <c:set var="childOpen" value="false" />
+              </ul></li>
+            </c:if>
+            <c:if test="${!childOpen}">
               <li class="first-li">
                 <a class="first-a">
-                  <i class="${icon}"></i>
-                  <span>${nm}</span>
+                  <i class="${page.pageIcon}"></i>
+                  <span>${page.pageNm}</span>
                 </a>
-            </c:when>
-            <c:otherwise>
-              <c:if test="${sub == '01' && !childOpen}">
-                <c:set var="childOpen" value="true" />
-                <ul class="nav child-menu">
-              </c:if>
-              <c:if test="${userPerm.indexOf(findPage) > -1}">
-                <c:choose>
-                  <c:when test="${isDash}">
-                    <li class="second-li">
-                      <a class="second-a" onclick="fnGoPage('${url}')">
-                        <span>${nm}</span>
-                      </a>
-                    </li>
-                  </c:when>
-                  <c:otherwise>
-                    <li class="second-li">
-                      <a class="second-a" onclick="fnAddTab('${nm}','${url}','${order}')">
-                        <span>${nm}</span>
-                      </a>
-                    </li>
-                  </c:otherwise>
-                </c:choose>
-              </c:if>
-            </c:otherwise>
-          </c:choose>
+            </c:if>
+          </c:if>
+          <c:if test="${page.subPage == '01'}">
+            <c:if test="${childOpen}">
+              <c:set var="childOpen" value="false" />
+              </ul></li>
+            </c:if>
+            <c:if test="${!childOpen}">
+              <c:set var="childOpen" value="true" />
+              <ul class="nav child-menu">
+            </c:if>
+          </c:if>
+          <c:if test="${sessionScope.userPerm.indexOf(page.findPage) > -1}">
+            <c:if test="${fn:contains(page.pageUrl, 'dash')}">
+              <li class="second-li">
+                <a class="second-a" onclick="fnGoPage('${page.pageUrl}')">
+                  <span>${page.pageNm}</span>
+                </a>
+              </li>
+            </c:if>
+            <c:if test="${!fn:contains(page.pageUrl, 'dash')}">
+              <li class="second-li">
+                <a class="second-a" onclick="fnAddTab('${page.pageNm}', '${page.pageUrl}', '${page.pageOrder}')">
+                  <span>${page.pageNm}</span>
+                </a>
+              </li>
+            </c:if>
+          </c:if>
         </c:forEach>
-        <c:if test="${childOpen}">
-          </ul></li>
-        </c:if>
       </ul>
     </div>
-    <div id="showVersion"></div>
   </div>
 
   <!-- main -->
@@ -86,7 +77,7 @@
       </div>
       <div class="header-menu">
         <div
-          class="fa fa-cog fs-25px light-black pointer-navy"
+          class="fa fa-gear fs-25px light-black pointer-navy"
           data-toggle="collapse"
           data-target=".menu-container"
           title="메뉴"
@@ -125,8 +116,14 @@
     </div>
   </div>
 
+  <!-- version -->
+  <div class="version-container">
+    <div class="showVersion"></div>
+  </div>
+
   <!-- js -->
   <%@ include file="./userConfig.jsp" %>
   <input type="hidden" id="configSeq" />
   <script defer src="${rsPath}/scripts/pages/main.js"></script>
+
 </body>

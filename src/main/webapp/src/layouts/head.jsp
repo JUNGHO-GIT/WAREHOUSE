@@ -44,20 +44,21 @@
   <link rel="stylesheet" href="${urlPath}/bootstrap/4.6.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="${urlPath}/font-awesome/4.7.0/css/font-awesome.css" />
   <link rel="stylesheet" href="${urlPath}/jqueryui/1.14.1/themes/base/jquery-ui.min.css" />
-  <link rel="stylesheet" href="${urlPath}/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" />
 
   <!-- css 2 -->
   <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.min.css" />
   <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.ui.css" />
   <link rel="stylesheet" href="${rsPath}/styles/libs/jquery-pqgrid.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/commons/main.css" />
+  <link rel="stylesheet" href="${rsPath}/styles/libs/datepicker.min.css" />
+
+  <!-- css 3 -->
+  <link rel="stylesheet" href="${rsPath}/styles/commons/common.css" />
 
   <!-- js 1 -->
   <script src="${urlPath}/jquery/3.7.1/jquery.min.js"></script>
   <script defer src="${urlPath}/jqueryui/1.14.1/jquery-ui.min.js"></script>
   <script defer src="${urlPath}/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script defer src="${urlPath}/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
-  <script defer src="${urlPath}/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
   <script defer src="${urlPath}/moment.js/2.30.1/moment.min.js"></script>
   <script defer src="${urlPath}/crypto-js/4.2.0/crypto-js.min.js"></script>
   <script defer src="${urlPath}/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
@@ -65,12 +66,17 @@
   <!-- js 2 -->
   <script defer src="${rsPath}/scripts/libs/jquery-pqgrid.min.js"></script>
   <script defer src="${rsPath}/scripts/libs/json2xls.js"></script>
-  <script defer src="${rsPath}/scripts/commons/common.js"></script>
+  <script defer src="${rsPath}/scripts/libs/jszip.js"></script>
+  <script defer src="${rsPath}/scripts/libs/filesaver.js"></script>
+  <script defer src="${rsPath}/scripts/libs/myexcel.js"></script>
+
+  <!-- js 3 -->
   <script defer src="${rsPath}/scripts/commons/dom.js"></script>
   <script defer src="${rsPath}/scripts/commons/sidebar.js"></script>
   <script defer src="${rsPath}/scripts/commons/files.js"></script>
   <script defer src="${rsPath}/scripts/commons/grid.js"></script>
-  <script defer src="${rsPath}/scripts/commons/script.js"></script>
+  <script defer src="${rsPath}/scripts/commons/util.js"></script>
+  <script defer src="${rsPath}/scripts/commons/common.js"></script>
 
   <!-- cdn -->
   <link
@@ -104,6 +110,9 @@
     }
     .d-none {
       display: none !important;
+    }
+    .hr {
+      margin: 0.5rem 0 !important;
     }
   </style>
 </head>
