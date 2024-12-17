@@ -341,13 +341,15 @@
               </div>
             </div>
             <!-- hidden -->
-            <div class="hidden-wrapper">
-              <input type="hidden" id="inOut" name="inOut" value="in" />
-              <input type="hidden" id="inOutSeq" name="inOutSeq" />
-              <input type="hidden" id="resrc" name="resrc" />
-              <input type="hidden" id="resrcCd" name="resrcCd" />
-              <input type="hidden" id="compCd" name="compCd" />
-              <input type="hidden" id="houseCd" name="houseCd" />
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" id="inOut" name="inOut" value="in" />
+                <input type="hidden" id="inOutSeq" name="inOutSeq" />
+                <input type="hidden" id="resrc" name="resrc" />
+                <input type="hidden" id="resrcCd" name="resrcCd" />
+                <input type="hidden" id="compCd" name="compCd" />
+                <input type="hidden" id="houseCd" name="houseCd" />
+              </div>
             </div>
           </div>
         </form>

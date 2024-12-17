@@ -217,6 +217,12 @@
                 </div>
               </div>
             </div>
+            <!-- hidden -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" id="shipCd" />
+              </div>
+            </div>
           </div>
         </form>
       </div>

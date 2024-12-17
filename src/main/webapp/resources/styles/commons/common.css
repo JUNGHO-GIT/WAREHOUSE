@@ -144,17 +144,17 @@
 	transition: 0.3s all ease-in-out !important;
 }
 .btn-xs {
-	padding: 0.2rem 0.4rem;
-	font-size: 0.75rem;
+	padding: 4px 8px;
+	font-size: 0.85rem;
 	line-height: 1.5;
 	border-radius: 0.2rem;
 }
 .form-control-sm {
-  height: calc(1.5em + .5rem + 2px);
-  padding: .25rem .5rem;
-  font-size: .7rem;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
   line-height: 1.5;
-  border-radius: .2rem;
+  border-radius: 3px;
 }
 
 /** header ****************************************************************************************/

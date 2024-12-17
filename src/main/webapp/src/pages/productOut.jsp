@@ -337,16 +337,18 @@
                       </div>
                     </div>
                   </div>
-                  <!-- hidden -->
-                  <div class="hidden-wrapper">
-                    <input type="hidden" id="inOut" name="inOut" value="out" />
-                    <input type="hidden" id="inOutSeq" name="inOutSeq" />
-                    <input type="hidden" id="prod" name="prod" />
-                    <input type="hidden" id="prodCd" name="prodCd" />
-                    <input type="hidden" id="compCd" name="compCd" />
-                    <input type="hidden" id="houseCd" name="houseCd" />
-                  </div>
                 </div>
+              </div>
+            </div>
+            <!-- hidden -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" id="inOut" name="inOut" value="out" />
+                <input type="hidden" id="inOutSeq" name="inOutSeq" />
+                <input type="hidden" id="prod" name="prod" />
+                <input type="hidden" id="prodCd" name="prodCd" />
+                <input type="hidden" id="compCd" name="compCd" />
+                <input type="hidden" id="houseCd" name="houseCd" />
               </div>
             </div>
           </div>

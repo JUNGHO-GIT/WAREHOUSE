@@ -162,9 +162,11 @@
               </div>
             </div>
             <!-- hidden -->
-            <div class="hidden-wrapper">
-              <input type="hidden" id="houseParentCd" />
-              <input type="hidden" id="houseCd" />
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" id="houseParentCd" />
+                <input type="hidden" id="houseCd" />
+              </div>
             </div>
           </div>
         </form>
