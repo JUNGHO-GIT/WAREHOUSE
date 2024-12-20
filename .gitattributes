@@ -1,3 +1,13 @@
 # .gitattributes
 
-* text=auto eol=lf
+# text
+* text eol=lf
+
+# linguist-detectable
+* linguist-detectable=true
+
+# linguist-vendored
+**/libs/** linguist-vendored=true
+**/fonts/** linguist-vendored=true
+**/images/** linguist-vendored=true
+**/types/** linguist-vendored=true
