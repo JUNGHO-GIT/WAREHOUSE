@@ -44,7 +44,7 @@
               <i class="fas fa-arrow-right pointer-white" onclick="fnSetDateToNext()"></i>
             </div>
             <div class="app-header-test d-center p-10px">
-              <div class="btn btn-sm btn-info hover" onclick="fnGetTestData()">
+              <div class="btn btn-xs btn-info hover" onclick="fnGetTestData()">
                 Get Test
               </div>
             </div>
@@ -611,8 +611,9 @@
     </div>
 
     <!-- js -->
-    <link rel="stylesheet" href="${rsPath}/styles/libs/dash.min.css">
-    <link rel="stylesheet" href="${urlPath}/font-awesome/5.8.0/css/all.min.css">
+    <link rel="stylesheet" href="${rsPath}/styles/libs/dash.min.css" />
+    <link rel="stylesheet" href="${urlPath}/font-awesome/5.8.0/css/all.min.css" />
+    <link rel="stylesheet" href="${rsPath}/styles/commons/common.css" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/serial.js"></script>

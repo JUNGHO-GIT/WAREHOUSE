@@ -43,9 +43,6 @@ const fnFindCd = async (targetNm, targetCd, targetId, event) => {
     response.json()
   ))
   .then((data) => {
-    // 0. 일단 해당 인풋에 포커스
-    strEl && strEl.focus();
-
     // 1. targetNm 과 targetCd 가 모두 없는 경우 (전체 조회인 경우)
     if (!targetNm && !targetCd) {
       strEl && (strEl.innerHTML = `<option value="">==${strKo}==</option>`);
