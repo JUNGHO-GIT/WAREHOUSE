@@ -12,6 +12,7 @@ public class Bom {
   private String bomType;
   private Integer qty;
   private Double unitQty;
+  private String fileUrl;
   private String flagYn, issueId;
   private Date regDt, issueDt;
 }

@@ -205,13 +205,12 @@ public class Utils {
     }
 
     String excelUrl = Paths.get(urlExcel.toURI()).toFile().getAbsolutePath();
-    URL urlNoLogo = getClass().getClassLoader().getResource("images/no-logo.png");
+    URL urlNoLogo = getClass().getClassLoader().getResource("images/no-logo.webp");
 
     Map<String, Object> fileData = new HashMap<>();
     fileData.put("fileUrl", fileUrl);
     fileData.put("fileDir", fileDir);
     fileData.put("excelUrl", excelUrl);
-    log.info("fileData : " + gson.toJson(fileData));
 
     byte[] imageBytes;
     if (fileUrl == null || fileUrl == "") {
@@ -224,7 +223,7 @@ public class Utils {
     	try (FileInputStream fis = new FileInputStream(new File(fileDir + fileUrl))) {
         imageBytes = new byte[(int) fis.available()];
         fis.read(imageBytes);
-    }
+      }
     }
 
     // 이미지 형식 확인 후 올바른 타입 지정 (기본값으로 PNG 설정)

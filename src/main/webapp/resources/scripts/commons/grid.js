@@ -32,17 +32,23 @@ function calcSum (data=[], dataIndx="") {
 
 // -------------------------------------------------------------------------------------------------
 function renderImage (data) {
+
+  const tableNm = getValue(getById("tableNm"));
+
   // summary 는 건너뛰기
   if (data.rowData.pq_rowcls === `summary-row`) {
     return "";
   }
   return (/* javascript */`
-    <img
-      src="viewFiles?fileUrl=${data.rowData.fileUrl || 'noGridImage.webp'}"
-      class="w-100p h-auto radius-1 shadow-1 border-1 p-5px"
-      loading="lazy"
-    />`
-  );
+    <div class="d-center w-70px h-70px p-5px">
+      <img
+        alt="gridImage"
+        src="viewFiles?tableNm=${tableNm}&fileUrl=${data.rowData.fileUrl || 'noGridImage.webp'}"
+        class="w-100p h-100p radius-1 border-2"
+        loading="lazy"
+      />
+    </div>
+  `);
 };
 
 // -------------------------------------------------------------------------------------------------

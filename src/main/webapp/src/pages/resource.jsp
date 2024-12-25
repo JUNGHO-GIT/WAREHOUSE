@@ -366,6 +366,76 @@
                     </div>
                   </div>
                 </div>
+                <div class="row mb-1vh">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div class="d-row-right detail-label" id="fileShow">
+                      <div class="fs-0-7rem fw-600 light-black">
+                        파일
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-row-left mr-10px">
+                      <div class="form-control d-left">
+                        <input
+                          type="file"
+                          id="userFile"
+                          name="userFile"
+                          class="d-none"
+                        />
+                        <label
+                          for="userFile"
+                          class="fs-0-7rem fw-600 pointer-navy mr-auto"
+                        >
+                          파일선택
+                        </label>
+                        <div
+                          id="fileUpBtn"
+                          class="btn btn-success btn-xs py-1px px-5px fs-0-7rem"
+                          onclick="fnUploadFiles('formData2')"
+                        >
+                          업로드
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1vh">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div class="d-row-right detail-label">
+                      <div class="fs-0-7rem fw-600 light-black">
+                        파일목록
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-row-left mr-10px">
+                      <div
+                        id="fileList"
+                        name="fileList"
+                        class="d-col-left w-100p h-100px p-10px over-y-auto border-1 radius-1"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1vh">
+                  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div class="d-row-right detail-label">
+                      <div class="fs-0-7rem fw-600 light-black">
+                        이미지
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <div class="d-row-left mr-10px">
+                      <div
+                        id="fileDetail"
+                        name="fileDetail"
+                        class="d-col-left w-100p h-100px p-10px over-y-auto border-1 radius-1"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
                 <div class="row mt-5vh">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-center">

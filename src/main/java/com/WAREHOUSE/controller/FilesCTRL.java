@@ -1,6 +1,9 @@
 package com.WAREHOUSE.controller;
 
-import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,10 +27,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import com.WAREHOUSE.container.Files;
 import com.WAREHOUSE.dao.FilesDAO;
-import com.WAREHOUSE.util.FilesUtil;
-import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.JsonUtil;
+import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.Utils;
+import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -34,11 +43,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FilesCTRL {
 
+  @Value("${storage-path}")
+  private String STORAGE_PATH;
+
+  @Value("${storage-main}")
+  private String STORAGE_MAIN;
+
+  @Value("${storage-folder}")
+  private String STORAGE_FOLDER;
+
+  @Value("${storage-empty}")
+  private String STORAGE_EMPTY;
+
   private final FilesDAO dao;
   private final LogsUtil logs;
   private final JsonUtil json;
   private final Utils utils;
-  private final FilesUtil filesUtil;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
@@ -70,65 +90,70 @@ public class FilesCTRL {
       e.printStackTrace();
       return ResponseEntity.status(500).body(null);
     }
-  }
-
-  //-----------------------------------------------------------------------------------------------
+  }//-----------------------------------------------------------------------------------------------
   @GetMapping(value="/viewFiles")
   public ResponseEntity<?> viewFiles(
+    @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl
   ) throws Exception {
 
-    String path = "TODO" + fileUrl;
+    // storage 객체 생성
+    Storage storage = StorageOptions.getDefaultInstance().getService();
+
+    // blobId 생성
+    BlobId blobId = BlobId.of(STORAGE_MAIN, STORAGE_FOLDER + "/" + tableNm + "/" + fileUrl);
+    Blob blob = storage.get(blobId);
+
+    // fileContent 객체 생성
+    byte[] fileContent = null;
+    String fileExt = fileUrl.substring(fileUrl.lastIndexOf(".") + 1);
     String contentType = "";
-    String fileExt = "";
-    File file = new File(path);
 
-    // 원래 파일이 없을 경우 기본 이미지로 대체 (resources/images/no-image)
-    if (!file.exists() || fileUrl.equals("no-image.webp")) {
-      ClassPathResource resource = new ClassPathResource("images/no-image.webp");
-      file = resource.getFile();
+    // 파일 확장자에 따른 Content-Type 설정
+    if (fileExt.equals("jpg") || fileExt.equals("jpeg")) {
+      contentType = "image/jpeg";
     }
-
-    // 확장자 형식이 맞지 않을 경우 기본 이미지로 대체 (resources/images/no-image)
-    Integer lastIndex = fileUrl.lastIndexOf(".");
-    if (lastIndex == -1) {
-      ClassPathResource resource = new ClassPathResource("images/no-image.webp");
-      file = resource.getFile();
-    }
-    else {
-      fileExt = fileUrl.substring(lastIndex);
-    }
-
-    if (fileExt.toLowerCase().equals(".png")) {
+    else if (fileExt.equals("png")) {
       contentType = "image/png";
     }
-    else if (fileExt.toLowerCase().equals(".jpg")) {
-      contentType = "image/jpeg";
-    }
-    else if (fileExt.toLowerCase().equals(".jpeg")) {
-      contentType = "image/jpeg";
-    }
-    else if (fileExt.toLowerCase().equals(".gif")) {
-      contentType = "image/gif";
-    }
-    else if (fileExt.toLowerCase().equals(".webp")) {
+    else if (fileExt.equals("webp")) {
       contentType = "image/webp";
     }
-    else {
+    else if (fileExt.equals("pdf")) {
       contentType = "application/pdf";
+    }
+    else {
+      contentType = "application/octet-stream";
+    }
+
+    // 파일이 존재하지 않을 경우 처리
+    if (blob == null || !blob.exists()) {
+      URL emptyImageUrl = new URL(STORAGE_EMPTY);
+      fileContent = emptyImageUrl.openStream().readAllBytes();
+
+      return ResponseEntity.ok()
+      .header("Content-Description", "Default Image Data")
+      .header("Cache-Control", "max-age=2592000, public")
+      .contentType(MediaType.parseMediaType("image/webp"))
+      .body(fileContent);
     }
 
     try {
-      byte[] fileContent = java.nio.file.Files.readAllBytes(file.toPath());
+      // 파일 데이터 읽기
+      fileContent = blob.getContent();
+
+      // ResponseEntity로 응답 생성
       return ResponseEntity.ok()
-      .header("Content-Description", "JSP Generated Data")
-      .header("Cache-Control", "max-age=2592000, public")
+      .header("Content-Description", "File Transfer")
+      .header("Content-Disposition", "inline; filename=\"" + fileUrl + "\"")
+      .header("Content-Transfer-Encoding", "binary")
       .contentType(MediaType.parseMediaType(contentType))
+      .contentLength(fileContent.length)
       .body(fileContent);
     }
     catch (Exception e) {
       e.printStackTrace();
-      String result = "파일 처리 중 오류가 발생했습니다.";
+      String result = "파일 다운로드 중 오류가 발생했습니다.";
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
   }
@@ -149,13 +174,15 @@ public class FilesCTRL {
     String uuidStr = String.valueOf(uuid).substring(0, 8);
 
     String fileNm = multipartFile.getOriginalFilename();
+    String fileExt = fileNm.substring(fileNm.lastIndexOf(".") + 1);
     String fileUrl = String.format(
-      "%s_%s.webp",
-      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")),
-      uuidStr
+      "%s_%s.%s",
+      LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")),
+      uuidStr,
+      fileExt
     );
 
-    Map<String, Object> map = new HashMap<String, Object>();
+    HashMap<String, Object> map = new HashMap<String, Object>();
     try {
       Files files = new Files();
       files.setFileSeq(fileSeq);
@@ -166,7 +193,21 @@ public class FilesCTRL {
       files.setFlagYn("Y");
       files.setIssueId(issueId);
 
-      filesUtil.uploadFiles(multipartFile, tableNm, files);
+      String fileName = String.valueOf(files.getFileUrl());
+      byte[] bytes = multipartFile.getBytes();
+      Storage storage = StorageOptions.getDefaultInstance().getService();
+
+      // blobId 생성
+      BlobId blobId = BlobId.of(STORAGE_MAIN, STORAGE_FOLDER + "/" + tableNm + "/" + fileName);
+
+      BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+      .setContentType(multipartFile.getContentType())
+      .setContentDisposition("inline; filename=\"" + fileName + "\"")
+      .build();
+
+      Blob blob = storage.create(blobInfo, bytes);
+      blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+
       dao.saveFiles(files);
       dao.updateIssueDt(tableNm, tableKey, keyColumn);
       map.put("result", "업로드 되었습니다");
@@ -217,24 +258,23 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value="/downloadFiles")
   public ResponseEntity<?> fileDownload(
+    @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl,
     @RequestHeader("User-Agent") String userAgent
   ) throws Exception {
 
     java.io.File downloadFile = null;
-    String path = "TODO";
+    String encodedFileName = "";
+
+    if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+      encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
+    }
+    else {
+      encodedFileName = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
+    }
 
     try {
-      // 1. 파일 이름 인코딩
-      String encodedFileName;
-      if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
-        encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
-      }
-      else {
-        encodedFileName = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
-      }
-
-      // 2. 엑셀 파일 다운로드인 경우
+      // 1. 엑셀 파일 다운로드인 경우
       if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
         ClassPathResource resource = new ClassPathResource("xls/" + fileUrl);
         downloadFile = resource.getFile();
@@ -242,20 +282,36 @@ public class FilesCTRL {
 
       // 3. 이미지 파일 다운로드인 경우
       else {
-        path = "TODO" + fileUrl;
-        downloadFile = new File(path);
+        // storage 객체 생성
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        // blobId 생성
+        BlobId blobId = BlobId.of(STORAGE_MAIN, STORAGE_FOLDER + "/" + tableNm + "/" + fileUrl);
+        Blob blob = storage.get(blobId);
+
+        // 파일이 존재하지 않을 경우 처리
+        if (blob == null || !blob.exists()) {
+          URL emptyImageUrl = new URL(STORAGE_EMPTY);
+          downloadFile = java.nio.file.Files.createTempFile("emptyImage", ".tmp").toFile();
+          try (
+            InputStream in = emptyImageUrl.openStream();
+            OutputStream out = new FileOutputStream(downloadFile)
+          ) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+              out.write(buffer, 0, bytesRead);
+            }
+          }
+        }
+        else {
+          downloadFile = java.nio.file.Files.createTempFile("downloadedFile", ".tmp").toFile();
+          blob.downloadTo(downloadFile.toPath());
+        }
       }
 
-      // 4. 원래 파일이 없을 경우 기본 이미지로 대체
-      if (!downloadFile.exists()) {
-        ClassPathResource resource = new ClassPathResource("no-image.webp");
-        downloadFile = resource.getFile();
-      }
-
-      // 5. 파일 데이터 읽기
       byte[] fileContent = java.nio.file.Files.readAllBytes(downloadFile.toPath());
 
-      // 6. Content-Type 설정
       String contentType = java.nio.file.Files.probeContentType(downloadFile.toPath());
       if (contentType == null) {
         contentType = "application/octet-stream";

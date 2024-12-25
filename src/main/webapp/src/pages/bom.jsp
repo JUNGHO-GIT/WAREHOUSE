@@ -159,6 +159,18 @@
                 </div>
               </div>
             </div>
+            <!-- hidden -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" name="prodCd" id="prodCd" />
+                <input type="hidden" name="tableNm" id="tableNm" value="tblProduct" />
+                <input type="hidden" name="tableKey" id="tableKey" value="0" />
+                <input type="hidden" name="keyColumn" id="keyColumn" value="prodCd" />
+                <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
+                <input type="hidden" name="fileNm" id="fileNm" />
+                <input type="hidden" name="fileUrl" id="fileUrl" />
+              </div>
+            </div>
           </div>
         </form>
       </div>

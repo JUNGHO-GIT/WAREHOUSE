@@ -1,7 +1,7 @@
 // 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
-function fnUploadFiles(formParam) {
+function fnUploadFiles (formParam) {
 
-  const fileUploadForm = formParam;
+  const fileUploadForm = getFormByName(formParam);
   const tableNm = $(`#tableNm`).val();
   const tableKey = $(`#tableKey`).val();
 
@@ -32,7 +32,7 @@ function fnUploadFiles(formParam) {
     cache: false,
     success: (data) => {
       // 1. alert
-      alert(data);
+      alert(data.result);
 
       // 2. 요소 초기화
       $(`#fileUpBtn`).html("업로드");
@@ -42,7 +42,7 @@ function fnUploadFiles(formParam) {
       fnGetList01();
 
       // 4. 상세정보에 이미지 표시
-      fnShowFiles(tableNm, tableKey, "files");
+      fnShowFiles(tableNm, tableKey, "fileList");
 
       // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
       if (tableKey !== "0") {
@@ -56,10 +56,9 @@ function fnUploadFiles(formParam) {
 // 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
 function fnShowFiles(tableNm, tableKey, target) {
 
-  const $target = $(`#${target}`);
-  const imgStyle = `style="cursor:pointer; margin-left:2px; border-radius:30%;"`;
-  const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
   let currentSelectedRow = null;
+  const $target = $(`#${target}`);
+  const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
 
   $.ajax({
     url: "act/showFiles",
@@ -70,7 +69,7 @@ function fnShowFiles(tableNm, tableKey, target) {
 
       // 1. 값 초기화
       $target.empty();
-      $(`#showImage`).empty();
+      $(`#fileDetail`).empty();
 
       // 2. 최신순으로 정렬
       data.reverse();
@@ -85,16 +84,25 @@ function fnShowFiles(tableNm, tableKey, target) {
           return;
         }
         const imgBox = (/* javascript */`
-          <div
-            id="imageRow${k}"
-            name="imageRow"
-            class="d-inline-block text-left pointer"
-            onclick="fnShowSelectedFiles('${file.fileUrl}', ${k})"
-          >
-            <i class="fas fa-image" onclick="fnPopupImage('${file.fileUrl}');" ${imgStyle}></i>
-            <i class="fas fa-download" onclick="fnDownloadFiles('${file.fileUrl}');" ${imgStyle}></i>
-            <i class="fas fa-trash-alt" onclick="fnDeleteFiles('${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}');" ${imgStyle}></i>
-            <span>${file.fileUrl}</span>
+          <div id="imageRow-${k}" name="imageRow-${k}" class="d-row-left h-30px p-5px">
+            <div
+              class="fs-0-9rem fa fa-picture-o radius-1 mr-10px success hover"
+              onclick="fnPopupImage('${tableNm}', '${file.fileUrl}')"
+            ></div>
+            <div
+              class="fs-0-9rem fa fa-download radius-1 mr-10px primary hover"
+              onclick="fnDownloadFiles('${tableNm}', '${file.fileUrl}')"
+            ></div>
+            <div
+              class="fs-0-9rem fa fa-trash radius-1 mr-10px danger hover"
+              onclick="fnDeleteFiles('${tableNm}', '${file.fileSeq}', '${file.fileUrl}', '${file.fileNm}')"
+            ></div>
+            <div
+              class="fs-0-7rem fw-600 dark hover"
+              onclick="fnShowSelectedFiles('${tableNm}', '${file.fileUrl}', ${k})"
+            >
+              ${file.fileNm}
+            </div>
           </div>
         `);
         $target.append(imgBox);
@@ -102,35 +110,42 @@ function fnShowFiles(tableNm, tableKey, target) {
       const firstImg = data.find((file) => {
         return imgFile.includes(`.${file.fileUrl.split(".").pop().toLowerCase()}`);
       });
-      firstImg && fnShowSelectedFiles(firstImg.fileUrl, 0);
+      firstImg && fnShowSelectedFiles(tableNm, firstImg.fileUrl, 0);
     },
     error: fnAjaxErrorHandler
   });
 };
 
 // 2-2. 리스트 이미지 클릭시 표시 ------------------------------------------------------------------
-function fnShowSelectedFiles (fileUrl, rowId) {
+function fnShowSelectedFiles (tableNm, fileUrl, rowId) {
 
-  const imgUrl = `viewFiles?fileUrl=${fileUrl}`;
+  const img = (/* javascript */`
+    <img
+      alt="fileDetail"
+      src="viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}"
+      class="h-100p radius-1 shadow-1"
+      loading="lazy"
+    />
+  `);
 
-  $(`#showImage`).html(`<img src="${imgUrl}" class="cards-image" loading="lazy" />`);
+  $(`#fileDetail`).empty().append(img);
   $(`[id^="imageRow"]`).css("background-color", "");
-  $(`#imageRow${rowId}`).css("background-color", "#ccc");
+  $(`#imageRow-${rowId}`).css("background-color", "#f1f1f1");
 };
 
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
-function fnPopupImage (fileUrl) {
-  const popupUrl = `viewFiles?fileUrl=${fileUrl}`;
+function fnPopupImage (tableNm, fileUrl) {
+  const popupUrl = `viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
   window.open(popupUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
 };
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
-function fnDownloadFiles(fileUrl) {
-  location.href = `downloadFiles?fileUrl=${fileUrl}`;
+function fnDownloadFiles (tableNm, fileUrl) {
+  location.href = `downloadFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------
-function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
+function fnDeleteFiles (tableNm, fileSeq, fileUrl, fileNm) {
 
   if (!confirm("업로드된 파일을 삭제 하시겠습니까?")) {
     return;
@@ -140,7 +155,7 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
     "fileSeq": fileSeq,
     "fileUrl": fileUrl,
     "fileNm": fileNm,
-    "tableNm": $(`#tableNm`).val(),
+    "tableNm": tableNm,
     "tableKey": $(`#tableKey`).val(),
     "keyColumn": $(`#keyColumn`).val(),
     "flagYn": "N"
@@ -167,7 +182,7 @@ function fnDeleteFiles(fileSeq, fileUrl, fileNm) {
       fnGetList01();
 
       // 4. 상세정보에 이미지 표시
-      fnShowFiles(param.tableNm, param.tableKey, "files");
+      fnShowFiles(param.tableNm, param.tableKey, "fileList");
 
       // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
       if (param.tableKey !== "0") {

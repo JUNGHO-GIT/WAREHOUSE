@@ -97,6 +97,9 @@
               <div class="grid-main h-min-30vh mb-3vh">
                 <div id="grid02"></div>
               </div>
+            </div>
+            <!-- grid 3 -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="grid-detail">
                 <div class="d-row">
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -116,6 +119,17 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <!-- hidden -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <div class="hidden-wrapper">
+                <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
+                <input type="hidden" name="tableKey" id="tableKey" value="0" />
+                <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
+                <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
+                <input type="hidden" name="fileNm" id="fileNm" />
+                <input type="hidden" name="fileUrl" id="fileUrl" />
               </div>
             </div>
           </div>

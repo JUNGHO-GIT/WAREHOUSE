@@ -135,7 +135,7 @@ function fnShow(prodCd) {
       $(`#tableNm`).val("tblProduct");
       $(`#keyColumn`).val("prodCd");
       $(`#tableKey`).val(data.prodCd);
-      fnShowFiles("tblProduct", data.prodCd, "files");
+      fnShowFiles("tblProduct", data.prodCd, "fileList");
     },
     error: fnAjaxErrorHandler
   });
@@ -271,7 +271,7 @@ function fnReset() {
   $(`#tableNm`).val("tblProduct");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("prodCd");
-  fnShowFiles("tblProduct", "0", "files");
+  fnShowFiles("tblProduct", "0", "fileList");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

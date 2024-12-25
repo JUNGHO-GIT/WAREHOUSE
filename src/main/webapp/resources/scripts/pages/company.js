@@ -127,7 +127,7 @@ function fnShow(compCd) {
       $(`#tableNm`).val("tblCompany");
       $(`#tableKey`).val(data.compCd);
       $(`#keyColumn`).val("compCd");
-      fnShowFiles("tblCompany", data.compCd, "files");
+      fnShowFiles("tblCompany", data.compCd, "fileList");
     },
     error: fnAjaxErrorHandler
   });
@@ -227,7 +227,7 @@ function fnReset() {
   $(`#tableNm`).val("tblCompany");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("compCd");
-  fnShowFiles("tblCompany", "0", "files");
+  fnShowFiles("tblCompany", "0", "fileList");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

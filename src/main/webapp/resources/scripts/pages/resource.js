@@ -137,7 +137,7 @@ function fnShow(resrcCd) {
     $(`#tableNm`).val("tblResource");
     $(`#keyColumn`).val("resrcCd");
     $(`#tableKey`).val(data.resrcCd);
-    fnShowFiles("tblResource", data.resrcCd, "files");
+    fnShowFiles("tblResource", data.resrcCd, "fileList");
   })
   .catch(fnAjaxErrorHandler);
 };
@@ -272,7 +272,7 @@ function fnReset() {
   $(`#tableNm`).val("tblResource");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("resrcCd");
-  fnShowFiles("tblResource", "0", "files");
+  fnShowFiles("tblResource", "0", "fileList");
 };
 
 // 0. 그룹 선택시 그룹코드 표시 --------------------------------------------------------------------

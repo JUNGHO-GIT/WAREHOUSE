@@ -19,7 +19,8 @@
       IFNULL (A.cnt, 0) cnt,
       IFNULL (C.option1, D.option1) option1,
       IFNULL (C.option2, D.option2) option2,
-      IFNULL (C.barcode, D.barcode) barcode
+      IFNULL (C.barcode, D.barcode) barcode,
+      IFNULL (F.fileUrl, '') fileUrl
     FROM (
       SELECT prodCd, COUNT(*) cnt
       FROM tblBom
@@ -39,6 +40,16 @@
       SELECT *
       FROM tblResource
     ) D ON D.resrcCd = B.prodCd
+    LEFT JOIN (
+      SELECT tableKey, fileUrl
+	    FROM tblFiles F1
+      INNER JOIN (
+        SELECT MAX(fileSeq) maxFileSeq
+        FROM tblFiles
+        WHERE flagYn = 'Y' AND tableNm = "tblProduct"
+        GROUP BY tableNm, tableKey
+      ) F2 ON F1.fileSeq = F2.maxFileSeq
+    ) F ON F.tableKey = B.prodCd
     ]]>
     <if test='findProdNm!="" and findProdNm!=null'>
       WHERE B.prodNm LIKE CONCAT('%', #{findProdNm}, '%')

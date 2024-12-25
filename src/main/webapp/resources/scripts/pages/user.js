@@ -193,7 +193,7 @@ function fnShow (userId) {
 
       $(`#tableNm`).val("tblUser");
       $(`#tableKey`).val(data.userId);
-      fnShowFiles("tblUser", data.userId, "files");
+      fnShowFiles("tblUser", data.userId, "fileList");
     },
     error: fnAjaxErrorHandler
   });

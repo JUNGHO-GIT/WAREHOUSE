@@ -47,7 +47,7 @@
                         type="text"
                         id="userId"
                         name="userId"
-                        class="form-control form-control-sm"
+                        class="form-control form-control-sm h-40px"
                         placeholder="아이디"
                       />
                     </div>
@@ -61,7 +61,7 @@
                         type="password"
                         id="userPw"
                         name="userPw"
-                        class="form-control form-control-sm"
+                        class="form-control form-control-sm h-40px"
                         placeholder="비밀번호"
                         onkeydown="fnPressGetLogin(event)"
                       />

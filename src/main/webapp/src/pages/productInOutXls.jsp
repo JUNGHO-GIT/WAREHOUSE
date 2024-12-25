@@ -24,8 +24,8 @@
               <div class="d-row-left mr-10px">
                 <input
                   type="file"
-                  name="productInOutXls"
                   id="productInOutXls"
+                  name="productInOutXls"
                   accept=".xls, .xlsx"
                   class="d-none"
                 />
