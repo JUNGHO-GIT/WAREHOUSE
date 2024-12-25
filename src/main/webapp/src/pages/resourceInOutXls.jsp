@@ -37,7 +37,7 @@
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 align-sm">
               <div class="d-row-right">
-                <div class="btn btn-success btn-xs ml-10px" onclick="fnUpload()">
+                <div class="btn btn-success btn-xs ml-10px" onclick="fnReset()">
                   초기화
                 </div>
                 <div class="btn btn-primary btn-xs ml-10px" onclick="fnSave()">
