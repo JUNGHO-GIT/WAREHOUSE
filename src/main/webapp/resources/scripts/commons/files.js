@@ -51,7 +51,16 @@ const fnUploadFiles = (formParam) => {
       $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
   })
-  .catch(fnAjaxErrorHandler);
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
+  });
 };
 
 // 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
@@ -119,7 +128,16 @@ const fnShowFiles = (tableNm, tableKey, target) => {
     });
     firstImg && fnShowSelectedFiles(tableNm, firstImg.fileUrl, 0);
   })
-  .catch(fnAjaxErrorHandler);
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
+  });
 };
 
 // 2-2. 리스트 이미지 클릭시 표시 ------------------------------------------------------------------
@@ -197,5 +215,14 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
       $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
   })
-  .catch(fnAjaxErrorHandler);
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
+  });
 };

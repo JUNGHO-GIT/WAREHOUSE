@@ -135,6 +135,13 @@ function fnShow (prodCd="0") {
     $(`#tableKey`).val(data.prodCd);
   })
   .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
     console.error(err);
   });
 };

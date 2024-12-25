@@ -134,7 +134,16 @@ function fnShow (resrcCd="0") {
     $(`#keyColumn`).val("resrcCd");
     $(`#tableKey`).val(data.resrcCd);
   })
-  .catch(fnAjaxErrorHandler);
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
+  });
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
