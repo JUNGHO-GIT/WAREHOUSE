@@ -104,7 +104,7 @@ function fnGetList01 () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-function fnShow (prodCd="0") {
+function fnShow (prodCd) {
 
   fetch(`act/showProduct`, {
     method: `POST`,

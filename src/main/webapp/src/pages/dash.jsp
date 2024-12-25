@@ -27,26 +27,26 @@
         <div id="header" class="app-header">
           <div class="app-header-log p-10px mr-auto">
             <img
-              src="${rsPath}/images/logo.png"
               alt="logo"
-              class="w-55px h-auto"
+              src="${rsPath}/images/logo.png"
+              class="w-55px h-auto hide-sm"
               loading="lazy"
             />
           </div>
           <div class="app-header-date d-center p-10px mx-auto">
-            <div class="fs-1-0rem fw-500 grey mr-20px">
+            <div class="fs-0-8rem fw-500 grey mr-20px">
               <i class="fas fa-arrow-left pointer-white" onclick="fnSetDateToPrev()"></i>
             </div>
-            <div class="fs-1-1rem fw-600 white pointer mr-20px">
-              <div id="displayedDate" onclick="fnSetDateToToday()"></div>
-              <input id="inputDate" type="hidden" value="" />
+            <div class="fs-0-9rem fw-600 white pointer mr-20px">
+              <div id="displayedDate" name="displayedDate" onclick="fnSetDateToToday()"></div>
+              <input id="inputDate" name="inputDate" type="hidden" value="" />
             </div>
-            <div class="fs-1-0rem fw-500 grey mr-20px">
+            <div class="fs-0-8rem fw-500 grey mr-20px">
               <i class="fas fa-arrow-right pointer-white" onclick="fnSetDateToNext()"></i>
             </div>
             <div class="app-header-test d-center p-10px">
               <div class="btn btn-xs btn-info hover" onclick="fnGetTestData()">
-                Get Test
+                Test
               </div>
             </div>
           </div>

@@ -98,6 +98,13 @@ const fnFindCd = async (targetNm, targetCd, targetId, event) => {
     });
   })
   .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
     console.error(err);
   });
 };
@@ -190,6 +197,13 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
     $(gridId).pqGrid("refreshDataAndView");
   })
   .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
     console.error(err);
   });
 };
@@ -381,27 +395,40 @@ const fnCheckSession = () => {
 
 // 버전 정보 표시 ----------------------------------------------------------------------------------
 const fnShowVersion = () => {
-  $.ajax({
-    type: "GET",
-    url: "showVersion",
-    dataType: "JSON",
-    success: (data) => {
-      const latestDateTime = data.latestDateTime;
-      const latestVersion = data.latestVersion;
-
-      const fmtHtml = (/* javascript */`
-        <div class="d-row-center">
-          <div class="fs-0-6rem fw-500 light-black mr-10px">Test Version</div>
-          <div class="fs-0-6rem fw-400 light-black mr-10px">v${latestVersion}</div>
-          <div class="fs-0-6rem fw-400 light-black">${latestDateTime}</div>
-        </div>
-      `);
-
-      $(".showVersion").html(fmtHtml);
+  fetch(`showVersion`, {
+    method: `GET`,
+    headers: {
+      "AJAX": "true",
     },
-    error: fnAjaxErrorHandler
+  })
+  .then((response) => (
+    response.json()
+  ))
+  .then((data) => {
+    const latestDateTime = data.latestDateTime;
+    const latestVersion = data.latestVersion;
+
+    const fmtHtml = (/* javascript */`
+      <div class="d-row-center">
+        <div class="fs-0-6rem fw-500 light-black mr-10px">Test Version</div>
+        <div class="fs-0-6rem fw-400 light-black mr-10px">v${latestVersion}</div>
+        <div class="fs-0-6rem fw-400 light-black">${latestDateTime}</div>
+      </div>
+    `);
+
+    $(".showVersion").html(fmtHtml);
+  })
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
   });
-}
+};
 
 // 0. 미디어 별로 마진, 정렬 조정 ------------------------------------------------------------------
 const fnDynamicDisplay = () => {
@@ -411,6 +438,9 @@ const fnDynamicDisplay = () => {
   const xsToMd = window.matchMedia("(min-width: 0px) and (max-width: 768px)");
   const mdToXl = window.matchMedia("(min-width: 769px) and (max-width: 10000px)");
 
+  const hideSm = document.querySelectorAll(".hide-sm");
+  const hideMd = document.querySelectorAll(".hide-md");
+
   const alignSm = document.querySelectorAll(".align-sm");
   const alignMd = document.querySelectorAll(".align-md");
 
@@ -419,6 +449,40 @@ const fnDynamicDisplay = () => {
 
   const marginSmDash = document.querySelectorAll(".margin-sm-dash");
   const marginMdDash = document.querySelectorAll(".margin-md-dash");
+
+  hideSm.forEach((el) => {
+    if (xsToSm.matches) {
+      el.classList.add("d-none");
+    }
+    else if (smToXl.matches) {
+      el.classList.remove("d-none");
+    }
+  });
+  hideMd.forEach((el) => {
+    if (xsToMd.matches) {
+      el.classList.add("d-none");
+    }
+    else if (mdToXl.matches) {
+      el.classList.remove("d-none");
+    }
+  });
+
+  alignSm.forEach((el) => {
+    if (xsToSm.matches) {
+      el.classList.add("d-center");
+    }
+    else if (smToXl.matches) {
+      el.classList.remove("d-center");
+    }
+  });
+  alignMd.forEach((el) => {
+    if (xsToMd.matches) {
+      el.classList.add("d-center");
+    }
+    else if (mdToXl.matches) {
+      el.classList.remove("d-center");
+    }
+  });
 
   marginSm.forEach((el) => {
     if (xsToSm.matches) {
@@ -430,7 +494,6 @@ const fnDynamicDisplay = () => {
       el?.classList?.add("pr-2vw");
     }
   });
-
   marginMd.forEach((el) => {
     if (xsToMd.matches) {
       el?.classList?.add("mb-4vh");
@@ -450,31 +513,12 @@ const fnDynamicDisplay = () => {
       el?.classList?.remove("mb-2vh");
     }
   });
-
   marginMdDash.forEach((el) => {
     if (xsToMd.matches) {
       el?.classList?.add("mb-2vh");
     }
     else if (mdToXl.matches) {
       el?.classList?.remove("mb-2vh");
-    }
-  });
-
-  alignSm.forEach((el) => {
-    if (xsToSm.matches) {
-      el.classList.add("d-center");
-    }
-    else if (smToXl.matches) {
-      el.classList.remove("d-center");
-    }
-  });
-
-  alignMd.forEach((el) => {
-    if (xsToMd.matches) {
-      el.classList.add("d-center");
-    }
-    else if (mdToXl.matches) {
-      el.classList.remove("d-center");
     }
   });
 }
@@ -503,114 +547,117 @@ const fnInitCombo = (configArray, onComplete, unusedParam) => {
     }
   }
 
-  $.ajax({
-    url: `act/initCodeAll`,
-    data: `part=${partStr}&groupCd=${groupCdStr}&target=${targetStr}`,
-    type: `POST`,
-    dataType: "JSON",
-    beforeSend: (req) => {
-      req.setRequestHeader("AJAX", "true");
+  fetch(`act/initCodeAll`, {
+    method: `POST`,
+    body: `part=${partStr}&groupCd=${groupCdStr}&target=${targetStr}`,
+    headers: {
+      "AJAX": "true",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    success: (responseData) => {
-      for (let i = 0; i < configArray.length; i++) {
-        const {
-          target,
-          format,
-          formID,
-          groupCd,
-          part,
-          cd,
-          option
-        } = configArray[i];
+  })
+  .then((response) => (
+    response.json()
+  ))
+  .then((data) => {
+    for (let i = 0; i < configArray.length; i++) {
+      const { target, format, formID, groupCd, part, cd, option } = configArray[i];
+      const $targetElem = $(`#${target}`);
+      $targetElem.html("");
 
-        const $targetElem = $(`#${target}`);
-        $targetElem.html("");
+      let optionHtml = "";
+      let showStr = "";
 
-        let optionHtml = "";
-        let showStr = "";
+      if (part === "comCodeGroup") {
+        optionHtml = `<option value="">==그룹==</option>`;
+      }
+      else {
+        for (let j = 0; j < data.length; j++) {
+          if (groupCd === data[j].groupCd) {
+            optionHtml = "";
+            showStr = "";
 
-        if (part === "comCodeGroup") {
-          optionHtml = `<option value="">==그룹==</option>`;
-        }
-        else {
-          for (let j = 0; j < responseData.length; j++) {
-            if (groupCd === responseData[j].groupCd) {
-              optionHtml = "";
-              showStr = "";
-
-              if (format === "radio") {
-                showStr = `(${groupCd})`;
-                optionHtml += `<span style="font-size:9px;line-height:18px;">${showStr}</span>`;
-              }
-              else if (format === "checkbox") {
-                showStr = `(${groupCd})`;
-              }
-              else {
-                showStr = `${responseData[j].groupNm}(${groupCd})`;
-                optionHtml = `<option value="">==${showStr}==</option>`;
-              }
+            if (format === "radio") {
+              showStr = `(${groupCd})`;
+              optionHtml += `<span style="font-size:9px;line-height:18px;">${showStr}</span>`;
+            }
+            else if (format === "checkbox") {
+              showStr = `(${groupCd})`;
+            }
+            else {
+              showStr = `${data[j].groupNm}(${groupCd})`;
+              optionHtml = `<option value="">==${showStr}==</option>`;
             }
           }
         }
+      }
 
-        let optionCount = 1;
-        let radioIndex = 0;
+      let optionCount = 1;
+      let radioIndex = 0;
 
-        for (let k = 0; k < responseData.length; k++) {
-          const item = responseData[k];
+      for (let k = 0; k < data.length; k++) {
+        const item = data[k];
 
-          if (target === item.target) {
-            let selectedAttr = "";
-            if (format === "radio") {
-              selectedAttr = radioIndex === 0 ? "checked" : "";
+        if (target === item.target) {
+          let selectedAttr = "";
+          if (format === "radio") {
+            selectedAttr = radioIndex === 0 ? "checked" : "";
+            optionHtml += `
+              <input type="radio" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;" ${selectedAttr}>
+              <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
+            radioIndex++;
+          }
+          else if (format === "checkbox") {
+            if (option === "addLabel") {
               optionHtml += `
-                <input type="radio" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;" ${selectedAttr}>
-                <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
-              radioIndex++;
-            }
-            else if (format === "checkbox") {
-              if (option === "addLabel") {
-                optionHtml += `
-                  <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
-                  <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>
-                  <label style="float:left;margin-right:2px" id="${item.cd}Status"></label>`;
-              }
-              else {
-                optionHtml += `
-                  <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
-                  <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
-              }
+                <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
+                <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>
+                <label style="float:left;margin-right:2px" id="${item.cd}Status"></label>`;
             }
             else {
-              if (item.cd === cd) {
-                selectedAttr = "SELECTED";
-              }
-              if (part === "comCodeGroup") {
-                optionHtml += `<option value="${item.cd}" ${selectedAttr}>${optionCount}_${item.nm}</option>`;
-              }
-              else {
-                optionHtml += `<option value="${item.cd}" ${selectedAttr}>${item.nm}</option>`;
-              }
+              optionHtml += `
+                <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
+                <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
             }
           }
           else {
-            optionCount = 0;
+            if (item.cd === cd) {
+              selectedAttr = "SELECTED";
+            }
+            if (part === "comCodeGroup") {
+              optionHtml += `<option value="${item.cd}" ${selectedAttr}>${optionCount}_${item.nm}</option>`;
+            }
+            else {
+              optionHtml += `<option value="${item.cd}" ${selectedAttr}>${item.nm}</option>`;
+            }
           }
-          optionCount++;
         }
+        else {
+          optionCount = 0;
+        }
+        optionCount++;
+      }
 
-        $targetElem.append(optionHtml);
-      }
-    },
-    complete: () => {
-      if (typeof onComplete === "function") {
-        onComplete();
-      }
-    },
-    error: fnAjaxErrorHandler
+      $targetElem.append(optionHtml);
+    }
+  })
+  .then(() => {
+    if (typeof onComplete === "function") {
+      onComplete();
+    }
+  })
+  .catch((err) => {
+    if (err.status === 477) {
+      alert("세션이 종료 되었습니다");
+      fnGoPage("reLogin");
+    }
+    else {
+      alert(`code: ${err.status}\n message: ${err.statusText}`);
+    }
+    console.error(err);
   });
 };
 
+// -------------------------------------------------------------------------------------------------
 const fnExport = (gridId, fileName) => {
   if (!gridId) {
     alert("그리드 코드가 지정되지 않았습니다");
@@ -634,10 +681,18 @@ const fnExport = (gridId, fileName) => {
   let totalWidth = 0;
   let baseWidth = 300;
 
-  if (columnCount < 20) baseWidth = 250;
-  if (columnCount < 15) baseWidth = 200;
-  if (columnCount < 10) baseWidth = 150;
-  if (columnCount < 5) baseWidth = 60;
+  if (columnCount < 20) {
+    baseWidth = 250;
+  }
+  if (columnCount < 15) {
+    baseWidth = 200;
+  }
+  if (columnCount < 10) {
+    baseWidth = 150;
+  }
+  if (columnCount < 5) {
+    baseWidth = 60;
+  }
 
   for (let colIndex = 0; colIndex < columnCount; colIndex++) {
     colTitles[colIndex] = colModel[colIndex].title.replace(/(<([^>]+)>)/gi, "");
@@ -687,9 +742,15 @@ const fnExport = (gridId, fileName) => {
       const cellStyle = {};
 
       cellStyle.align = "C C";
-      if (colAlignments[dataColIndex] === undefined) cellStyle.align = "L C";
-      if (colAlignments[dataColIndex] === "left") cellStyle.align = "L C";
-      if (colAlignments[dataColIndex] === "right") cellStyle.align = "R C";
+      if (colAlignments[dataColIndex] === undefined) {
+        cellStyle.align = "L C";
+      }
+      if (colAlignments[dataColIndex] === "left") {
+        cellStyle.align = "L C";
+      }
+      if (colAlignments[dataColIndex] === "right") {
+        cellStyle.align = "R C";
+      }
 
       if (dataRowIndex % 2 === 0) {
         cellStyle.border = "thin #bdbdbd,thin #bdbdbd,thin #bdbdbd,thin #bdbdbd";
@@ -719,7 +780,7 @@ const fnExport = (gridId, fileName) => {
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------
-jQuery(function($) {
+document.addEventListener("DOMContentLoaded", () => {
   fnShowVersion();
   fnDynamicDisplay();
   fnCheckSession();
