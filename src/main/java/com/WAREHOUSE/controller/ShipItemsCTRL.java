@@ -18,7 +18,7 @@ import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.dao.ShipItemsDAO;
 import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.Utils;
+import com.WAREHOUSE.util.ExcelUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ public class ShipItemsCTRL {
 
   private final ShipItemsDAO dao;
   private final CompanyDAO companyDao;
-  private final Utils utils;
+  private final ExcelUtil excel;
   private final LogsUtil logs;
   private final JsonUtil json;
 
@@ -135,7 +135,7 @@ public class ShipItemsCTRL {
       HashMap<String, Object> detail = dao.showShipItems(shipCd, findStartDt, findEndDt);
       ArrayList<HashMap<String, Object>> list = dao.listShipItemsDetail(shipCd, findStartDt, findEndDt);
 
-      utils.shipExcel(
+      excel.shipExcel(
         Integer.valueOf(shipCd),
         detail,
         company,
