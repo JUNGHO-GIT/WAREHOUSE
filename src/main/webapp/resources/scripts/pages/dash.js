@@ -29,7 +29,6 @@ const fnInOutChart = async (key, inOut, plan, dateType) => {
     body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (
@@ -117,7 +116,6 @@ const fnPieChart = async (key, inOut, plan, dateType) => {
     body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (
@@ -167,7 +165,6 @@ const fnProdProtected = async () => {
     body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (
@@ -305,7 +302,6 @@ const fnProdInChartWeek = async () => {
     body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => response.json())
@@ -428,7 +424,6 @@ const fnProdOutChartWeek = async () => {
     body: `date=${date}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (

@@ -26,7 +26,7 @@ public class ResourceInOutAllCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceInOutAll", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/resourceInOutAll", produces="text/html")
   public ModelAndView resourceInOutAll () throws Exception {
     try {
       return new ModelAndView("resourceInOutAll");
@@ -38,7 +38,7 @@ public class ResourceInOutAllCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceInOutAll", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveResourceInOutAll", produces="application/json")
   public ResponseEntity<?> saveResourceInOutAll (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

@@ -25,7 +25,7 @@ public class CommonCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findBom", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findBom", produces="application/json")
   public ResponseEntity<?> findBom (
     @RequestParam(value="findBom", required=false) String findBom
   ) throws Exception {
@@ -40,7 +40,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findHouseNm", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findHouseNm", produces="application/json")
   public ResponseEntity<?> findHouseNm (
     @RequestParam(value="findHouseNm", required=false) String findHouseNm
   ) throws Exception {
@@ -55,7 +55,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findHouseCd", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findHouseCd", produces="application/json")
   public ResponseEntity<?> findHouseCd (
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
@@ -71,7 +71,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findCompNm", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findCompNm", produces="application/json")
   public ResponseEntity<?> findCompNm (
     @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
@@ -86,7 +86,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findCompCd", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findCompCd", produces="application/json")
   public ResponseEntity<?> findCompCd (
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
@@ -102,7 +102,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findProdNm", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findProdNm", produces="application/json")
   public ResponseEntity<?> findProdNm (
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
@@ -117,7 +117,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findProdCd", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findProdCd", produces="application/json")
   public ResponseEntity<?> findProdCd (
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd
@@ -133,7 +133,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findResrcNm", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findResrcNm", produces="application/json")
   public ResponseEntity<?> findResrcNm (
     @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
@@ -148,7 +148,7 @@ public class CommonCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/findResrcCd", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/findResrcCd", produces="application/json")
   public ResponseEntity<?> findResrcCd (
     @RequestParam(value="findNm", required=false) String findNm,
     @RequestParam(value="findCd", required=false) String findCd

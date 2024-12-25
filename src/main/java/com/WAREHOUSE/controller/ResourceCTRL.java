@@ -28,7 +28,7 @@ public class ResourceCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resource", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/resource", produces="text/html")
   public ModelAndView resource () throws Exception {
     try {
       return new ModelAndView("resource");
@@ -40,7 +40,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listResource", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listResource", produces="application/json")
   public ResponseEntity<?> listResource (
     @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
@@ -55,7 +55,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showResource", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showResource", produces="application/json")
   public ResponseEntity<?> showResource (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
@@ -70,7 +70,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResource", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveResource", produces="application/json")
   public ResponseEntity<?> saveResource (
     @RequestBody Resource param,
     @SessionAttribute("userId") String userId

@@ -36,7 +36,6 @@ const fnFindCd = async (targetNm, targetCd, targetId, event) => {
     body: `findNm=${targetNm}&findCd=${targetCd}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (
@@ -137,7 +136,6 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
     body: `findNm=${targetVal}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     },
   })
   .then((response) => (
@@ -296,7 +294,7 @@ const fnGoPage = (page) => {
 
 // 0. ajax 에러 핸들러 -----------------------------------------------------------------------------
 const fnAjaxErrorHandler = (request, status, error) => {
-  if (request.status === 477) {
+  if ((request.status) && (request.status === 400 || request.status === 477)) {
     alert("세션이 종료 되었습니다");
     fnGoPage("reLogin");
   }
@@ -534,7 +532,8 @@ const fnInitCombo = (configArray, onComplete, unusedParam) => {
 
         if (part === "comCodeGroup") {
           optionHtml = `<option value="">==그룹==</option>`;
-        } else {
+        }
+        else {
           for (let j = 0; j < responseData.length; j++) {
             if (groupCd === responseData[j].groupCd) {
               optionHtml = "";
@@ -543,9 +542,11 @@ const fnInitCombo = (configArray, onComplete, unusedParam) => {
               if (format === "radio") {
                 showStr = `(${groupCd})`;
                 optionHtml += `<span style="font-size:9px;line-height:18px;">${showStr}</span>`;
-              } else if (format === "checkbox") {
+              }
+              else if (format === "checkbox") {
                 showStr = `(${groupCd})`;
-              } else {
+              }
+              else {
                 showStr = `${responseData[j].groupNm}(${groupCd})`;
                 optionHtml = `<option value="">==${showStr}==</option>`;
               }
@@ -567,28 +568,33 @@ const fnInitCombo = (configArray, onComplete, unusedParam) => {
                 <input type="radio" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;" ${selectedAttr}>
                 <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
               radioIndex++;
-            } else if (format === "checkbox") {
+            }
+            else if (format === "checkbox") {
               if (option === "addLabel") {
                 optionHtml += `
                   <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
                   <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>
                   <label style="float:left;margin-right:2px" id="${item.cd}Status"></label>`;
-              } else {
+              }
+              else {
                 optionHtml += `
                   <input type="checkbox" id="${formID}" name="${formID}" value="${item.cd}" style="float:left;position:relative;">
                   <label style="float:left;margin-right:3px">${decodeURIComponent(item.nm)}</label>`;
               }
-            } else {
+            }
+            else {
               if (item.cd === cd) {
                 selectedAttr = "SELECTED";
               }
               if (part === "comCodeGroup") {
                 optionHtml += `<option value="${item.cd}" ${selectedAttr}>${optionCount}_${item.nm}</option>`;
-              } else {
+              }
+              else {
                 optionHtml += `<option value="${item.cd}" ${selectedAttr}>${item.nm}</option>`;
               }
             }
-          } else {
+          }
+          else {
             optionCount = 0;
           }
           optionCount++;
@@ -689,14 +695,16 @@ const fnExport = (gridId, fileName) => {
       if (dataRowIndex % 2 === 0) {
         cellStyle.border = "thin #bdbdbd,thin #bdbdbd,thin #bdbdbd,thin #bdbdbd";
         cellStyle.fill = "";
-      } else {
+      }
+      else {
         cellStyle.border = "thin #bdbdbd,thin #bdbdbd,thin #bdbdbd,thin #bdbdbd";
         cellStyle.fill = "#FAFAFA";
       }
 
       if (colDataTypes[dataColIndex] === "float" || colDataTypes[dataColIndex] === "integer") {
         cellStyle.format = "#,##0 ;[Red](#,##0)";
-      } else {
+      }
+      else {
         cellStyle.format = "";
       }
 

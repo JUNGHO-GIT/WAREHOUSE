@@ -163,7 +163,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/dash", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/dash", produces="application/json")
   public ResponseEntity<?> dash (
     @RequestParam(value="key", required=false) String key,
     @RequestParam(value="inOut", required=false) String inOut,
@@ -314,7 +314,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodProtected", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/prodProtected", produces="application/json")
   public ResponseEntity<?> prodProtected (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {
@@ -350,7 +350,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodInChartWeek", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/prodInChartWeek", produces="application/json")
   public ResponseEntity<?> prodInChartWeek (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {
@@ -434,7 +434,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodOutChartWeek", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/prodOutChartWeek", produces="application/json")
   public ResponseEntity<?> prodOutChartWeek (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {

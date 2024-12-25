@@ -28,7 +28,7 @@ public class ResourceXlsCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceXls", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/resourceXls", produces="text/html")
   public ModelAndView resourceXls () throws Exception {
     try {
       return new ModelAndView("resourceXls");
@@ -40,7 +40,7 @@ public class ResourceXlsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceXls", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveResourceXls", produces="application/json")
   public ResponseEntity<?> saveResourceXls (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

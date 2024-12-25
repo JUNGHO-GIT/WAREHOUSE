@@ -28,7 +28,7 @@ public class ShippingCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipping", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/shipping", produces="text/html")
   public ModelAndView shipping () throws Exception {
     try {
       return new ModelAndView("shipping");
@@ -40,7 +40,7 @@ public class ShippingCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipping", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listShipping", produces="application/json")
   public ResponseEntity<?> listShipping(
     @RequestParam(value="inOutDt", required=false) String inOutDt,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -59,7 +59,7 @@ public class ShippingCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveShipping", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveShipping", produces="application/json")
   public ResponseEntity<?> saveShipping (
     @RequestBody Shipping param,
     @SessionAttribute("userId") String userId

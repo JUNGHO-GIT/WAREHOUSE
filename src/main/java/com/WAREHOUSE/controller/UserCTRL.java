@@ -30,7 +30,7 @@ public class UserCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/", "/login"}, produces="text/html;charset=UTF-8")
+  @GetMapping(value={"/", "/login"}, produces="text/html")
   public ModelAndView login () throws Exception {
     try {
       return new ModelAndView("userLogin");
@@ -42,7 +42,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/reLogin", "/logout"}, produces="text/html;charset=UTF-8")
+  @GetMapping(value={"/reLogin", "/logout"}, produces="text/html")
   public ModelAndView reLogin () throws Exception {
     try {
       return new ModelAndView("reLogin");
@@ -54,7 +54,7 @@ public class UserCTRL {
   }
 
   //-----------------------------------------------------------------------------------------------
-  @GetMapping(value="/user", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/user", produces="text/html")
   public ModelAndView user () throws Exception {
     try {
       return new ModelAndView("user");
@@ -66,7 +66,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/auth", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/auth", produces="application/json")
   public ResponseEntity<?> auth (
     @RequestParam(value="userId", required=false) String userId,
     @RequestParam(value="userPw", required=false) String pwClient,
@@ -123,7 +123,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listUser", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listUser", produces="application/json")
   public ResponseEntity<?> listUser (
     @RequestParam(value="findUserNm", required=false) String findUserNm
   ) throws Exception {
@@ -138,7 +138,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listUserPerm", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listUserPerm", produces="application/json")
   public ResponseEntity<?> listUserPerm () throws Exception {
     try {
       ArrayList<HashMap<String, Object>> list = dao.listUserPerm();
@@ -151,7 +151,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showUser", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showUser", produces="application/json")
   public ResponseEntity<?> showUser (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
@@ -166,7 +166,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/checkUserId", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/checkUserId", produces="application/json")
   public ResponseEntity<?> checkUserId (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
@@ -181,7 +181,7 @@ public class UserCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveUser", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveUser", produces="application/json")
   public ResponseEntity<?> saveUser (
     @RequestBody HashMap<String, Object> param,
     @SessionAttribute("userId") String idParam
@@ -263,7 +263,7 @@ public class UserCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/updatePw", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/updatePw", produces="application/json")
   public ResponseEntity<?> updatePw (
     @RequestBody User param,
     @SessionAttribute("userId") String userId

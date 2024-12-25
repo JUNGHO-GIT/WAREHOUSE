@@ -32,6 +32,10 @@ function fnGetList01 () {
       render: renderImage,
     },
     {
+      title:"자재코드", dataIndx:"resrcCd", dataType:"string", align:"center",
+      hidden: true,
+    },
+    {
       title:"자재명", dataIndx:"resrcNm", dataType:"string", align:"center",
       minWidth:150
     },
@@ -106,7 +110,6 @@ function fnShow (resrcCd="0") {
     body: `resrcCd=${resrcCd}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     }
   })
   .then((response) => (

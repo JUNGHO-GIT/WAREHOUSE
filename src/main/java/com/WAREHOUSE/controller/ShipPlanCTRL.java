@@ -34,7 +34,7 @@ public class ShipPlanCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipPlan", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/shipPlan", produces="text/html")
   public ModelAndView shipPlan () throws Exception {
     try {
       return new ModelAndView("shipPlan");
@@ -46,7 +46,7 @@ public class ShipPlanCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listShipPlan", produces="application/json")
   public ResponseEntity<?> listShipPlan (
     @RequestParam(value="shipDt", required=false) String shipDt,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -63,7 +63,7 @@ public class ShipPlanCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipPlanDetail", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listShipPlanDetail", produces="application/json")
   public ResponseEntity<?> listShipPlanDetail (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -80,7 +80,7 @@ public class ShipPlanCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showShipPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showShipPlan", produces="application/json")
   public ResponseEntity<?> showShipPlan (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -97,7 +97,7 @@ public class ShipPlanCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveShipPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveShipPlan", produces="application/json")
   public ResponseEntity<?> saveShipPlan (
     @RequestBody Shipping param,
     @SessionAttribute("userId") String userId
@@ -119,7 +119,7 @@ public class ShipPlanCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipPlanExcelDown", produces="application/json;charset=UTF-8")
+  @GetMapping(value="/shipPlanExcelDown", produces="application/json")
   public ResponseEntity<?> shipPlanExcelDown (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,

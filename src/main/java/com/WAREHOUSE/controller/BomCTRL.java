@@ -30,7 +30,7 @@ public class BomCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/bom", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/bom", produces="text/html")
   public ModelAndView bom () throws Exception {
     try {
       return new ModelAndView("bom");
@@ -42,7 +42,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listBom", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listBom", produces="application/json")
   public ResponseEntity<?> listBom(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
@@ -57,7 +57,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showBom", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showBom", produces="application/json")
   public ResponseEntity<?> showBom (
     @RequestParam(value="prodCd", required=false) Integer prodCd,
     @RequestParam(value="bomType", required=false) String bomType
@@ -73,7 +73,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveBom", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveBom", produces="application/json")
   public ResponseEntity<?> saveBom (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

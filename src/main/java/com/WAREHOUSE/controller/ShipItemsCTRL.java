@@ -34,7 +34,7 @@ public class ShipItemsCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipItems", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/shipItems", produces="text/html")
   public ModelAndView shipItems () throws Exception {
     try {
       return new ModelAndView("shipItems");
@@ -46,7 +46,7 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipItems", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listShipItems", produces="application/json")
   public ResponseEntity<?> listShipItems (
     @RequestParam(value="shipDt", required=false) String shipDt,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -63,7 +63,7 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipItemsDetail", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listShipItemsDetail", produces="application/json")
   public ResponseEntity<?> listShipItemsDetail (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -80,7 +80,7 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showShipItems", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showShipItems", produces="application/json")
   public ResponseEntity<?> showShipItems (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -97,7 +97,7 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveShipItems", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveShipItems", produces="application/json")
   public ResponseEntity<?> saveShipItems (
     @RequestBody Shipping param,
     @SessionAttribute("userId") String userId
@@ -119,7 +119,7 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipItemsExcelDown", produces="application/json;charset=UTF-8")
+  @GetMapping(value="/shipItemsExcelDown", produces="application/json")
   public ResponseEntity<?> shipItemsExcelDown (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,

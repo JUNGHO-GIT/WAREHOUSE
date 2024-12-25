@@ -35,7 +35,7 @@ public class MainCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/main", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/main", produces="text/html")
   public ModelAndView main (
     HttpSession session,
     Model model
@@ -60,7 +60,7 @@ public class MainCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listSysMenu", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listSysMenu", produces="application/json")
   public ResponseEntity<?> listSysMenu (
     @RequestParam(value="config", required=false) String config
   ) throws Exception {
@@ -89,7 +89,7 @@ public class MainCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/showVersion", produces="application/json;charset=UTF-8")
+  @GetMapping(value="/showVersion", produces="application/json")
   public ResponseEntity<?> showVersion () throws Exception {
 
     Map<String, Object> map = new HashMap<>();

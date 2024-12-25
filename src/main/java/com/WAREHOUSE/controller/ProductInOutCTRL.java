@@ -28,7 +28,7 @@ public class ProductInOutCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productIn", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/productIn", produces="text/html")
   public ModelAndView productIn () throws Exception {
     try {
       return new ModelAndView("productIn");
@@ -40,7 +40,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productOut", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/productOut", produces="text/html")
   public ModelAndView productOut () throws Exception {
     try {
       return new ModelAndView("productOut");
@@ -52,7 +52,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listProductInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listProductInOut", produces="application/json")
   public ResponseEntity<?> listProductInOut(
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
@@ -67,7 +67,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showProductInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showProductInOut", produces="application/json")
   public ResponseEntity<?> showProductInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +82,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveProductInOut", produces="application/json")
   public ResponseEntity<?> saveProductInOut (
     @RequestBody ProductInOut param,
     @SessionAttribute("userId") String userId

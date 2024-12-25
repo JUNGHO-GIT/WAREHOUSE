@@ -28,7 +28,7 @@ public class ResourceInOutCTRL {
   private final JsonUtil json;
 
   //-----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceIn", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/resourceIn", produces="text/html")
   public ModelAndView resourceIn () throws Exception {
     try {
       return new ModelAndView("resourceIn");
@@ -40,7 +40,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceOut", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/resourceOut", produces="text/html")
   public ModelAndView resourceOut () throws Exception {
     try {
       return new ModelAndView("resourceOut");
@@ -52,7 +52,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listResourceInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listResourceInOut", produces="application/json")
   public ResponseEntity<?> listResourceInOut (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
@@ -67,7 +67,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showResourceInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showResourceInOut", produces="application/json")
   public ResponseEntity<?> showResourceInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +82,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceInOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveResourceInOut", produces="application/json")
   public ResponseEntity<?> saveResourceInOut (
     @RequestBody ResourceInOut param,
     @SessionAttribute("userId") String userId

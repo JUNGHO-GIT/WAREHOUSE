@@ -28,7 +28,7 @@ public class ProductCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/product", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/product", produces="text/html")
   public ModelAndView product () throws Exception {
     try {
       return new ModelAndView("product");
@@ -40,7 +40,7 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listProduct", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listProduct", produces="application/json")
   public ResponseEntity<?> listProduct(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
@@ -55,7 +55,7 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showProduct", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showProduct", produces="application/json")
   public ResponseEntity<?> showProducts (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
@@ -70,7 +70,7 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProduct", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveProduct", produces="application/json")
   public ResponseEntity<?> saveProduct (
     @RequestBody Product param,
     @SessionAttribute("userId") String userId

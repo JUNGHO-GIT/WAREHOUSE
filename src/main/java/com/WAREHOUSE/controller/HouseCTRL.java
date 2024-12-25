@@ -28,7 +28,7 @@ public class HouseCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/house", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/house", produces="text/html")
   public ModelAndView house () throws Exception {
     try {
       return new ModelAndView("house");
@@ -40,7 +40,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listHouse", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listHouse", produces="application/json")
   public ResponseEntity<?> listHouse (
     @RequestParam(value="id", required=false) Integer id
   ) throws Exception {
@@ -55,7 +55,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showHouse", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showHouse", produces="application/json")
   public ResponseEntity<?> showHouse (
     @RequestParam(value="houseCd", required=false) Integer houseCd
   ) throws Exception {
@@ -76,7 +76,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveHouse", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveHouse", produces="application/json")
   public ResponseEntity<?> saveHouse (
     @RequestBody House param,
     @SessionAttribute("userId") String userId

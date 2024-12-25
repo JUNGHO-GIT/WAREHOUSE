@@ -26,7 +26,7 @@ public class ProductInOutXlsCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productInOutXls", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/productInOutXls", produces="text/html")
   public ModelAndView productInOutXls () throws Exception {
     try {
       return new ModelAndView("productInOutXls");
@@ -38,7 +38,7 @@ public class ProductInOutXlsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductInOutXls", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveProductInOutXls", produces="application/json")
   public ResponseEntity<?> saveProductInOutXls (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

@@ -33,6 +33,10 @@ function fnGetList01 () {
       render: renderImage,
     },
     {
+      title:"제품코드", dataIndx:"prodCd", dataType:"string", align:"center",
+      hidden: true,
+    },
+    {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
       minWidth:150
     },

@@ -26,7 +26,7 @@ public class ReportCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/reportIn", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/reportIn", produces="text/html")
   public ModelAndView reportIn () throws Exception {
     try {
       return new ModelAndView("reportIn");
@@ -38,7 +38,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/reportOut", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/reportOut", produces="text/html")
   public ModelAndView reportOut () throws Exception {
     try {
       return new ModelAndView("reportOut");
@@ -50,7 +50,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/reportStock", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/reportStock", produces="text/html")
   public ModelAndView reportStock () throws Exception {
     try {
       return new ModelAndView("reportStock");
@@ -62,7 +62,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/reportHouse", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/reportHouse", produces="text/html")
   public ModelAndView reportHouse () throws Exception {
     try {
       return new ModelAndView("reportHouse");
@@ -74,7 +74,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportProdIn", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportProdIn", produces="application/json")
   public ResponseEntity<?> listReportProdIn (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -97,7 +97,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcIn", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcIn", produces="application/json")
   public ResponseEntity<?> listReportResrcIn (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -120,7 +120,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportProdOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportProdOut", produces="application/json")
   public ResponseEntity<?> listReportProdOut (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -143,7 +143,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcOut", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcOut", produces="application/json")
   public ResponseEntity<?> listReportResrcOut (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -166,7 +166,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportProdStock", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportProdStock", produces="application/json")
   public ResponseEntity<?> listReportProdStock (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {
@@ -189,7 +189,7 @@ public class ReportCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listReportResrcStock", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listReportResrcStock", produces="application/json")
   public ResponseEntity<?> listReportResrcStock (
     @RequestParam(value="findYear", required=false) String findYearParam
   ) throws Exception {

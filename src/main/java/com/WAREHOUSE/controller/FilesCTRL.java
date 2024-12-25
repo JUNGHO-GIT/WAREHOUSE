@@ -61,7 +61,7 @@ public class FilesCTRL {
   private final Utils utils;
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listFiles", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listFiles", produces="application/json")
   public ResponseEntity<?> listFiles (
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="tableKey", required=false) String tableKey
@@ -77,7 +77,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showFiles", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showFiles", produces="application/json")
   public ResponseEntity<?> showFiles (
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="tableKey", required=false) String tableKey
@@ -159,7 +159,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/uploadFiles", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/uploadFiles", produces="application/json")
   public ResponseEntity<?> uploadFiles (
     @RequestParam(value="userFile", required=false) MultipartFile multipartFile,
     @RequestParam(value="tableNm", required=false) String tableNm,
@@ -221,7 +221,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveFiles", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveFiles", produces="application/json")
   public ResponseEntity<?> saveFiles (
     @RequestBody HashMap<String, Object> param,
     @SessionAttribute("userId") String userId

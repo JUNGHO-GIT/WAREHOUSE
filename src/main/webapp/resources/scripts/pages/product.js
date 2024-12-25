@@ -32,6 +32,10 @@ function fnGetList01 () {
       render: renderImage,
     },
     {
+      title:"제품코드", dataIndx:"prodCd", dataType:"string", align:"center",
+      hidden: true,
+    },
+    {
       title:"제품명", dataIndx:"prodNm", dataType:"string", align:"center",
       minWidth:150
     },
@@ -101,12 +105,12 @@ function fnGetList01 () {
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
 function fnShow (prodCd="0") {
+
   fetch(`act/showProduct`, {
     method: "POST",
     body: `prodCd=${prodCd}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     }
   })
   .then((response) => (

@@ -75,7 +75,6 @@ const fnShowFiles = (tableNm, tableKey, target) => {
     body: `tableNm=${tableNm}&tableKey=${tableKey}`,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "AJAX": "true"
     }
   })
   .then((response) => (

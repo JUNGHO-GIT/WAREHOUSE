@@ -28,7 +28,7 @@ public class CompanyCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/company", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/company", produces="text/html")
   public ModelAndView company () throws Exception {
     try {
       return new ModelAndView("company");
@@ -40,7 +40,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listCompany", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listCompany", produces="application/json")
   public ResponseEntity<?> listCompany(
     @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
@@ -55,7 +55,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showCompany", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showCompany", produces="application/json")
   public ResponseEntity<?> showCompany(
     @RequestParam(value="compCd", required=false) Integer compCd
   ) throws Exception {
@@ -70,7 +70,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveCompany", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveCompany", produces="application/json")
   public ResponseEntity<?> saveCompany (
     @RequestBody Company param,
     @SessionAttribute("userId") String userId

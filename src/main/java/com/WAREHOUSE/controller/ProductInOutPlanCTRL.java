@@ -28,7 +28,7 @@ public class ProductInOutPlanCTRL {
   private final JsonUtil json;
 
   // 0. 제품 입고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/productInPlan", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/productInPlan", produces="text/html")
   public ModelAndView productInPlan () throws Exception {
     try {
       return new ModelAndView("productInPlan");
@@ -40,7 +40,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 0. 제품 출고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/productOutPlan", produces="text/html;charset=UTF-8")
+  @GetMapping(value="/productOutPlan", produces="text/html")
   public ModelAndView productOutPlan () throws Exception {
     try {
       return new ModelAndView("productOutPlan");
@@ -52,7 +52,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
-  @PostMapping(value="/act/listProductInOutPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/listProductInOutPlan", produces="application/json")
   public ResponseEntity<?> listProductInOutPlan (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
@@ -67,7 +67,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
-  @PostMapping(value="/act/showProductInOutPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/showProductInOutPlan", produces="application/json")
   public ResponseEntity<?> showProductInOutPlan (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +82,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-3. 제품 입출고 예정 저장 -------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductInOutPlan", produces="application/json;charset=UTF-8")
+  @PostMapping(value="/act/saveProductInOutPlan", produces="application/json")
   public ResponseEntity<?> saveProductInOutPlan (
     @RequestBody ProductInOut param,
     @SessionAttribute("userId") String userId
