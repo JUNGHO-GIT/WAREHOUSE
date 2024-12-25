@@ -98,47 +98,48 @@ function fnGetList01 () {
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
 function fnShow(prodCd) {
+  fetch(`act/showProduct`, {
+    method: "POST",
+    body: `prodCd=${prodCd}`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "AJAX": "true"
+    }
+  })
+  .then((response) => (
+    response.json()
+  ))
+  .then((data) => {
 
-  $.ajax({
-    url: "act/showProduct",
-    data: `prodCd=${prodCd}`,
-    type: "POST",
-    dataType:"JSON",
-    beforeSend: (xmlHttpRequest) => {
-      xmlHttpRequest.setRequestHeader("AJAX", "true");
-    },
-    success: (data) => {
+    // 1. 제품 관련
+    $(`#prodCd`).val(data.prodCd);
+    $(`#prodNm`).val(data.prodNm);
+    $(`#prodType`).val(data.prodType);
 
-      // 1. 제품 관련
-      $(`#prodCd`).val(data.prodCd);
-      $(`#prodNm`).val(data.prodNm);
-      $(`#prodType`).val(data.prodType);
+    $(`#option1`).val(data.option1);
+    $(`#unit`).val(data.unit);
+    $(`#option2`).val(data.option2);
+    $(`#quality`).val(data.quality);
+    $(`#maker`).val(data.maker);
+    $(`#remarks`).val(data.remarks);
+    $(`#barcode`).val(data.barcode);
+    $(`#flagYn`).val("Y");
+    $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
+    $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
-      $(`#option1`).val(data.option1);
-      $(`#unit`).val(data.unit);
-      $(`#option2`).val(data.option2);
-      $(`#quality`).val(data.quality);
-      $(`#maker`).val(data.maker);
-      $(`#remarks`).val(data.remarks);
-      $(`#barcode`).val(data.barcode);
-      $(`#flagYn`).val("Y");
-      $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
-      $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
+    // 3. 창고 관련
+    fnFindCd("", data.houseCd, "house", null);
 
-      // 3. 창고 관련
-      fnFindCd("", data.houseCd, "house", null);
+    // 4. 거래처 관련
+    fnFindCd("", data.compCd, "comp", null);
 
-      // 4. 거래처 관련
-      fnFindCd("", data.compCd, "comp", null);
-
-      // 5. file 관련
-      $(`#tableNm`).val("tblProduct");
-      $(`#keyColumn`).val("prodCd");
-      $(`#tableKey`).val(data.prodCd);
-      fnShowFiles("tblProduct", data.prodCd, "fileList");
-    },
-    error: fnAjaxErrorHandler
-  });
+    // 5. file 관련
+    $(`#tableNm`).val("tblProduct");
+    $(`#keyColumn`).val("prodCd");
+    $(`#tableKey`).val(data.prodCd);
+    fnShowFiles("tblProduct", data.prodCd, "fileList");
+  })
+  .catch(fnAjaxErrorHandler);
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------

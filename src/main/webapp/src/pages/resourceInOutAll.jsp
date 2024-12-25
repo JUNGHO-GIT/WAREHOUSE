@@ -128,8 +128,8 @@
                 <input type="hidden" name="tableKey" id="tableKey" value="0" />
                 <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
                 <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                <input type="hidden" name="fileNm" id="fileNm" />
-                <input type="hidden" name="fileUrl" id="fileUrl" />
+                <input type="hidden" name="fileNm" id="fileNm" value="" />
+                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
               </div>
             </div>
           </div>

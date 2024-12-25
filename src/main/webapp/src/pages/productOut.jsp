@@ -348,13 +348,13 @@
                 <input type="hidden" id="prod" name="prod" />
                 <input type="hidden" id="prodCd" name="prodCd" />
                 <input type="hidden" id="compCd" name="compCd" />
-                <input type="hidden" id="houseCd" name="houseCd" />
+                <input type="hidden" id="houseCd" name="houseCd" value="" />
                 <input type="hidden" name="tableNm" id="tableNm" value="tblProduct" />
                 <input type="hidden" name="tableKey" id="tableKey" value="0" />
                 <input type="hidden" name="keyColumn" id="keyColumn" value="prodCd" />
                 <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                <input type="hidden" name="fileNm" id="fileNm" />
-                <input type="hidden" name="fileUrl" id="fileUrl" />
+                <input type="hidden" name="fileNm" id="fileNm" value="" />
+                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
               </div>
             </div>
           </div>

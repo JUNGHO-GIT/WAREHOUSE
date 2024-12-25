@@ -355,13 +355,13 @@
             <!-- hidden -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="hidden-wrapper">
-                <input type="hidden" name="compCd" id="compCd" />
+                <input type="hidden" name="compCd" id="compCd" value="" />
                 <input type="hidden" name="tableNm" id="tableNm" value="tblCompany" />
                 <input type="hidden" name="tableKey" id="tableKey" value="0" />
                 <input type="hidden" name="keyColumn" id="keyColumn" value="compCd" />
                 <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                <input type="hidden" name="fileNm" id="fileNm" />
-                <input type="hidden" name="fileUrl" id="fileUrl" />
+                <input type="hidden" name="fileNm" id="fileNm" value="" />
+                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
               </div>
             </div>
           </div>

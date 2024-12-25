@@ -348,13 +348,13 @@
                 <input type="hidden" id="resrc" name="resrc" />
                 <input type="hidden" id="resrcCd" name="resrcCd" />
                 <input type="hidden" id="compCd" name="compCd" />
-                <input type="hidden" id="houseCd" name="houseCd" />
+                <input type="hidden" id="houseCd" name="houseCd" value="" />
                 <input type="hidden" name="tableNm" id="tableNm" value="tblResource" />
                 <input type="hidden" name="tableKey" id="tableKey" value="0" />
                 <input type="hidden" name="keyColumn" id="keyColumn" value="resrcCd" />
                 <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                <input type="hidden" name="fileNm" id="fileNm" />
-                <input type="hidden" name="fileUrl" id="fileUrl" />
+                <input type="hidden" name="fileNm" id="fileNm" value="" />
+                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
               </div>
             </div>
           </div>
