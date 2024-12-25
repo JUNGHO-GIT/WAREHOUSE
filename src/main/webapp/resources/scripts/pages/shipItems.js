@@ -58,10 +58,10 @@ function fnGetList01 () {
     },
   ];
   $.ajax({
-    url: "act/listShipItems",
+    url: `act/listShipItems`,
     data:`shipDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -117,10 +117,10 @@ function fnGetList02 (shipCd) {
 
   $(`#shipCd`).val(shipCd);
   $.ajax({
-    url: "act/listShipItemsDetail",
+    url: `act/listShipItemsDetail`,
     data: `shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -140,10 +140,10 @@ function fnGetList02 (shipCd) {
 function fnShow(shipCd) {
 
   $.ajax({
-    url: "act/showShipItems",
+    url: `act/showShipItems`,
     data:`shipCd=${shipCd}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -189,10 +189,10 @@ function fnDel() {
   };
 
   $.ajax({
-    url: "act/saveShipItems",
+    url: `act/saveShipItems`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

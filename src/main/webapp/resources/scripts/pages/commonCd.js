@@ -58,10 +58,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listCommonCd",
+    url: `act/listCommonCd`,
     data: `findGroupCd=${$(`#findGroupCd`).val()}&findItemNm=${$(`#findItemNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -81,10 +81,10 @@ function fnGetList01 () {
 function fnShow(groupCd, itemCd) {
 
   $.ajax({
-    url: "act/showCommonCd",
+    url: `act/showCommonCd`,
     data: `groupCd=${groupCd}&itemCd=${itemCd}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -171,10 +171,10 @@ function fnSave(flagYn) {
   };
 
   $.ajax({
-    url: "act/saveCommonCd",
+    url: `act/saveCommonCd`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

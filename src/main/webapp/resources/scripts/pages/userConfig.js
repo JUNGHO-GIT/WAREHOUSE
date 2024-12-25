@@ -2,10 +2,10 @@
 function fnShowUserConfig() {
 
   $.ajax({
-    url: "act/showUserConfigTab",
+    url: `act/showUserConfigTab`,
     data: `gridCd=${""}&pageNm=${"tabs"}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend : function(xmlHttpRequest){
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -24,10 +24,10 @@ function fnShowUserConfigInfo() {
   fnPopup('popupUserConfig', 'on');
 
   $.ajax({
-    url: "act/showUserConfigInfo",
+    url: `act/showUserConfigInfo`,
     data: {},
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -98,10 +98,10 @@ function fnSaveUserConfigInfo() {
   };
 
   $.ajax({
-    url: "act/saveUserConfigInfo",
+    url: `act/saveUserConfigInfo`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -126,10 +126,10 @@ function fnSaveUserConfigTab() {
   };
 
   $.ajax({
-    url: "act/saveUserConfigTab",
+    url: `act/saveUserConfigTab`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -168,10 +168,10 @@ function fnUpdateConfigPw() {
   };
 
   $.ajax({
-    url: "act/updateConfigPw",
+    url: `act/updateConfigPw`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.DashDAO;
 import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.LogsUtil;
@@ -34,10 +33,10 @@ public class DashCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/dash", produces="text/plain;charset=UTF-8")
-  public ModelAndView dash () throws Exception {
+  @GetMapping(value={"/dash"}, produces="text/plain; charset=UTF-8")
+  public String dash () {
     try {
-      return new ModelAndView("dash");
+      return "dash";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -163,7 +162,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/dash", produces="application/json")
+  @PostMapping(value={"/act/dash"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> dash (
     @RequestParam(value="key", required=false) String key,
     @RequestParam(value="inOut", required=false) String inOut,
@@ -314,7 +313,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodProtected", produces="application/json")
+  @PostMapping(value={"/act/prodProtected"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> prodProtected (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {
@@ -350,7 +349,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodInChartWeek", produces="application/json")
+  @PostMapping(value={"/act/prodInChartWeek"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> prodInChartWeek (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {
@@ -434,7 +433,7 @@ public class DashCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/prodOutChartWeek", produces="application/json")
+  @PostMapping(value={"/act/prodOutChartWeek"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> prodOutChartWeek (
     @RequestParam(value="date", required=false) String date
   ) throws Exception {

@@ -11,7 +11,7 @@ function fnGetList01 (pCd)  {
     },
     async: {
       enable: true,
-      url: "act/listHouse",
+      url: `act/listHouse`,
       autoParam: ["id"],
       dataFilter: (treeId, parentNode, childNodes) => {
         if (!childNodes) {
@@ -26,10 +26,10 @@ function fnGetList01 (pCd)  {
   };
 
   $.ajax({
-    url: "act/listHouse",
+    url: `act/listHouse`,
     data: `id=${pCd}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -173,10 +173,10 @@ function fnGetList03 (houseData)  {
 function fnShow (event, treeId, treeNode)  {
 
   $.ajax({
-    url: "act/showHouse",
+    url: `act/showHouse`,
     data: `houseCd=${treeNode.id}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -262,10 +262,10 @@ function fnSave (YN)  {
   };
 
   $.ajax({
-    url: "act/saveHouse",
+    url: `act/saveHouse`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

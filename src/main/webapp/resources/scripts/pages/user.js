@@ -52,10 +52,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listUser",
+    url: `act/listUser`,
     data: `findUserNm=${$(`#findUserNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -77,10 +77,10 @@ function fnGetPartsUser() {
   $(`#userPerms`).empty();
 
   $.ajax({
-    url: "act/listUserPerm",
+    url: `act/listUserPerm`,
     data: "",
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -138,10 +138,10 @@ function fnGetPartsUser() {
 // 2. 상세 항목 ------------------------------------------------------------------------------------
 function fnShow (userId) {
   $.ajax({
-    url: "act/showUser",
+    url: `act/showUser`,
     data: `userId=${userId}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -271,10 +271,10 @@ function fnSave(flagYn) {
   };
 
   $.ajax({
-    url: "act/saveUser",
+    url: `act/saveUser`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -297,10 +297,10 @@ function fnCheckUserId() {
   }
 
   $.ajax({
-    url: "act/checkUserId",
+    url: `act/checkUserId`,
     data: `userId=${$(`#userId`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -350,10 +350,10 @@ function fnUpdatePw() {
   };
 
   $.ajax({
-    url: "act/updatePw",
+    url: `act/updatePw`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

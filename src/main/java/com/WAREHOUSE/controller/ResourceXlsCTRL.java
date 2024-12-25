@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.ResourceXlsDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ResourceXlsCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceXls", produces="text/html")
-  public ModelAndView resourceXls () throws Exception {
+  @GetMapping(value={"/resourceXls"}, produces={"text/plain; charset=UTF-8"})
+  public String resourceXls () {
     try {
-      return new ModelAndView("resourceXls");
+      return "resourceXls";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class ResourceXlsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceXls", produces="application/json")
+  @PostMapping(value={"/act/saveResourceXls"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceXls (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

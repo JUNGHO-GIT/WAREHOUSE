@@ -79,10 +79,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listResource",
+    url: `act/listResource`,
     data: `findResrcNm=${$(`#findResrcNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -161,10 +161,10 @@ function fnGetList02 (resrcCd) {
 
   $(`#resrcCd`).val(resrcCd);
   $.ajax({
-    url: "act/listResourceInOut",
+    url: `act/listResourceInOut`,
     data: `resrcCd=${resrcCd}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -185,10 +185,10 @@ function fnGetList02 (resrcCd) {
 function fnShow(inOutSeq) {
 
   $.ajax({
-    url: "act/showResourceInOut",
+    url: `act/showResourceInOut`,
     data: `inOutSeq=${inOutSeq}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -308,10 +308,10 @@ function fnSave(flagYn) {
   };
 
   $.ajax({
-    url: "act/saveResourceInOut",
+    url: `act/saveResourceInOut`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

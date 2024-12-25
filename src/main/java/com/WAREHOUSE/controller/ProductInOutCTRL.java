@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ProductInOutCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productIn", produces="text/html")
-  public ModelAndView productIn () throws Exception {
+  @GetMapping(value={"/productIn"}, produces={"text/plain; charset=UTF-8"})
+  public String productIn () {
     try {
-      return new ModelAndView("productIn");
+      return "productIn";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,10 +39,10 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productOut", produces="text/html")
-  public ModelAndView productOut () throws Exception {
+  @GetMapping(value={"/productOut"}, produces={"text/plain; charset=UTF-8"})
+  public String productOut () {
     try {
-      return new ModelAndView("productOut");
+      return "productOut";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -52,7 +51,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listProductInOut", produces="application/json")
+  @PostMapping(value={"/act/listProductInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listProductInOut(
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
@@ -67,7 +66,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showProductInOut", produces="application/json")
+  @PostMapping(value={"/act/showProductInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showProductInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +81,7 @@ public class ProductInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductInOut", produces="application/json")
+  @PostMapping(value={"/act/saveProductInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProductInOut (
     @RequestBody ProductInOut param,
     @SessionAttribute("userId") String userId

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutPlanDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ProductInOutPlanCTRL {
   private final JsonUtil json;
 
   // 0. 제품 입고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/productInPlan", produces="text/html")
-  public ModelAndView productInPlan () throws Exception {
+  @GetMapping(value={"/productInPlan"}, produces={"text/plain; charset=UTF-8"})
+  public String productInPlan () {
     try {
-      return new ModelAndView("productInPlan");
+      return "productInPlan";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,10 +39,10 @@ public class ProductInOutPlanCTRL {
   }
 
   // 0. 제품 출고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/productOutPlan", produces="text/html")
-  public ModelAndView productOutPlan () throws Exception {
+  @GetMapping(value={"/productOutPlan"}, produces={"text/plain; charset=UTF-8"})
+  public String productOutPlan () {
     try {
-      return new ModelAndView("productOutPlan");
+      return "productOutPlan";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -52,7 +51,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-1. 제품 입출고 예정 리스트 -----------------------------------------------------------------
-  @PostMapping(value="/act/listProductInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/listProductInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listProductInOutPlan (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
@@ -67,7 +66,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-2. 제품 입출고 예정 상세 -------------------------------------------------------------------
-  @PostMapping(value="/act/showProductInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/showProductInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showProductInOutPlan (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +81,7 @@ public class ProductInOutPlanCTRL {
   }
 
   // 1-3. 제품 입출고 예정 저장 -------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/saveProductInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProductInOutPlan (
     @RequestBody ProductInOut param,
     @SessionAttribute("userId") String userId

@@ -77,10 +77,10 @@ function fnGetList01 () {
     },
   ];
   $.ajax({
-    url: "act/listShipping",
+    url: `act/listShipping`,
     data:`inOutDt=${"P"}&findStartDt=${$(`#findStartDt`).val()}&findEndDt=${$(`#findEndDt`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -220,10 +220,10 @@ function fnSaveItems() {
   };
 
   $.ajax({
-    url: "act/saveShipItems",
+    url: `act/saveShipItems`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -298,10 +298,10 @@ function fnSavePlan() {
   };
 
   $.ajax({
-    url: "act/saveShipPlan",
+    url: `act/saveShipPlan`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

@@ -17,20 +17,14 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
   ) throws Exception {
 
     HttpSession session = request.getSession(false);
-    String ajaxCall = "";
+    String ajaxCall = request.getHeader("AJAX");
     String userId = "";
     String userConfigId = "";
-
-    try {
-      ajaxCall = request.getHeader("AJAX");
-    }
-    catch (Exception ex) {
-      ajaxCall = "";
-    }
 
     if (ajaxCall == null) {
       ajaxCall = "";
     }
+
     if (session == null) {
       if (ajaxCall.equals("true") == false) {
         response.sendRedirect(request.getContextPath() + "/reLogin");
@@ -53,6 +47,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
       }
       return false;
     }
+
     return true;
   }
 }

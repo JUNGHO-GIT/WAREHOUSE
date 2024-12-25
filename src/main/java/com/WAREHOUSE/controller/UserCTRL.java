@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.User;
 import com.WAREHOUSE.dao.UserDAO;
-import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.JsonUtil;
+import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -30,10 +29,10 @@ public class UserCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/", "/login"}, produces="text/html")
-  public ModelAndView login () throws Exception {
+  @GetMapping(value={"/", "/login"}, produces={"text/plain; charset=UTF-8"})
+  public String login () throws Exception {
     try {
-      return new ModelAndView("userLogin");
+      return "userLogin";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -42,10 +41,10 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/reLogin", "/logout"}, produces="text/html")
-  public ModelAndView reLogin () throws Exception {
+  @GetMapping(value={"/reLogin", "/logout"}, produces={"text/plain; charset=UTF-8"})
+  public String reLogin () throws Exception {
     try {
-      return new ModelAndView("reLogin");
+      return "reLogin";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -54,10 +53,10 @@ public class UserCTRL {
   }
 
   //-----------------------------------------------------------------------------------------------
-  @GetMapping(value="/user", produces="text/html")
-  public ModelAndView user () throws Exception {
+  @GetMapping(value={"/user"}, produces={"text/plain; charset=UTF-8"})
+  public String user () throws Exception {
     try {
-      return new ModelAndView("user");
+      return "user";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -66,7 +65,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/auth", produces="application/json")
+  @PostMapping(value={"/act/loginUser"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> auth (
     @RequestParam(value="userId", required=false) String userId,
     @RequestParam(value="userPw", required=false) String pwClient,
@@ -123,7 +122,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listUser", produces="application/json")
+  @PostMapping(value={"/act/listUser"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listUser (
     @RequestParam(value="findUserNm", required=false) String findUserNm
   ) throws Exception {
@@ -138,7 +137,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listUserPerm", produces="application/json")
+  @PostMapping(value={"/act/listUserPerm"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listUserPerm () throws Exception {
     try {
       ArrayList<HashMap<String, Object>> list = dao.listUserPerm();
@@ -151,7 +150,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showUser", produces="application/json")
+  @PostMapping(value={"/act/showUser"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showUser (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
@@ -166,7 +165,7 @@ public class UserCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/checkUserId", produces="application/json")
+  @PostMapping(value={"/act/checkUserId"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> checkUserId (
     @RequestParam(value="userId", required=false) String userId
   ) throws Exception {
@@ -181,7 +180,7 @@ public class UserCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveUser", produces="application/json")
+  @PostMapping(value={"/act/saveUser"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUser (
     @RequestBody HashMap<String, Object> param,
     @SessionAttribute("userId") String idParam
@@ -263,7 +262,7 @@ public class UserCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/updatePw", produces="application/json")
+  @PostMapping(value={"/act/updatePw"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> updatePw (
     @RequestBody User param,
     @SessionAttribute("userId") String userId

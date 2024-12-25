@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.dao.FilesDAO;
 import com.WAREHOUSE.dao.MainDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -35,8 +34,8 @@ public class MainCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/main", produces="text/html")
-  public ModelAndView main (
+  @GetMapping(value={"/main"}, produces={"text/plain; charset=UTF-8"})
+  public String main (
     HttpSession session,
     Model model
   ) throws Exception {
@@ -56,11 +55,11 @@ public class MainCTRL {
     session.setAttribute("fileUrl", fileUrl);
     model.addAttribute("mainList", mainList);
 
-    return new ModelAndView("main");
+    return "main";
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listSysMenu", produces="application/json")
+  @PostMapping(value={"/act/listSysMenu"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listSysMenu (
     @RequestParam(value="config", required=false) String config
   ) throws Exception {
@@ -89,7 +88,7 @@ public class MainCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/showVersion", produces="application/json")
+  @GetMapping(value={"/showVersion"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showVersion () throws Exception {
 
     Map<String, Object> map = new HashMap<>();

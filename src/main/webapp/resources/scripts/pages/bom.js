@@ -52,10 +52,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listBom",
+    url: `act/listBom`,
     data: `findProdNm=${$(`#findProdNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -156,10 +156,10 @@ function fnGetList02() {
   ];
 
   $.ajax({
-    url: "act/listResource",
+    url: `act/listResource`,
     data: `findResrcNm=${$(`#findResrcNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -302,10 +302,10 @@ function fnShow(prodCd, bomType) {
   ];
 
   $.ajax({
-    url: "act/showBom",
+    url: `act/showBom`,
     data: `prodCd=${prodCd}&bomType=${bomType}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -374,10 +374,10 @@ function fnSave() {
   }
 
   $.ajax({
-    url: "act/saveBom",
+    url: `act/saveBom`,
     data: JSON.stringify({dataList: getData03}),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
@@ -416,10 +416,10 @@ function fnDelResrc(rowIdx) {
   };
 
   $.ajax({
-    url: "act/saveBom",
+    url: `act/saveBom`,
     data: JSON.stringify({dataList: [bomData]}),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

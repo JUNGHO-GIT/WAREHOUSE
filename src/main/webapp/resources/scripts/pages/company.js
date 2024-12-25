@@ -71,10 +71,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listCompany",
+    url: `act/listCompany`,
     data: `findCompNm=${$(`#findCompNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -102,10 +102,10 @@ function fnGetList01 () {
 function fnShow(compCd) {
 
   $.ajax({
-    url: "act/showCompany",
+    url: `act/showCompany`,
     data: `compCd=${compCd}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -178,10 +178,10 @@ function fnSave(flagYn) {
   };
 
   $.ajax({
-    url: "act/saveCompany",
+    url: `act/saveCompany`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

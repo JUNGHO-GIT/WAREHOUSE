@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class CompanyCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/company", produces="text/html")
-  public ModelAndView company () throws Exception {
+  @GetMapping(value={"/company"}, produces={"text/plain; charset=UTF-8"})
+  public String company () {
     try {
-      return new ModelAndView("company");
+      return "company";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listCompany", produces="application/json")
+  @PostMapping(value={"/act/listCompany"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listCompany(
     @RequestParam(value="findCompNm", required=false) String findCompNm
   ) throws Exception {
@@ -55,7 +54,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showCompany", produces="application/json")
+  @PostMapping(value={"/act/showCompany"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showCompany(
     @RequestParam(value="compCd", required=false) Integer compCd
   ) throws Exception {
@@ -70,7 +69,7 @@ public class CompanyCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveCompany", produces="application/json")
+  @PostMapping(value={"/act/saveCompany"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveCompany (
     @RequestBody Company param,
     @SessionAttribute("userId") String userId

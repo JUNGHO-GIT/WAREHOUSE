@@ -3,6 +3,7 @@ package com.WAREHOUSE.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,12 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductDAO;
-import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.JsonUtil;
+import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,15 +23,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductCTRL {
 
+  @Value("${title}")
+  private String TITLE;
+
   private final ProductDAO dao;
   private final LogsUtil logs;
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/product", produces="text/html")
-  public ModelAndView product () throws Exception {
+  @GetMapping(value={"/product"}, produces={"text/plain; charset=UTF-8"})
+  public String product () {
     try {
-      return new ModelAndView("product");
+      return "product";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +43,7 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listProduct", produces="application/json")
+  @PostMapping(value={"/act/listProduct"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listProduct(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
@@ -55,8 +58,8 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showProduct", produces="application/json")
-  public ResponseEntity<?> showProducts (
+  @PostMapping(value={"/act/showProduct"}, produces={"application/json; charset=UTF-8"})
+  public ResponseEntity<?> showProduct (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
     try {
@@ -70,7 +73,7 @@ public class ProductCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProduct", produces="application/json")
+  @PostMapping(value={"/act/saveProduct"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProduct (
     @RequestBody Product param,
     @SessionAttribute("userId") String userId

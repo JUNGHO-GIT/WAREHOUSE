@@ -211,10 +211,10 @@ function fnSave() {
   }
 
   $.ajax({
-    url: "act/saveResourceInOutXls",
+    url: `act/saveResourceInOutXls`,
     data: JSON.stringify({dataList: colData}),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

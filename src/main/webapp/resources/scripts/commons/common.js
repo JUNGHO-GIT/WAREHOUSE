@@ -32,9 +32,10 @@ const fnFindCd = async (targetNm, targetCd, targetId, event) => {
   });
 
   fetch(`act/find${upStrCd}`, {
-    method: "POST",
+    method: `POST`,
     body: `findNm=${targetNm}&findCd=${targetCd}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -132,9 +133,10 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
   }
 
   fetch(`act/find${upStrCd}`, {
-    method: "POST",
+    method: `POST`,
     body: `findNm=${targetVal}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -501,14 +503,11 @@ const fnInitCombo = (configArray, onComplete, unusedParam) => {
     }
   }
 
-  const dataParams = `part=${partStr}&groupCd=${groupCdStr}&target=${targetStr}`;
-  const requestUrl = "act/initCodeAll";
-
   $.ajax({
-    url: requestUrl,
-    type: "POST",
-    dataType: "json",
-    data: dataParams,
+    url: `act/initCodeAll`,
+    data: `part=${partStr}&groupCd=${groupCdStr}&target=${targetStr}`,
+    type: `POST`,
+    dataType: "JSON",
     beforeSend: (req) => {
       req.setRequestHeader("AJAX", "true");
     },

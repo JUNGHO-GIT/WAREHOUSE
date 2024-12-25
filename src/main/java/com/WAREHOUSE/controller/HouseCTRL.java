@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.House;
 import com.WAREHOUSE.dao.HouseDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class HouseCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/house", produces="text/html")
-  public ModelAndView house () throws Exception {
+  @GetMapping(value={"/house"}, produces={"text/plain; charset=UTF-8"})
+  public String house () {
     try {
-      return new ModelAndView("house");
+      return "house";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listHouse", produces="application/json")
+  @PostMapping(value={"/act/listHouse"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listHouse (
     @RequestParam(value="id", required=false) Integer id
   ) throws Exception {
@@ -55,7 +54,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showHouse", produces="application/json")
+  @PostMapping(value={"/act/showHouse"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showHouse (
     @RequestParam(value="houseCd", required=false) Integer houseCd
   ) throws Exception {
@@ -76,7 +75,7 @@ public class HouseCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveHouse", produces="application/json")
+  @PostMapping(value={"/act/saveHouse"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveHouse (
     @RequestBody House param,
     @SessionAttribute("userId") String userId

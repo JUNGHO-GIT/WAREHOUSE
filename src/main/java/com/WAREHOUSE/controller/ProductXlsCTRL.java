@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductXlsDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -26,10 +25,10 @@ public class ProductXlsCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/productXls", produces="text/html")
-  public ModelAndView productXls () throws Exception {
+  @GetMapping(value={"/productXls"}, produces={"text/plain; charset=UTF-8"})
+  public String productXls() {
     try {
-      return new ModelAndView("productXls");
+      return "productXls";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -38,7 +37,7 @@ public class ProductXlsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveProductXls", produces="application/json")
+  @PostMapping(value={"/act/saveProductXls"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProductXls (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

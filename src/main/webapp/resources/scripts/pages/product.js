@@ -82,10 +82,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listProduct",
+    url: `act/listProduct`,
     data: `findProdNm=${$(`#findProdNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -107,9 +107,10 @@ function fnGetList01 () {
 function fnShow (prodCd="0") {
 
   fetch(`act/showProduct`, {
-    method: "POST",
+    method: `POST`,
     body: `prodCd=${prodCd}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     }
   })
@@ -217,10 +218,10 @@ function fnSave (flagYn) {
   };
 
   $.ajax({
-    url: "act/saveProduct",
+    url: `act/saveProduct`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

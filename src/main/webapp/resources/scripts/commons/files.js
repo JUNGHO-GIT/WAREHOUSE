@@ -23,7 +23,7 @@ const fnUploadFiles = (formParam) => {
   $(`#fileUpBtn`).html("ing..");
 
   fetch(`act/uploadFiles`, {
-    method: "POST",
+    method: `POST`,
     body: formData,
     headers: {
       "AJAX": "true"
@@ -71,9 +71,10 @@ const fnShowFiles = (tableNm, tableKey, target) => {
   const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
 
   fetch(`act/showFiles`, {
-    method: "POST",
+    method: `POST`,
     body: `tableNm=${tableNm}&tableKey=${tableKey}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     }
   })
@@ -185,7 +186,7 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
   };
 
   fetch(`act/deleteFiles`, {
-    method: "POST",
+    method: `POST`,
     body: JSON.stringify(param),
     headers: {
       "Content-Type": "application/json",

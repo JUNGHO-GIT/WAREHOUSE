@@ -191,7 +191,7 @@ declare namespace JQuery {
        */
       jsonpCallback?: string | ((this: TContext) => string) | undefined;
       /**
-       * The HTTP method to use for the request (e.g. "POST", "GET", "PUT").
+       * The HTTP method to use for the request (e.g. `POST`, "GET", "PUT").
        */
       method?: string | undefined;
       /**

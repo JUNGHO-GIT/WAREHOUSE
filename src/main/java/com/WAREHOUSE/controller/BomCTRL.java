@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Bom;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
@@ -30,10 +29,10 @@ public class BomCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/bom", produces="text/html")
-  public ModelAndView bom () throws Exception {
+  @GetMapping(value={"/bom"}, produces={"text/plain; charset=UTF-8"})
+  public String bom () {
     try {
-      return new ModelAndView("bom");
+      return "bom";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -42,7 +41,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listBom", produces="application/json")
+  @PostMapping(value={"/act/listBom"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listBom(
     @RequestParam(value="findProdNm", required=false) String findProdNm
   ) throws Exception {
@@ -57,7 +56,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showBom", produces="application/json")
+  @PostMapping(value={"/act/showBom"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showBom (
     @RequestParam(value="prodCd", required=false) Integer prodCd,
     @RequestParam(value="bomType", required=false) String bomType
@@ -73,7 +72,7 @@ public class BomCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveBom", produces="application/json")
+  @PostMapping(value={"/act/saveBom"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveBom (
     @RequestBody HashMap<String, Object> obj,
     @SessionAttribute("userId") String userId

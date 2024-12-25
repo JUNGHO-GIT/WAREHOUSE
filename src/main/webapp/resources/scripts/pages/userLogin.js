@@ -17,10 +17,10 @@ const fnLogin = () => {
     $.cookie("userId", "");
   }
   $.ajax({
-    url: `auth`,
-    type: "POST",
+    url: `act/loginUser`,
     data: `userId=${$(`#userId`).val()}&userPw=${$(`#userPw`).val()}`,
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ResourceInOutCTRL {
   private final JsonUtil json;
 
   //-----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceIn", produces="text/html")
-  public ModelAndView resourceIn () throws Exception {
+  @GetMapping(value={"/resourceIn"}, produces={"text/plain; charset=UTF-8"})
+  public String resourceIn () {
     try {
-      return new ModelAndView("resourceIn");
+      return "resourceIn";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,10 +39,10 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resourceOut", produces="text/html")
-  public ModelAndView resourceOut () throws Exception {
+  @GetMapping(value={"/resourceOut"}, produces={"text/plain; charset=UTF-8"})
+  public String resourceOut () {
     try {
-      return new ModelAndView("resourceOut");
+      return "resourceOut";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -52,7 +51,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listResourceInOut", produces="application/json")
+  @PostMapping(value={"/act/listResourceInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listResourceInOut (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
@@ -67,7 +66,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showResourceInOut", produces="application/json")
+  @PostMapping(value={"/act/showResourceInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showResourceInOut (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +81,7 @@ public class ResourceInOutCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceInOut", produces="application/json")
+  @PostMapping(value={"/act/saveResourceInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceInOut (
     @RequestBody ResourceInOut param,
     @SessionAttribute("userId") String userId

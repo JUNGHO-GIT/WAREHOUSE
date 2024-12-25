@@ -233,7 +233,7 @@ jQuery(function( $ ) {
    * @example ​ ````Save some data to the server and notify the user once it&#39;s complete.
 ```javascript
 $.ajax({
-method: "POST",
+method: `POST`,
 url: "some.php",
 data: { name: "John", location: "Boston" }
 })
@@ -268,7 +268,7 @@ xmlRequest.done( handleResponse );
 var menuId = $( "ul.nav" ).first().attr( "id" );
 var request = $.ajax({
 url: "script.php",
-method: "POST",
+method: `POST`,
 data: { id : menuId },
 dataType:"html"
 });
@@ -331,7 +331,7 @@ dataType:"script"
 $.ajaxSetup({
 url: "/xmlhttp/",
 global: false,
-type: "POST"
+type: `POST`
 });
 $.ajax({ data: myData });
 ```

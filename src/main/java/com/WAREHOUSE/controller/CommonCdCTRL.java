@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Common;
 import com.WAREHOUSE.container.CommonCd;
 import com.WAREHOUSE.dao.CommonCdDAO;
@@ -29,10 +28,10 @@ public class CommonCdCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/commonCd", produces="text/html")
-  public ModelAndView commonCd () throws Exception {
+  @GetMapping(value={"/commonCd"}, produces={"text/plain; charset=UTF-8"})
+  public String commonCd () {
     try {
-      return new ModelAndView("commonCd");
+      return "commonCd";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -41,7 +40,7 @@ public class CommonCdCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/initCodeAll", produces="application/json")
+  @PostMapping(value={"/act/initCodeAll"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> initCodeAll (
     @RequestParam(value="part", required=false) String part,
     @RequestParam(value="groupCd", required=false) String groupCd,
@@ -67,7 +66,7 @@ public class CommonCdCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listCommonCd", produces="application/json")
+  @PostMapping(value={"/act/listCommonCd"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listCommonCd (
     @RequestParam(value="findGroupCd", required=false) String findGroupCd,
     @RequestParam(value="findItemNm", required=false) String findItemNm
@@ -83,7 +82,7 @@ public class CommonCdCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showCommonCd", produces="application/json")
+  @PostMapping(value={"/act/showCommonCd"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showCommonCd (
     @RequestParam(value="groupCd", required=false) String groupCd,
     @RequestParam(value="itemCd", required=false) String itemCd
@@ -99,7 +98,7 @@ public class CommonCdCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveCommonCd", produces="application/json")
+  @PostMapping(value={"/act/saveCommonCd"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveCommonCd (
     @RequestBody CommonCd param,
     @SessionAttribute("userId") String userId

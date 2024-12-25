@@ -143,8 +143,8 @@ function fnInitializeTabs(tabs) {
   const pageUrls = tabArray.map(item => item.split("@")[1]).join(",");
 
   $.ajax({
-    url: "act/listSysMenu",
-    type: "POST",
+    url: `act/listSysMenu`,
+    type: `POST`,
     dataType: "json",
     data: `config=${pageUrls}`,
     beforeSend: (xhr) => xhr.setRequestHeader("AJAX", "true"),

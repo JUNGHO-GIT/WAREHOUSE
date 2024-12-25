@@ -25,9 +25,10 @@ const fnInOutChart = async (key, inOut, plan, dateType) => {
   const date = getValue(getById("inputDate"));
 
   fetch(`act/dash`, {
-    method: "POST",
+    method: `POST`,
     body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -112,9 +113,10 @@ const fnPieChart = async (key, inOut, plan, dateType) => {
   });
 
   fetch(`act/dash`, {
-    method: "POST",
+    method: `POST`,
     body: `key=${key}&inOut=${inOut}&plan=${plan}&dateType=${dateType}&date=${date}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -161,9 +163,10 @@ const fnProdProtected = async () => {
   const date = getValue(getById("inputDate"));
 
   fetch(`act/prodProtected`, {
-    method: "POST",
+    method: `POST`,
     body: `date=${date}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -298,9 +301,10 @@ const fnProdInChartWeek = async () => {
   });
 
   fetch(`act/prodInChartWeek`, {
-    method: "POST",
+    method: `POST`,
     body: `date=${date}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
@@ -420,9 +424,10 @@ const fnProdOutChartWeek = async () => {
   });
 
   fetch(`act/prodOutChartWeek`, {
-    method: "POST",
+    method: `POST`,
     body: `date=${date}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.ResourceDAO;
@@ -28,10 +27,10 @@ public class ResourceCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/resource", produces="text/html")
-  public ModelAndView resource () throws Exception {
+  @GetMapping(value={"/resource"}, produces={"text/plain; charset=UTF-8"})
+  public String resource () {
     try {
-      return new ModelAndView("resource");
+      return "resource";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listResource", produces="application/json")
+  @PostMapping(value={"/act/listResource"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listResource (
     @RequestParam(value="findResrcNm", required=false) String findResrcNm
   ) throws Exception {
@@ -55,7 +54,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showResource", produces="application/json")
+  @PostMapping(value={"/act/showResource"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showResource (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
@@ -70,7 +69,7 @@ public class ResourceCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveResource", produces="application/json")
+  @PostMapping(value={"/act/saveResource"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResource (
     @RequestBody Resource param,
     @SessionAttribute("userId") String userId

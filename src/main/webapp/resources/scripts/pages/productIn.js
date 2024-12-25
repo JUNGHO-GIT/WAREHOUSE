@@ -79,10 +79,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listProduct",
+    url: `act/listProduct`,
     data: `findProdNm=${$(`#findProdNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -160,10 +160,10 @@ function fnGetList02 (prodCd) {
 
   $(`#prodCd`).val(prodCd);
   $.ajax({
-    url: "act/listProductInOut",
+    url: `act/listProductInOut`,
     data: `prodCd=${prodCd}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -184,10 +184,10 @@ function fnGetList02 (prodCd) {
 function fnShow(inOutSeq) {
 
   $.ajax({
-    url: "act/showProductInOut",
+    url: `act/showProductInOut`,
     data: `inOutSeq=${inOutSeq}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -307,10 +307,10 @@ function fnSave(flagYn) {
   };
 
   $.ajax({
-    url: "act/saveProductInOut",
+    url: `act/saveProductInOut`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

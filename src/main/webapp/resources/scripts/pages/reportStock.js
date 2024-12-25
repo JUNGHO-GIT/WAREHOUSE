@@ -75,10 +75,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listReportProdStock",
+    url: `act/listReportProdStock`,
     data: `findYear=${$(`#findYear`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -171,10 +171,10 @@ function fnGetList02() {
   ];
 
   $.ajax({
-    url: "act/listReportResrcStock",
+    url: `act/listReportResrcStock`,
     data: `findYear=${$(`#findYear`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },

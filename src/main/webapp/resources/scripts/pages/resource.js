@@ -82,10 +82,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listResource",
+    url: `act/listResource`,
     data: `findResrcNm=${$(`#findResrcNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -106,9 +106,10 @@ function fnGetList01 () {
 // 2. 상세 항목 ------------------------------------------------------------------------------------
 function fnShow (resrcCd="0") {
   fetch(`act/showResource`, {
-    method: "POST",
+    method: `POST`,
     body: `resrcCd=${resrcCd}`,
     headers: {
+      "AJAX": "true",
       "Content-Type": "application/x-www-form-urlencoded",
     }
   })
@@ -216,10 +217,10 @@ function fnSave (flagYn) {
   };
 
   $.ajax({
-    url: "act/saveResource",
+    url: `act/saveResource`,
     data: JSON.stringify(param),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.Shipping;
 import com.WAREHOUSE.dao.ShippingDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ShippingCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/shipping", produces="text/html")
-  public ModelAndView shipping () throws Exception {
+  @GetMapping(value={"/shipping"}, produces={"text/plain; charset=UTF-8"})
+  public String shipping() {
     try {
-      return new ModelAndView("shipping");
+      return "shipping";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,7 +39,7 @@ public class ShippingCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/listShipping", produces="application/json")
+  @PostMapping(value={"/act/listShipping"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listShipping(
     @RequestParam(value="inOutDt", required=false) String inOutDt,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
@@ -59,7 +58,7 @@ public class ShippingCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveShipping", produces="application/json")
+  @PostMapping(value={"/act/saveShipping"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveShipping (
     @RequestBody Shipping param,
     @SessionAttribute("userId") String userId

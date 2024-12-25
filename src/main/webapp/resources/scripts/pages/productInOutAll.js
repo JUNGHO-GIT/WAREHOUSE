@@ -110,10 +110,10 @@ function fnGetList01 () {
   ];
 
   $.ajax({
-    url: "act/listProduct",
+    url: `act/listProduct`,
     data: `findProdNm=${$(`#findProdNm`).val()}`,
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
@@ -345,10 +345,10 @@ function fnSave() {
   }
 
   $.ajax({
-    url: "act/saveProductInOutAll",
+    url: `act/saveProductInOutAll`,
     data: JSON.stringify({dataList : getData}),
-    type: "POST",
-    dataType:"JSON",
+    type: `POST`,
+    dataType: `JSON`,
     contentType: "application/json; charset=UTF-8",
     beforeSend: (xmlHttpRequest) => {
       xmlHttpRequest.setRequestHeader("AJAX", "true");

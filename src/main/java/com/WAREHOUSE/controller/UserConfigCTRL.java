@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.UserConfig;
 import com.WAREHOUSE.dao.UserConfigDAO;
-import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.JsonUtil;
+import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ public class UserConfigCTRL {
   private final JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/showUserConfigTab", produces="application/json")
+  @PostMapping(value={"/act/showUserConfigTab"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showUserConfigTab (
     @RequestParam(value="pageNm", required=false) String pageNm,
     @RequestParam(value="gridCd", required=false) String gridCd,
@@ -43,7 +43,7 @@ public class UserConfigCTRL {
   }
 
   // 2-2. 상세 (정보) ------------------------------------------------------------------------------
-  @PostMapping(value="/act/showUserConfigInfo", produces="application/json")
+  @PostMapping(value={"/act/showUserConfigInfo"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showUserConfigInfo (
     @SessionAttribute("userConfigId") String userConfigId
   ) throws Exception {
@@ -58,7 +58,7 @@ public class UserConfigCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/updateConfigPw", produces="application/json")
+  @PostMapping(value={"/act/updateConfigPw"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> updateConfigPw (
     @RequestBody UserConfig param
   ) throws Exception {
@@ -88,7 +88,7 @@ public class UserConfigCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveUserConfigInfo", produces="application/json")
+  @PostMapping(value={"/act/saveUserConfigInfo"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUserConfigInfo (
     @RequestBody HashMap<String, Object> param,
     @SessionAttribute("userConfigId") String idParam
@@ -161,7 +161,7 @@ public class UserConfigCTRL {
   }
 
   //------------------------------------------------------------------------------------------------
-  @PostMapping(value="/act/saveUserConfigTab", produces="application/json")
+  @PostMapping(value={"/act/saveUserConfigTab"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUserConfigTab (
     @RequestBody HashMap<String, Object> param,
     @SessionAttribute("userConfigId") String idParam

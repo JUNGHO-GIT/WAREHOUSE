@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="../layouts/head.jsp" %>
+<%@ page session="true" %>
 <c:set var="rsPath" value="${pageContext.request.contextPath}/resources" />
 <c:set var="fileUrl" value="${sessionScope.fileUrl}"/>
 

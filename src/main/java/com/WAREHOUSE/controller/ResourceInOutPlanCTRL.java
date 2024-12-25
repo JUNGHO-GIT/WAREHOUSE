@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutPlanDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -28,10 +27,10 @@ public class ResourceInOutPlanCTRL {
   private final JsonUtil json;
 
   // 0. 자재 입고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/resourceInPlan", produces="text/html")
-  public ModelAndView resourceInPlan () throws Exception {
+  @GetMapping(value={"/resourceInPlan"}, produces={"text/plain; charset=UTF-8"})
+  public String resourceInPlan () {
     try {
-      return new ModelAndView("resourceInPlan");
+      return "resourceInPlan";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -40,10 +39,10 @@ public class ResourceInOutPlanCTRL {
   }
 
   // 0. 자재 출고 예정 -----------------------------------------------------------------------------
-  @GetMapping(value="/resourceOutPlan", produces="text/html")
-  public ModelAndView resourceOutPlan () throws Exception {
+  @GetMapping(value={"/resourceOutPlan"}, produces={"text/plain; charset=UTF-8"})
+  public String resourceOutPlan () {
     try {
-      return new ModelAndView("resourceOutPlan");
+      return "resourceOutPlan";
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -52,7 +51,7 @@ public class ResourceInOutPlanCTRL {
   }
 
   // 1-1. 자재 입출고 예정 리스트 -----------------------------------------------------------------
-  @PostMapping(value="/act/listResourceInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/listResourceInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> listResourceInOutPlan (
     @RequestParam(value="resrcCd", required=false) String resrcCd
   ) throws Exception {
@@ -67,7 +66,7 @@ public class ResourceInOutPlanCTRL {
   }
 
   // 1-2. 자재 입출고 예정 상세 -------------------------------------------------------------------
-  @PostMapping(value="/act/showResourceInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/showResourceInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showResourceInOutPlan (
     @RequestParam(value="inOutSeq", required=false) Integer inOutSeq
   ) throws Exception {
@@ -82,7 +81,7 @@ public class ResourceInOutPlanCTRL {
   }
 
   // 1-3. 자재 입출고 예정 저장 --------------------------------------------------------------------
-  @PostMapping(value="/act/saveResourceInOutPlan", produces="application/json")
+  @PostMapping(value={"/act/saveResourceInOutPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceInOutPlan (
     @RequestBody ResourceInOut param,
     @SessionAttribute("userId") String userId
