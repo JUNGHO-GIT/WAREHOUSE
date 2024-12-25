@@ -101,6 +101,9 @@ function fnShow(prodCd) {
   fetch(`act/showProduct`, {
     method: "POST",
     body: `prodCd=${prodCd}`,
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -143,7 +146,7 @@ function fnShow(prodCd) {
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------
-function fnSave(flagYn) {
+function fnSave (flagYn) {
 
   let flagParam = "";
 

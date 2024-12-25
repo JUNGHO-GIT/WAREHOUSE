@@ -124,12 +124,12 @@
             <!-- hidden -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <div class="hidden-wrapper">
-                <input type="hidden" name="tableNm" id="tableNm" value="tblProduct" />
-                <input type="hidden" name="tableKey" id="tableKey" value="0" />
-                <input type="hidden" name="keyColumn" id="keyColumn" value="prodCd" />
-                <input type="hidden" name="fileSeq" id="fileSeq" value="0" />
-                <input type="hidden" name="fileNm" id="fileNm" value="" />
-                <input type="hidden" name="fileUrl" id="fileUrl" value="" />
+                <input type="hidden" id="tableNm" name="tableNm" value="tblProduct" />
+                <input type="hidden" id="tableKey" name="tableKey" value="0" />
+                <input type="hidden" id="keyColumn" name="keyColumn" value="prodCd" />
+                <input type="hidden" id="fileSeq" name="fileSeq" value="0" />
+                <input type="hidden" id="fileSeq" name="fileSeq" value="" />
+                <input type="hidden" id="fileUrl" name="fileUrl" value="" />
               </div>
             </div>
           </div>

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductDAO;
 import com.WAREHOUSE.util.LogsUtil;
@@ -57,10 +57,10 @@ public class ProductCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showProduct", produces="application/json;charset=UTF-8")
   public ResponseEntity<?> showProduct (
-    @RequestParam(value="prodCd", required=false) Integer prodCd
+    @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
     try {
-      Product show = dao.showProduct(prodCd);
+      Product show = dao.showProduct(Integer.parseInt(prodCd));
       return ResponseEntity.ok(show);
     }
     catch (Exception e) {

@@ -169,10 +169,10 @@
           <!-- hidden -->
           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="hidden-wrapper">
-              <input type="hidden" id="changeConfigFlag" value="N" />
-              <input type="hidden" id="userConfigLevel">
-              <input type="hidden" id="userConfigCompCd">
-              <input type="hidden" id="userConfigPerm">
+              <input type="hidden" id="changeConfigFlag" name="changeConfigFlag" value="N">
+              <input type="hidden" id="userConfigLevel" name="userConfigLevel" value="">
+              <input type="hidden" id="userConfigCompCd" name="userConfigCompCd" value="">
+              <input type="hidden" id="userConfigPerm" name="userConfigPerm" value="">
             </div>
           </div>
         </form>
