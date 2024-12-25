@@ -20,6 +20,9 @@ function fnGetList01 () {
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.prodCd);
+      fnFindCd("", ui.rowData.houseCd, "house", null);
+      fnFindCd("", ui.rowData.compCd, "comp", null);
+      fnShowFiles("tblProduct", ui.rowData.prodCd, "fileList");
     },
   };
   const colModel = [
@@ -97,13 +100,10 @@ function fnGetList01 () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-function fnShow(prodCd) {
+function fnShow (prodCd="0") {
   fetch(`act/showProduct`, {
     method: "POST",
     body: `prodCd=${prodCd}`,
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "AJAX": "true"
@@ -118,7 +118,6 @@ function fnShow(prodCd) {
     $(`#prodCd`).val(data.prodCd);
     $(`#prodNm`).val(data.prodNm);
     $(`#prodType`).val(data.prodType);
-
     $(`#option1`).val(data.option1);
     $(`#unit`).val(data.unit);
     $(`#option2`).val(data.option2);
@@ -130,19 +129,14 @@ function fnShow(prodCd) {
     $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
     $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
-    // 3. 창고 관련
-    fnFindCd("", data.houseCd, "house", null);
-
-    // 4. 거래처 관련
-    fnFindCd("", data.compCd, "comp", null);
-
     // 5. file 관련
     $(`#tableNm`).val("tblProduct");
     $(`#keyColumn`).val("prodCd");
     $(`#tableKey`).val(data.prodCd);
-    fnShowFiles("tblProduct", data.prodCd, "fileList");
   })
-  .catch(fnAjaxErrorHandler);
+  .catch((err) => {
+    console.error(err);
+  });
 };
 
 // 3. 저장 -----------------------------------------------------------------------------------------

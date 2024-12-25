@@ -44,7 +44,7 @@ function renderImage (data) {
       <img
         alt="gridImage"
         src="viewFiles?tableNm=${tableNm}&fileUrl=${data.rowData.fileUrl || 'noGridImage.webp'}"
-        class="w-100p h-100p radius-1 border-2"
+        class="w-100p h-100p radius-1 border-1"
         loading="lazy"
       />
     </div>

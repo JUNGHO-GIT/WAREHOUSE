@@ -56,7 +56,7 @@ public class ProductCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value="/act/showProduct", produces="application/json;charset=UTF-8")
-  public ResponseEntity<?> showProduct (
+  public ResponseEntity<?> showProducts (
     @RequestParam(value="prodCd", required=false) String prodCd
   ) throws Exception {
     try {

@@ -20,6 +20,9 @@ function fnGetList01 () {
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.resrcCd);
+      fnFindCd("", ui.rowData.houseCd, "house", null);
+      fnFindCd("", ui.rowData.compCd, "comp", null);
+      fnShowFiles("tblResource", ui.rowData.resrcCd, "fileList");
     },
   };
   const colModel = [
@@ -97,7 +100,7 @@ function fnGetList01 () {
 };
 
 // 2. 상세 항목 ------------------------------------------------------------------------------------
-function fnShow(resrcCd) {
+function fnShow (resrcCd="0") {
   fetch(`act/showResource`, {
     method: "POST",
     body: `resrcCd=${resrcCd}`,
@@ -115,7 +118,6 @@ function fnShow(resrcCd) {
     $(`#resrcCd`).val(data.resrcCd);
     $(`#resrcNm`).val(data.resrcNm);
     $(`#resrcType`).val(data.resrcType);
-
     $(`#option1`).val(data.option1);
     $(`#unit`).val(data.unit);
     $(`#option2`).val(data.option2);
@@ -127,17 +129,10 @@ function fnShow(resrcCd) {
     $(`#protectedQty`).val(parseInt(data.protectedQty).toLocaleString());
     $(`#unitPrice`).val(parseInt(data.unitPrice).toLocaleString());
 
-    // 3. 창고 관련
-    fnFindCd("", data.houseCd, "house", null);
-
-    // 4. 거래처 관련
-    fnFindCd("", data.compCd, "comp", null);
-
     // 5. file 관련
     $(`#tableNm`).val("tblResource");
     $(`#keyColumn`).val("resrcCd");
     $(`#tableKey`).val(data.resrcCd);
-    fnShowFiles("tblResource", data.resrcCd, "fileList");
   })
   .catch(fnAjaxErrorHandler);
 };

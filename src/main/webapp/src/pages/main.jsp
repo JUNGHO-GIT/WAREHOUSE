@@ -123,7 +123,7 @@
 
   <!-- js -->
   <%@ include file="./userConfig.jsp" %>
-  <input type="hidden" id="configSeq" />
+  <input type="hidden" id="configSeq" name="configSeq" value="" />
   <script defer src="${rsPath}/scripts/pages/main.js"></script>
 
 </body>

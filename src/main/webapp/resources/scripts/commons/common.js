@@ -296,7 +296,7 @@ const fnGoPage = (page) => {
 
 // 0. ajax 에러 핸들러 -----------------------------------------------------------------------------
 const fnAjaxErrorHandler = (request, status, error) => {
-  if (request.status && (request.status === 400 || request.status === 477)) {
+  if ((request.status) && (request.status === 400 || request.status === 477)) {
     alert("세션이 종료 되었습니다");
     fnGoPage("reLogin");
   }

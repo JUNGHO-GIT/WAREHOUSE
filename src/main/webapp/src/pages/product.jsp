@@ -413,7 +413,7 @@
                       <div
                         id="fileList"
                         name="fileList"
-                        class="d-col-left w-100p h-100px p-10px over-y-auto border-1 radius-1"
+                        class="d-col-left w-100p h-100px p-10px over-auto border-1 radius-1"
                       ></div>
                     </div>
                   </div>
@@ -431,7 +431,7 @@
                       <div
                         id="fileDetail"
                         name="fileDetail"
-                        class="d-col-left w-100p h-100px p-10px over-y-auto border-1 radius-1"
+                        class="d-col-left w-100p h-100px p-10px over-auto border-1 radius-1"
                       ></div>
                     </div>
                   </div>

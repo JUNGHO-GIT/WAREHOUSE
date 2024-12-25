@@ -24,7 +24,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     try {
       ajaxCall = request.getHeader("AJAX");
     }
-    catch(Exception ex) {
+    catch (Exception ex) {
       ajaxCall = "";
     }
 
@@ -38,7 +38,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
       else {
       	response.sendError(477);
       }
-
       return false;
     }
 

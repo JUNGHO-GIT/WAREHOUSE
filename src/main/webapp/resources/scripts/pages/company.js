@@ -20,6 +20,7 @@ function fnGetList01 () {
     summaryData: [],
     rowClick: (_, ui) => {
       fnShow (ui.rowData.compCd);
+      fnShowFiles("tblCompany", ui.rowData.compCd, "fileList");
     },
   };
   const colModel = [
@@ -127,7 +128,6 @@ function fnShow(compCd) {
       $(`#tableNm`).val("tblCompany");
       $(`#tableKey`).val(data.compCd);
       $(`#keyColumn`).val("compCd");
-      fnShowFiles("tblCompany", data.compCd, "fileList");
     },
     error: fnAjaxErrorHandler
   });
