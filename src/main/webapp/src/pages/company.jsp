@@ -285,10 +285,15 @@
                         />
                         <label
                           for="userFile"
-                          class="fs-0-7rem fw-600 pointer-navy mr-auto"
+                          class="fs-0-7rem fw-700 pointer-navy mr-15px"
                         >
-                          파일선택
+                          선택
                         </label>
+                        <div
+                          id="fileDisplayedName"
+                          name="fileDisplayedName"
+                          class="fs-0-7rem fw-500 light-black mr-auto"
+                        ></div>
                         <div
                           id="fileUpBtn"
                           class="btn btn-success btn-xs py-1px px-5px fs-0-7rem"

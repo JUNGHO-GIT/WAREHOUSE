@@ -31,7 +31,7 @@
                   class="d-none"
                 />
                 <div class="btn btn-primary btn-xs">
-                  <label for="productXls">파일선택</label>
+                  <label for="productXls">선택</label>
                 </div>
               </div>
             </div>

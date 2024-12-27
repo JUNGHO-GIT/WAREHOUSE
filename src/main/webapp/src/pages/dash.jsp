@@ -612,8 +612,8 @@
     </div>
 
     <!-- js -->
-    <link rel="stylesheet" href="${rsPath}/styles/libs/dash.min.css" />
     <link rel="stylesheet" href="${urlPath}/font-awesome/5.8.0/css/all.min.css" />
+    <link rel="stylesheet" href="${rsPath}/styles/libs/dash.min.css" />
     <link rel="stylesheet" href="${rsPath}/styles/commons/common.css" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/amcharts.js"></script>

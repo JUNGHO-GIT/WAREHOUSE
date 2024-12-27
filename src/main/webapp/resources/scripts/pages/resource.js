@@ -277,6 +277,7 @@ function fnReset() {
 
   // 파일 초기화
   $(`#userFile`).val("");
+  $(`#fileDisplayedName`).html("");
   $(`#tableNm`).val("tblResource");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("resrcCd");

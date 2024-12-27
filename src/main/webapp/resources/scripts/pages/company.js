@@ -224,6 +224,7 @@ function fnReset() {
 
   // 파일 초기화
   $(`#userFile`).val("");
+  $(`#fileDisplayedName`).html("");
   $(`#tableNm`).val("tblCompany");
   $(`#tableKey`).val("0");
   $(`#keyColumn`).val("compCd");

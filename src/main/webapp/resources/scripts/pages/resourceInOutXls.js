@@ -231,9 +231,12 @@ function fnSave() {
 function fnReset() {
   // 파일 초기화
   $(`#resourceInOutXls`).val("");
+
   // 그리드 초기화
-  $(`#grid01`).pqGrid("option", "dataModel.data", []);
-  $(`#grid01`).pqGrid("refreshDataAndView");
+  $(`#grid01`).pqGrid({
+    dataModel: {data: []},
+  })
+  .pqGrid("refreshDataAndView");
 };
 
 // 0. 엑셀 업로드 ----------------------------------------------------------------------------------

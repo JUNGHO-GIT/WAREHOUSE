@@ -33,20 +33,20 @@ const fnUploadFiles = (formParam) => {
     response.json()
   ))
   .then((data) => {
-    // 1. alert
     alert(data.result);
 
-    // 2. 요소 초기화
-    $(`#fileUpBtn`).html("업로드");
-    $(`#userFile`).val("");
+    // 요소 초기화
+    getById("userFile").innerHTML = "";
+    getById("fileDisplayedName").innerHTML = "";
+    getById("fileUpBtn").innerHTML = "업로드";
 
-    // 3. 그리드에 이미지 표시
+    // 그리드에 이미지 표시
     fnGetList01();
 
-    // 4. 상세정보에 이미지 표시
+    // 상세정보에 이미지 표시
     fnShowFiles(tableNm, tableKey, "fileList");
 
-    // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
+    // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (tableKey !== "0") {
       $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
@@ -185,7 +185,7 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
     "flagYn": "N"
   };
 
-  fetch(`act/deleteFiles`, {
+  fetch(`act/saveFiles`, {
     method: `POST`,
     body: JSON.stringify(param),
     headers: {
@@ -197,20 +197,20 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
     response.json()
   ))
   .then((data) => {
-    // 1. alert
     alert(data.result);
 
-    // 2. 요소 초기화
-    $(`#fileUpBtn`).html("업로드");
-    $(`#userFile`).val("");
+    // 요소 초기화
+    getById("userFile").innerHTML = "";
+    getById("fileDisplayedName").innerHTML = "";
+    getById("fileUpBtn").innerHTML = "업로드";
 
-    // 3. 그리드에 이미지 표시
+    // 그리드에 이미지 표시
     fnGetList01();
 
-    // 4. 상세정보에 이미지 표시
+    // 상세정보에 이미지 표시
     fnShowFiles(param.tableNm, param.tableKey, "fileList");
 
-    // 5. 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
+    // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (param.tableKey !== "0") {
       $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
@@ -226,3 +226,13 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
     console.error(err);
   });
 };
+
+// 0. 업로드한 파일 이름 표시 ---------------------------------------------------------------------
+(() => {
+  const userFile = getById("userFile");
+  userFile.addEventListener("change", () => {
+    const userFileVal = getValue(userFile);
+    const fileName = typeof userFileVal === 'string' ? userFileVal.split("\\").pop() : "";
+    getById("fileDisplayedName").innerHTML = fileName;
+  });
+})();
