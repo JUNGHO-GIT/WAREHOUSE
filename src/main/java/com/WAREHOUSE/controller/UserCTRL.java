@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.User;
 import com.WAREHOUSE.dao.UserDAO;
-import com.WAREHOUSE.util.JsonUtil;
-import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -25,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class UserCTRL {
 
   private final UserDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/", "/login"}, produces={"text/plain; charset=UTF-8"})

@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "product.xlsx",
+    xlsNm: "product",
     title: "   제품 정보",
     width: "100%",
     height: "100%",
@@ -80,7 +80,7 @@ function fnGetList02() {
   const insertBtn = `<div class="insertBtn">▼</div>`;
 
   const gridOption = {
-    xlsNm: "resource.xlsx",
+    xlsNm: "resource",
     title: "   자재 정보",
     width: "100%",
     height: "100%",
@@ -183,7 +183,7 @@ function fnGetList03 () {
   const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
-    xlsNm: "bomList.xlsx",
+    xlsNm: "bomList",
     title: "   BOM 항목",
     width: "100%",
     height: "100%",
@@ -249,7 +249,7 @@ function fnShow(prodCd, bomType) {
   const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
-    xlsNm: "resource.xlsx",
+    xlsNm: "resource",
     title: "   BOM 정보",
     width: "100%",
     height: "100%",

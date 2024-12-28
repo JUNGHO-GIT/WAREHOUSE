@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "commonCd.xlsx",
+    xlsNm: "commonCd",
     title: "   공통 코드 관리",
     width: "100%",
     height: "100%",

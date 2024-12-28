@@ -118,11 +118,14 @@ const fnExportExcel = (gridId) => {
   const gridData = $grid.pqGrid("getData");
   const column = $grid.pqGrid("getColModel");
 
+  // title 가져오기
+  const title = $grid.pqGrid("option", "xlsNm");
+
   // summaryData 행 제거
-  const data = gridData.filter((row) => row.pq_rowcls !== "summary-row");
+  const data = gridData.filter(row => row.pq_rowcls !== "summary-row");
 
   // 이미지 열 제거
-  const colModel = column.filter((col) => col.dataIndx !== "fileUrl");
+  const colModel = column.filter(col => col.dataIndx !== "fileUrl");
 
   $grid.pqGrid({
     dataModel: { data: data },
@@ -130,7 +133,6 @@ const fnExportExcel = (gridId) => {
   });
 
   $grid.pqGrid("exportCsv", {
-    url: "exportData",
-    sheetName: "pqGrid"
+    url: "exportExcel?pq_title=" + title,
   });
 };

@@ -1,6 +1,8 @@
 package com.WAREHOUSE.controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -16,7 +18,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.hadoop.fs.FSDataInputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import com.WAREHOUSE.container.Files;
 import com.WAREHOUSE.dao.FilesDAO;
-import com.WAREHOUSE.util.JsonUtil;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.Utils;
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -61,9 +59,8 @@ public class FilesCTRL {
   private String STORAGE_EMPTY;
 
   private final FilesDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
-  private final Utils utils;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value={"/act/listFiles"}, produces={"application/json; charset=UTF-8"})
@@ -98,7 +95,7 @@ public class FilesCTRL {
   }
 
   //-----------------------------------------------------------------------------------------------
-  @GetMapping(value="/viewFiles")
+  @GetMapping(value={"/viewFiles"})
   public ResponseEntity<?> viewFiles(
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl
@@ -263,7 +260,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value="/downloadFiles")
+  @GetMapping(value={"/downloadFiles"})
   public ResponseEntity<?> fileDownload(
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl,
@@ -302,8 +299,8 @@ public class FilesCTRL {
           URL emptyImageUrl = new URL(STORAGE_EMPTY);
           downloadFile = java.nio.file.Files.createTempFile("emptyImage", ".tmp").toFile();
           try (
-            FSDataInputStream in = new FSDataInputStream(emptyImageUrl.openStream());
-            java.io.FileOutputStream out = new java.io.FileOutputStream(downloadFile);
+            InputStream in = emptyImageUrl.openStream();
+            OutputStream out = new FileOutputStream(downloadFile);
           ) {
             byte[] buffer = new byte[1024];
             int bytesRead;
@@ -341,12 +338,12 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value={"/exportData"})
-  public ResponseEntity<?> exportData(
+  @PostMapping(value={"/exportExcel"})
+  public ResponseEntity<?> postExportExcel(
     @RequestParam("pq_data") String pqData,
     @RequestParam("pq_ext") String pqExt,
     @RequestParam("pq_decode") Boolean pqDecode,
-    @RequestParam("pq_filename") String pqFilename,
+    @RequestParam("pq_title") String pqTitle,
     HttpSession session
   ) throws Exception {
 
@@ -356,7 +353,7 @@ public class FilesCTRL {
         return ResponseEntity.status(400).body(null);
       }
 
-      String filename = pqFilename + "." + pqExt;
+      String filename = pqTitle + "." + pqExt;
       session.setAttribute("pq_data", pqData);
       session.setAttribute("pq_decode", pqDecode);
       session.setAttribute("pq_filename", filename);
@@ -373,8 +370,8 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/exportData"})
-  public void exportData(
+  @GetMapping(value={"/exportExcel"})
+  public void getExportExcel(
     @RequestParam("pq_filename") String pqFilename,
     HttpSession session,
     HttpServletResponse response

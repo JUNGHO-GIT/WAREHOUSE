@@ -6,7 +6,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "user.xlsx",
+    xlsNm: "user",
     title: "   사용자 관리",
     width: "100%",
     height: "100%",

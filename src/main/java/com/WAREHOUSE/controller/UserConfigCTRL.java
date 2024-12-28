@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.UserConfig;
 import com.WAREHOUSE.dao.UserConfigDAO;
-import com.WAREHOUSE.util.JsonUtil;
-import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -22,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class UserConfigCTRL {
 
   private final UserConfigDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value={"/act/showUserConfigTab"}, produces={"application/json; charset=UTF-8"})

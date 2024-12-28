@@ -6,7 +6,7 @@ function fnGetList01 () {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "productInOutAll.xlsx",
+    xlsNm: "productInOutAll",
     title: "   제품 입출고 관리",
     width: "100%",
     height: "100%",
@@ -139,7 +139,7 @@ function fnGetList02() {
   const delBtn = `<div class="delBtn">x</div>`;
 
   const gridOption = {
-    xlsNm: "productInOutAll.xlsx",
+    xlsNm: "productInOutAll",
     title: "   일괄 입고",
     width: "100%",
     height: "100%",

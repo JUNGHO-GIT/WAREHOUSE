@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "resourcePlan.xlsx",
+    xlsNm: "resourcePlan",
     title: "   자재 입고 예정",
     width: "100%",
     height: "100%",
@@ -107,7 +107,7 @@ function fnGetList02 (resrcCd) {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "resourceInPlan.xlsx",
+    xlsNm: "resourceInPlan",
     title: "   자재 입출고 예정 내역",
     width: "100%",
     height: "100%",

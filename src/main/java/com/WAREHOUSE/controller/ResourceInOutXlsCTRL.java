@@ -1,5 +1,3 @@
-// ResourceInOutXlsCTRL.java
-
 package com.WAREHOUSE.controller;
 
 import java.util.ArrayList;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.ResourceInOut;
 import com.WAREHOUSE.dao.ResourceInOutXlsDAO;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -23,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class ResourceInOutXlsCTRL {
 
   private final ResourceInOutXlsDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/resourceInOutXls"}, produces={"text/plain; charset=UTF-8"})

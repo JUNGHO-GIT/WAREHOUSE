@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.ProductInOut;
 import com.WAREHOUSE.dao.ProductInOutXlsDAO;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -21,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductInOutXlsCTRL {
 
   private final ProductInOutXlsDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/productInOutXls"}, produces={"text/plain; charset=UTF-8"})

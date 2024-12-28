@@ -16,8 +16,6 @@ import com.WAREHOUSE.container.Company;
 import com.WAREHOUSE.container.Shipping;
 import com.WAREHOUSE.dao.CompanyDAO;
 import com.WAREHOUSE.dao.ShipItemsDAO;
-import com.WAREHOUSE.util.JsonUtil;
-import com.WAREHOUSE.util.LogsUtil;
 import com.WAREHOUSE.util.ExcelUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +27,8 @@ public class ShipItemsCTRL {
   private final ShipItemsDAO dao;
   private final CompanyDAO companyDao;
   private final ExcelUtil excel;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/shipItems"}, produces={"text/plain; charset=UTF-8"})
@@ -118,16 +116,15 @@ public class ShipItemsCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/shipItemsExcelDown"}, produces={"application/json; charset=UTF-8"})
+  @GetMapping(value={"/shipItemsExcelDown"})
   public ResponseEntity<?> shipItemsExcelDown (
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt,
-    @SessionAttribute("fileUrl") String fileUrl,
+    @SessionAttribute(value="fileUrl", required=false) String fileUrl,
     HttpServletResponse response
   ) throws Exception {
 
-    String fileDir = "test";
     Map<String, Object> map = new HashMap<String, Object>();
 
     try {
@@ -141,8 +138,7 @@ public class ShipItemsCTRL {
         company,
         list,
         response,
-        fileUrl,
-        fileDir
+        fileUrl
       );
 
       map.put("result", "저장되었습니다");

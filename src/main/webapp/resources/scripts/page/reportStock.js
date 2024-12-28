@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "reportStock.xlsx",
+    xlsNm: "reportStock",
     title: "   [제품] 연간 재고 현황",
     width: "100%",
     height: "100%",
@@ -101,7 +101,7 @@ function fnGetList02() {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "reportStock.xlsx",
+    xlsNm: "reportStock",
     title: "   [자재] 연간 재고 현황",
     width: "100%",
     height: "100%",

@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.dao.ProductDAO;
-import com.WAREHOUSE.util.JsonUtil;
-import com.WAREHOUSE.util.LogsUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -27,8 +25,8 @@ public class ProductCTRL {
   private String TITLE;
 
   private final ProductDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/product"}, produces={"text/plain; charset=UTF-8"})

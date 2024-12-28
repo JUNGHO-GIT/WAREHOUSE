@@ -15,8 +15,6 @@ import com.WAREHOUSE.container.Bom;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.BomDAO;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -25,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class BomCTRL {
 
   private final BomDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/bom"}, produces={"text/plain; charset=UTF-8"})

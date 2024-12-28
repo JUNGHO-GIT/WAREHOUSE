@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "company.xlsx",
+    xlsNm: "company",
     title: "   거래처 관리",
     width: "100%",
     height: "100%",

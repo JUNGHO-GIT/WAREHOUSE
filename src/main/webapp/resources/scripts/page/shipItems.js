@@ -4,7 +4,7 @@ function fnGetList01 () {
   const $grid01 = $(`#grid01`);
 
   const gridOption = {
-    xlsNm: "shipItems.xlsx",
+    xlsNm: "shipItems",
     title: "   출하 목록 관리",
     width: "100%",
     height: "100%",
@@ -85,7 +85,7 @@ function fnGetList02 (shipCd) {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "shipItemsDetail.xlsx",
+    xlsNm: "shipItemsDetail",
     title: "   출하 상세 목록",
     width: "100%",
     height: "100%",
@@ -235,14 +235,11 @@ function fnReset() {
 // 0. 엑셀 다운로드 --------------------------------------------------------------------------------
 function fnExcelDown() {
   const shipCd = $(`#shipCd`).val();
-
   if (!shipCd) {
     alert("다운받을 출하 항목을 선택해주세요");
     return;
   }
-
-  const valUrl = `/shipItemsExcelDown?shipCd=${shipCd}`;
-  location.href = valUrl;
+  location.href =`shipItemsExcelDown?shipCd=${shipCd}`;
 };
 
 // 0. 화면 로딩시 실행 -----------------------------------------------------------------------------

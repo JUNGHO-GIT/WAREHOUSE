@@ -1,9 +1,9 @@
 package com.WAREHOUSE.util;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -33,6 +32,9 @@ public class ExcelUtil {
   @Value("${storage-empty}")
   private String STORAGE_EMPTY;
 
+  @Value("${storage-path}")
+  private String STORAGE_PATH;
+
   // -----------------------------------------------------------------------------------------------
 	public void shipExcel(
     Integer shipCd,
@@ -40,8 +42,7 @@ public class ExcelUtil {
     Company company,
     ArrayList<HashMap<String, Object>> shippingList,
     HttpServletResponse response,
-    String fileUrl,
-    String fileDir
+    String fileUrl
   ) throws IOException, URISyntaxException {
 
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -54,24 +55,10 @@ public class ExcelUtil {
 
     String excelUrl = Paths.get(urlExcel.toURI()).toFile().getAbsolutePath();
     URL emptyImageUrl = new URL(STORAGE_EMPTY);
+    byte[] fileContent = null;
 
-    Map<String, Object> fileData = new HashMap<>();
-    fileData.put("fileUrl", fileUrl);
-    fileData.put("fileDir", fileDir);
-    fileData.put("excelUrl", excelUrl);
-
-    byte[] imageBytes;
-    if (fileUrl == null || fileUrl == "") {
-      try (FileInputStream fis = new FileInputStream(new File(emptyImageUrl.toURI()))) {
-        imageBytes = new byte[(int) fis.available()];
-        fis.read(imageBytes);
-      }
-    }
-    else {
-      try (FileInputStream fis = new FileInputStream(new File(fileDir + fileUrl))) {
-        imageBytes = new byte[(int) fis.available()];
-        fis.read(imageBytes);
-      }
+    try (InputStream file = emptyImageUrl.openStream()) {
+      fileContent = emptyImageUrl.openStream().readAllBytes();
     }
 
     // 이미지 형식 확인 후 올바른 타입 지정 (기본값으로 PNG 설정)
@@ -91,8 +78,8 @@ public class ExcelUtil {
     }
     HSSFSheet sheet1 = xlsxWb.getSheetAt(0);
 
-    if (imageBytes.length > 0) {
-      Integer pictureIdx = xlsxWb.addPicture(imageBytes, imageType);
+    if (fileContent.length > 0) {
+      Integer pictureIdx = xlsxWb.addPicture(fileContent, imageType);
       CreationHelper helper = xlsxWb.getCreationHelper();
       Drawing drawing = sheet1.createDrawingPatriarch();
       ClientAnchor anchor = helper.createClientAnchor();

@@ -5,7 +5,7 @@ function fnShowExcel(body) {
   const inputBox = `<input class="mt-5px" type="checkbox" id="allCheck" onclick="fnSelectAll()" />`;
 
   const gridOption = {
-    xlsNm: "resourceInOutXls.xlsx",
+    xlsNm: "resourceInOutXls",
     title: "   자재 입출고 관리",
     width: "100%",
     height: "100%",

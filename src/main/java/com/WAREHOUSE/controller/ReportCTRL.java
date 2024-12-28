@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.WAREHOUSE.dao.ReportDAO;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.JsonUtil;
 import com.WAREHOUSE.util.Utils;
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +19,8 @@ public class ReportCTRL {
 
   private final ReportDAO dao;
   private final Utils utils;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/reportIn"}, produces={"text/plain; charset=UTF-8"})

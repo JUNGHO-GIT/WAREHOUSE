@@ -11,10 +11,10 @@
   <artifactId>WAREHOUSE</artifactId>
   <packaging>war</packaging>
   <modelVersion>4.0.0</modelVersion>
-  <version>1.0.0-BUILD-SNAPSHOT</version>
+  <version>1.0.0</version>
   <!-- properties -->
   <properties>
-    <org.springframework-version>4.3.14.RELEASE</org.springframework-version>
+    <org.springframework-version>4.3.30.RELEASE</org.springframework-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java-version>17</java-version>
@@ -51,22 +51,22 @@
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.2.20.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.2.20.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.2.20.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-taglibs</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>4.2.20.RELEASE</version>
     </dependency>
     <!-- aspectj -->
     <dependency>
@@ -78,32 +78,32 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.12.4</version>
+      <version>2.19.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.12.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.12.4</version>
+      <version>2.19.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-jcl</artifactId>
-      <version>2.12.4</version>
+      <version>2.19.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-web</artifactId>
-      <version>2.12.4</version>
+      <version>2.19.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.19.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.30</version>
+      <version>1.7.32</version>
     </dependency>
     <!-- javax -->
     <dependency>
@@ -127,11 +127,6 @@
       <version>1.3.2</version>
     </dependency>
     <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>mail</artifactId>
-      <version>1.4.7</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
@@ -147,7 +142,7 @@
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
-      <version>4.0.3</version>
+      <version>5.1.0</version>
     </dependency>
     <!-- mybatis -->
     <dependency>
@@ -191,7 +186,7 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-storage</artifactId>
-      <version>2.44.1</version>
+      <version>2.11.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
@@ -221,14 +216,15 @@
       <version>3.7</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-common</artifactId>
-      <version>3.2.0</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.17.0</version>
     </dependency>
+    <!-- commons -->
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
-      <version>3.6</version>
+      <version>3.11.1</version>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
@@ -236,30 +232,14 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.13</version>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.18.0</version>
     </dependency>
     <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>org.apache.commons.fileupload</artifactId>
-      <version>1.2.2.LIFERAY-PATCHED-1</version>
-    </dependency>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>3.3.0</version>
-    </dependency>
-    <!-- etc -->
-    <dependency>
-      <groupId>org.quartz-scheduler</groupId>
-      <artifactId>quartz</artifactId>
-      <version>2.5.0</version>
-    </dependency>
-    <dependency>
-      <groupId>net.nurigo</groupId>
-      <artifactId>javaSDK</artifactId>
-      <version>2.2</version>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.5</version>
     </dependency>
   </dependencies>
   <!-- build -->
@@ -268,7 +248,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>3.2.3</version>
+        <version>3.4.0</version>
         <configuration>
           <warSourceDirectory>src/main/webapp</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -277,7 +257,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.13.0</version>
         <configuration>
           <source>${java-version}</source>
           <target>${java-version}</target>

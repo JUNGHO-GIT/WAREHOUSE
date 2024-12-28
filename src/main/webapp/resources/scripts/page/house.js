@@ -46,7 +46,7 @@ function fnGetList02 (houseData)  {
   const $grid02 = $(`#grid02`);
 
   const gridOption = {
-    xlsNm: "product.xlsx",
+    xlsNm: "product",
     title: "   창고별 재고 현황",
     width: "100%",
     height: "100%",
@@ -112,7 +112,7 @@ function fnGetList03 (houseData)  {
   const $grid03 = $(`#grid03`);
 
   const gridOption = {
-    xlsNm: "product.xlsx",
+    xlsNm: "product",
     title: "   창고별 재고 현황",
     width: "100%",
     height: "100%",

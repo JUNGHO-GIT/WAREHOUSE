@@ -11,8 +11,6 @@ import com.WAREHOUSE.container.House;
 import com.WAREHOUSE.container.Product;
 import com.WAREHOUSE.container.Resource;
 import com.WAREHOUSE.dao.CommonDAO;
-import com.WAREHOUSE.util.LogsUtil;
-import com.WAREHOUSE.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 
 // -------------------------------------------------------------------------------------------------
@@ -21,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class CommonCTRL {
 
   private final CommonDAO dao;
-  private final LogsUtil logs;
-  private final JsonUtil json;
+  // private final com.WAREHOUSE.util.LogsUtil logs;
+  // private final com.WAREHOUSE.util.JsonUtil json;
 
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value={"/act/findBom"}, produces={"application/json; charset=UTF-8"})
