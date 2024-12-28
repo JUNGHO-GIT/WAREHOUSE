@@ -34,6 +34,7 @@ type PQGridMethods = (
   | "expand"
   | "exportData"
   | "exportExcel"
+  | "exportCsv"
   | "filter"
   | "flex"
   | "focus"

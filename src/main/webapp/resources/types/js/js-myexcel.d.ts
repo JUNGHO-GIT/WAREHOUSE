@@ -1,4 +1,4 @@
-declare var MyExcel: MyExcel.MyExcelStatic;
+declare type ExcelType = Excel.ExcelStatic;
 
 declare interface Workbook {
   /**
@@ -38,8 +38,8 @@ declare interface Workbook {
   generate (filename: string): void;
 }
 
-declare namespace MyExcel {
-  interface MyExcelStatic {
+declare namespace Excel {
+  interface ExcelStatic {
     /**
     * 지정한 RGB 값을 16진수 색상코드로 변환합니다.
     * @param r 빨강 값(0~255)

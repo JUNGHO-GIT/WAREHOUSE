@@ -1,17 +1,22 @@
 package com.WAREHOUSE.controller;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -90,7 +95,9 @@ public class FilesCTRL {
       e.printStackTrace();
       return ResponseEntity.status(500).body(null);
     }
-  }//-----------------------------------------------------------------------------------------------
+  }
+
+  //-----------------------------------------------------------------------------------------------
   @GetMapping(value="/viewFiles")
   public ResponseEntity<?> viewFiles(
     @RequestParam(value="tableNm", required=false) String tableNm,
@@ -266,6 +273,7 @@ public class FilesCTRL {
     java.io.File downloadFile = null;
     String encodedFileName = "";
 
+    // User-Agent에 따른 파일명 인코딩
     if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
       encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
     }
@@ -274,13 +282,13 @@ public class FilesCTRL {
     }
 
     try {
-      // 1. 엑셀 파일 다운로드인 경우
+      // 엑셀 파일 다운로드인 경우
       if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
         ClassPathResource resource = new ClassPathResource("xls/" + fileUrl);
         downloadFile = resource.getFile();
       }
 
-      // 3. 이미지 파일 다운로드인 경우
+      // 이미지 파일 다운로드인 경우
       else {
         // storage 객체 생성
         Storage storage = StorageOptions.getDefaultInstance().getService();
@@ -294,8 +302,8 @@ public class FilesCTRL {
           URL emptyImageUrl = new URL(STORAGE_EMPTY);
           downloadFile = java.nio.file.Files.createTempFile("emptyImage", ".tmp").toFile();
           try (
-            InputStream in = emptyImageUrl.openStream();
-            OutputStream out = new FileOutputStream(downloadFile)
+            FSDataInputStream in = new FSDataInputStream(emptyImageUrl.openStream());
+            java.io.FileOutputStream out = new java.io.FileOutputStream(downloadFile);
           ) {
             byte[] buffer = new byte[1024];
             int bytesRead;
@@ -331,4 +339,70 @@ public class FilesCTRL {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  @PostMapping(value={"/exportData"})
+  public ResponseEntity<?> exportData(
+    @RequestParam("pq_data") String pqData,
+    @RequestParam("pq_ext") String pqExt,
+    @RequestParam("pq_decode") Boolean pqDecode,
+    @RequestParam("pq_filename") String pqFilename,
+    HttpSession session
+  ) throws Exception {
+
+    try {
+      List<String> allowedExtensions = Arrays.asList("csv", "xlsx", "htm", "zip", "json");
+      if (!allowedExtensions.contains(pqExt)) {
+        return ResponseEntity.status(400).body(null);
+      }
+
+      String filename = pqFilename + "." + pqExt;
+      session.setAttribute("pq_data", pqData);
+      session.setAttribute("pq_decode", pqDecode);
+      session.setAttribute("pq_filename", filename);
+
+      return ResponseEntity.ok()
+      .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
+      .contentType(MediaType.APPLICATION_OCTET_STREAM)
+      .body(filename);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.status(500).body(null);
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  @GetMapping(value={"/exportData"})
+  public void exportData(
+    @RequestParam("pq_filename") String pqFilename,
+    HttpSession session,
+    HttpServletResponse response
+  ) throws Exception {
+
+    String sessionFilename = (String) session.getAttribute("pq_filename");
+    String pqData = (String) session.getAttribute("pq_data");
+    Boolean pqDecode = (Boolean) session.getAttribute("pq_decode");
+
+    if (sessionFilename == null || !sessionFilename.equals(pqFilename) || pqData == null) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid session data or filename.");
+      return;
+    }
+
+    byte[] fileBytes = (pqDecode != null && pqDecode)
+    ? Base64.decodeBase64(pqData)
+    : pqData.getBytes(StandardCharsets.UTF_8);
+
+    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+    response.setHeader("Content-Disposition", "attachment; filename=\"" + pqFilename + "\"");
+    response.setContentLength(fileBytes.length);
+
+    try (OutputStream out = response.getOutputStream()) {
+      out.write(fileBytes);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

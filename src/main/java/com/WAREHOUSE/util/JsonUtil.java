@@ -1,7 +1,9 @@
 package com.WAREHOUSE.util;
 
+import java.util.List;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -28,4 +30,12 @@ public class JsonUtil {
   public <T> T fromJson(String json, Class<T> clazz) throws Exception {
     return objectMapper.readValue(json, clazz);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // jsonToList
+  public <T> List<T> jsonToList(String json, TypeReference<List<T>> typeReference) throws Exception {
+    return objectMapper.readValue(json, typeReference);
+}
+
+
 }
