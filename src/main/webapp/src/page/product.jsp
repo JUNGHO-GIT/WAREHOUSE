@@ -454,9 +454,6 @@
                       <div class="btn btn-danger btn-xs" onclick="fnDel()">
                         삭제
                       </div>
-                      <div class="btn btn-warning btn-xs" onclick="fnExportExcel('grid01')">
-                        엑셀
-                      </div>
                     </div>
                   </div>
                 </div>
