@@ -5,6 +5,7 @@
 	margin: 0;
 	padding: 0;
 	background: #f7f7f7 !important;
+  overflow-y: hidden;
 }
 .body .container {
 	padding: 20px !important;

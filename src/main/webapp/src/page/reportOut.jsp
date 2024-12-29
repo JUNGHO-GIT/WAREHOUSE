@@ -5,7 +5,7 @@
 <c:set var="rsPath" value="${pageContext.request.contextPath}/resources" />
 
 <!------------------------------------------------------------------------------------------------->
-<body class="body">
+<body class="body over-y-auto">
   <div class="container">
 
     <!-- row 1 ------------------------------------------------------------------------------------>
