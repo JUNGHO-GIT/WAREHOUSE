@@ -82,7 +82,7 @@
   />
   <link
     rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/style/Init.min.css"
+    href="https://jungho-git.github.io/JCDN/style/Reset.min.css"
   />
   <link
     rel="stylesheet"
