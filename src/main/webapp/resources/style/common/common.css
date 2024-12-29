@@ -330,4 +330,15 @@ ul.nav.child-menu li a {
 }
 .pq-grid-cell {
 	height: 35px;
+  font-size: 0.8rem;
+}
+.pq-slider-icon {
+  position: absolute;
+  transform: translateY(30%);
+}
+.pq-grid-col {
+  font-size: 0.85rem;
+}
+.pq-grid-number-cell {
+  font-size: 0.7rem;
 }

@@ -27,17 +27,14 @@
   <link
     rel="preconnect"
     href="https://cdnjs.cloudflare.com"
-    crossorigin
   />
   <link
     rel="preconnect"
     href="https://storage.googleapis.com"
-    crossorigin
   />
   <link
     rel="preconnect"
     href="https://jungho-git.github.io"
-    crossorigin
   />
 
   <!-- css 1 -->
@@ -82,22 +79,14 @@
   <link
     rel="stylesheet"
     href="https://jungho-git.github.io/JCDN/font/PretendardVariable.min.css"
-    crossorigin
-  />
-  <link
-    rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/style/Reset.min.css"
-    crossorigin
   />
   <link
     rel="stylesheet"
     href="https://jungho-git.github.io/JCDN/style/Init.min.css"
-    crossorigin
   />
   <link
     rel="stylesheet"
     href="https://jungho-git.github.io/JCDN/style/Jstyle.min.css"
-    crossorigin
   />
 
   <!-- custom -->
