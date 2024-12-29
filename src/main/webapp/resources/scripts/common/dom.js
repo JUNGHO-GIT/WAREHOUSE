@@ -218,3 +218,18 @@ const setTextContent = (el, text) => {
 
   el.textContent = text ? String(text).trim() : "";
 };
+
+/** ------------------------------------------------------------------------------------------------
+* @namespace DOM
+* @description DOM 데이터 조작
+**/
+
+/** ------------------------------------------------------------------------------------------------
+* @memberof DOM
+* @param {string} el
+* @returns {void}
+* @description 페이지 이동
+**/
+const goPage = (el) => {
+  window.location.href = el;
+};

@@ -94,74 +94,6 @@ public class FilesCTRL {
     }
   }
 
-  //-----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/viewFiles"})
-  public ResponseEntity<?> viewFiles(
-    @RequestParam(value="tableNm", required=false) String tableNm,
-    @RequestParam(value="fileUrl", required=false) String fileUrl
-  ) throws Exception {
-
-    // storage 객체 생성
-    Storage storage = StorageOptions.getDefaultInstance().getService();
-
-    // blobId 생성
-    BlobId blobId = BlobId.of(STORAGE_MAIN, STORAGE_FOLDER + "/" + tableNm + "/" + fileUrl);
-    Blob blob = storage.get(blobId);
-
-    // fileContent 객체 생성
-    byte[] fileContent = null;
-    String fileExt = fileUrl.substring(fileUrl.lastIndexOf(".") + 1);
-    String contentType = "";
-
-    // 파일 확장자에 따른 Content-Type 설정
-    if (fileExt.equals("jpg") || fileExt.equals("jpeg")) {
-      contentType = "image/jpeg";
-    }
-    else if (fileExt.equals("png")) {
-      contentType = "image/png";
-    }
-    else if (fileExt.equals("webp")) {
-      contentType = "image/webp";
-    }
-    else if (fileExt.equals("pdf")) {
-      contentType = "application/pdf";
-    }
-    else {
-      contentType = "application/octet-stream";
-    }
-
-    // 파일이 존재하지 않을 경우 처리
-    if (blob == null || !blob.exists()) {
-      URL emptyImageUrl = new URL(STORAGE_EMPTY);
-      fileContent = emptyImageUrl.openStream().readAllBytes();
-
-      return ResponseEntity.ok()
-      .header("Content-Description", "Default Image Data")
-      .header("Cache-Control", "max-age=2592000, public")
-      .contentType(MediaType.parseMediaType("image/webp"))
-      .body(fileContent);
-    }
-
-    try {
-      // 파일 데이터 읽기
-      fileContent = blob.getContent();
-
-      // ResponseEntity로 응답 생성
-      return ResponseEntity.ok()
-      .header("Content-Description", "File Transfer")
-      .header("Content-Disposition", "inline; filename=\"" + fileUrl + "\"")
-      .header("Content-Transfer-Encoding", "binary")
-      .contentType(MediaType.parseMediaType(contentType))
-      .contentLength(fileContent.length)
-      .body(fileContent);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-      String result = "파일 다운로드 중 오류가 발생했습니다.";
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
-    }
-  }
-
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value={"/act/uploadFiles"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> uploadFiles (
@@ -259,9 +191,77 @@ public class FilesCTRL {
     return ResponseEntity.ok(map);
   }
 
+  //-----------------------------------------------------------------------------------------------
+  @GetMapping(value={"/viewFiles"}, produces={"application/octet-stream; charset=UTF-8"})
+  public ResponseEntity<?> viewFiles(
+    @RequestParam(value="tableNm", required=false) String tableNm,
+    @RequestParam(value="fileUrl", required=false) String fileUrl
+  ) throws Exception {
+
+    // storage 객체 생성
+    Storage storage = StorageOptions.getDefaultInstance().getService();
+
+    // blobId 생성
+    BlobId blobId = BlobId.of(STORAGE_MAIN, STORAGE_FOLDER + "/" + tableNm + "/" + fileUrl);
+    Blob blob = storage.get(blobId);
+
+    // fileContent 객체 생성
+    byte[] fileContent = null;
+    String fileExt = fileUrl.substring(fileUrl.lastIndexOf(".") + 1);
+    String contentType = "";
+
+    // 파일 확장자에 따른 Content-Type 설정
+    if (fileExt.equals("jpg") || fileExt.equals("jpeg")) {
+      contentType = "image/jpeg";
+    }
+    else if (fileExt.equals("png")) {
+      contentType = "image/png";
+    }
+    else if (fileExt.equals("webp")) {
+      contentType = "image/webp";
+    }
+    else if (fileExt.equals("pdf")) {
+      contentType = "application/pdf";
+    }
+    else {
+      contentType = "application/octet-stream";
+    }
+
+    // 파일이 존재하지 않을 경우 처리
+    if (blob == null || !blob.exists()) {
+      URL emptyImageUrl = new URL(STORAGE_EMPTY);
+      fileContent = emptyImageUrl.openStream().readAllBytes();
+
+      return ResponseEntity.ok()
+      .header("Content-Description", "Default Image Data")
+      .header("Cache-Control", "max-age=2592000, public")
+      .contentType(MediaType.parseMediaType("image/webp"))
+      .body(fileContent);
+    }
+
+    try {
+      // 파일 데이터 읽기
+      fileContent = blob.getContent();
+
+      // ResponseEntity로 응답 생성
+      return ResponseEntity.ok()
+      .header("Content-Description", "File Transfer")
+      .header("Content-Disposition", "inline; filename=\"" + fileUrl + "\"")
+      .header("Content-Transfer-Encoding", "binary")
+      .contentType(MediaType.parseMediaType(contentType))
+      .contentLength(fileContent.length)
+      .body(fileContent);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      String result = "파일 다운로드 중 오류가 발생했습니다.";
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+    }
+  }
+
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/downloadFiles"})
-  public ResponseEntity<?> fileDownload(
+  @GetMapping(value={"/downloadFiles"}, produces={"application/octet-stream; charset=UTF-8"})
+  public ResponseEntity<?> downloadFiles(
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl,
     @RequestHeader("User-Agent") String userAgent
@@ -338,7 +338,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @PostMapping(value={"/exportExcel"})
+  @PostMapping(value={"/exportExcel"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> postExportExcel(
     @RequestParam("pq_data") String pqData,
     @RequestParam("pq_ext") String pqExt,
@@ -370,7 +370,7 @@ public class FilesCTRL {
   }
 
   // -----------------------------------------------------------------------------------------------
-  @GetMapping(value={"/exportExcel"})
+  @GetMapping(value={"/exportExcel"}, produces={"application/octet-stream; charset=UTF-8"})
   public void getExportExcel(
     @RequestParam("pq_filename") String pqFilename,
     HttpSession session,

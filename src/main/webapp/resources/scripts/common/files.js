@@ -1,26 +1,27 @@
 // 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
 const fnUploadFiles = (formParam) => {
 
+  const $grid = $(`#grid01`);
   const fileUploadForm = getFormByName(formParam);
-  const tableNm = $(`#tableNm`).val();
-  const tableKey = $(`#tableKey`).val();
+  const tableNm = getValue(getById("tableNm"));
+  const tableKey = getValue(getById("tableKey"));
 
   const formData = new FormData(fileUploadForm);
-  const userFileVal = $(`#userFile`).val();
+  const userFileVal = getValue(getById("userFile"));
   const divFile = typeof userFileVal === 'string' ? userFileVal.split(".") : [];
   const fileExt = divFile[(divFile.length - 1)];
 
-  if (!$(`#userFile`).val()) {
+  if (!userFileVal) {
     alert("파일을 먼저 선택해 주세요");
-    $(`#userFile`).trigger("focus");
+    getById("userFile").focus();
     return;
   }
-  if (fileExt != "jpg" && fileExt != "JPG" && fileExt != "png" && fileExt != "PNG") {
+  if (fileExt !== "jpg" && fileExt !== "JPG" && fileExt !== "png" && fileExt !== "PNG") {
     alert("등록 불가능한 파일입니다");
-    $(`#userFile`).trigger("focus");
+    getById("userFile").focus();
     return;
   }
-  $(`#fileUpBtn`).html("ing..");
+  getById("fileUpBtn").innerHTML = "ing..";
 
   fetch(`act/uploadFiles`, {
     method: `POST`,
@@ -48,7 +49,7 @@ const fnUploadFiles = (formParam) => {
 
     // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (tableKey !== "0") {
-      $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
+      $grid.pqGrid("setSelection", {rowIndxPage:0});
     }
   })
   .catch((err) => {
@@ -165,11 +166,13 @@ const fnPopupImage = (tableNm, fileUrl) => {
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
 const fnDownloadFiles = (tableNm, fileUrl) => {
-  location.href = `downloadFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
+  goPage(`downloadFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`);
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------
 const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
+
+  const $grid = $(`#grid01`);
 
   if (!confirm("업로드된 파일을 삭제 하시겠습니까?")) {
     return;
@@ -212,7 +215,7 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
 
     // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (param.tableKey !== "0") {
-      $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
+      $grid.pqGrid("setSelection", {rowIndxPage:0});
     }
   })
   .catch((err) => {
