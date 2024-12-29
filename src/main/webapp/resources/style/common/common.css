@@ -334,7 +334,7 @@ ul.nav.child-menu li a {
 }
 .pq-slider-icon {
   position: absolute;
-  transform: translateY(30%);
+  transform: translateY(25%);
 }
 .pq-grid-col {
   font-size: 0.85rem;
