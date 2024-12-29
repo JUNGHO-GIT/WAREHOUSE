@@ -290,7 +290,7 @@
     </div>
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/user.js"></script>
+    <script defer src="${rsPath}/script/page/user.js"></script>
 
   </div>
 </body>

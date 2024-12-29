@@ -179,6 +179,6 @@
       </div>
     </div>
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/userConfig.js"></script>
+    <script defer src="${rsPath}/script/page/userConfig.js"></script>
   </div>
 </div>

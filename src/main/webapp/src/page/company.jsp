@@ -377,7 +377,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/company.js"></script>
+    <script defer src="${rsPath}/script/page/company.js"></script>
 
   </div>
 </body>

@@ -141,7 +141,7 @@
 
     <!-- js -->
     <%@ include file="./productInOutAllPop.jsp" %>
-    <script defer src="${rsPath}/scripts/page/productInOutAll.js"></script>
+    <script defer src="${rsPath}/script/page/productInOutAll.js"></script>
 
   </div>
 </body>

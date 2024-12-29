@@ -12,7 +12,7 @@
   <div class="sidebar-container sidebar-open">
     <div class="sidebar-logo">
       <img
-        src="${rsPath}/images/common/logo.png"
+        src="${rsPath}/image/common/logo.png"
         alt="logo"
         class="sidebar-img pointer hover"
         onclick="fnGoPage('main')"
@@ -125,6 +125,6 @@
   <!-- js -->
   <%@ include file="./userConfig.jsp" %>
   <input type="hidden" id="configSeq" name="configSeq" value="" />
-  <script defer src="${rsPath}/scripts/page/main.js"></script>
+  <script defer src="${rsPath}/script/page/main.js"></script>
 
 </body>

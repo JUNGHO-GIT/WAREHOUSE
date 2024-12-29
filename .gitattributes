@@ -9,5 +9,5 @@
 # linguist-vendored
 **/libs/** linguist-vendored=true
 **/fonts/** linguist-vendored=true
-**/images/** linguist-vendored=true
+**/image/** linguist-vendored=true
 **/types/** linguist-vendored=true

@@ -69,7 +69,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/reportOut.js"></script>
+    <script defer src="${rsPath}/script/page/reportOut.js"></script>
 
   </div>
 </body>

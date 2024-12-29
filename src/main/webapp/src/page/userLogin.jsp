@@ -21,7 +21,7 @@
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="d-row-center">
                       <img
-                        src="${rsPath}/images/common/cores-logo.png"
+                        src="${rsPath}/image/common/cores-logo.png"
                         alt="logo"
                         class="img-fluid w-max-200px"
                         loading="lazy"
@@ -121,7 +121,7 @@
     </div>
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/userLogin.js"></script>
+    <script defer src="${rsPath}/script/page/userLogin.js"></script>
 
   </div>
 </body>

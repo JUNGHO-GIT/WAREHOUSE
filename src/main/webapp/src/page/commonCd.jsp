@@ -224,7 +224,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/commonCd.js"></script>
+    <script defer src="${rsPath}/script/page/commonCd.js"></script>
 
   </div>
 </body>

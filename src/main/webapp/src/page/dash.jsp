@@ -28,7 +28,7 @@
           <div class="app-header-log p-10px mr-auto">
             <img
               alt="logo"
-              src="${rsPath}/images/common/logo.png"
+              src="${rsPath}/image/common/logo.png"
               class="w-55px h-auto hide-sm"
               loading="lazy"
             />
@@ -613,15 +613,15 @@
 
     <!-- js -->
     <link rel="stylesheet" href="${urlPath}/font-awesome/5.8.0/css/all.min.css" />
-    <link rel="stylesheet" href="${rsPath}/styles/lib/dash.min.css" />
-    <link rel="stylesheet" href="${rsPath}/styles/common/common.css" />
+    <link rel="stylesheet" href="${rsPath}/style/lib/dash.min.css" />
+    <link rel="stylesheet" href="${rsPath}/style/common/common.css" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/serial.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-    <script defer src="${rsPath}/scripts/lib/pace.min.js"></script>
-    <script defer src="${rsPath}/scripts/lib/dash.min.js"></script>
-    <script defer src="${rsPath}/scripts/page/dash.js"></script>
+    <script defer src="${rsPath}/script/lib/pace.min.js"></script>
+    <script defer src="${rsPath}/script/lib/dash.min.js"></script>
+    <script defer src="${rsPath}/script/page/dash.js"></script>
 
   </div>
 </body>

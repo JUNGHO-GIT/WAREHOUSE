@@ -231,7 +231,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/shipPlan.js"></script>
+    <script defer src="${rsPath}/script/page/shipPlan.js"></script>
 
   </div>
 </body>

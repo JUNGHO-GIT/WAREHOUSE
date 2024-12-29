@@ -179,7 +179,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/bom.js"></script>
+    <script defer src="${rsPath}/script/page/bom.js"></script>
 
   </div>
 </body>

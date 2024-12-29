@@ -365,7 +365,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/resourceIn.js"></script>
+    <script defer src="${rsPath}/script/page/resourceIn.js"></script>
 
   </div>
 </body>

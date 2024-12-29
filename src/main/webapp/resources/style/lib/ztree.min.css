@@ -23,7 +23,7 @@
 	padding: 0 0 0 18px;
 }
 .ztree li ul.line {
-	background: url(../../images/lib/ztree/line_conn.gif) repeat-y;
+	background: url(../../image/lib/ztree/line_conn.gif) repeat-y;
 }
 .ztree li a {
 	padding: 1px 3px 0 0;
@@ -81,7 +81,7 @@
 	background-color: transparent;
 	background-repeat: no-repeat;
 	background-attachment: scroll;
-	background-image: url("../../images/lib/ztree/ztree-icons.png");
+	background-image: url("../../image/lib/ztree/ztree-icons.png");
 }
 .ztree li span.button.chk {
 	width: 13px;
@@ -225,7 +225,7 @@
 }
 .ztree li span.button.ico_loading {
 	margin-right: 2px;
-	background: url(../../images/lib/ztree/loading.gif) no-repeat;
+	background: url(../../image/lib/ztree/loading.gif) no-repeat;
 	vertical-align: top;
 }
 ul.tmpTargetzTree {
@@ -244,7 +244,7 @@ span.tmpzTreeMove_arrow {
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-position: -110px -80px;
-	background-image: url("../../images/lib/ztree/ztree-icons.png");
+	background-image: url("../../image/lib/ztree/ztree-icons.png");
 }
 ul.ztree.zTreeDragUL {
 	margin: 0;

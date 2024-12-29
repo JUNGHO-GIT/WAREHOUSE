@@ -15,12 +15,12 @@
   <link
     rel="icon"
     type="image/x-icon"
-    href="${rsPath}/images/common/favicon.ico"
+    href="${rsPath}/image/common/favicon.ico"
   />
   <link
     rel="shortcut icon"
     type="image/x-icon"
-    href="${rsPath}/images/common/favicon.ico"
+    href="${rsPath}/image/common/favicon.ico"
   />
 
   <!-- preconnect -->
@@ -46,13 +46,13 @@
   <link rel="stylesheet" href="${urlPath}/jqueryui/1.14.1/themes/base/jquery-ui.min.css" />
 
   <!-- css 2 -->
-  <link rel="stylesheet" href="${rsPath}/styles/lib/jquery-pqgrid.min.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/lib/jquery-pqgrid.ui.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/lib/jquery-pqgrid.css" />
-  <link rel="stylesheet" href="${rsPath}/styles/lib/datepicker.min.css" />
+  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.min.css" />
+  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.ui.css" />
+  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.css" />
+  <link rel="stylesheet" href="${rsPath}/style/lib/datepicker.min.css" />
 
   <!-- css 3 -->
-  <link rel="stylesheet" href="${rsPath}/styles/common/common.css" />
+  <link rel="stylesheet" href="${rsPath}/style/common/common.css" />
 
   <!-- js 1 -->
   <script src="${urlPath}/jquery/3.7.1/jquery.min.js"></script>
@@ -64,39 +64,39 @@
   <script defer src="${urlPath}/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
   <!-- js 2 -->
-  <script defer src="${rsPath}/scripts/lib/jquery-pqgrid.min.js"></script>
-  <script defer src="${rsPath}/scripts/lib/json2xls.js"></script>
-  <script defer src="${rsPath}/scripts/lib/jszip.js"></script>
-  <script defer src="${rsPath}/scripts/lib/filesaver.js"></script>
-  <script defer src="${rsPath}/scripts/lib/myexcel.js"></script>
+  <script defer src="${rsPath}/script/lib/jquery-pqgrid.min.js"></script>
+  <script defer src="${rsPath}/script/lib/json2xls.js"></script>
+  <script defer src="${rsPath}/script/lib/jszip.js"></script>
+  <script defer src="${rsPath}/script/lib/filesaver.js"></script>
+  <script defer src="${rsPath}/script/lib/myexcel.js"></script>
 
   <!-- js 3 -->
-  <script defer src="${rsPath}/scripts/common/dom.js"></script>
-  <script defer src="${rsPath}/scripts/common/sidebar.js"></script>
-  <script defer src="${rsPath}/scripts/common/files.js"></script>
-  <script defer src="${rsPath}/scripts/common/grid.js"></script>
-  <script defer src="${rsPath}/scripts/common/util.js"></script>
-  <script defer src="${rsPath}/scripts/common/common.js"></script>
+  <script defer src="${rsPath}/script/common/dom.js"></script>
+  <script defer src="${rsPath}/script/common/sidebar.js"></script>
+  <script defer src="${rsPath}/script/common/files.js"></script>
+  <script defer src="${rsPath}/script/common/grid.js"></script>
+  <script defer src="${rsPath}/script/common/util.js"></script>
+  <script defer src="${rsPath}/script/common/common.js"></script>
 
   <!-- cdn -->
   <link
     rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/fonts/PretendardVariable.min.css"
+    href="https://jungho-git.github.io/JCDN/font/PretendardVariable.min.css"
     crossorigin
   />
   <link
     rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/styles/Reset.min.css"
+    href="https://jungho-git.github.io/JCDN/style/Reset.min.css"
     crossorigin
   />
   <link
     rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/styles/Init.min.css"
+    href="https://jungho-git.github.io/JCDN/style/Init.min.css"
     crossorigin
   />
   <link
     rel="stylesheet"
-    href="https://jungho-git.github.io/JCDN/styles/Jstyle.min.css"
+    href="https://jungho-git.github.io/JCDN/style/Jstyle.min.css"
     crossorigin
   />
 

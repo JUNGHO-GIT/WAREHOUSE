@@ -73,7 +73,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/productXls.js"></script>
+    <script defer src="${rsPath}/script/page/productXls.js"></script>
 
   </div>
 </body>

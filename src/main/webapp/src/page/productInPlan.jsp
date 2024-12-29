@@ -365,7 +365,7 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <script defer src="${rsPath}/scripts/page/productInPlan.js"></script>
+    <script defer src="${rsPath}/script/page/productInPlan.js"></script>
 
   </div>
 </body>
