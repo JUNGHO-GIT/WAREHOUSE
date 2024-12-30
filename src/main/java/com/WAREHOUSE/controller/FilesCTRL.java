@@ -261,24 +261,25 @@ public class FilesCTRL {
 
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/downloadFiles"}, produces={"application/octet-stream; charset=UTF-8"})
-  public ResponseEntity<?> downloadFiles(
+  public void downloadFiles(
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl,
-    @RequestHeader(value="User-Agent", required=false) String userAgent
+    @RequestHeader(value="User-Agent", required=false) String userAgent,
+    HttpServletResponse response
   ) throws Exception {
 
-    java.io.File downloadFile = null;
-    String encodedFileName = "";
-
-    // User-Agent에 따른 파일명 인코딩
-    if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
-      encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
-    }
-    else {
-      encodedFileName = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
-    }
-
     try {
+      java.io.File downloadFile = null;
+      String encodedFileName = "";
+
+      // User-Agent에 따른 파일명 인코딩
+      if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+        encodedFileName = URLEncoder.encode(fileUrl, "UTF-8").replaceAll("\\+", "%20");
+      }
+      else {
+        encodedFileName = new String(fileUrl.getBytes("UTF-8"), "ISO-8859-1");
+      }
+
       // 엑셀 파일 다운로드인 경우
       if (fileUrl.contains(".xlsx") || fileUrl.contains(".xls")) {
         ClassPathResource resource = new ClassPathResource("xls/" + fileUrl);
@@ -321,18 +322,20 @@ public class FilesCTRL {
         contentType = "application/octet-stream";
       }
 
-      // 7. ResponseEntity로 응답 생성
-      return ResponseEntity.ok()
-      .header("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"")
-      .header("Content-Transfer-Encoding", "binary")
-      .contentType(MediaType.parseMediaType(contentType))
-      .contentLength(downloadFile.length())
-      .body(fileContent);
+      // 파일 다운로드 응답 생성
+      response.setContentType(contentType);
+      response.setContentLength(fileContent.length);
+      response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
+
+      try (OutputStream out = response.getOutputStream()) {
+        out.write(fileContent);
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
     catch (Exception e) {
       e.printStackTrace();
-      String result = "파일 다운로드 중 오류가 발생했습니다.";
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
   }
 
@@ -375,28 +378,33 @@ public class FilesCTRL {
     HttpServletResponse response,
     HttpSession session
   ) throws Exception {
+    try {
 
-    String sessionFilename = (String) session.getAttribute("pq_filename");
-    String pqData = (String) session.getAttribute("pq_data");
-    Boolean pqDecode = (Boolean) session.getAttribute("pq_decode");
+      String sessionFilename = (String) session.getAttribute("pq_filename");
+      String pqData = (String) session.getAttribute("pq_data");
+      Boolean pqDecode = (Boolean) session.getAttribute("pq_decode");
 
-    if (sessionFilename == null || !sessionFilename.equals(pqFilename) || pqData == null) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid session data or filename.");
-      return;
+      if (sessionFilename == null || !sessionFilename.equals(pqFilename) || pqData == null) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid session data or filename.");
+        return;
+      }
+
+      byte[] fileBytes = (pqDecode != null && pqDecode)
+      ? Base64.decodeBase64(pqData)
+      : pqData.getBytes(StandardCharsets.UTF_8);
+
+      response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+      response.setHeader("Content-Disposition", "attachment; filename=\"" + pqFilename + "\"");
+      response.setContentLength(fileBytes.length);
+
+      try (OutputStream out = response.getOutputStream()) {
+        out.write(fileBytes);
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
-
-    byte[] fileBytes = (pqDecode != null && pqDecode)
-    ? Base64.decodeBase64(pqData)
-    : pqData.getBytes(StandardCharsets.UTF_8);
-
-    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-    response.setHeader("Content-Disposition", "attachment; filename=\"" + pqFilename + "\"");
-    response.setContentLength(fileBytes.length);
-
-    try (OutputStream out = response.getOutputStream()) {
-      out.write(fileBytes);
-    }
-    catch (IOException e) {
+    catch (Exception e) {
       e.printStackTrace();
     }
   }
