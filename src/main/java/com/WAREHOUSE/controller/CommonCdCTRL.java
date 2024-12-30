@@ -99,7 +99,7 @@ public class CommonCdCTRL {
   @PostMapping(value={"/act/saveCommonCd"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveCommonCd (
     @RequestBody CommonCd param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

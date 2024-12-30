@@ -112,9 +112,6 @@ const fnFindCd = async (targetNm, targetCd, targetId, event) => {
 // 0. nm 으로 cd 값 구하기 -------------------------------------------------------------------------
 const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
 
-  // ex. grid00
-  const gridId = `#${gridCd}`;
-
   // ex. house, houseCd, houseNm
   const str = targetNm.slice(0, -2);
   const strCd = `${str}Cd`;
@@ -134,7 +131,7 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
   );
 
   // strNm 값이 변경되었을 경우에는 strCd 값도 변경되어야 함
-  const rowData = $(gridId).pqGrid("getRowData", {rowIndx: rowIndx});
+  const rowData = $(`#${gridCd}`).pqGrid("getRowData", {rowIndx: rowIndx});
   if (rowData[strCd] && rowData[strNm] === targetVal) {
     return;
   }
@@ -189,12 +186,12 @@ const fnGetCdWithNm = async (targetNm, targetVal, rowIndx, gridCd) => {
       }
     }
     // 그리드 업데이트
-    $(gridId).pqGrid("updateRow", {
+    $(`#${gridCd}`).pqGrid("updateRow", {
       rowIndx: rowIndx,
       row: dynamicRowData
     });
 
-    $(gridId).pqGrid("refreshDataAndView");
+    $(`#${gridCd}`).pqGrid("refreshDataAndView");
   })
   .catch((err) => {
     if (err.status === 477) {
@@ -215,17 +212,19 @@ const fnSwitchTab = (newTab) => {
     return;
   }
   // 버튼 스타일 변경
-  document.getElementById(curTab + "Tab").classList.remove("active");
-  document.getElementById(newTab + "Tab").classList.add("active");
+  removeClass(getById(`${curTab}Tab`), "active");
+  addClass(getById(`${newTab}Tab`), "active");
 
   // 라디오 버튼 체크
-  $(`input[name=inOut][value=${curTab}]`).prop("checked", false);
-  $(`input[name=inOut][value=${newTab}]`).prop("checked", true);
+  setProperty(getEl(`input[name=inOut]`), "checked", false);
+  setProperty(getEl(`input[name=inOut][value=${newTab}]`), "checked", true);
 
   // 그리드 제목 변경
   const title = newTab === "in" ? "일괄 입고" : "일괄 출고";
-  $(`#grid02`).pqGrid("option", "title", title);
-  $(`#grid02`).pqGrid("refreshDataAndView");
+  $(`#grid02`).pqGrid({
+    title: title,
+  })
+  .pqGrid("refreshDataAndView");
 
   // 현재 탭 업데이트
   curTab = newTab;
@@ -234,6 +233,7 @@ const fnSwitchTab = (newTab) => {
 // 0. 유저 정보, 권한 탭 전환 ----------------------------------------------------------------------
 const fnSwitchPage = (page) => {
   if (page === "detail") {
+    addClass(getById("detailTab"), "active");
     $("#detailTab").addClass("active");
     $("#permTab").removeClass("active");
     $(".grid-detail").removeClass("d-none");

@@ -28,7 +28,7 @@ public class UserConfigCTRL {
   public ResponseEntity<?> showUserConfigTab (
     @RequestParam(value="pageNm", required=false) String pageNm,
     @RequestParam(value="gridCd", required=false) String gridCd,
-    @SessionAttribute("userConfigId") String userConfigId
+    @SessionAttribute(value="userConfigId", required=false) String userConfigId
   ) throws Exception {
     try {
       UserConfig show = dao.showUserConfigTab(userConfigId, pageNm, gridCd);
@@ -43,7 +43,7 @@ public class UserConfigCTRL {
   // 2-2. 상세 (정보) ------------------------------------------------------------------------------
   @PostMapping(value={"/act/showUserConfigInfo"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> showUserConfigInfo (
-    @SessionAttribute("userConfigId") String userConfigId
+    @SessionAttribute(value="userConfigId", required=false) String userConfigId
   ) throws Exception {
     try {
       UserConfig show = dao.showUserConfigInfo(userConfigId);
@@ -89,7 +89,7 @@ public class UserConfigCTRL {
   @PostMapping(value={"/act/saveUserConfigInfo"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUserConfigInfo (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userConfigId") String idParam
+    @SessionAttribute(value="userConfigId", required=false) String idParam
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
@@ -162,7 +162,7 @@ public class UserConfigCTRL {
   @PostMapping(value={"/act/saveUserConfigTab"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUserConfigTab (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userConfigId") String idParam
+    @SessionAttribute(value="userConfigId", required=false) String idParam
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

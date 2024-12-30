@@ -1,7 +1,5 @@
 // 1-1. 파일 업로드 (일반) -------------------------------------------------------------------------
 const fnUploadFiles = (formParam) => {
-
-  const $grid = $(`#grid01`);
   const fileUploadForm = getFormByName(formParam);
   const tableNm = getValue(getById("tableNm"));
   const tableKey = getValue(getById("tableKey"));
@@ -49,7 +47,7 @@ const fnUploadFiles = (formParam) => {
 
     // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (tableKey !== "0") {
-      $grid.pqGrid("setSelection", {rowIndxPage:0});
+      $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
   })
   .catch((err) => {
@@ -68,7 +66,8 @@ const fnUploadFiles = (formParam) => {
 const fnShowFiles = (tableNm, tableKey, target) => {
 
   let currentSelectedRow = null;
-  const $target = $(`#${target}`);
+  const targetEl = getEl(`#${target}`);
+  const fileDetail = getEl(`#fileDetail`);
   const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
 
   fetch(`act/showFiles`, {
@@ -85,14 +84,14 @@ const fnShowFiles = (tableNm, tableKey, target) => {
   .then((data) => {
 
     // 1. 값 초기화
-    $target.empty();
-    $(`#fileDetail`).empty();
+    targetEl.innerHTML = "";
+    fileDetail.innerHTML = "";
 
     // 2. 최신순으로 정렬
     data.reverse();
 
     if (currentSelectedRow) {
-      $(`#imageRow${currentSelectedRow}`).css("background-color", "");
+      setAttribute(getById(`imageRow${currentSelectedRow}`), "style", "background-color: ''");
     }
     currentSelectedRow = null;
 
@@ -122,7 +121,7 @@ const fnShowFiles = (tableNm, tableKey, target) => {
           </div>
         </div>
       `);
-      $target.append(imgBox);
+      targetEl.innerHTML += imgBox;
     });
     const firstImg = data.find((file) => {
       return imgFile.includes(`.${file.fileUrl.split(".").pop().toLowerCase()}`);
@@ -153,26 +152,25 @@ const fnShowSelectedFiles = (tableNm, fileUrl, rowId) => {
     />
   `);
 
-  $(`#fileDetail`).empty().append(img);
-  $(`[id^="imageRow"]`).css("background-color", "");
-  $(`#imageRow-${rowId}`).css("background-color", "#f1f1f1");
+  getById("fileDetail").innerHTML = img;
+  setAttribute(getEl(`[id^="imageRow"]`), "style", "background-color: ''");
+  setAttribute(getById(`imageRow-${rowId}`), "style", "background-color: #f1f1f1");
 };
 
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
 const fnPopupImage = (tableNm, fileUrl) => {
-  const popupUrl = `viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
-  window.open(popupUrl, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
+  const url = `viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
+  window.open(url, "ImageViewer", "width=800, height=600, scrollbars=yes, resizable=yes");
 };
 
 // 3. 파일 다운로드 --------------------------------------------------------------------------------
 const fnDownloadFiles = (tableNm, fileUrl) => {
-  goPage(`downloadFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`);
+  const url = `downloadFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
+  window.open(url, "_blank");
 };
 
 // 4. 파일 삭제 ------------------------------------------------------------------------------------
 const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
-
-  const $grid = $(`#grid01`);
 
   if (!confirm("업로드된 파일을 삭제 하시겠습니까?")) {
     return;
@@ -183,8 +181,8 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
     "fileUrl": fileUrl,
     "fileNm": fileNm,
     "tableNm": tableNm,
-    "tableKey": $(`#tableKey`).val(),
-    "keyColumn": $(`#keyColumn`).val(),
+    "tableKey": getValue(getById("tableKey")),
+    "keyColumn": getValue(getById("keyColumn")),
     "flagYn": "N"
   };
 
@@ -215,7 +213,7 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
 
     // 업로드 이후 해당 row에 포커스 (신규등록이 아닐 경우에만)
     if (param.tableKey !== "0") {
-      $grid.pqGrid("setSelection", {rowIndxPage:0});
+      $(`#grid01`).pqGrid("setSelection", {rowIndxPage:0});
     }
   })
   .catch((err) => {

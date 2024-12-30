@@ -97,7 +97,7 @@ public class ShipPlanCTRL {
   @PostMapping(value={"/act/saveShipPlan"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveShipPlan (
     @RequestBody Shipping param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();
@@ -121,7 +121,7 @@ public class ShipPlanCTRL {
     @RequestParam(value="shipCd", required=false) String shipCd,
     @RequestParam(value="findStartDt", required=false) String findStartDt,
     @RequestParam(value="findEndDt", required=false) String findEndDt,
-    @SessionAttribute("fileUrl") String fileUrl,
+    @SessionAttribute(value="fileUrl", required=false) String fileUrl,
     HttpServletResponse response
   ) throws Exception {
 

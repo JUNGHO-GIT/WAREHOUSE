@@ -70,7 +70,7 @@ public class ResourceCTRL {
   @PostMapping(value={"/act/saveResource"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResource (
     @RequestBody Resource param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

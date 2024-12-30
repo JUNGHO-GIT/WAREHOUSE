@@ -181,7 +181,7 @@ public class UserCTRL {
   @PostMapping(value={"/act/saveUser"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveUser (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userId") String idParam
+    @SessionAttribute(value="userId", required=false) String idParam
   ) throws Exception {
 
 
@@ -263,7 +263,7 @@ public class UserCTRL {
   @PostMapping(value={"/act/updatePw"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> updatePw (
     @RequestBody User param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
 

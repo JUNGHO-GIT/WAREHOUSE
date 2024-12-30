@@ -21,7 +21,7 @@
   </properties>
   <!-- dependencies -->
   <dependencies>
-    <!-- spring core -->
+    <!-- spring -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>

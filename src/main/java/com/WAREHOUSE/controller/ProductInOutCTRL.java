@@ -82,7 +82,7 @@ public class ProductInOutCTRL {
   @PostMapping(value={"/act/saveProductInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProductInOut (
     @RequestBody ProductInOut param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

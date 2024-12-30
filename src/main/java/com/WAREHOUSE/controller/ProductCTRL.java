@@ -74,7 +74,7 @@ public class ProductCTRL {
   @PostMapping(value={"/act/saveProduct"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveProduct (
     @RequestBody Product param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

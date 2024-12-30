@@ -76,7 +76,7 @@ public class HouseCTRL {
   @PostMapping(value={"/act/saveHouse"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveHouse (
     @RequestBody House param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

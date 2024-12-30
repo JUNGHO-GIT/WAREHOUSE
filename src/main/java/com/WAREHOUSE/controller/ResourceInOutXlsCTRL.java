@@ -38,7 +38,7 @@ public class ResourceInOutXlsCTRL {
   @PostMapping(value={"/act/saveResourceInOutXls"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceInOutXls (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")

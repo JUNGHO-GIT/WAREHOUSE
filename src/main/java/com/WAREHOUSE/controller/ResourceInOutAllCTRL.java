@@ -38,7 +38,7 @@ public class ResourceInOutAllCTRL {
   @PostMapping(value={"/act/saveResourceInOutAll"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceInOutAll (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")

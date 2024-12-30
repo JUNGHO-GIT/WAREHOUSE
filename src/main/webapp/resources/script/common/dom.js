@@ -138,6 +138,35 @@ const getValue = (el) => {
   return String(el.value).trim();
 }
 
+/** ------------------------------------------------------------------------------------------------
+* @memberof Getter
+* @param {Element} el
+* @param {string} attr
+* @returns {string | null}
+* @description attribute 값 얻기
+**/
+const getAttribute = (el, attr) => {
+  if (!el || !(el instanceof Element)) {
+    return null;
+  }
+
+  return el.getAttribute(attr);
+}
+
+/** ------------------------------------------------------------------------------------------------
+* @memberof Getter
+* @param {Element} el
+* @param {string | number} property
+* @returns {string | null}
+* @description property 값 얻기
+**/
+const getProperty = (el, property) => {
+  if (!el || !(el instanceof Element)) {
+    return null;
+  }
+
+  return el[property];
+}
 
 /** ------------------------------------------------------------------------------------------------
 * @namespace Setter
@@ -179,21 +208,6 @@ const removeClass = (el, className) => {
 * @param {HTMLElement} el
 * @param {string} text
 * @returns {void}
-* @description value 값 설정
-**/
-const setValue = (el, text) => {
-  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
-    return;
-  }
-
-  el.value = text ? String(text).trim() : "";
-};
-
-/** ------------------------------------------------------------------------------------------------
-* @memberof Setter
-* @param {HTMLElement} el
-* @param {string} text
-* @returns {void}
 * @description innerHTML 값 설정
 **/
 const setInnerHTML = (el, text) => {
@@ -217,6 +231,53 @@ const setTextContent = (el, text) => {
   }
 
   el.textContent = text ? String(text).trim() : "";
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @memberof Setter
+* @param {HTMLElement} el
+* @param {string} text
+* @returns {void}
+* @description value 값 설정
+**/
+const setValue = (el, text) => {
+  if (!el || !(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement || el instanceof HTMLButtonElement || el instanceof HTMLOptionElement)) {
+    return;
+  }
+
+  el.value = text ? String(text).trim() : "";
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @memberof Setter
+* @param {Element} el
+* @param {string} attr
+* @param {string} value
+* @returns {void}
+* @description attribute 값 설정
+**/
+const setAttribute = (el, attr, value) => {
+  if (!el || !(el instanceof Element)) {
+    return;
+  }
+
+  el.setAttribute(attr, value);
+};
+
+/** ------------------------------------------------------------------------------------------------
+* @memberof Setter
+* @param {Element} el
+* @param {string} property
+* @param {string | number | boolean} value
+* @returns {void}
+* @description property 값 설정
+**/
+const setProperty = (el, property, value) => {
+  if (!el || !(el instanceof Element)) {
+    return;
+  }
+
+  el[property] = value;
 };
 
 /** ------------------------------------------------------------------------------------------------

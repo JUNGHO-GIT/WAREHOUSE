@@ -102,7 +102,7 @@ public class FilesCTRL {
     @RequestParam(value="tableKey", required=false) String tableKey,
     @RequestParam(value="keyColumn", required=false) String keyColumn,
     @RequestParam(value="fileSeq", required=false) Integer fileSeq,
-    @SessionAttribute("userId") String issueId
+    @SessionAttribute(value="userId", required=false) String issueId
   ) throws Exception {
 
     // 1. 보안을 위해 UUID 사용
@@ -160,7 +160,7 @@ public class FilesCTRL {
   @PostMapping(value={"/act/saveFiles"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveFiles (
     @RequestBody HashMap<String, Object> param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     String tableNm = String.valueOf(param.get("tableNm"));
@@ -264,7 +264,7 @@ public class FilesCTRL {
   public ResponseEntity<?> downloadFiles(
     @RequestParam(value="tableNm", required=false) String tableNm,
     @RequestParam(value="fileUrl", required=false) String fileUrl,
-    @RequestHeader("User-Agent") String userAgent
+    @RequestHeader(value="User-Agent", required=false) String userAgent
   ) throws Exception {
 
     java.io.File downloadFile = null;
@@ -316,7 +316,6 @@ public class FilesCTRL {
       }
 
       byte[] fileContent = java.nio.file.Files.readAllBytes(downloadFile.toPath());
-
       String contentType = java.nio.file.Files.probeContentType(downloadFile.toPath());
       if (contentType == null) {
         contentType = "application/octet-stream";
@@ -340,10 +339,10 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @PostMapping(value={"/exportExcel"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> postExportExcel(
-    @RequestParam("pq_data") String pqData,
-    @RequestParam("pq_ext") String pqExt,
-    @RequestParam("pq_decode") Boolean pqDecode,
-    @RequestParam("pq_title") String pqTitle,
+    @RequestParam(value="pq_data", required=false) String pqData,
+    @RequestParam(value="pq_ext", required=false) String pqExt,
+    @RequestParam(value="pq_decode", required=false) Boolean pqDecode,
+    @RequestParam(value="pq_title", required=false) String pqTitle,
     HttpSession session
   ) throws Exception {
 
@@ -372,9 +371,9 @@ public class FilesCTRL {
   // -----------------------------------------------------------------------------------------------
   @GetMapping(value={"/exportExcel"}, produces={"application/octet-stream; charset=UTF-8"})
   public void getExportExcel(
-    @RequestParam("pq_filename") String pqFilename,
-    HttpSession session,
-    HttpServletResponse response
+    @RequestParam(value="pq_filename", required=false) String pqFilename,
+    HttpServletResponse response,
+    HttpSession session
   ) throws Exception {
 
     String sessionFilename = (String) session.getAttribute("pq_filename");

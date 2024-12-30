@@ -59,7 +59,7 @@ public class ShippingCTRL {
   @PostMapping(value={"/act/saveShipping"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveShipping (
     @RequestBody Shipping param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

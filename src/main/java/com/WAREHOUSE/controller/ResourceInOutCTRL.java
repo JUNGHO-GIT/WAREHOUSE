@@ -82,7 +82,7 @@ public class ResourceInOutCTRL {
   @PostMapping(value={"/act/saveResourceInOut"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveResourceInOut (
     @RequestBody ResourceInOut param,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     Map<String, Object> map = new HashMap<String, Object>();

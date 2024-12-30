@@ -73,7 +73,7 @@ public class BomCTRL {
   @PostMapping(value={"/act/saveBom"}, produces={"application/json; charset=UTF-8"})
   public ResponseEntity<?> saveBom (
     @RequestBody HashMap<String, Object> obj,
-    @SessionAttribute("userId") String userId
+    @SessionAttribute(value="userId", required=false) String userId
   ) throws Exception {
 
     @SuppressWarnings("unchecked")
