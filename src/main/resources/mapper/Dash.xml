@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
@@ -16,8 +15,13 @@
   >
     <![CDATA[
     SELECT
-      A.${paramMap.keyCd}, A.inOutDt, A.qty, A.sessionCnt, D.${paramMap.keyNm},
-      (SELECT SUM(qty)
+      (A.${paramMap.keyCd}) ${paramMap.keyCd},
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (IFNULL(D.${paramMap.keyNm}, '미등록')) ${paramMap.keyNm},
+      (
+        SELECT SUM(qty)
         FROM ${paramMap.tableNm}
         WHERE flagYn = 'Y'
         AND planYn = '${paramMap.planYn}'
@@ -54,10 +58,15 @@
   	resultType="hashmap"
   >
     SELECT
-      A.shipCd, A.shipDt, A.sessionCnt,
-      F.prodNm, C.prodCd, C.inOutSeq,
+      (A.shipCd) shipCd,
+      (A.shipDt) shipDt,
+      (A.sessionCnt) sessionCnt,
+      (C.inOutSeq) inOutSeq,
+      (C.inOutDt) inOutDt,
+      (C.prodCd) prodCd,
       (D.qty * -1) qty,
-      G.totalQty
+      (IFNULL(F.prodNm, '미등록')) prodNm,
+      (G.totalQty) totalQty
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
@@ -130,13 +139,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty > 0 AND inOutDt = #{inOutDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'Y'
+        AND qty > 0
+        AND inOutDt = #{inOutDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -162,13 +177,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND inOutDt = #{inOutDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'Y'
+        AND qty < 0
+        AND inOutDt = #{inOutDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -194,17 +215,23 @@
   >
     <![CDATA[
     SELECT
-      A.shipDt, A.shipCd, A.sessionCnt,
-      B.inOutSeq, C.inOutDt,
-      F.prodCd, F.prodNm,
-      IFNULL(B.cnt, 0) cnt,
+      (A.shipDt) shipDt,
+      (A.shipCd) shipCd,
+      (A.sessionCnt) sessionCnt,
+      (B.inOutSeq) inOutSeq,
+      (IFNULL(B.cnt, 0)) cnt,
+      (C.inOutDt) inOutDt,
       (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      (F.prodCd) prodCd,
+      (IFNULL(F.prodNm, '미등록')) prodNm,
       (
         SELECT SUM(qty)
         FROM tblShipping
-        WHERE flagYn = 'Y' AND planYn = 'Y' AND qty < 0 AND shipDt = #{shipDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'Y'
+        AND qty < 0
+        AND shipDt = #{shipDt}
+      ) totalQty
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
@@ -234,7 +261,7 @@
       GROUP BY prodCd
     ) E ON E.prodCd = C.prodCd
     LEFT JOIN (
-      SELECT *
+      SELECT prodCd, prodNm
       FROM tblProduct
       WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
@@ -252,13 +279,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt = #{inOutDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty > 0
+        AND inOutDt = #{inOutDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -284,13 +317,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt = #{inOutDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty < 0
+        AND inOutDt = #{inOutDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -316,17 +355,23 @@
   >
     <![CDATA[
     SELECT
-      A.shipDt, A.shipCd, A.sessionCnt,
-      B.inOutSeq, C.inOutDt,
-      F.prodCd, F.prodNm,
-      IFNULL(B.cnt, 0) cnt,
+      (A.shipDt) shipDt,
+      (A.shipCd) shipCd,
+      (A.sessionCnt) sessionCnt,
+      (B.inOutSeq) inOutSeq,
+      (IFNULL(B.cnt, 0)) cnt,
+      (C.inOutDt) inOutDt,
       (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      (F.prodCd) prodCd,
+      (IFNULL(F.prodNm, '미등록')) prodNm,
       (
         SELECT SUM(qty)
         FROM tblShipping
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND shipDt = #{shipDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty < 0
+        AND shipDt = #{shipDt}
+      ) totalQty
     FROM (
       SELECT shipCd, shipDt, COUNT(shipCd) sessionCnt
       FROM tblShipping
@@ -356,7 +401,7 @@
       GROUP BY prodCd
     ) E ON E.prodCd = C.prodCd
     LEFT JOIN (
-      SELECT *
+      SELECT prodCd, prodNm
       FROM tblProduct
       WHERE flagYn = 'Y'
     ) F ON F.prodCd = C.prodCd
@@ -374,13 +419,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty > 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty > 0
+        AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -406,13 +457,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty < 0
+        AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -438,13 +495,19 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.inOutDt, A.qty, A.sessionCnt, D.prodNm,
+      (A.prodCd) prodCd,
+      (A.inOutDt) inOutDt,
+      (A.qty) qty,
+      (A.sessionCnt) sessionCnt,
+      (D.prodNm) prodNm,
       (
         SELECT SUM(qty)
         FROM tblProductInOut
-        WHERE flagYn = 'Y' AND planYn = 'N' AND qty < 0 AND inOutDt BETWEEN #{startDt} AND #{endDt}
-      )
-      totalQty
+        WHERE flagYn = 'Y'
+        AND planYn = 'N'
+        AND qty < 0
+        AND inOutDt BETWEEN #{startDt} AND #{endDt}
+      ) totalQty
     FROM (
       SELECT prodCd, inOutDt, SUM(qty) qty, COUNT(prodCd) sessionCnt
       FROM tblProductInOut
@@ -470,10 +533,12 @@
   >
     <![CDATA[
     SELECT
-      A.prodCd, A.prodNm, A.protectedQty,
-      IFNULL(D.inQty, 0) inQty,
-      IFNULL(E.outQty, 0) outQty,
-      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty
+      (A.prodCd) prodCd,
+      (A.prodNm) prodNm,
+      (A.protectedQty) protectedQty,
+      (IFNULL(D.inQty, 0)) inQty,
+      (IFNULL(D.inQty, 0) + IFNULL(E.outQty, 0)) qty,
+      IFNULL(E.outQty, 0) outQty
     FROM (
       SELECT prodCd, prodNm, protectedQty
       FROM tblProduct

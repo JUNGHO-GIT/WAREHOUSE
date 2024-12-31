@@ -176,7 +176,6 @@
     <!-- /.row 2 -->
 
     <!-- js -->
-    <link rel="stylesheet" href="${rsPath}/style/lib/ztree.min.css" />
     <script defer src="${rsPath}/script/lib/ztree.min.js"></script>
     <script defer src="${rsPath}/script/page/house.js"></script>
 

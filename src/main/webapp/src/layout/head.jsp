@@ -12,30 +12,13 @@
   <meta name="author" content="WAREHOUSE"/>
 
   <!-- favicon -->
-  <link
-    rel="icon"
-    type="image/x-icon"
-    href="${rsPath}/image/common/favicon.ico"
-  />
-  <link
-    rel="shortcut icon"
-    type="image/x-icon"
-    href="${rsPath}/image/common/favicon.ico"
-  />
+  <link rel="icon" type="image/x-icon" href="${rsPath}/image/common/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="${rsPath}/image/common/favicon.ico" />
 
   <!-- preconnect -->
-  <link
-    rel="preconnect"
-    href="https://cdnjs.cloudflare.com"
-  />
-  <link
-    rel="preconnect"
-    href="https://storage.googleapis.com"
-  />
-  <link
-    rel="preconnect"
-    href="https://jungho-git.github.io"
-  />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://storage.googleapis.com" />
+  <link rel="preconnect" href="https://jungho-git.github.io" />
 
   <!-- css 1 -->
   <link rel="stylesheet" href="${urlPath}/bootstrap/4.6.2/css/bootstrap.min.css" />
@@ -43,12 +26,9 @@
   <link rel="stylesheet" href="${urlPath}/jqueryui/1.14.1/themes/base/jquery-ui.min.css" />
 
   <!-- css 2 -->
-  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.min.css" />
-  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.ui.css" />
-  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.css" />
   <link rel="stylesheet" href="${rsPath}/style/lib/datepicker.min.css" />
-
-  <!-- css 3 -->
+  <link rel="stylesheet" href="${rsPath}/style/lib/jquery-pqgrid.css" />
+  <link rel="stylesheet" href="${rsPath}/style/lib/ztree.css" />
   <link rel="stylesheet" href="${rsPath}/style/common/common.css" />
 
   <!-- js 1 -->

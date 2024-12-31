@@ -14,7 +14,7 @@ const fnUploadFiles = (formParam) => {
     getById("userFile").focus();
     return;
   }
-  if (fileExt !== "jpg" && fileExt !== "JPG" && fileExt !== "png" && fileExt !== "PNG") {
+  if (fileExt !== "jpg" && fileExt !== "png" && fileExt !== "webp") {
     alert("등록 불가능한 파일입니다");
     getById("userFile").focus();
     return;
@@ -63,12 +63,12 @@ const fnUploadFiles = (formParam) => {
 };
 
 // 2-1. 특정항목의 파일 리스트 ---------------------------------------------------------------------
+let currentSelectedRow = null;
 const fnShowFiles = (tableNm, tableKey, target) => {
 
-  let currentSelectedRow = null;
   const targetEl = getEl(`#${target}`);
   const fileDetail = getEl(`#fileDetail`);
-  const imgFile = [".jpg", ".JPG", ".png", ".PNG", ".webp", ".WEBP"];
+  const imgFile = [".jpg", ".png", ".webp"];
 
   fetch(`act/showFiles`, {
     method: `POST`,
@@ -117,7 +117,7 @@ const fnShowFiles = (tableNm, tableKey, target) => {
             class="fs-0-7rem fw-600 dark hover"
             onclick="fnShowSelectedFiles('${tableNm}', '${file.fileUrl}', ${k})"
           >
-            ${file.fileNm}
+            ${file.fileUrl}
           </div>
         </div>
       `);
@@ -153,10 +153,15 @@ const fnShowSelectedFiles = (tableNm, fileUrl, rowId) => {
   `);
 
   getById("fileDetail").innerHTML = img;
-  setAttribute(getEl(`[id^="imageRow"]`), "style", "background-color: ''");
-  setAttribute(getById(`imageRow-${rowId}`), "style", "background-color: #f1f1f1");
-};
 
+  // 선택한 row에 background-color 적용
+  if (currentSelectedRow !== null) {
+    setAttribute(getById(`imageRow-${currentSelectedRow}`), "style", "background-color: ''");
+  }
+
+  currentSelectedRow = rowId;
+  setAttribute(getById(`imageRow-${rowId}`), "style", "background-color: #f0f0f0");
+};
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
 const fnPopupImage = (tableNm, fileUrl) => {
   const url = `viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;
@@ -234,6 +239,8 @@ const fnDeleteFiles = (tableNm, fileSeq, fileUrl, fileNm) => {
   userFile && userFile.addEventListener("change", () => {
     const userFileVal = getValue(userFile);
     const fileName = typeof userFileVal === 'string' ? userFileVal.split("\\").pop() : "";
-    getById("fileDisplayedName").innerHTML = fileName;
+    getById("fileDisplayedName").innerHTML = fileName.length > 7
+    ? fileName.substring(0, 7) + "..."
+    : fileName;
   });
 })();

@@ -213,7 +213,7 @@
                   <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                     <div class="d-row-right detail-label">
                       <div class="fs-0-7rem fw-600 light-black">
-                        세금계산서 Email
+                        Email
                       </div>
                     </div>
                   </div>

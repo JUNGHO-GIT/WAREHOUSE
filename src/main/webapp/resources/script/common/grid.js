@@ -67,14 +67,14 @@ const fnRenderCheckBox = (data) => {
 const fnUpdateTitle = (titleKo, data) => {
 
   const nonCalc = [
-    "거래처", "창고", "입출고 내역", "출하", "제품 출고 현황", "연간 입고 현황", "연간 출고 현황", "연간 재고 현황", "예정 내역", "제품 정보", "자재 정보", "BOM",
+    "거래처", "창고", "입출고 내역", "출하", "제품 출고 현황", "연간 입고 현황", "연간 출고 현황", "연간 재고 현황", "예정 내역", "제품 정보", "자재 정보", "BOM", "일괄 입고", "일괄 출고"
   ];
 
   if (nonCalc.some((item) => titleKo.includes(item))) {
     return (/* javascript */`
-      <div class="d-row-left">
+      <div class="d-row-left mt-3px">
         <div class="d-row-center">
-          <div class="fs-0-8rem fw-600">
+          <div class="fs-0-8rem fw-600 ml-20px">
             ${titleKo}
           </div>
         </div>
@@ -82,16 +82,16 @@ const fnUpdateTitle = (titleKo, data) => {
     `);
   }
   return (/* javascript */`
-    <div class="d-row-left">
+    <div class="d-row-left mt-3px">
       <div class="d-row-center">
-        <div class="fs-0-8rem fw-600">
+        <div class="fs-0-8rem fw-600 ml-20px">
           ${titleKo}
         </div>
       </div>
       <div class="d-row-center ml-auto mr-50px">
-        <div class="fs-0-8rem red">●</div>
-        <div class="fs-0-8rem ml-5px mr-5px">안전재고: </div>
-        <div class="fs-0-8rem red">${fnCalcLowStock(data)}</div>
+        <div class="fs-0-8rem fw-600 red">●</div>
+        <div class="fs-0-8rem fw-600 ml-5px mr-5px">안전재고: </div>
+        <div class="fs-0-8rem fw-600 red">${fnCalcLowStock(data)}</div>
       </div>
     </div>
   `);

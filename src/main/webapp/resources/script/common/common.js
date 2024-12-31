@@ -220,7 +220,15 @@ const fnSwitchTab = (newTab) => {
   setProperty(getEl(`input[name=inOut][value=${newTab}]`), "checked", true);
 
   // 그리드 제목 변경
-  const title = newTab === "in" ? "일괄 입고" : "일괄 출고";
+  const title = (/* javascript */`
+    <div class="d-row-left mt-3px">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600 ml-20px">
+          ${newTab === "in" ? "일괄 입고" : "일괄 출고"}
+        </div>
+      </div>
+    </div>
+  `);
   $(`#grid02`).pqGrid({
     title: title,
   })

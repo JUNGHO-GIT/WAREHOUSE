@@ -211,8 +211,9 @@ public class DashCTRL {
       }
 
       for (
-        ArrayList<HashMap<String, Object>> list :
-        List.of(todayList, yesterdayList, thisWeekList, lastWeekList)
+        ArrayList<HashMap<String, Object>> list : (
+          List.of(todayList, yesterdayList, thisWeekList, lastWeekList)
+        )
       ) {
         if (list != null) {
           list.removeIf(item -> item.get(paramMap.get("keyCd")) == null);

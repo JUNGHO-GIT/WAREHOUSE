@@ -224,6 +224,7 @@ function fnGetList02() {
     },
   ];
 
+  gridOption.title = fnUpdateTitle("일괄 입고", []);
   $grid02.pqGrid({
     ...gridOption,
     colModel: colModel,
