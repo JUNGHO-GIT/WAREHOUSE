@@ -221,7 +221,7 @@ const fnSwitchTab = (newTab) => {
 
   // 그리드 제목 변경
   const title = (/* javascript */`
-    <div class="d-row-left mt-3px">
+    <div class="d-row-left mt-2px">
       <div class="d-row-center">
         <div class="fs-0-8rem fw-600 ml-20px">
           ${newTab === "in" ? "일괄 입고" : "일괄 출고"}

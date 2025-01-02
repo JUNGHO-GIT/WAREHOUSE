@@ -162,6 +162,7 @@ const fnShowSelectedFiles = (tableNm, fileUrl, rowId) => {
   currentSelectedRow = rowId;
   setAttribute(getById(`imageRow-${rowId}`), "style", "background-color: #f0f0f0");
 };
+
 // 2-3. 리스트 이미지 클릭시 팝업 ------------------------------------------------------------------
 const fnPopupImage = (tableNm, fileUrl) => {
   const url = `viewFiles?tableNm=${tableNm}&fileUrl=${fileUrl}`;

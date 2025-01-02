@@ -89,15 +89,15 @@ function fnGetList02 (houseData)  {
   : [];
 
   gridOption.title = (/* javascript */`
-    <div class="d-row-left">
-      <div class="fs-0-8rem fw-600 mr-10px">
-        [${$(`#houseNm`).val()||"창고"}]
-      </div>
-      <div class="fs-0-8rem fw-500">
-        제품 재고현황
+    <div class="d-row-left mt-2px">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600 ml-20px">
+          [${$(`#houseNm`).val()||"창고"}] 제품 재고현황
+        </div>
       </div>
     </div>
   `);
+
   $grid02.pqGrid({
     ...gridOption,
     dataModel: { data: data },
@@ -151,12 +151,11 @@ function fnGetList03 (houseData)  {
   : [];
 
   gridOption.title = (/* javascript */`
-    <div class="d-row-left">
-      <div class="fs-0-8rem fw-600 mr-10px">
-        [${$(`#houseNm`).val()||"창고"}]
-      </div>
-      <div class="fs-0-8rem fw-500">
-        자재 재고현황
+    <div class="d-row-left mt-2px">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600 ml-20px">
+          [${$(`#houseNm`).val()||"창고"}] 자재 재고현황
+        </div>
       </div>
     </div>
   `);

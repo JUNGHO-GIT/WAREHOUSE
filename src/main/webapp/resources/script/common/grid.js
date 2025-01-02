@@ -72,7 +72,7 @@ const fnUpdateTitle = (titleKo, data) => {
 
   if (nonCalc.some((item) => titleKo.includes(item))) {
     return (/* javascript */`
-      <div class="d-row-left mt-3px">
+      <div class="d-row-left mt-2px">
         <div class="d-row-center">
           <div class="fs-0-8rem fw-600 ml-20px">
             ${titleKo}
@@ -82,7 +82,7 @@ const fnUpdateTitle = (titleKo, data) => {
     `);
   }
   return (/* javascript */`
-    <div class="d-row-left mt-3px">
+    <div class="d-row-left mt-2px">
       <div class="d-row-center">
         <div class="fs-0-8rem fw-600 ml-20px">
           ${titleKo}

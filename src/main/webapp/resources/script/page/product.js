@@ -28,7 +28,7 @@ function fnGetList01 () {
   const colModel = [
     {
       title:"이미지", dataIndx:"fileUrl", dataType:"string", align:"center",
-      minWidth:70, maxWidth: 70,
+      minWidth:70, maxWidth:70,
       render: fnRenderImage,
     },
     {

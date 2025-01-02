@@ -5,13 +5,15 @@ let TABS_LIMIT = 5;
 let HEIGHT = window.innerHeight * 0.9;
 
 // 탭 관련 함수 ------------------------------------------------------------------------------------
-function fnGetTabList() {
+const fnGetTabList = () => {
   return TABS.split("/").filter(tab => tab.trim() !== "");
 }
-function fnGetTargetList() {
+
+const fnGetTargetList = () => {
   return TABS_TARGET.split("/").filter(target => target.trim() !== "");
 }
-function fnSetTabsAndTargets(tabList, targetList) {
+
+const fnSetTabsAndTargets = (tabList, targetList) => {
   TABS = "/";
   TABS_TARGET = "/";
   tabList.forEach((tab, index) => {
@@ -21,7 +23,7 @@ function fnSetTabsAndTargets(tabList, targetList) {
 }
 
 // 현재 TABS_LIMIT을 기준으로 탭을 조정 ------------------------------------------------------------
-function fnAdjustTabsToLimit() {
+const fnAdjustTabsToLimit = () => {
   const tabList = fnGetTabList();
   const targetList = fnGetTargetList();
 
@@ -35,8 +37,8 @@ function fnAdjustTabsToLimit() {
   fnSetTabsAndTargets(tabList, targetList);
 }
 
-// 반응형 규칙에 따라 TABS_LIMIT 설정 -------------------------------------------------------------
-function fnUpdateTabsLimitBasedOnMediaQuery() {
+// 반응형 규칙에 따라 TABS_LIMIT 설정 --------------------------------------------------------------
+const fnUpdateTabsLimitBasedOnMediaQuery = () => {
   const xs = window.matchMedia("(min-width: 0px) and (max-width: 576px)");
   const sm = window.matchMedia("(min-width: 577px) and (max-width: 768px)");
   const md = window.matchMedia("(min-width: 769px) and (max-width: 992px)");
@@ -63,7 +65,7 @@ function fnUpdateTabsLimitBasedOnMediaQuery() {
 }
 
 // 탭 추가, 제거 함수 ------------------------------------------------------------------------------
-function fnModifyTabs(pageNo, pageUrl, action) {
+const fnModifyTabs = (pageNo, pageUrl, action) => {
   const tabList = fnGetTabList();
   const targetList = fnGetTargetList();
   let currentTab = pageNo;
@@ -100,7 +102,7 @@ function fnModifyTabs(pageNo, pageUrl, action) {
 }
 
 // 탭 활성화 함수 ----------------------------------------------------------------------------------
-function fnShowTab(pageNo, pageUrl) {
+const fnShowTab = (pageNo, pageUrl) => {
 
   // 해당 탭 콘텐츠가 없는 경우 생성
   if (!$(`#tabContents${pageNo}`).length) {
@@ -132,8 +134,8 @@ function fnShowTab(pageNo, pageUrl) {
   // fnLogTabInfo(pageNo);
 }
 
-// 탭 초기 로딩 및 생성 ---------------------------------------------------------------------------
-function fnInitializeTabs(tabs) {
+// 탭 초기 로딩 및 생성 ----------------------------------------------------------------------------
+const fnInitializeTabs = (tabs) => {
 
   if (!tabs) {
     return;
@@ -160,7 +162,7 @@ function fnInitializeTabs(tabs) {
 }
 
 // 탭 초기화 함수 ----------------------------------------------------------------------------------
-function fnInitializeTabElements(urlToNameMap, tabArray) {
+const fnInitializeTabElements = (urlToNameMap, tabArray) => {
 
   let lastTabNo = "";
   let lastTabUrl = "";
@@ -194,7 +196,7 @@ function fnInitializeTabElements(urlToNameMap, tabArray) {
 }
 
 // 탭을 비활성화된 상태로 추가 (초기화용) ----------------------------------------------------------
-function fnAddTabWithoutActivation(pageName, pageUrl, pageNo) {
+const fnAddTabWithoutActivation = (pageName, pageUrl, pageNo) => {
   const tabList = fnGetTabList();
   if (tabList.includes(pageNo)) {
     fnShowTab(pageNo, pageUrl);
@@ -228,7 +230,7 @@ function fnAddTabWithoutActivation(pageName, pageUrl, pageNo) {
 }
 
 // 사용자가 직접 탭을 추가할 때 호출 ---------------------------------------------------------------
-function fnAddTab(pageName, pageUrl, pageNo) {
+const fnAddTab = (pageName, pageUrl, pageNo) => {
   const tabList = fnGetTabList();
 
   // 모든 탭 비활성화
@@ -291,7 +293,7 @@ function fnAddTab(pageName, pageUrl, pageNo) {
 }
 
 // 탭 제거 -----------------------------------------------------------------------------------------
-function fnRemoveTab(pageNo, pageUrl) {
+const fnRemoveTab = (pageNo, pageUrl) => {
   const wasActive = $(`#tab${pageNo}`).hasClass("active");
   $(`#tab${pageNo}`).remove();
   $(`#tabContents${pageNo}`).remove();
@@ -301,12 +303,10 @@ function fnRemoveTab(pageNo, pageUrl) {
     $(`#tab${lastActiveTab}`).addClass("active");
     $(`#tabContents${lastActiveTab}`).show();
   }
-
-  // fnLogTabInfo(pageNo);
 }
 
 // 탭 전체 새로고침 --------------------------------------------------------------------------------
-function fnRefreshAllTabs() {
+const fnRefreshAllTabs = () => {
   const tabList = fnGetTabList();
   tabList.forEach(t => {
     const src = $(`#ifr${t}`).attr("src");
@@ -315,7 +315,7 @@ function fnRefreshAllTabs() {
 }
 
 // 현재 탭 순서를 문자열로 반환 --------------------------------------------------------------------
-function fnGetTabOrder() {
+const fnGetTabOrder = () => {
   const tabs = [];
   $("#tabs li").each(function() {
     const tabNo = $(this).attr("id").replace("tab", "");
@@ -326,7 +326,7 @@ function fnGetTabOrder() {
 }
 
 // 모든 탭 닫기 ------------------------------------------------------------------------------------
-function fnCloseAllTabs() {
+const fnCloseAllTabs = () => {
   const tabList = fnGetTabList();
   tabList.forEach(t => {
     $(`#tab${t}`).remove();
@@ -337,7 +337,7 @@ function fnCloseAllTabs() {
 }
 
 // 탭 순서 변경 가능하도록 설정 --------------------------------------------------------------------
-function fnEnableTabSorting() {
+const fnEnableTabSorting = () => {
   $("#tabs").sortable({
     axis: 'x',
     cursor: 'move',
@@ -349,7 +349,7 @@ function fnEnableTabSorting() {
 }
 
 // 탭 정보 콘솔 출력 -------------------------------------------------------------------------------
-function fnLogTabInfo(tabNo) {
+const fnLogTabInfo = (tabNo) => {
   console.log(`
     =============================
     누른 탭: ${tabNo}
@@ -361,7 +361,7 @@ function fnLogTabInfo(tabNo) {
 }
 
 // 초기 로딩 ---------------------------------------------------------------------------------------
-jQuery(function($) {
+document.addEventListener("DOMContentLoaded", () => {
   fnEnableTabSorting();
   fnUpdateTabsLimitBasedOnMediaQuery();
 });
