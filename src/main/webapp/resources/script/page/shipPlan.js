@@ -125,6 +125,8 @@ function fnGetList02 (shipCd) {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
+      gridOption.title = fnUpdateTitle("출하 계획 목록", data);
+
       $grid02.pqGrid({
         ...gridOption,
         dataModel: { data: data },

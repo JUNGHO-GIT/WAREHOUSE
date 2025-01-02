@@ -152,6 +152,17 @@ function fnGetList02() {
       minWidth:70,
     },
   ];
+
+  gridOption.title = (/* javascript */`
+    <div class="d-row-left mt-2px">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600 ml-20px">
+          출하 대기 목록
+        </div>
+      </div>
+    </div>
+  `);
+
   $grid02.pqGrid({
     ...gridOption,
     colModel: colModel,

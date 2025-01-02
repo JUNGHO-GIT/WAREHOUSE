@@ -235,6 +235,16 @@ function fnGetList03 () {
     }
   ];
 
+  gridOption.title = (/* javascript */`
+    <div class="d-row-left mt-2px">
+      <div class="d-row-center">
+        <div class="fs-0-8rem fw-600 ml-20px">
+          BOM 항목
+        </div>
+      </div>
+    </div>
+  `);
+
   $grid03.pqGrid({
     ...gridOption,
     colModel: colModel,

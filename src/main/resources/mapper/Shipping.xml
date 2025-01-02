@@ -14,17 +14,24 @@
   >
 		<![CDATA[
     SELECT
-      A.inOutSeq, A.inOutDt, (A.qty * -1) qty,
-      B.prodCd, B.prodNm, B.option1, B.option2
+      (A.inOutSeq) inOutSeq,
+      (A.inOutDt) inOutDt,
+      (A.qty * -1) qty,
+      (B.prodCd) prodCd,
+      (B.prodNm) prodNm,
+      (B.option1) option1,
+      (B.option2) option2
 		FROM (
       SELECT *
       FROM tblProductInOut
-      WHERE flagYn = 'Y' AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt} AND qty < 0
+      WHERE flagYn = 'Y'
+      AND inOutDt BETWEEN #{findStartDt} AND #{findEndDt}
+      AND qty < 0
     ) A
     LEFT JOIN (
-      SELECT *
+      SELECT prodCd, prodNm, option1, option2
       FROM tblProduct
-      WHERE flagYn = 'Y'
+      WHERE flagYn = 'Y' AND prodNm IS NOT NULL
     ) B ON B.prodCd = A.prodCd
     GROUP BY
       A.inOutSeq
