@@ -883,7 +883,7 @@ div.pq-grid {
   border-left-color: #c6c6c6;
 }
 div.pq-pager {
-  background: #f1f5f8;
+  background: #f1f5f8 !important;
 }
 div.pq-pager,
 div.pq-grid-summary {
