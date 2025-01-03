@@ -66,6 +66,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
+      gridOption.title = fnUpdateTitle("공통 코드 관리", data);
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: data },

@@ -60,6 +60,7 @@ function fnGetList01 () {
       xmlHttpRequest.setRequestHeader("AJAX", "true");
     },
     success: (data) => {
+      gridOption.title = fnUpdateTitle("회원 관리", data);
       $grid01.pqGrid({
         ...gridOption,
         dataModel: { data: data },
@@ -94,39 +95,41 @@ function fnGetPartsUser() {
       for (let i = 0; i < data.length; i++) {
         const detail = data[i];
         const userPermHtml = (/* javascript */`
-        <div class="row mt-10px">
-          <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-left">
-            <div class="fs-0-7rem fw-600 light-black">
-              ${detail.pageNm}
+          <div class="row mb-10px">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="d-row-right detail-label mr-0px pr-15px">
+                <div class="fs-0-7rem fw-600 light-black">
+                  ${detail.pageNm}
+                </div>
+              </div>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
+              <div
+                name="${detail.page}${detail.subPage}"
+                data-value="${detail.page}${detail.subPage}"
+                class="fs-0-7rem fw-500 light on pointer"
+                onclick="fnToggleUserPerm(this)"
+              >
+                ●
+              </div>
+              <div class="fs-0-7rem fw-500 light-black ml-10px">
+                있음
+              </div>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
+              <div
+                name="${detail.page}${detail.subPage}"
+                data-value=""
+                class="fs-0-7rem fw-500 light off pointer"
+                onclick="fnToggleUserPerm(this)"
+              >
+                ●
+              </div>
+              <div class="fs-0-7rem fw-500 light-black ml-10px">
+                없음
+              </div>
             </div>
           </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
-            <div
-              name="${detail.page}${detail.subPage}"
-              data-value="${detail.page}${detail.subPage}"
-              class="fs-0-7rem fw-500 light on pointer"
-              onclick="fnToggleUserPerm(this)"
-            >
-              ●
-            </div>
-            <div class="fs-0-7rem fw-400 light-black">
-              있음
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 d-center">
-            <div
-              name="${detail.page}${detail.subPage}"
-              data-value=""
-              class="fs-0-7rem fw-500 light off pointer"
-              onclick="fnToggleUserPerm(this)"
-            >
-              ●
-            </div>
-            <div class="fs-0-7rem fw-400 light-black">
-              없음
-            </div>
-          </div>
-        </div>
         `);
         $(`#userPerms`).append(userPermHtml);
       }

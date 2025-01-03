@@ -264,12 +264,12 @@
                     <div class="d-row-left">
                       <i class="fa fa-list-alt mr-1vw"></i>
                       <div class="fs-0-9rem fw-700 light-black">
-                        권한
+                        사용자 권한
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row mb-1vh">
+                <div class="row">
                   <div class="col-12 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div id="userPerms"></div>
                   </div>
